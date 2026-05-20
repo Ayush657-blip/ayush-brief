@@ -2,12 +2,14 @@ const Groq = require("groq-sdk");
 const { Resend } = require("resend");
 const https = require("https");
 const http = require("http");
+const fs = require("fs");
 const { generateEmailHTML } = require("./email");
 
 // ── CONFIG ──────────────────────────────────────────────
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const resend = new Resend(process.env.RESEND_API_KEY);
 const MY_EMAIL = process.env.MY_EMAIL;
+const DASHBOARD_URL = "https://ayushbrief.online";
 
 // ── RSS FEEDS ────────────────────────────────────────────
 const RSS_FEEDS = {
@@ -45,9 +47,7 @@ function fetchURL(url, redirectCount = 0) {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return fetchURL(res.headers.location, redirectCount + 1).then(resolve).catch(reject);
       }
-      if (res.statusCode !== 200) {
-        return reject(new Error(`HTTP ${res.statusCode}`));
-      }
+      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode}`));
       let data = "";
       res.on("data", chunk => data += chunk);
       res.on("end", () => resolve(data));
@@ -57,10 +57,9 @@ function fetchURL(url, redirectCount = 0) {
   });
 }
 
-// ── PARSE RSS / ATOM ─────────────────────────────────────
+// ── PARSE FEED ───────────────────────────────────────────
 function parseFeed(xml) {
   const items = [];
-
   const itemRegex = /<item[^>]*>([\s\S]*?)<\/item>/gi;
   let match;
   while ((match = itemRegex.exec(xml)) !== null) {
@@ -70,13 +69,11 @@ function parseFeed(xml) {
     const link = extractTag(block, "link");
     const pubDate = extractTag(block, "pubDate");
     if (title) items.push({
-      title,
+      title, link: link || "",
       description: desc ? desc.replace(/<[^>]+>/g, "").substring(0, 300) : "",
-      link: link || "",
       pubDate: pubDate || ""
     });
   }
-
   if (items.length === 0) {
     const entryRegex = /<entry[^>]*>([\s\S]*?)<\/entry>/gi;
     while ((match = entryRegex.exec(xml)) !== null) {
@@ -86,14 +83,12 @@ function parseFeed(xml) {
       const link = (block.match(/href="([^"]+)"/) || [])[1];
       const published = extractTag(block, "published") || extractTag(block, "updated");
       if (title) items.push({
-        title,
+        title, link: link || "",
         description: summary ? summary.replace(/<[^>]+>/g, "").substring(0, 300) : "",
-        link: link || "",
         pubDate: published || ""
       });
     }
   }
-
   return items;
 }
 
@@ -101,23 +96,17 @@ function extractTag(xml, tag) {
   const match = xml.match(new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/${tag}>`, "i"));
   if (!match) return null;
   return match[1].trim()
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&#039;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'");
+    .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&#039;/g, "'").replace(/&quot;/g, '"').replace(/&apos;/g, "'");
 }
 
 function isRecent(pubDate) {
   if (!pubDate) return true;
-  try {
-    const hours = (new Date() - new Date(pubDate)) / 3600000;
-    return hours <= 24;
-  } catch { return true; }
+  try { return (new Date() - new Date(pubDate)) / 3600000 <= 24; }
+  catch { return true; }
 }
 
-// ── FETCH CATEGORY NEWS ──────────────────────────────────
+// ── FETCH NEWS ───────────────────────────────────────────
 async function fetchCategoryNews(category, feeds) {
   const allItems = [];
   for (const url of feeds) {
@@ -148,11 +137,11 @@ async function summarizeWithGroq(category, articles) {
     `[${i + 1}] Title: ${a.title}\nDescription: ${a.description || "No description"}`
   ).join("\n\n");
 
-  const prompt = `You are a sharp intelligence analyst writing for Ayush — a 24-year-old Indian FMCG sales professional who is also building an AI startup.
+  const prompt = `You are a sharp intelligence analyst writing for Ayush — a 24-year-old Indian FMCG sales professional building an AI startup.
 
 Category: ${category}
 
-Summarize each article below. Return ONLY a valid JSON array. No markdown. No backticks. No extra text.
+Summarize each article. Return ONLY a valid JSON array. No markdown. No backticks. No extra text.
 
 Format:
 [{"title":"exact original title","summary":"2 sentences: what happened and why it matters","why":"1 specific actionable insight for Indian FMCG or startup professional","tag":"2-3 word tag"}]
@@ -169,20 +158,15 @@ ${articleText}`;
     });
 
     const raw = res.choices[0].message.content.trim()
-      .replace(/^```json\s*/i, "")
-      .replace(/^```\s*/i, "")
-      .replace(/```\s*$/i, "")
-      .trim();
+      .replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
 
     const parsed = JSON.parse(raw);
-
     return articles.map((article, i) => ({
       ...article,
       summary: parsed[i]?.summary || article.description,
       why: parsed[i]?.why || "Stay informed on this development",
       tag: parsed[i]?.tag || category
     }));
-
   } catch (err) {
     console.log(`  ⚠ Groq error for ${category}: ${err.message}`);
     return articles.map(a => ({
@@ -225,8 +209,18 @@ async function run() {
     return;
   }
 
+  // Save data.json for dashboard
+  const dashboardData = {
+    date: new Date().toISOString(),
+    totalStories,
+    sections
+  };
+  fs.writeFileSync("data.json", JSON.stringify(dashboardData, null, 2));
+  console.log("\n📊 data.json saved for dashboard");
+
+  // Send email
   console.log(`\n📧 Sending email (${totalStories} stories)...`);
-  const html = generateEmailHTML(sections, totalStories);
+  const html = generateEmailHTML(sections, totalStories, DASHBOARD_URL);
 
   const today = new Date().toLocaleDateString("en-IN", {
     weekday: "long", year: "numeric", month: "long", day: "numeric",
