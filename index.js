@@ -22,9 +22,10 @@ const RSS_FEEDS = {
     "https://feeds.bbci.co.uk/news/world/rss.xml",
     "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
   ],
-  "FMCG & Consumer": [
-    "https://economictimes.indiatimes.com/industry/cons-products/rss.cms",
-    "https://www.business-standard.com/rss/home_page_top_stories.rss"
+  "Healthcare": [
+    "https://www.medscape.com/cx/rssfeeds/2quier_rss_e.xml",
+    "https://economictimes.indiatimes.com/industry/healthcare/biotech/rss.cms"
+  ],
   ],
   "India Business": [
     "https://economictimes.indiatimes.com/markets/rss.cms",
@@ -137,7 +138,7 @@ async function summarizeWithGroq(category, articles) {
     `[${i + 1}] Title: ${a.title}\nDescription: ${a.description || "No description"}`
   ).join("\n\n");
 
-  const prompt = `You are a sharp intelligence analyst writing for Ayush — a 24-year-old Indian FMCG sales professional building an AI startup.
+  const prompt = `You are a sharp intelligence analyst writing for Ayush — a 24-year-old Indian professional in FMCG sales and healthcare building an AI startup.
 
 Category: ${category}
 
