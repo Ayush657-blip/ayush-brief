@@ -1,13 +1,13 @@
 const Groq = require("groq-sdk");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 const https = require("https");
 const http = require("http");
 const { generateEmailHTML } = require("./email");
 
 // ── CONFIG ──────────────────────────────────────────────
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const resend = new Resend(process.env.RESEND_API_KEY);
 const MY_EMAIL = process.env.MY_EMAIL;
-const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
 
 // ── RSS FEEDS ────────────────────────────────────────────
 const RSS_FEEDS = {
@@ -61,7 +61,6 @@ function fetchURL(url, redirectCount = 0) {
 function parseFeed(xml) {
   const items = [];
 
-  // Try RSS <item> format
   const itemRegex = /<item[^>]*>([\s\S]*?)<\/item>/gi;
   let match;
   while ((match = itemRegex.exec(xml)) !== null) {
@@ -78,7 +77,6 @@ function parseFeed(xml) {
     });
   }
 
-  // Try Atom <entry> format
   if (items.length === 0) {
     const entryRegex = /<entry[^>]*>([\s\S]*?)<\/entry>/gi;
     while ((match = entryRegex.exec(xml)) !== null) {
@@ -133,7 +131,6 @@ async function fetchCategoryNews(category, feeds) {
       console.log(`    ⚠ Failed: ${err.message}`);
     }
   }
-  // Deduplicate by title
   const seen = new Set();
   return allItems.filter(item => {
     const key = item.title.toLowerCase().substring(0, 60);
@@ -197,33 +194,6 @@ ${articleText}`;
   }
 }
 
-// ── SEND EMAIL ───────────────────────────────────────────
-async function sendEmail(html, totalStories) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: MY_EMAIL,
-      pass: GMAIL_PASSWORD
-    }
-  });
-
-  const today = new Date().toLocaleDateString("en-IN", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-    timeZone: "Asia/Kolkata"
-  });
-
-  const mailOptions = {
-    from: `Ayush's Brief <${MY_EMAIL}>`,
-    to: MY_EMAIL,
-    subject: `☀️ Ayush's Brief — ${today} · ${totalStories} Stories`,
-    html
-  };
-
-  const info = await transporter.sendMail(mailOptions);
-  console.log("✅ Email sent!", info.messageId);
-  console.log("📬 Delivered to:", MY_EMAIL);
-}
-
 // ── MAIN ─────────────────────────────────────────────────
 async function run() {
   console.log("\n🚀 Ayush's Brief starting...");
@@ -247,7 +217,6 @@ async function run() {
       sections.push({ category, articles: [] });
     }
 
-    // Delay between Groq calls
     await new Promise(r => setTimeout(r, 1500));
   }
 
@@ -258,12 +227,29 @@ async function run() {
 
   console.log(`\n📧 Sending email (${totalStories} stories)...`);
   const html = generateEmailHTML(sections, totalStories);
-  await sendEmail(html, totalStories);
+
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    timeZone: "Asia/Kolkata"
+  });
+
+  const { data, error } = await resend.emails.send({
+    from: "Ayush's Brief <onboarding@resend.dev>",
+    to: MY_EMAIL,
+    subject: `☀️ Ayush's Brief — ${today} · ${totalStories} Stories`,
+    html
+  });
+
+  if (error) {
+    console.log("❌ Email failed:", JSON.stringify(error));
+  } else {
+    console.log("✅ Email sent! ID:", data.id);
+    console.log("📬 Delivered to:", MY_EMAIL);
+  }
 
   console.log("\n🎯 Done. See you tomorrow at 6:00 AM IST.\n");
 }
 
-// Run
 run().catch(err => {
   console.error("❌ Fatal error:", err.message);
   process.exit(1);
