@@ -3,247 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayush's Brief — Intelligence Dashboard</title>
+<title>AyushBrief — Daily Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ink:#0a0908;--gold:#c9a84c;--gold-light:#e8c96d;
-  --surface:#0f0d0b;--card:#141210;--card2:#1a1714;
-  --ai:#3b7dd8;--world:#4caf7d;--fmcg:#e07b39;--india:#9b59b6;
+:root {
+  --bg: #0c0c0e;
+  --surface: #141416;
+  --surface2: #1c1c20;
+  --border: #252528;
+  --text: #e8e4dc;
+  --text-dim: #5a5760;
+  --text-mid: #9a9298;
+  --gold: #d4a843;
+  --gold-dim: #7a5f20;
+  --tech: #4a9eff;
+  --world: #ff6b6b;
+  --health: #4ecb8d;
+  --india: #ff9f43;
 }
-body{background:var(--surface);font-family:'Segoe UI',Arial,sans-serif;min-height:100vh;color:#fff;}
 
-/* LOADING */
-#loading{position:fixed;inset:0;background:var(--surface);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:16px;}
-.loader{width:40px;height:40px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-#loading p{font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle noise */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+}
 
 /* HEADER */
-.header{border-bottom:1px solid rgba(255,255,255,0.06);padding:0 24px;display:flex;align-items:center;height:56px;gap:20px;position:sticky;top:0;background:rgba(10,9,8,0.96);backdrop-filter:blur(12px);z-index:100;}
-.brand{font-family:Georgia,serif;font-size:18px;font-weight:bold;color:#fff;}
-.brand span{color:var(--gold);}
-.date-badge{margin-left:auto;font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.08em;}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#4caf7d;box-shadow:0 0 6px #4caf7d;}
+header {
+  padding: 1.8rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(12,12,14,0.95);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.03em;
+}
+
+.logo span { color: var(--gold); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--health);
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--health);
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.date {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
 
 /* STATS BAR */
-.stats-bar{display:flex;border-bottom:1px solid rgba(255,255,255,0.05);padding:0 24px;}
-.stat{padding:10px 20px 10px 0;margin-right:20px;border-right:1px solid rgba(255,255,255,0.05);}
-.stat:last-child{border-right:none;}
-.stat-val{font-family:Georgia,serif;font-size:20px;font-weight:bold;color:var(--gold);}
-.stat-lbl{font-family:'Courier New',monospace;font-size:8px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.15em;margin-top:2px;}
+.stats-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
 
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(255,255,255,0.05);}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:500px){.grid{grid-template-columns:1fr;}}
+.stat-item {
+  padding: 1rem 2.5rem;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
 
-.col{border-right:1px solid rgba(255,255,255,0.05);}
-.col:last-child{border-right:none;}
+.stat-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.3rem;
+}
 
-.col-header{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:8px;position:sticky;top:56px;background:rgba(12,10,9,0.98);z-index:10;}
-.col-accent{width:3px;height:16px;border-radius:2px;}
-.col-name{font-family:'Courier New',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:500;}
-.col-count{margin-left:auto;font-family:'Courier New',monospace;font-size:8px;color:rgba(255,255,255,0.2);}
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
 
-/* CARD */
-.card{margin:8px;background:var(--card);border:1px solid rgba(255,255,255,0.05);padding:12px;cursor:pointer;transition:all 0.2s;border-radius:2px;}
-.card:hover{background:var(--card2);border-color:rgba(201,168,76,0.25);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,0.4);}
-.card-num{font-family:'Courier New',monospace;font-size:9px;color:rgba(255,255,255,0.2);margin-bottom:7px;}
-.card-title{font-size:12px;font-weight:600;color:rgba(255,255,255,0.85);line-height:1.4;margin-bottom:7px;}
-.card-preview{font-size:11px;color:rgba(255,255,255,0.3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,0.04);}
-.card-why{font-size:10px;color:var(--gold);opacity:0;transition:opacity 0.2s;}
-.card:hover .card-why{opacity:1;}
+/* MAIN */
+main { padding: 2rem 2.5rem; max-width: 1300px; margin: 0 auto; }
+
+/* CATEGORY SECTION */
+.cat-section {
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.cat-section:nth-child(1) { animation-delay: 0.1s; }
+.cat-section:nth-child(2) { animation-delay: 0.2s; }
+.cat-section:nth-child(3) { animation-delay: 0.3s; }
+.cat-section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cat-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+
+.cat-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cat-count {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-left: auto;
+  letter-spacing: 0.1em;
+}
+
+/* 3+2 GRID */
+.card-grid-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 1px;
+}
+
+.card-grid-bottom {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+
+/* NEWS CARD */
+.news-card {
+  background: var(--surface);
+  padding: 1.4rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 0;
+  transition: height 0.3s ease;
+}
+
+.news-card:hover { background: var(--surface2); }
+.news-card:hover::before { height: 100%; }
+
+.card-num {
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.6rem;
+}
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-summary {
+  font-size: 0.7rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-source {
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.card-arrow {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  transition: transform 0.2s, color 0.2s;
+}
+
+.news-card:hover .card-arrow {
+  transform: translateX(4px);
+}
+
+/* Color theming per category */
+.cat-tech .cat-dot { background: var(--tech); }
+.cat-tech .cat-title { color: var(--tech); }
+.cat-tech .news-card::before { background: var(--tech); }
+.cat-tech .news-card:hover .card-arrow { color: var(--tech); }
+
+.cat-world .cat-dot { background: var(--world); }
+.cat-world .cat-title { color: var(--world); }
+.cat-world .news-card::before { background: var(--world); }
+.cat-world .news-card:hover .card-arrow { color: var(--world); }
+
+.cat-health .cat-dot { background: var(--health); }
+.cat-health .cat-title { color: var(--health); }
+.cat-health .news-card::before { background: var(--health); }
+.cat-health .news-card:hover .card-arrow { color: var(--health); }
+
+.cat-india .cat-dot { background: var(--india); }
+.cat-india .cat-title { color: var(--india); }
+.cat-india .news-card::before { background: var(--india); }
+.cat-india .news-card:hover .card-arrow { color: var(--india); }
 
 /* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:20px;}
-.overlay.open{display:flex;}
-.modal{background:#141210;border:1px solid rgba(201,168,76,0.2);max-width:540px;width:100%;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 40px 80px rgba(0,0,0,0.8);border-top:2px solid var(--gold);}
-.modal-header{padding:22px 24px 14px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.modal-cat{font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
-.modal-title{font-family:Georgia,serif;font-size:19px;font-weight:bold;color:#fff;line-height:1.3;}
-.modal-body{padding:18px 24px;}
-.modal-summary{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:18px;}
-.btl-label{font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.btl-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
-.btl-list li{display:flex;gap:10px;font-size:12.5px;color:rgba(255,255,255,0.75);line-height:1.55;}
-.btl-list li::before{content:'—';color:var(--gold);flex-shrink:0;}
-.modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
-.modal-close:hover{background:rgba(255,255,255,0.12);color:#fff;}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
 
-/* EMPTY STATE */
-.empty{padding:40px;text-align:center;color:rgba(255,255,255,0.2);font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.1em;}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  max-width: 680px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-top {
+  height: 4px;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-cat {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.modal-summary {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text-mid);
+  margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+
+.modal-source {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.btn-read {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.btn-read:hover { opacity: 0.85; }
+
+.btn-close {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-close:hover { border-color: var(--text-dim); color: var(--text); }
+
+/* EMPTY */
+.empty-section {
+  background: var(--surface);
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
 
 /* FOOTER */
-.footer{padding:14px 24px;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;}
-.footer-brand{font-family:Georgia,serif;font-size:13px;color:rgba(255,255,255,0.25);}
-.footer-meta{font-family:'Courier New',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.08em;}
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
 
-::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:2px;}
+@media (max-width: 768px) {
+  header { padding: 1.2rem 1.2rem; }
+  main { padding: 1.2rem; }
+  .stat-item { padding: 0.8rem 1.2rem; }
+  .card-grid-top { grid-template-columns: 1fr; }
+  .card-grid-bottom { grid-template-columns: 1fr; }
+  .modal-title { font-size: 1.2rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div id="loading">
-  <div class="loader"></div>
-  <p>Loading today's intelligence...</p>
-</div>
+<header>
+  <div class="logo">Ayush<span>Brief.</span></div>
+  <div class="header-right">
+    <div class="live-badge"><div class="live-dot"></div>Live</div>
+    <div class="date" id="dateEl">—</div>
+  </div>
+</header>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="brand">Ayush's <span>Brief.</span></div>
-  <div class="date-badge" id="header-date">Loading...</div>
-  <div class="live-dot" title="Live"></div>
-</div>
-
-<!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat"><div class="stat-val" id="stat-stories">—</div><div class="stat-lbl">Stories</div></div>
-  <div class="stat"><div class="stat-val">4</div><div class="stat-lbl">Categories</div></div>
-  <div class="stat"><div class="stat-val">24h</div><div class="stat-lbl">News window</div></div>
-  <div class="stat"><div class="stat-val">06:00</div><div class="stat-lbl">Generated IST</div></div>
+  <div class="stat-item">
+    <div class="stat-label">Stories</div>
+    <div class="stat-val" id="statTotal">—</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Categories</div>
+    <div class="stat-val">4</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Generated</div>
+    <div class="stat-val" style="font-size:0.9rem;padding-top:0.3rem">06:00 IST</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Engine</div>
+    <div class="stat-val" style="font-size:0.9rem;padding-top:0.3rem">Groq AI</div>
+  </div>
 </div>
 
-<!-- GRID -->
-<div class="grid" id="grid"></div>
+<main id="main"></main>
 
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-brand">Ayush's Brief.</div>
-  <div class="footer-meta" id="footer-meta">Loading...</div>
-</div>
+<footer>
+  <span>AyushBrief — Daily Intelligence</span>
+  <span>Runs 6:00 AM IST · Built by Ayush Bansal</span>
+</footer>
 
 <!-- MODAL -->
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-header">
-      <div class="modal-cat" id="m-cat"></div>
-      <div class="modal-title" id="m-title"></div>
-    </div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-top" id="modalTop"></div>
     <div class="modal-body">
-      <div class="modal-summary" id="m-summary"></div>
-      <div class="btl-label">The Bottom Line</div>
-      <ul class="btl-list" id="m-btl"></ul>
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-summary" id="modalSummary"></div>
+      <div class="modal-footer">
+        <span class="modal-source" id="modalSource"></span>
+        <div class="modal-actions">
+          <button class="btn-close" onclick="closeModalBtn()">Close</button>
+          <button class="btn-read" id="modalReadBtn" onclick="openSource()">Read Full →</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-const COLORS = {
-  "AI & Technology": "var(--ai)",
-  "World News": "var(--world)",
-  "FMCG & Consumer": "var(--fmcg)",
-  "India Business": "var(--india)"
-};
+const CATEGORIES = [
+  { key: 'tech',   label: 'Tech & AI',       color: '#4a9eff', cls: 'cat-tech'   },
+  { key: 'world',  label: 'World News',       color: '#ff6b6b', cls: 'cat-world'  },
+  { key: 'health', label: 'Healthcare',       color: '#4ecb8d', cls: 'cat-health' },
+  { key: 'india',  label: 'India Business',   color: '#ff9f43', cls: 'cat-india'  },
+];
 
-let globalData = null;
+let currentUrl = '';
+
+// Date
+document.getElementById('dateEl').textContent = new Date().toLocaleDateString('en-IN', {
+  weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+});
+
+function detectCategory(story) {
+  const t = (story.title + ' ' + (story.summary || '') + ' ' + (story.source || '')).toLowerCase();
+  if (/health|pharma|medic|hospital|drug|vaccine|disease|patient|clinical|who |ebola|pandemic/.test(t)) return 'health';
+  if (/india|delhi|mumbai|modi|bjp|rupee|sensex|nifty|livemint|sebi|rbi/.test(t)) return 'india';
+  if (/tech|ai|apple|google|microsoft|software|startup|gadget|openai|meta |amazon|nvidia|cyber/.test(t)) return 'tech';
+  return 'world';
+}
+
+function openModal(story, catColor, catLabel) {
+  currentUrl = story.url || '';
+  document.getElementById('modalTop').style.background = catColor;
+  document.getElementById('modalCat').innerHTML = `<span style="color:${catColor}">●</span> <span style="color:${catColor}">${catLabel}</span>`;
+  document.getElementById('modalTitle').textContent = story.title || '';
+  document.getElementById('modalSummary').textContent = story.summary || story.description || 'No summary available.';
+  document.getElementById('modalSource').textContent = story.source || '';
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function openSource() {
+  if (currentUrl) window.open(currentUrl, '_blank');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+function buildSection(cat, stories) {
+  const top3 = stories.slice(0, 3);
+  const bot2 = stories.slice(3, 5);
+
+  const cardHTML = (story, idx, totalIdx) => `
+    <div class="news-card" onclick='openModal(${JSON.stringify(story).replace(/'/g,"&#39;")}, "${cat.color}", "${cat.label}")'>
+      <div class="card-num">0${totalIdx + 1}</div>
+      <div class="card-title">${story.title || ''}</div>
+      <div class="card-summary">${story.summary || story.description || ''}</div>
+      <div class="card-footer">
+        <span class="card-source">${story.source || ''}</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </div>`;
+
+  const topHTML = top3.length
+    ? `<div class="card-grid-top">${top3.map((s,i) => cardHTML(s,i,i)).join('')}</div>`
+    : '';
+
+  const botHTML = bot2.length
+    ? `<div class="card-grid-bottom">${bot2.map((s,i) => cardHTML(s,i,i+3)).join('')}</div>`
+    : '';
+
+  const emptyHTML = !stories.length
+    ? `<div class="empty-section">Next edition at 6:00 AM IST</div>`
+    : '';
+
+  return `
+    <div class="cat-section ${cat.cls}">
+      <div class="cat-header">
+        <div class="cat-dot"></div>
+        <div class="cat-title">${cat.label}</div>
+        <div class="cat-count">${stories.length} stories</div>
+      </div>
+      ${topHTML}${botHTML}${emptyHTML}
+    </div>`;
+}
 
 async function loadData() {
   try {
     const res = await fetch('./data.json');
-    if (!res.ok) throw new Error('No data yet');
+    if (!res.ok) throw new Error('no data');
     const data = await res.json();
-    globalData = data;
-    renderDashboard(data);
-  } catch(e) {
-    // Show placeholder
-    renderPlaceholder();
-  }
-  document.getElementById('loading').style.display = 'none';
-}
+    const stories = Array.isArray(data) ? data : (data.stories || data.articles || []);
 
-function renderDashboard(data) {
-  const today = new Date().toLocaleDateString('en-IN', {
-    weekday:'long', year:'numeric', month:'long', day:'numeric',
-    timeZone:'Asia/Kolkata'
-  });
-  document.getElementById('header-date').textContent = today + ' · 06:00 IST';
-  document.getElementById('stat-stories').textContent = data.totalStories || 0;
-  document.getElementById('footer-meta').textContent = 'Auto-generated · 06:00 IST · Groq API + Resend + GitHub Actions';
-
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-
-  (data.sections || []).forEach(section => {
-    const col = document.createElement('div');
-    col.className = 'col';
-    const color = COLORS[section.category] || '#888';
-
-    col.innerHTML = `
-      <div class="col-header">
-        <div class="col-accent" style="background:${color}"></div>
-        <div class="col-name">${section.category}</div>
-        <div class="col-count">${(section.articles||[]).length}</div>
-      </div>`;
-
-    (section.articles || []).forEach((article, i) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <div class="card-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="card-title">${article.title||''}</div>
-        <div class="card-preview">${article.summary||article.description||''}</div>
-        <div class="card-footer">
-          <span style="font-family:'Courier New',monospace;font-size:8px;color:rgba(255,255,255,0.2);text-transform:uppercase;">${article.source||''}</span>
-          <span class="card-why">→</span>
-        </div>`;
-      card.onclick = () => openModal(section.category, article, color);
-      col.appendChild(card);
+    // Bucket into categories
+    const buckets = { tech: [], world: [], health: [], india: [] };
+    stories.forEach(s => {
+      const cat = detectCategory(s);
+      if (buckets[cat]) buckets[cat].push(s);
+      else buckets.world.push(s);
     });
 
-    grid.appendChild(col);
-  });
+    document.getElementById('statTotal').textContent = stories.length;
+
+    document.getElementById('main').innerHTML = CATEGORIES
+      .map(cat => buildSection(cat, buckets[cat.key] || []))
+      .join('');
+
+  } catch(e) {
+    document.getElementById('statTotal').textContent = '0';
+    document.getElementById('main').innerHTML = CATEGORIES
+      .map(cat => buildSection(cat, []))
+      .join('');
+  }
 }
-
-function renderPlaceholder() {
-  const today = new Date().toLocaleDateString('en-IN', {
-    weekday:'long', year:'numeric', month:'long', day:'numeric',
-    timeZone:'Asia/Kolkata'
-  });
-  document.getElementById('header-date').textContent = today + ' · 06:00 IST';
-  document.getElementById('stat-stories').textContent = '—';
-  document.getElementById('footer-meta').textContent = 'Next edition at 06:00 IST tomorrow';
-
-  const grid = document.getElementById('grid');
-  const cats = ['AI & Technology','World News','FMCG & Consumer','India Business'];
-  grid.innerHTML = cats.map(cat => `
-    <div class="col">
-      <div class="col-header">
-        <div class="col-accent" style="background:${COLORS[cat]}"></div>
-        <div class="col-name">${cat}</div>
-      </div>
-      <div class="empty">Next edition at 6:00 AM IST</div>
-    </div>`).join('');
-}
-
-function openModal(category, article, color) {
-  document.getElementById('m-cat').textContent = category;
-  document.getElementById('m-cat').style.color = color;
-  document.getElementById('m-title').textContent = article.title || '';
-  document.getElementById('m-summary').textContent = article.summary || article.description || '';
-  const btl = document.getElementById('m-btl');
-  btl.innerHTML = '';
-  const insights = article.why ? [article.why] : ['Read the full article for context'];
-  insights.forEach(insight => {
-    const li = document.createElement('li');
-    li.textContent = insight;
-    btl.appendChild(li);
-  });
-  document.getElementById('overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('overlay').addEventListener('click', e => { if(e.target===document.getElementById('overlay')) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
 loadData();
 </script>
