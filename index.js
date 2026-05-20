@@ -234,7 +234,7 @@ async function run() {
   });
 
   const { data, error } = await resend.emails.send({
-    from: "Ayush's Brief <onboarding@resend.dev>",
+    from: "Ayush's Brief <newsletter@ayushbrief.online>",
     to: MY_EMAIL,
     subject: `☀️ Ayush's Brief — ${today} · ${totalStories} Stories`,
     html
