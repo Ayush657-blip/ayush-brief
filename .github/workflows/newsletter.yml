@@ -3,7 +3,7 @@ name: Ayush's Brief — Daily Newsletter
 on:
   schedule:
     - cron: '30 0 * * *'  # 6:00 AM IST = 12:30 AM UTC
-  workflow_dispatch:        # Allow manual trigger from GitHub
+  workflow_dispatch:        # Manual trigger
 
 jobs:
   send-newsletter:
@@ -27,3 +27,10 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
         run: node index.js
+
+      - name: Deploy dashboard to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy . --project-name=ayushbrief --branch=main
