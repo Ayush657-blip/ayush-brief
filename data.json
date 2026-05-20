@@ -1,0 +1,160 @@
+{
+  "date": "2026-05-20T16:01:25.582Z",
+  "totalStories": 15,
+  "sections": [
+    {
+      "category": "AI & Technology",
+      "articles": [
+        {
+          "title": "Customers say Trump Mobile is leaking their personal information",
+          "link": "https://techcrunch.com/2026/05/20/customers-say-trump-mobile-is-leaking-their-personal-information/",
+          "description": "Trump Mobile is leaking customers’ email and home addresses, but has not responded to people alerting the company of the data exposure, according to two YouTubers who said they verified that their leaked data is authentic.",
+          "pubDate": "Wed, 20 May 2026 15:28:55 +0000",
+          "summary": "Trump Mobile is facing a data leak issue, with customers' email and home addresses being exposed, and the company has not responded to alerts about the issue. This incident highlights the importance of data security and prompt response to security breaches, which can damage customer trust and reputation.",
+          "why": "Indian FMCG companies should prioritize data security and have a robust incident response plan in place to protect customer data",
+          "tag": "Data Security"
+        },
+        {
+          "title": "Intuit to lay off over 3,000 employees to refocus on AI",
+          "link": "https://techcrunch.com/2026/05/20/intuit-to-lay-off-over-3000-employees-to-refocus-on-ai/",
+          "description": "In a memo to employees, CEO Sasan Goodarzi said the layoffs are meant to reduce complexity, simplify the company's corporate structure, and deliver better AI products.",
+          "pubDate": "Wed, 20 May 2026 15:14:31 +0000",
+          "summary": "Intuit is laying off over 3,000 employees as part of a restructuring effort to simplify its corporate structure and focus on developing better AI products. This move indicates a shift in the company's strategy towards AI-driven innovation and reducing complexity.",
+          "why": "Indian startups can learn from Intuit's example and prioritize AI-driven innovation to stay competitive in the market",
+          "tag": "AI Focus"
+        },
+        {
+          "title": "AI search startups are blowing up",
+          "link": "https://techcrunch.com/2026/05/20/ai-search-startups-are-blowing-up/",
+          "description": "AI search has quietly become one of the most attractive targets in consumer AI.",
+          "pubDate": "Wed, 20 May 2026 15:04:45 +0000",
+          "summary": "AI search has become an attractive target in consumer AI, with several startups emerging in this space. This trend indicates a growing demand for AI-powered search solutions that can provide more accurate and personalized results.",
+          "why": "Indian FMCG professionals can explore AI-powered search solutions to improve customer engagement and experience",
+          "tag": "AI Search"
+        },
+        {
+          "title": "Stability AI releases a new audio model that can create six-minute songs",
+          "link": "https://techcrunch.com/2026/05/20/stability-ai-release-a-new-audio-model-that-can-create-six-minute-songs/",
+          "description": "Stability Audio 3.0 small model can run on-device and generate two-minute long tracks",
+          "pubDate": "Wed, 20 May 2026 15:00:00 +0000",
+          "summary": "Stability AI has released a new audio model that can generate high-quality audio tracks, including six-minute songs, and can run on-device. This development has the potential to revolutionize the music industry and enable new use cases for audio content creation.",
+          "why": "Indian startups can leverage AI-powered audio models to create innovative music and audio content for their customers",
+          "tag": "AI Audio"
+        },
+        {
+          "title": "NanoClaw creator turns down $20M buyout offer, raises $12M seed instead",
+          "link": "https://techcrunch.com/2026/05/20/nanoclaw-creator-turns-down-20m-buyout-offer-raises-12m-seed-instead/",
+          "description": "NanoCo, the company behind  OpenClaw alternative NanoClaw, has raised a $12 million seed after a viral launch, the founders tell TechCrunch.",
+          "pubDate": "Wed, 20 May 2026 14:00:00 +0000",
+          "summary": "The creator of NanoClaw has turned down a $20M buyout offer and instead raised $12M in seed funding, indicating a strong belief in the product's potential. This move suggests that the founder is committed to building a successful company and is willing to take risks to achieve that goal.",
+          "why": "Indian entrepreneurs can learn from this example and prioritize their vision and goals over short-term gains, and be willing to take calculated risks to achieve success",
+          "tag": "Startup Funding"
+        }
+      ]
+    },
+    {
+      "category": "World News",
+      "articles": [
+        {
+          "title": "Xi basks in spotlight as he hosts Putin days after Trump",
+          "link": "https://www.bbc.com/news/articles/cjep12qx3xjo?at_medium=RSS&at_campaign=rss",
+          "description": "Two presidential visits days apart is how Xi Jinping wants the world to see him: talking to everyone, tied to no-one.",
+          "pubDate": "Wed, 20 May 2026 11:42:44 GMT",
+          "summary": "Chinese President Xi Jinping has hosted Russian President Vladimir Putin, just days after meeting with former US President Donald Trump, in a move to showcase his diplomatic influence. This development matters as it highlights China's growing global presence and its ability to engage with multiple world leaders, potentially impacting global trade and diplomacy.",
+          "why": "Indian FMCG companies should monitor China's growing influence in global trade to identify potential opportunities and challenges for their business",
+          "tag": "Global Diplomacy"
+        },
+        {
+          "title": "Far-right Israeli minister condemned for taunting handcuffed Gaza flotilla activists",
+          "link": "https://www.bbc.com/news/articles/clyp32weyn8o?at_medium=RSS&at_campaign=rss",
+          "description": "France and Italy are among the countries that have criticised a video showing Itamar Ben-Gvir taunting dozens of activists detained at an Israeli port.",
+          "pubDate": "Wed, 20 May 2026 15:23:17 GMT",
+          "summary": "A far-right Israeli minister has been criticized for taunting activists detained at an Israeli port, sparking condemnation from countries like France and Italy. This incident matters as it highlights the ongoing tensions in the region and the need for diplomatic sensitivity, which can impact global relations and trade",
+          "why": "Indian startup professionals should be aware of the geopolitical landscape and its potential impact on international business and trade, particularly in sensitive regions",
+          "tag": "Middle East"
+        },
+        {
+          "title": "Ebola vaccine could take nine months as death toll rise further, WHO warns",
+          "link": "https://www.bbc.com/news/articles/cwy2g197dp8o?at_medium=RSS&at_campaign=rss",
+          "description": "In its latest update, the World Health Organization says there have now been 139 suspected deaths and 600 cases.",
+          "pubDate": "Wed, 20 May 2026 15:18:12 GMT",
+          "summary": "The World Health Organization has warned that an Ebola vaccine could take up to nine months to develop, as the death toll from the outbreak continues to rise. This development matters as it highlights the urgent need for medical solutions to combat the outbreak and prevent further spread, which can have significant public health implications",
+          "why": "Indian healthcare professionals should be prepared to respond to potential outbreaks and develop strategies for vaccine distribution and public health awareness, particularly in regions with limited healthcare infrastructure",
+          "tag": "Global Health"
+        },
+        {
+          "title": "Lithuania's leaders take shelter during drone air alert",
+          "link": "https://www.bbc.com/news/articles/c9d3vpqqqpeo?at_medium=RSS&at_campaign=rss",
+          "description": "Flights were suspended and people were urged to take shelter after a suspected drone was detected near the Belarus border.",
+          "pubDate": "Wed, 20 May 2026 10:53:19 GMT",
+          "summary": "Lithuania's leaders took shelter after a suspected drone was detected near the Belarus border, prompting a security alert and flight suspensions. This incident matters as it highlights the growing concern over drone security and the need for countries to develop strategies to counter potential threats, particularly in regions with sensitive borders",
+          "why": "Indian startup professionals in the drone technology sector should be aware of the growing demand for drone security solutions and develop products that can help countries counter potential threats, particularly in regions with limited security infrastructure",
+          "tag": "Drone Security"
+        },
+        {
+          "title": "Man who murdered teen TikTok star in Pakistan gets death sentence",
+          "link": "https://www.bbc.com/news/articles/cvgzrgm0rgvo?at_medium=RSS&at_campaign=rss",
+          "description": "Sana Yousaf's murder highlights a pattern of violence against women in Pakistan, activists say.",
+          "pubDate": "Wed, 20 May 2026 01:52:24 GMT",
+          "summary": "A man who murdered a teenage TikTok star in Pakistan has been sentenced to death, highlighting a pattern of violence against women in the country. This development matters as it underscores the need for greater awareness and action to prevent violence against women, particularly in regions with limited social and cultural support",
+          "why": "Indian FMCG companies should consider partnering with organizations that support women's empowerment and safety initiatives, particularly in regions with limited social and cultural support, to promote positive social change and brand values",
+          "tag": "Women Safety"
+        }
+      ]
+    },
+    {
+      "category": "Healthcare",
+      "articles": []
+    },
+    {
+      "category": "India Business",
+      "articles": [
+        {
+          "title": "Ola Electric misses FY26 revenue guidance, cuts losses in reset year",
+          "link": "https://www.livemint.com/companies/ola-electric-fy26-revenue-declines-sales-fall-ather-energy-overtakes-market-leader-11779285957533.html",
+          "description": "On Wednesday, the Bengaluru-based company posted a 50% year-on-year decline in FY26 revenue at  ₹2,253 crore, well below its  ₹3,000-3,200 crore guidance issued in November. Ola Electric attributed the miss to an operational reset and higher investments in in-house cell manufacturing",
+          "pubDate": "Wed, 20 May 2026 21:21:17 +0530",
+          "summary": "Ola Electric reported a 50% year-on-year decline in FY26 revenue, missing its guidance due to operational reset and investments in in-house cell manufacturing. This development matters as it highlights the challenges faced by Indian companies in the electric vehicle sector, particularly in terms of meeting revenue targets and managing operational costs.",
+          "why": "Indian FMCG and startup professionals should focus on robust operational planning and risk management to mitigate potential losses and meet revenue targets",
+          "tag": "Electric Vehicles"
+        },
+        {
+          "title": "Jubilant FoodWorks sees near-term margin hit as costs rise",
+          "link": "https://www.livemint.com/companies/company-results/jubilant-foodworks-dominos-india-operator-flags-margin-pressure-rising-costs-food-firms-fuels-costs-11779286725435.html",
+          "description": "Jubilant FoodWorks faced multiple inflationary headwinds, particularly from LPG and PNG prices, wage inflation and rising logistics-linked commodity costs.",
+          "pubDate": "Wed, 20 May 2026 21:19:38 +0530",
+          "summary": "Jubilant FoodWorks is facing margin pressure due to rising costs, including LPG and PNG prices, wage inflation, and logistics-linked commodity costs. This development matters as it highlights the impact of inflationary headwinds on the profitability of Indian companies, particularly in the food sector.",
+          "why": "Indian FMCG professionals should closely monitor input costs and develop strategies to mitigate their impact on margins, such as pricing adjustments or cost optimization",
+          "tag": "Food Sector"
+        },
+        {
+          "title": "HR has no value in startups: Bolt CEO Ryan Breslow explains why, ‘When I let them go…’",
+          "link": "https://www.livemint.com/companies/people/hr-has-no-value-in-startups-bolt-ceo-ryan-breslow-explains-why-when-i-let-them-go-11779287716378.html",
+          "description": "Ryan Breslow abandoned progressive policies to revive Bolt, eliminating four-day workweeks and unlimited PTO. After a severe valuation drop, he returned as CEO.",
+          "pubDate": "Wed, 20 May 2026 20:14:14 +0530",
+          "summary": "Bolt CEO Ryan Breslow has eliminated progressive policies, including four-day workweeks and unlimited PTO, to revive the company after a severe valuation drop. This development matters as it highlights the challenges faced by startups in balancing employee benefits and business sustainability, particularly during times of crisis.",
+          "why": "Indian startup professionals should prioritize business sustainability and be willing to make tough decisions, such as adjusting employee benefits, to ensure the company's survival and growth",
+          "tag": "Startup Management"
+        },
+        {
+          "title": "AI layoffs: Artificial Intelligence will destroy certain jobs says HSBC CEO, urges staff to ‘not resist the change’",
+          "link": "https://www.livemint.com/companies/news/artificial-intelligence-will-destroy-certain-jobs-says-hsbc-ceo-urges-staff-to-not-resist-the-change-11779287451571.html",
+          "description": "Amid AI job cuts, HSBC's CEO Georges Elhedery encouraged staff to adapt and not resist technological changes. The bank may cut 20,000 roles, focusing on non-client-facing positions, while AI advancements are reshaping the workforce across the banking sector.",
+          "pubDate": "Wed, 20 May 2026 20:13:57 +0530",
+          "summary": "HSBC CEO Georges Elhedery has warned that AI advancements will lead to job losses, particularly in non-client-facing positions, and has encouraged staff to adapt to the changes. This development matters as it highlights the impact of AI on the workforce and the need for employees to develop new skills to remain relevant.",
+          "why": "Indian professionals, including those in FMCG and startups, should develop skills that complement AI and focus on roles that require human interaction and empathy to remain relevant in an AI-driven workforce",
+          "tag": "AI Impact"
+        },
+        {
+          "title": "RIL tells SC KG Basin arbitration was international dispute, not domestic",
+          "link": "https://www.livemint.com/companies/news/reliance-industries-supreme-court-kg-basin-gas-dispute-international-arbitration-foreign-partners-11779279121718.html",
+          "description": "Reliance Industries had not pursued the arbitration alone but had acted only as the operator under the production sharing contract on behalf of the entire consortium comprising it, BP and Niko, argues RIL lawyer.",
+          "pubDate": "Wed, 20 May 2026 20:03:24 +0530",
+          "summary": "Reliance Industries has argued that the KG Basin arbitration was an international dispute, not a domestic one, as it involved a consortium of companies, including BP and Niko. This development matters as it highlights the complexities of international arbitration and the need for Indian companies to navigate these complexities effectively.",
+          "why": "Indian professionals, particularly those in the energy sector, should understand the nuances of international arbitration and develop strategies to manage risks and disputes effectively in international collaborations",
+          "tag": "Energy Sector"
+        }
+      ]
+    }
+  ]
+}
