@@ -1,13 +1,13 @@
 const Groq = require("groq-sdk");
-const { Resend } = require("resend");
+const nodemailer = require("nodemailer");
 const https = require("https");
 const http = require("http");
 const { generateEmailHTML } = require("./email");
 
 // ── CONFIG ──────────────────────────────────────────────
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const resend = new Resend(process.env.RESEND_API_KEY);
 const MY_EMAIL = process.env.MY_EMAIL;
+const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
 
 // ── RSS FEEDS ────────────────────────────────────────────
 const RSS_FEEDS = {
@@ -70,7 +70,12 @@ function parseFeed(xml) {
     const desc = extractTag(block, "description");
     const link = extractTag(block, "link");
     const pubDate = extractTag(block, "pubDate");
-    if (title) items.push({ title, description: desc ? desc.replace(/<[^>]+>/g, "").substring(0, 300) : "", link: link || "", pubDate: pubDate || "" });
+    if (title) items.push({
+      title,
+      description: desc ? desc.replace(/<[^>]+>/g, "").substring(0, 300) : "",
+      link: link || "",
+      pubDate: pubDate || ""
+    });
   }
 
   // Try Atom <entry> format
@@ -82,7 +87,12 @@ function parseFeed(xml) {
       const summary = extractTag(block, "summary") || extractTag(block, "content");
       const link = (block.match(/href="([^"]+)"/) || [])[1];
       const published = extractTag(block, "published") || extractTag(block, "updated");
-      if (title) items.push({ title, description: summary ? summary.replace(/<[^>]+>/g, "").substring(0, 300) : "", link: link || "", pubDate: published || "" });
+      if (title) items.push({
+        title,
+        description: summary ? summary.replace(/<[^>]+>/g, "").substring(0, 300) : "",
+        link: link || "",
+        pubDate: published || ""
+      });
     }
   }
 
@@ -123,7 +133,7 @@ async function fetchCategoryNews(category, feeds) {
       console.log(`    ⚠ Failed: ${err.message}`);
     }
   }
-  // Deduplicate
+  // Deduplicate by title
   const seen = new Set();
   return allItems.filter(item => {
     const key = item.title.toLowerCase().substring(0, 60);
@@ -148,7 +158,7 @@ Category: ${category}
 Summarize each article below. Return ONLY a valid JSON array. No markdown. No backticks. No extra text.
 
 Format:
-[{"title":"exact original title","summary":"2 sentences: what happened and why it matters globally","why":"1 specific actionable insight for Indian FMCG/startup professional","tag":"2-3 word tag"}]
+[{"title":"exact original title","summary":"2 sentences: what happened and why it matters","why":"1 specific actionable insight for Indian FMCG or startup professional","tag":"2-3 word tag"}]
 
 Articles:
 ${articleText}`;
@@ -162,15 +172,20 @@ ${articleText}`;
     });
 
     const raw = res.choices[0].message.content.trim()
-      .replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
+      .replace(/^```json\s*/i, "")
+      .replace(/^```\s*/i, "")
+      .replace(/```\s*$/i, "")
+      .trim();
 
     const parsed = JSON.parse(raw);
+
     return articles.map((article, i) => ({
       ...article,
       summary: parsed[i]?.summary || article.description,
       why: parsed[i]?.why || "Stay informed on this development",
       tag: parsed[i]?.tag || category
     }));
+
   } catch (err) {
     console.log(`  ⚠ Groq error for ${category}: ${err.message}`);
     return articles.map(a => ({
@@ -180,6 +195,33 @@ ${articleText}`;
       tag: category
     }));
   }
+}
+
+// ── SEND EMAIL ───────────────────────────────────────────
+async function sendEmail(html, totalStories) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: MY_EMAIL,
+      pass: GMAIL_PASSWORD
+    }
+  });
+
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    timeZone: "Asia/Kolkata"
+  });
+
+  const mailOptions = {
+    from: `Ayush's Brief <${MY_EMAIL}>`,
+    to: MY_EMAIL,
+    subject: `☀️ Ayush's Brief — ${today} · ${totalStories} Stories`,
+    html
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+  console.log("✅ Email sent!", info.messageId);
+  console.log("📬 Delivered to:", MY_EMAIL);
 }
 
 // ── MAIN ─────────────────────────────────────────────────
@@ -205,6 +247,7 @@ async function run() {
       sections.push({ category, articles: [] });
     }
 
+    // Delay between Groq calls
     await new Promise(r => setTimeout(r, 1500));
   }
 
@@ -214,31 +257,13 @@ async function run() {
   }
 
   console.log(`\n📧 Sending email (${totalStories} stories)...`);
-  const { generateEmailHTML } = require("./email");
   const html = generateEmailHTML(sections, totalStories);
-
-  const today = new Date().toLocaleDateString("en-IN", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-    timeZone: "Asia/Kolkata"
-  });
-
-  const { data, error } = await resend.emails.send({
-    from: "Ayush's Brief <Ab.2101.ab@gmail.com>",
-    to: MY_EMAIL,
-    subject: `☀️ Ayush's Brief — ${today} · ${totalStories} Stories`,
-    html
-  });
-
-  if (error) {
-    console.log("❌ Email failed:", JSON.stringify(error));
-  } else {
-    console.log("✅ Email sent! ID:", data.id);
-    console.log("📬 Delivered to:", MY_EMAIL);
-  }
+  await sendEmail(html, totalStories);
 
   console.log("\n🎯 Done. See you tomorrow at 6:00 AM IST.\n");
 }
 
+// Run
 run().catch(err => {
   console.error("❌ Fatal error:", err.message);
   process.exit(1);
