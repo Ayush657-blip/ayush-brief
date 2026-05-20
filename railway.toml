@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "node index.js"
+restartPolicyType = "never"
+
+[[cronjobs]]
+schedule = "30 0 * * *"
+command = "node index.js"
