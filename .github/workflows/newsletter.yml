@@ -8,7 +8,8 @@ on:
 jobs:
   send-newsletter:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,10 +29,10 @@ jobs:
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
         run: node index.js
 
-      - name: Deploy dashboard to Cloudflare Pages
+      - name: Commit data.json
         run: |
-          npm install -g wrangler
-          wrangler pages deploy . --project-name=ayushbrief --branch=main --commit-dirty=true
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data.json
+          git commit -m "Update data.json" || echo "No changes"
+          git push
