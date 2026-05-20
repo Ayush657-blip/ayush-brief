@@ -26,7 +26,6 @@ const RSS_FEEDS = {
     "https://www.medscape.com/cx/rssfeeds/2quier_rss_e.xml",
     "https://economictimes.indiatimes.com/industry/healthcare/biotech/rss.cms"
   ],
-  ],
   "India Business": [
     "https://economictimes.indiatimes.com/markets/rss.cms",
     "https://www.livemint.com/rss/companies"
