@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AyushBrief — Daily Intelligence</title>
+<title>The Dawn Brief — Daily Intelligence</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -83,7 +83,7 @@ footer{border-top:1px solid var(--border);padding:1rem 2rem;display:flex;justify
 <body>
 
 <header>
-  <div class="logo">Ayush<span>Brief.</span></div>
+  <div class="logo">The Dawn<span>Brief.</span></div>
   <div class="hright">
     <div class="live"><div class="ldot"></div>Live</div>
     <div class="hdate" id="dateEl"></div>
@@ -100,7 +100,7 @@ footer{border-top:1px solid var(--border);padding:1rem 2rem;display:flex;justify
 <main id="main"></main>
 
 <footer>
-  <span>AyushBrief — Daily Intelligence</span>
+  <span>The Dawn Brief — Daily Intelligence</span>
   <span>Runs 6:00 AM IST · Built by Ayush Bansal</span>
 </footer>
 
@@ -212,10 +212,11 @@ function render(dataMap){
   }).join('');
 }
 
+render(DUMMY);
 
 async function loadReal(){
   try{
-    const r=await fetch('https://raw.githubusercontent.com/Ayush657-blip/ayush-brief/main/data.json?v='+Date.now());
+    const r=await fetch('./data.json?v='+Date.now());
     if(!r.ok)return;
     const d=await r.json();
     if(!d.sections)return;
