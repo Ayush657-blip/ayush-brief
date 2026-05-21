@@ -112,13 +112,13 @@ async function fetchCategoryNews(category, feeds) {
   const allItems = [];
   for (const url of feeds) {
     try {
-      console.log(`  → ${url.split("/")[2]}`);
+      console.log(`  -> ${url.split("/")[2]}`);
       const xml = await fetchURL(url);
       const items = parseFeed(xml).filter(i => isRecent(i.pubDate));
       allItems.push(...items);
-      console.log(`    ✓ ${items.length} recent articles`);
+      console.log(`    ok ${items.length} recent articles`);
     } catch (err) {
-      console.log(`    ⚠ Failed: ${err.message}`);
+      console.log(`    Failed: ${err.message}`);
     }
   }
   const seen = new Set();
@@ -169,7 +169,7 @@ ${articleText}`;
       tag: parsed[i]?.tag || category
     }));
   } catch (err) {
-    console.log(`  ⚠ Groq error for ${category}: ${err.message}`);
+    console.log(`  Groq error for ${category}: ${err.message}`);
     return articles.map(a => ({
       ...a,
       summary: a.description || a.title,
@@ -181,24 +181,24 @@ ${articleText}`;
 
 // ── MAIN ─────────────────────────────────────────────────
 async function run() {
-  console.log("\n🚀 Ayush's Brief starting...");
-  console.log(`📅 ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST\n`);
+  console.log("\nThe Dawn Brief starting...");
+  console.log(`${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST\n`);
 
   const sections = [];
   let totalStories = 0;
 
   for (const [category, feeds] of Object.entries(RSS_FEEDS)) {
-    console.log(`\n📰 ${category}`);
+    console.log(`\n${category}`);
     const articles = await fetchCategoryNews(category, feeds);
 
     if (articles.length > 0) {
-      console.log(`  🤖 Summarizing ${articles.length} articles...`);
+      console.log(`  Summarizing ${articles.length} articles...`);
       const summarized = await summarizeWithGroq(category, articles);
       sections.push({ category, articles: summarized });
       totalStories += summarized.length;
-      console.log(`  ✅ Done`);
+      console.log(`  Done`);
     } else {
-      console.log(`  ⚠ No recent articles`);
+      console.log(`  No recent articles`);
       sections.push({ category, articles: [] });
     }
 
@@ -206,21 +206,19 @@ async function run() {
   }
 
   if (totalStories === 0) {
-    console.log("\n❌ No stories found. Exiting.");
+    console.log("\nNo stories found. Exiting.");
     return;
   }
 
-  // Save data.json for dashboard
   const dashboardData = {
     date: new Date().toISOString(),
     totalStories,
     sections
   };
   fs.writeFileSync("data.json", JSON.stringify(dashboardData, null, 2));
-  console.log("\n📊 data.json saved for dashboard");
+  console.log("\ndata.json saved for dashboard");
 
-  // Send email
-  console.log(`\n📧 Sending email (${totalStories} stories)...`);
+  console.log(`\nSending email (${totalStories} stories)...`);
   const html = generateEmailHTML(sections, totalStories, DASHBOARD_URL);
 
   const today = new Date().toLocaleDateString("en-IN", {
@@ -229,23 +227,23 @@ async function run() {
   });
 
   const { data, error } = await resend.emails.send({
-    from: "Ayush's Brief <newsletter@ayushbrief.online>",
+    from: "The Dawn Brief <newsletter@ayushbrief.online>",
     to: MY_EMAIL,
-    subject: `☀️ Ayush's Brief — ${today} · ${totalStories} Stories`,
+    subject: `The Dawn Brief - ${today} - ${totalStories} Stories`,
     html
   });
 
   if (error) {
-    console.log("❌ Email failed:", JSON.stringify(error));
+    console.log("Email failed:", JSON.stringify(error));
   } else {
-    console.log("✅ Email sent! ID:", data.id);
-    console.log("📬 Delivered to:", MY_EMAIL);
+    console.log("Email sent! ID:", data.id);
+    console.log("Delivered to:", MY_EMAIL);
   }
 
-  console.log("\n🎯 Done. See you tomorrow at 6:00 AM IST.\n");
+  console.log("\nDone. See you tomorrow at 6:00 AM IST.\n");
 }
 
 run().catch(err => {
-  console.error("❌ Fatal error:", err.message);
+  console.error("Fatal error:", err.message);
   process.exit(1);
 });
