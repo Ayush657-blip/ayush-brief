@@ -215,7 +215,7 @@ function render(dataMap){
 
 async function loadReal(){
   try{
-    const r=await fetch('https://ayush657-blip.github.io/ayush-brief/data.json?v='+Date.now());
+    const r=await fetch('https://raw.githubusercontent.com/Ayush657-blip/ayush-brief/main/data.json?v='+Date.now());
     if(!r.ok)return;
     const d=await r.json();
     if(!d.sections)return;
