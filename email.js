@@ -9,7 +9,7 @@ function generateEmailHTML(sections, totalStories, dashboardUrl) {
   const categoryConfig = {
     "AI & Technology": { color: "#3b7dd8", label: "AI & TECH" },
     "World News":      { color: "#4caf7d", label: "WORLD" },
-    "FMCG & Consumer": { color: "#e07b39", label: "FMCG" },
+    "Healthcare":      { color: "#e07b39", label: "HEALTH" },
     "India Business":  { color: "#9b59b6", label: "INDIA" }
   };
 
@@ -42,7 +42,7 @@ function generateEmailHTML(sections, totalStories, dashboardUrl) {
               <td style="vertical-align:top;">
                 <p style="margin:0 0 6px 0;font-family:Georgia,serif;font-size:14px;font-weight:bold;color:#0f0e0c;line-height:1.35;">${article.title || ""}</p>
                 <p style="margin:0 0 7px 0;font-size:12.5px;color:#5a5248;line-height:1.6;font-family:Arial,sans-serif;">${article.summary || article.description || ""}</p>
-                <span style="font-size:11px;color:#c8392b;font-weight:600;font-family:Arial,sans-serif;">→ ${article.why || "Stay informed"}</span>
+                <span style="font-size:11px;color:#c8392b;font-weight:600;font-family:Arial,sans-serif;">-> ${article.why || "Stay informed"}</span>
               </td>
             </tr>
           </table>
@@ -82,7 +82,7 @@ function generateEmailHTML(sections, totalStories, dashboardUrl) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ayush's Brief</title>
+<title>The Dawn Brief</title>
 </head>
 <body style="margin:0;padding:30px 16px;background:#e8e3d8;font-family:Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -94,12 +94,12 @@ function generateEmailHTML(sections, totalStories, dashboardUrl) {
         <tr>
           <td style="background:#0f0e0c;padding:36px 40px 28px;border-top:3px solid #c9a84c;">
             <p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:#c9a84c;">MORNING INTELLIGENCE</p>
-            <h1 style="margin:0;font-family:Georgia,serif;font-size:48px;font-weight:bold;color:#fff;line-height:1;letter-spacing:-1px;">Ayush's<br><span style="color:#c9a84c;">Brief.</span></h1>
+            <h1 style="margin:0;font-family:Georgia,serif;font-size:48px;font-weight:bold;color:#fff;line-height:1;letter-spacing:-1px;">The Dawn<br><span style="color:#c9a84c;">Brief.</span></h1>
             <p style="margin:8px 0 24px 0;font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.15em;text-transform:uppercase;">YOUR WORLD, SUMMARISED BY AI</p>
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td style="padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">
-                  <span style="font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,0.4);">${today} &middot; 06:00 IST</span>
+                  <span style="font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,0.4);">${today} · 06:00 IST</span>
                 </td>
                 <td align="right" style="padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">
                   <span style="background:#c9a84c;color:#0f0e0c;font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:5px 12px;font-weight:bold;">${totalStories} STORIES</span>
@@ -154,11 +154,11 @@ function generateEmailHTML(sections, totalStories, dashboardUrl) {
         <tr>
           <td style="background:#0f0e0c;padding:24px 40px;text-align:center;">
             <p style="margin:0 0 14px 0;font-size:13px;color:rgba(255,255,255,0.5);font-family:Arial,sans-serif;">Open your intelligence dashboard for the full experience</p>
-            <a href="${DASHBOARD_URL}" style="display:inline-block;background:#c9a84c;color:#0f0e0c;font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding:14px 40px;font-weight:bold;text-decoration:none;">OPEN DASHBOARD →</a>
+            <a href="${DASHBOARD_URL}" style="display:inline-block;background:#c9a84c;color:#0f0e0c;font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding:14px 40px;font-weight:bold;text-decoration:none;">OPEN DASHBOARD -></a>
           </td>
         </tr>
 
-        <!-- STORIES PREVIEW -->
+        <!-- STORIES -->
         ${sectionHTML}
 
         <!-- FOOTER -->
@@ -167,17 +167,17 @@ function generateEmailHTML(sections, totalStories, dashboardUrl) {
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td>
-                  <p style="margin:0;font-family:Georgia,serif;font-size:14px;font-weight:bold;color:#0f0e0c;">Ayush's Brief.</p>
+                  <p style="margin:0;font-family:Georgia,serif;font-size:14px;font-weight:bold;color:#0f0e0c;">The Dawn Brief.</p>
                   <table cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">
                     <tr>
-                      <td style="padding-right:6px;"><span style="font-family:'Courier New',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border:1px solid #e2ddd4;color:#999;">Groq API</span></td>
+                      <td style="padding-right:6px;"><span style="font-family:'Courier New',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border:1px solid #e2ddd4;color:#999;">Groq AI</span></td>
                       <td style="padding-right:6px;"><span style="font-family:'Courier New',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border:1px solid #e2ddd4;color:#999;">Resend</span></td>
                       <td><span style="font-family:'Courier New',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border:1px solid #e2ddd4;color:#999;">ayushbrief.online</span></td>
                     </tr>
                   </table>
                 </td>
                 <td align="right" style="vertical-align:top;">
-                  <p style="margin:0;font-family:'Courier New',monospace;font-size:9px;color:#bbb;line-height:1.8;text-align:right;">Auto-generated &middot; 06:00 IST Daily</p>
+                  <p style="margin:0;font-family:'Courier New',monospace;font-size:9px;color:#bbb;line-height:1.8;text-align:right;">Auto-generated · 06:00 IST Daily<br>Built by Ayush Bansal</p>
                 </td>
               </tr>
             </table>
