@@ -1,54 +1,54 @@
 {
-  "date": "2026-05-20T16:52:02.492Z",
+  "date": "2026-05-21T04:54:31.802Z",
   "totalStories": 15,
   "sections": [
     {
       "category": "AI & Technology",
       "articles": [
         {
-          "title": "Customers say Trump Mobile is leaking their personal information",
-          "link": "https://techcrunch.com/2026/05/20/customers-say-trump-mobile-is-leaking-their-personal-information/",
-          "description": "Trump Mobile is leaking customers’ email and home addresses, but has not responded to people alerting the company of the data exposure, according to two YouTubers who said they verified that their leaked data is authentic.",
-          "pubDate": "Wed, 20 May 2026 15:28:55 +0000",
-          "summary": "Trump Mobile is facing a data exposure issue, with customers' email and home addresses being leaked, and the company has not responded to alerts about the issue. This incident highlights the importance of data security and prompt response to potential breaches, which can damage customer trust and reputation.",
-          "why": "Indian FMCG companies must prioritize data security to maintain customer trust",
-          "tag": "Data Security"
+          "title": "Imperagen raises £5 million to use quantum physics, AI on enzyme engineering",
+          "link": "https://techcrunch.com/2026/05/20/imperagen-raises-5-million-to-redefine-enzyme-engineering/",
+          "description": "Biotech company Imperagen announced on Thursday a £5 million ($6.7 million) seed round led by PXN Ventures, with participation from IQ Capital and Northern Gritstone.",
+          "pubDate": "Thu, 21 May 2026 04:00:00 +0000",
+          "summary": "Imperagen, a biotech company, has raised £5 million in a seed round to apply quantum physics and AI to enzyme engineering, which could lead to breakthroughs in various fields. This development matters because it showcases the potential of interdisciplinary approaches in driving innovation and solving complex problems.",
+          "why": "Indian FMCG companies can explore similar interdisciplinary approaches to develop innovative products and solutions",
+          "tag": "AI Biotech"
         },
         {
-          "title": "Intuit to lay off over 3,000 employees to refocus on AI",
-          "link": "https://techcrunch.com/2026/05/20/intuit-to-lay-off-over-3000-employees-to-refocus-on-ai/",
-          "description": "In a memo to employees, CEO Sasan Goodarzi said the layoffs are meant to reduce complexity, simplify the company's corporate structure, and deliver better AI products.",
-          "pubDate": "Wed, 20 May 2026 15:14:31 +0000",
-          "summary": "Intuit is laying off over 3,000 employees to simplify its corporate structure and focus on delivering better AI products. This move indicates the growing importance of AI in the industry and the need for companies to adapt and invest in AI technology to remain competitive.",
-          "why": "Indian startups can learn from Intuit's strategic shift towards AI and consider similar investments",
-          "tag": "AI Focus"
+          "title": "Jensen Huang says he&#8217;s found a &#8216;brand new&#8217; $200B market for Nvidia",
+          "link": "https://techcrunch.com/2026/05/20/jensen-huang-says-hes-found-a-brand-new-200b-market-for-nvidia/",
+          "description": "The next big thing for Nvidia will be CPUs for AI agents, $200 billion worth, CEO Jensen Huang predicts.",
+          "pubDate": "Thu, 21 May 2026 00:28:31 +0000",
+          "summary": "Nvidia CEO Jensen Huang has identified a new $200 billion market opportunity for the company in CPUs for AI agents, which could be a significant growth area. This matters because it highlights the vast potential of AI applications and the importance of companies like Nvidia in driving this growth.",
+          "why": "Indian startups can focus on developing AI-powered solutions that cater to the growing demand for AI agents and related technologies",
+          "tag": "AI Market"
         },
         {
-          "title": "AI search startups are blowing up",
-          "link": "https://techcrunch.com/2026/05/20/ai-search-startups-are-blowing-up/",
-          "description": "AI search has quietly become one of the most attractive targets in consumer AI.",
-          "pubDate": "Wed, 20 May 2026 15:04:45 +0000",
-          "summary": "AI search has become an attractive target in consumer AI, with many startups emerging in this space. This trend indicates a growing demand for AI-powered search solutions and potential opportunities for Indian startups to innovate and compete in this area.",
-          "why": "Indian AI startups can explore opportunities in AI search to cater to the growing demand",
-          "tag": "AI Search"
+          "title": "Anthropic says it&#8217;s about to have its first profitable quarter",
+          "link": "https://techcrunch.com/2026/05/20/anthropic-says-its-about-to-have-its-first-profitable-quarter/",
+          "description": "Anthropic has told its investors that it will more than double revenue to around $10.9 billion in its second quarter.",
+          "pubDate": "Thu, 21 May 2026 00:21:21 +0000",
+          "summary": "Anthropic has informed its investors that it expects to more than double its revenue and achieve profitability in its second quarter, marking a significant milestone for the company. This development matters because it demonstrates the potential for AI companies to achieve rapid growth and profitability.",
+          "why": "Indian professionals can learn from Anthropic's growth strategy and apply similar principles to their own startups or businesses",
+          "tag": "AI Growth"
         },
         {
-          "title": "Stability AI releases a new audio model that can create six-minute songs",
-          "link": "https://techcrunch.com/2026/05/20/stability-ai-release-a-new-audio-model-that-can-create-six-minute-songs/",
-          "description": "Stability Audio 3.0 small model can run on-device and generate two-minute long tracks",
-          "pubDate": "Wed, 20 May 2026 15:00:00 +0000",
-          "summary": "Stability AI has released a new audio model that can generate high-quality, six-minute songs, demonstrating advancements in AI-powered audio generation. This technology has potential applications in music and audio production, and Indian startups can explore similar innovations in AI-powered content creation.",
-          "why": "Indian startups can leverage AI-powered audio generation for innovative applications in music and entertainment",
-          "tag": "AI Audio"
+          "title": "The SpaceX IPO filing is filled with AI bets, Starship dreams, and Elon Musk at the center",
+          "link": "https://techcrunch.com/2026/05/20/the-spacex-ipo-filing-ai-bets-starship-dreams-elon-musk/",
+          "description": "SpaceX has finally made the contents of its IPO filing public, weeks ahead of what is expected to be the largest IPO ever and one that will make Musk the CEO, CTO, and chairman of the board.",
+          "pubDate": "Wed, 20 May 2026 23:03:02 +0000",
+          "summary": "SpaceX has made its IPO filing public, revealing the company's ambitious plans, including significant investments in AI and Starship development, with Elon Musk at the helm. This matters because it showcases the company's vision for the future of space exploration and technology.",
+          "why": "Indian FMCG and startup professionals can take inspiration from SpaceX's innovative approach and vision for the future",
+          "tag": "AI Space"
         },
         {
-          "title": "NanoClaw creator turns down $20M buyout offer, raises $12M seed instead",
-          "link": "https://techcrunch.com/2026/05/20/nanoclaw-creator-turns-down-20m-buyout-offer-raises-12m-seed-instead/",
-          "description": "NanoCo, the company behind  OpenClaw alternative NanoClaw, has raised a $12 million seed after a viral launch, the founders tell TechCrunch.",
-          "pubDate": "Wed, 20 May 2026 14:00:00 +0000",
-          "summary": "The creator of NanoClaw has turned down a $20M buyout offer and instead raised $12M in seed funding, indicating confidence in the company's potential for growth and innovation. This move highlights the importance of strategic decision-making and prioritizing long-term goals over short-term gains.",
-          "why": "Indian entrepreneurs can learn from NanoClaw's strategic decision to prioritize growth and innovation over immediate financial gains",
-          "tag": "Startup Growth"
+          "title": "Clouted wants to take the guesswork out of making short videos go viral",
+          "link": "https://techcrunch.com/2026/05/20/clouted-wants-to-take-the-guesswork-out-of-making-short-videos-go-viral/",
+          "description": "The video clipping startup raised a $7 million seed round led by Slow Ventures.",
+          "pubDate": "Wed, 20 May 2026 22:30:45 +0000",
+          "summary": "Clouted, a video clipping startup, has raised $7 million in a seed round to develop AI-powered solutions that help create viral short videos, reducing the guesswork involved in the process. This matters because it highlights the growing importance of AI in content creation and marketing.",
+          "why": "Indian FMCG companies can leverage AI-powered content creation tools to enhance their marketing strategies and improve engagement with their target audience",
+          "tag": "AI Marketing"
         }
       ]
     },
@@ -56,49 +56,49 @@
       "category": "World News",
       "articles": [
         {
+          "title": "US charges Cuba's Raúl Castro with murder over 1996 downing of two planes",
+          "link": "https://www.bbc.com/news/articles/c3r219yxl5eo?at_medium=RSS&at_campaign=rss",
+          "description": "Cuba's current president says the charges against Castro - including conspiracy to kill US nationals and destruction of aircraft - are a \"political manoeuvre\".",
+          "pubDate": "Thu, 21 May 2026 03:01:15 GMT",
+          "summary": "The US has charged Cuba's Raúl Castro with murder over the 1996 downing of two planes, which Cuba's current president claims is a political maneuver. This development may escalate tensions between the US and Cuba, potentially affecting global trade and diplomatic relations.",
+          "why": "Diversify supply chains to mitigate risks from geopolitical tensions",
+          "tag": "US Cuba"
+        },
+        {
           "title": "Rosenberg: Putin enjoys Xi's Chinese welcome but heads home without pipeline deal",
           "link": "https://www.bbc.com/news/articles/c8r8me3nlllo?at_medium=RSS&at_campaign=rss",
           "description": "Russia and China showed they were shoulder-to-shoulder on the world stage, but it became clear there are limits, says the BBC's Russia Editor.",
           "pubDate": "Wed, 20 May 2026 16:34:40 GMT",
-          "summary": "Russian President Putin visited China and received a warm welcome from President Xi, but failed to secure a pipeline deal, highlighting the limits of their partnership. This development matters as it shows that despite their close relationship, China is cautious about committing to major deals with Russia, potentially impacting global energy dynamics.",
-          "why": "Indian FMCG companies should monitor the evolving Russia-China relationship for potential implications on global energy prices and trade agreements",
-          "tag": "Global Politics"
+          "summary": "Russian President Putin received a warm welcome from Chinese President Xi, but failed to secure a pipeline deal, highlighting the limits of their alliance. This outcome may impact the global energy landscape and trade dynamics, particularly for countries reliant on Russian oil and gas.",
+          "why": "Monitor shifts in global energy trade to identify opportunities for Indian businesses",
+          "tag": "Russia China"
         },
         {
           "title": "Far-right Israeli minister condemned for taunting handcuffed Gaza flotilla activists",
           "link": "https://www.bbc.com/news/articles/clyp32weyn8o?at_medium=RSS&at_campaign=rss",
           "description": "France and Italy are among the countries that have criticised a video showing Itamar Ben-Gvir taunting dozens of activists detained at an Israeli port.",
-          "pubDate": "Wed, 20 May 2026 16:02:37 GMT",
-          "summary": "A video showing Israeli minister Itamar Ben-Gvir taunting detained Gaza flotilla activists has sparked international criticism, with countries like France and Italy condemning the incident. This incident matters as it highlights the ongoing tensions in the region and the need for diplomacy and respect for human rights, which can impact global perceptions of Israel and its relationships with other countries.",
-          "why": "Indian startups should consider the potential reputational risks of operating in or partnering with companies in regions with high geopolitical tensions",
-          "tag": "Middle East"
+          "pubDate": "Wed, 20 May 2026 23:28:28 GMT",
+          "summary": "A far-right Israeli minister has been criticized for taunting handcuffed Gaza flotilla activists, sparking international condemnation from countries like France and Italy. This incident may strain diplomatic relations and potentially affect trade and business ties with Israel.",
+          "why": "Assess potential reputational risks when engaging with Israeli businesses or partners",
+          "tag": "Israel Gaza"
         },
         {
-          "title": "Ebola vaccine could take nine months as death toll rise further, WHO warns",
+          "title": "Ebola vaccine could take nine months as death toll rises further, WHO warns",
           "link": "https://www.bbc.com/news/articles/cwy2g197dp8o?at_medium=RSS&at_campaign=rss",
           "description": "In its latest update, the World Health Organization says there have now been 139 suspected deaths and 600 cases.",
-          "pubDate": "Wed, 20 May 2026 15:18:12 GMT",
-          "summary": "The World Health Organization has warned that an Ebola vaccine may take up to nine months to develop, as the death toll from the outbreak continues to rise with 139 suspected deaths and 600 cases reported. This development matters as it highlights the urgent need for effective public health measures to contain the outbreak and prevent further spread, which can have significant implications for global health security.",
-          "why": "Indian healthcare professionals should stay updated on the latest developments in the Ebola outbreak and be prepared to respond to potential cases in the country",
-          "tag": "Global Health"
+          "pubDate": "Wed, 20 May 2026 23:47:01 GMT",
+          "summary": "The World Health Organization has warned that an Ebola vaccine may take nine months to develop, as the death toll continues to rise with 139 suspected deaths and 600 cases reported. This outbreak poses significant health risks and may disrupt global supply chains, particularly in the healthcare sector.",
+          "why": "Develop contingency plans to address potential disruptions in healthcare supply chains",
+          "tag": "Ebola Outbreak"
         },
         {
           "title": "Murder or accident? Mystery of Mango tycoon's hiking death after son's arrest",
           "link": "https://www.bbc.com/news/articles/cwy2g09yvgmo?at_medium=RSS&at_campaign=rss",
           "description": "Isak Andic's son Jonathan denies involvement in the fatal fall of his father, who founded one of Europe's biggest clothing empires.",
           "pubDate": "Wed, 20 May 2026 15:44:41 GMT",
-          "summary": "The son of Mango founder Isak Andic has been arrested in connection with his father's death during a hiking trip, with the investigation ongoing to determine whether it was a murder or an accident. This incident matters as it highlights the complexities of family-owned businesses and the potential risks of succession planning, which can have significant implications for companies and their stakeholders.",
-          "why": "Indian FMCG companies should prioritize robust succession planning and family governance to mitigate potential risks and ensure business continuity",
-          "tag": "Business News"
-        },
-        {
-          "title": "US military jets and drones tracked near Cuba as tensions rise",
-          "link": "https://www.bbc.com/news/articles/cjep1wx7w0ko?at_medium=RSS&at_campaign=rss",
-          "description": "Tracking data shows several flights by US Navy reconnaissance jets and drones during the last week.",
-          "pubDate": "Wed, 20 May 2026 15:36:03 GMT",
-          "summary": "US military jets and drones have been tracked near Cuba, amid rising tensions between the two countries, with the US increasing its surveillance activities in the region. This development matters as it highlights the ongoing geopolitical tensions in the region and the potential risks of escalation, which can have significant implications for global trade and security.",
-          "why": "Indian startups should monitor the evolving US-Cuba relationship for potential implications on global trade and investment opportunities",
-          "tag": "US Politics"
+          "summary": "The son of Mango founder Isak Andic has been arrested in connection with his father's fatal fall while hiking, with the circumstances surrounding the death remaining unclear. This incident may impact the leadership and operations of the Mango clothing empire, potentially affecting business partners and suppliers.",
+          "why": "Monitor developments in the Mango case to assess potential implications for Indian business partners or suppliers",
+          "tag": "Mango Tycoon"
         }
       ]
     },
@@ -110,49 +110,49 @@
       "category": "India Business",
       "articles": [
         {
-          "title": "Navi Mumbai airport can hike passenger fees by 6% from next April, regulator says",
-          "link": "https://www.livemint.com/companies/news/adani-airport-news-navi-mumbai-airport-fees-11779290356156.html",
-          "description": "At  ₹620 for departing domestic passengers and  ₹270 for those arriving, Navi Mumbai airport already has the second-highest user development fees of any major Indian airport.",
-          "pubDate": "Wed, 20 May 2026 21:51:14 +0530",
-          "summary": "The Navi Mumbai airport has been allowed to increase its passenger fees by 6% from next April, with current fees already being the second-highest among major Indian airports. This increase may impact the travel costs of individuals and businesses, including those in the FMCG sector, who frequently use the airport for domestic travel.",
-          "why": "Indian FMCG companies should factor in potential increases in travel costs when planning their sales and marketing strategies",
-          "tag": "Airport Fees"
+          "title": "From Saudi Aramco to Alibaba: 7 biggest IPOs before Elon Musk’s SpaceX market debut",
+          "link": "https://www.livemint.com/companies/news/from-saudi-aramco-to-alibaba-7-biggest-ipos-before-elon-musk-s-spacex-market-debut-11779326227532.html",
+          "description": "SpaceX could become the biggest IPO in history, but before Elon Musk’s space giant hits public markets, companies like Saudi Aramco, Alibaba, Visa and Meta dominated global listings. Here’s a look at the seven largest IPOs ever by funds raised.",
+          "pubDate": "Thu, 21 May 2026 07:36:00 +0530",
+          "summary": "SpaceX is set to become the biggest IPO in history, surpassing companies like Saudi Aramco and Alibaba, which have dominated global listings in the past. This development matters as it highlights the growing trend of large-scale IPOs and their impact on the global market.",
+          "why": "Indian startups can learn from the successful IPOs of global companies and prepare themselves for a similar debut",
+          "tag": "IPO Trends"
         },
         {
-          "title": "Meta layoff: Here is what 8,000 employees let go will receive as severance package",
-          "link": "https://www.livemint.com/companies/news/meta-layoff-what-8-000-employees-will-receive-as-severance-package-11779292448076.html",
-          "description": "Meta has begun laying off 8,000 employees globally as part of its restructuring to focus on AI. Affected workers will receive severance packages, with US employees getting 16 weeks of pay and healthcare coverage. This round of layoffs represents nearly 10% of Meta's workforce.",
-          "pubDate": "Wed, 20 May 2026 21:33:39 +0530",
-          "summary": "Meta is laying off 8,000 employees globally as part of its restructuring to focus on AI, with affected workers receiving severance packages including pay and healthcare coverage. This move may lead to a surge in tech talent availability in the market, which Indian startups can leverage to build their teams.",
-          "why": "Indian startups can tap into the pool of laid-off tech talent to build their AI-focused teams",
-          "tag": "Tech Layoffs"
+          "title": "Mark Zuckerberg 'feeling weight of' mass layoffs at Meta, says ‘success isn’t a given’ in memo",
+          "link": "https://www.livemint.com/companies/people/mark-zuckerberg-feeling-weight-of-mass-layoffs-at-meta-says-success-isn-t-a-given-in-memo-11779325313086.html",
+          "description": "Mark Zuckerberg sent a formal email to his staff ahead of the layoffs, addressing it and thanking those who have been sacked for their work.",
+          "pubDate": "Thu, 21 May 2026 07:02:15 +0530",
+          "summary": "Mark Zuckerberg has acknowledged the impact of mass layoffs at Meta, expressing gratitude to the affected employees and emphasizing that success is not guaranteed. This matters as it shows the human side of a CEO and the challenges of making tough decisions in the tech industry.",
+          "why": "Indian professionals can take a cue from Zuckerberg's approach to layoffs and prioritize empathy in their own leadership styles",
+          "tag": "Leadership"
         },
         {
-          "title": "Ola Electric misses FY26 revenue guidance, cuts losses in reset year",
-          "link": "https://www.livemint.com/companies/ola-electric-fy26-revenue-declines-sales-fall-ather-energy-overtakes-market-leader-11779285957533.html",
-          "description": "On Wednesday, the Bengaluru-based company posted a 50% year-on-year decline in FY26 revenue at  ₹2,253 crore, well below its  ₹3,000-3,200 crore guidance issued in November. Ola Electric attributed the miss to an operational reset and higher investments in in-house cell manufacturing",
-          "pubDate": "Wed, 20 May 2026 21:21:17 +0530",
-          "summary": "Ola Electric has reported a 50% year-on-year decline in FY26 revenue, missing its guidance due to operational reset and higher investments in in-house cell manufacturing. This development may impact the company's growth plans and its position in the Indian electric vehicle market.",
-          "why": "Indian FMCG and startup professionals should closely monitor the developments in the electric vehicle market, which may have implications for last-mile delivery and logistics",
-          "tag": "Electric Vehicles"
+          "title": "Marriott bets on outbound Indian travel surge, rewires loyalty into experiences",
+          "link": "https://www.livemint.com/companies/news/marriott-bets-on-outbound-indian-travel-surge-rewires-loyalty-into-experiences-11779256779014.html",
+          "description": "Marriott International is focusing on the Indian market as travel demand grows, especially among younger travellers. The company is transforming its loyalty programs to prioritize experiential rewards and has formed partnerships with various sectors to enhance customer engagement.",
+          "pubDate": "Thu, 21 May 2026 06:00:50 +0530",
+          "summary": "Marriott International is focusing on the Indian market, transforming its loyalty programs to prioritize experiential rewards and partnering with various sectors to enhance customer engagement. This development matters as it highlights the growing demand for travel and experiential services in India.",
+          "why": "Indian FMCG and travel companies can leverage the growing demand for experiential services and loyalty programs to drive customer engagement",
+          "tag": "Travel Trends"
         },
         {
-          "title": "Jubilant FoodWorks sees near-term margin hit as costs rise",
-          "link": "https://www.livemint.com/companies/company-results/jubilant-foodworks-dominos-india-operator-flags-margin-pressure-rising-costs-food-firms-fuels-costs-11779286725435.html",
-          "description": "Jubilant FoodWorks faced multiple inflationary headwinds, particularly from LPG and PNG prices, wage inflation and rising logistics-linked commodity costs.",
-          "pubDate": "Wed, 20 May 2026 21:19:38 +0530",
-          "summary": "Jubilant FoodWorks is facing margin pressure due to rising costs, including LPG and PNG prices, wage inflation, and logistics-linked commodity costs. This may impact the company's profitability and pricing strategy in the near term.",
-          "why": "Indian FMCG companies should keep a close eye on input costs and develop strategies to mitigate their impact on margins",
-          "tag": "Food Costs"
+          "title": "Microfinance sector recovers after stress cycle but caution prevails amid geopolitical, inflation risks",
+          "link": "https://www.livemint.com/companies/news/india-microfinance-sector-recovery-growth-fy27-11779277115073.html",
+          "description": "India's microfinance institutions are cautiously recovering after two years of stress, with improved collection efficiency and asset quality. Analysts warn that while conditions are stabilizing, growth will be disciplined due to geopolitical risks and a changing lending environment.",
+          "pubDate": "Thu, 21 May 2026 06:00:50 +0530",
+          "summary": "India's microfinance institutions are recovering after two years of stress, with improved collection efficiency and asset quality, but analysts warn of disciplined growth due to geopolitical risks and a changing lending environment. This development matters as it highlights the challenges and opportunities in the microfinance sector.",
+          "why": "Indian microfinance institutions can focus on disciplined growth and risk management to navigate the challenges of the current economic environment",
+          "tag": "Microfinance"
         },
         {
-          "title": "HR has no value in startups: Bolt CEO Ryan Breslow explains why, ‘When I let them go…’",
-          "link": "https://www.livemint.com/companies/people/hr-has-no-value-in-startups-bolt-ceo-ryan-breslow-explains-why-when-i-let-them-go-11779287716378.html",
-          "description": "Ryan Breslow abandoned progressive policies to revive Bolt, eliminating four-day workweeks and unlimited PTO. After a severe valuation drop, he returned as CEO.",
-          "pubDate": "Wed, 20 May 2026 20:14:14 +0530",
-          "summary": "Bolt CEO Ryan Breslow has stated that HR has no value in startups, citing his experience of reviving the company after eliminating progressive policies. This perspective may have implications for the role of HR in Indian startups, particularly those in the early stages of growth.",
-          "why": "Indian startup founders should reassess the role of HR in their organizations and focus on building a lean and efficient team structure",
-          "tag": "Startup HR"
+          "title": "Tata Capital listing gain cushions Tata Sons from dividend fall blow",
+          "link": "https://www.livemint.com/companies/news/tata-capital-ipo-windfall-offsets-dividend-dip-new-business-challenges-11779263896652.html",
+          "description": "The one-off boost comes amid growing concern within Tata Trusts, the majority shareholder in Tata Sons, over mounting losses in newer businesses that continue to consume significant funding.",
+          "pubDate": "Thu, 21 May 2026 05:40:50 +0530",
+          "summary": "The listing gain of Tata Capital has provided a one-off boost to Tata Sons, amid concerns over mounting losses in newer businesses. This development matters as it highlights the importance of diversification and strategic investments in the Tata Group's portfolio.",
+          "why": "Indian businesses can learn from Tata Sons' diversification strategy and focus on building a balanced portfolio to mitigate risks",
+          "tag": "Tata Group"
         }
       ]
     }
