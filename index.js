@@ -23,8 +23,9 @@ const RSS_FEEDS = {
     "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
   ],
   "Healthcare": [
-    "https://www.medscape.com/cx/rssfeeds/2quier_rss_e.xml",
-    "https://economictimes.indiatimes.com/industry/healthcare/biotech/rss.cms"
+    "https://economictimes.indiatimes.com/industry/healthcare/biotech/pharmaceuticals/rss.cms",
+    "https://www.who.int/rss-feeds/news-english.xml",
+    "https://feeds.bbci.co.uk/news/health/rss.xml"
   ],
   "India Business": [
     "https://economictimes.indiatimes.com/markets/rss.cms",
