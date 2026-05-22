@@ -1,54 +1,54 @@
 {
-  "date": "2026-05-21T05:43:16.515Z",
+  "date": "2026-05-22T00:30:57.451Z",
   "totalStories": 20,
   "sections": [
     {
       "category": "AI & Technology",
       "articles": [
         {
-          "title": "Imperagen raises £5 million to use quantum physics, AI on enzyme engineering",
-          "link": "https://techcrunch.com/2026/05/20/imperagen-raises-5-million-to-redefine-enzyme-engineering/",
-          "description": "Biotech company Imperagen announced on Thursday a £5 million ($6.7 million) seed round led by PXN Ventures, with participation from IQ Capital and Northern Gritstone.",
-          "pubDate": "Thu, 21 May 2026 04:00:00 +0000",
-          "summary": "Imperagen, a biotech company, has raised £5 million in a seed round to use quantum physics and AI for enzyme engineering. This development matters as it showcases the potential of AI and quantum physics in revolutionizing the biotech industry, particularly in enzyme engineering, which can have significant implications for various fields, including healthcare and pharmaceuticals.",
-          "why": "Indian FMCG professionals can explore the application of AI and quantum physics in optimizing enzyme engineering for food processing and preservation, leading to improved product quality and shelf life",
-          "tag": "AI Biotech"
+          "title": "SpaceX scrubs first Starship V3 launch just before liftoff",
+          "link": "https://techcrunch.com/2026/05/21/spacex-scrubs-first-starship-v3-launch-just-before-liftoff/",
+          "description": "SpaceX fueled the third-generation rocket booster and ship and was just moments away from liftoff, before calling a scrub. It's expected to try again Friday.",
+          "pubDate": "Fri, 22 May 2026 00:07:47 +0000",
+          "summary": "SpaceX scrubbed the first Starship V3 launch just before liftoff due to unknown reasons and is expected to try again soon. This delay may impact the company's future launch schedule and plans for space exploration.",
+          "why": "Indian startups can learn from SpaceX's iterative approach to product development and testing",
+          "tag": "Space Tech"
         },
         {
-          "title": "Jensen Huang says he&#8217;s found a &#8216;brand new&#8217; $200B market for Nvidia",
-          "link": "https://techcrunch.com/2026/05/20/jensen-huang-says-hes-found-a-brand-new-200b-market-for-nvidia/",
-          "description": "The next big thing for Nvidia will be CPUs for AI agents, $200 billion worth, CEO Jensen Huang predicts.",
-          "pubDate": "Thu, 21 May 2026 00:28:31 +0000",
-          "summary": "Nvidia CEO Jensen Huang has predicted a new $200 billion market for the company in CPUs for AI agents. This prediction matters as it highlights the growing demand for AI-powered technologies and the potential for Nvidia to capitalize on this trend, which can have significant implications for the tech industry and AI adoption.",
-          "why": "Indian startup professionals can explore opportunities in developing AI-powered solutions that leverage Nvidia's CPUs, particularly in applications such as natural language processing and computer vision, to create innovative products and services",
-          "tag": "AI Market"
+          "title": "Who will benefit most from SpaceX IPO? Mostly Elon — and a few from his inner circle",
+          "link": "https://techcrunch.com/2026/05/21/who-will-benefit-most-from-spacex-ipo-mostly-elon-and-a-few-from-his-inner-circle/",
+          "description": "Elon Musk has the largest stake in SpaceX by billions of shares. The other biggest shareholders also have longstanding and deep ties to Musk.",
+          "pubDate": "Thu, 21 May 2026 21:39:03 +0000",
+          "summary": "The SpaceX IPO is expected to benefit Elon Musk and his inner circle the most due to their large stakes in the company. This highlights the importance of equity distribution and ownership in startups and their impact on wealth creation.",
+          "why": "Indian FMCG professionals should consider equity distribution when building their own startups",
+          "tag": "Startup IPO"
         },
         {
-          "title": "Anthropic says it&#8217;s about to have its first profitable quarter",
-          "link": "https://techcrunch.com/2026/05/20/anthropic-says-its-about-to-have-its-first-profitable-quarter/",
-          "description": "Anthropic has told its investors that it will more than double revenue to around $10.9 billion in its second quarter.",
-          "pubDate": "Thu, 21 May 2026 00:21:21 +0000",
-          "summary": "Anthropic has announced that it expects to more than double its revenue and achieve its first profitable quarter. This development matters as it showcases the growing commercial viability of AI companies and the potential for Anthropic to become a major player in the industry, which can have significant implications for AI adoption and investment.",
-          "why": "Indian FMCG professionals can learn from Anthropic's business model and explore opportunities in developing AI-powered solutions that can drive revenue growth and profitability in the FMCG sector, such as AI-powered marketing and sales analytics",
-          "tag": "AI Profit"
+          "title": "Waymo halts freeway rides after robotaxis struggle in construction zones",
+          "link": "https://techcrunch.com/2026/05/21/waymo-halts-freeway-rides-after-robotaxis-struggle-in-construction-zones/",
+          "description": "The service suspension comes as Waymo has also paused operations in Atlanta and San Antonio after its robotaxis drove into flooded streets.",
+          "pubDate": "Thu, 21 May 2026 21:13:23 +0000",
+          "summary": "Waymo has halted its freeway rides after its robotaxis struggled to navigate construction zones, highlighting the challenges of autonomous driving. This pause will allow Waymo to refine its technology and improve safety features.",
+          "why": "Indian autonomous vehicle startups should focus on developing robust navigation systems for complex scenarios",
+          "tag": "Autonomous Vehicles"
         },
         {
-          "title": "The SpaceX IPO filing is filled with AI bets, Starship dreams, and Elon Musk at the center",
-          "link": "https://techcrunch.com/2026/05/20/the-spacex-ipo-filing-ai-bets-starship-dreams-elon-musk/",
-          "description": "SpaceX has finally made the contents of its IPO filing public, weeks ahead of what is expected to be the largest IPO ever and one that will make Musk the CEO, CTO, and chairman of the board.",
-          "pubDate": "Wed, 20 May 2026 23:03:02 +0000",
-          "summary": "SpaceX has made its IPO filing public, revealing its plans and ambitions, including significant investments in AI. This development matters as it highlights the growing importance of AI in the space industry and the potential for SpaceX to leverage AI in its operations and services, which can have significant implications for the future of space exploration and development.",
-          "why": "Indian startup professionals can explore opportunities in developing AI-powered solutions for the space industry, particularly in applications such as satellite imaging and navigation, to support India's growing space program and private space industry",
-          "tag": "AI Space"
+          "title": "NYC Mayor Zohran Mamdani takes to Twitch to chat with New Yorkers",
+          "link": "https://techcrunch.com/2026/05/21/nycmayor-zohran-mamdani-takes-to-twitch-to-chat-with-new-yorkers/",
+          "description": "New York City Mayor Zohran Mamdani is launching a Twitch series today at 4 p.m. ET.",
+          "pubDate": "Thu, 21 May 2026 21:00:42 +0000",
+          "summary": "New York City Mayor Zohran Mamdani is using Twitch to connect with New Yorkers and increase civic engagement. This innovative approach to community outreach can be replicated by other leaders and organizations.",
+          "why": "Indian professionals can leverage social media platforms to build stronger connections with their target audience",
+          "tag": "Social Media"
         },
         {
-          "title": "Clouted wants to take the guesswork out of making short videos go viral",
-          "link": "https://techcrunch.com/2026/05/20/clouted-wants-to-take-the-guesswork-out-of-making-short-videos-go-viral/",
-          "description": "The video clipping startup raised a $7 million seed round led by Slow Ventures.",
-          "pubDate": "Wed, 20 May 2026 22:30:45 +0000",
-          "summary": "Clouted, a video clipping startup, has raised $7 million in a seed round to develop its platform for creating viral short videos. This development matters as it highlights the growing importance of social media and video content in marketing and advertising, particularly in the FMCG sector, where brands are increasingly using short videos to engage with consumers and promote their products.",
-          "why": "Indian FMCG professionals can leverage Clouted's platform to create engaging and viral short videos that can help promote their products and brands, particularly on social media platforms such as Instagram and TikTok, to reach younger audiences and drive sales",
-          "tag": "Video Marketing"
+          "title": "Spotify and Universal Music strike deal allowing fan-made AI covers and remixes",
+          "link": "https://techcrunch.com/2026/05/21/spotify-and-universal-music-strike-deal-allowing-fan-made-ai-covers-and-remixes/",
+          "description": "Spotify is partnering with  Universal Music Group￼ to let Premium subscribers create AI-generated song covers and remixes, with participating artists receiving a share of the revenue.",
+          "pubDate": "Thu, 21 May 2026 19:45:00 +0000",
+          "summary": "Spotify has partnered with Universal Music Group to allow Premium subscribers to create AI-generated song covers and remixes, with participating artists receiving a share of the revenue. This deal highlights the growing importance of AI in the music industry and its potential for revenue generation.",
+          "why": "Indian music startups can explore AI-generated content as a new revenue stream and partner with music labels to offer innovative services",
+          "tag": "Music AI"
         }
       ]
     },
@@ -56,49 +56,49 @@
       "category": "World News",
       "articles": [
         {
-          "title": "US charges Cuba's Raúl Castro with murder over 1996 downing of two planes",
-          "link": "https://www.bbc.com/news/articles/c3r219yxl5eo?at_medium=RSS&at_campaign=rss",
-          "description": "Cuba's current president says the charges against Castro - including conspiracy to kill US nationals and destruction of aircraft - are a \"political manoeuvre\".",
-          "pubDate": "Thu, 21 May 2026 03:01:15 GMT",
-          "summary": "The US has charged Cuba's Raúl Castro with murder over the 1996 downing of two planes, which Cuba's current president claims is a political maneuver. This development may lead to increased tensions between the US and Cuba, potentially affecting global trade and diplomatic relations.",
-          "why": "Indian FMCG companies should monitor the situation for potential trade disruptions",
+          "title": "Rubio says Cuba is threat to US as Havana accuses him of 'lies'",
+          "link": "https://www.bbc.com/news/articles/ckgpzwkn5jko?at_medium=RSS&at_campaign=rss",
+          "description": "Cuba's foreign minister accused Rubio of trying to \"instigate a military aggression\".",
+          "pubDate": "Fri, 22 May 2026 00:10:44 GMT",
+          "summary": "Cuba's foreign minister has accused US Senator Marco Rubio of trying to instigate a military aggression, after Rubio stated that Cuba is a threat to the US. This escalation in tensions between the US and Cuba matters because it could impact global trade and diplomacy, particularly in the Americas.",
+          "why": "Indian FMCG companies should monitor US-Cuba relations for potential trade disruptions",
           "tag": "US Cuba"
         },
         {
-          "title": "Rosenberg: Putin enjoys Xi's Chinese welcome but heads home without pipeline deal",
-          "link": "https://www.bbc.com/news/articles/c8r8me3nlllo?at_medium=RSS&at_campaign=rss",
-          "description": "Russia and China showed they were shoulder-to-shoulder on the world stage, but it became clear there are limits, says the BBC's Russia Editor.",
-          "pubDate": "Wed, 20 May 2026 16:34:40 GMT",
-          "summary": "Russian President Putin received a warm welcome from Chinese President Xi, but failed to secure a pipeline deal, highlighting the limits of their alliance. This outcome may impact the global energy market and influence the geopolitical landscape, particularly for countries like India that rely on international energy trade.",
-          "why": "Indian energy startups should consider the implications of shifting global energy alliances",
-          "tag": "Russia China"
-        },
-        {
-          "title": "Far-right Israeli minister condemned for taunting handcuffed Gaza flotilla activists",
-          "link": "https://www.bbc.com/news/articles/clyp32weyn8o?at_medium=RSS&at_campaign=rss",
-          "description": "France and Italy are among the countries that have criticised a video showing Itamar Ben-Gvir taunting dozens of activists detained at an Israeli port.",
-          "pubDate": "Wed, 20 May 2026 23:28:28 GMT",
-          "summary": "A far-right Israeli minister has been criticized for taunting handcuffed Gaza flotilla activists, sparking international condemnation from countries like France and Italy. This incident may escalate tensions in the region and affect global perceptions of Israel's human rights record, potentially influencing diplomatic relations and trade partnerships.",
-          "why": "Indian companies operating in the Middle East should be aware of the region's complex geopolitical dynamics",
-          "tag": "Israel Gaza"
-        },
-        {
-          "title": "Ebola vaccine could take nine months as death toll rises further, WHO warns",
-          "link": "https://www.bbc.com/news/articles/cwy2g197dp8o?at_medium=RSS&at_campaign=rss",
-          "description": "In its latest update, the World Health Organization says there have now been 139 suspected deaths and 600 cases.",
-          "pubDate": "Wed, 20 May 2026 23:47:01 GMT",
-          "summary": "The World Health Organization has warned that an Ebola vaccine may take nine months to develop, as the death toll from the outbreak continues to rise. This situation highlights the need for urgent global health responses and may impact the operations of healthcare companies, including those in India, that work in affected regions.",
-          "why": "Indian healthcare startups should consider developing emergency response plans for infectious disease outbreaks",
+          "title": "Angry crowd sets Ebola hospital tents on fire in DR Congo",
+          "link": "https://www.bbc.com/news/articles/cp8p2g8yp8do?at_medium=RSS&at_campaign=rss",
+          "description": "Grieving relatives and friends of a suspected Ebola victim were prevented from taking his body for burial.",
+          "pubDate": "Thu, 21 May 2026 20:12:25 GMT",
+          "summary": "A crowd in the Democratic Republic of Congo has set fire to Ebola hospital tents, following a dispute over the burial of a suspected Ebola victim. This incident matters because it highlights the challenges of containing infectious diseases in areas with social unrest and mistrust of authorities.",
+          "why": "Indian healthcare startups should consider the social and cultural context of disease outbreaks when developing interventions",
           "tag": "Ebola Outbreak"
         },
         {
-          "title": "Murder or accident? Mystery of Mango tycoon's hiking death after son's arrest",
-          "link": "https://www.bbc.com/news/articles/cwy2g09yvgmo?at_medium=RSS&at_campaign=rss",
-          "description": "Isak Andic's son Jonathan denies involvement in the fatal fall of his father, who founded one of Europe's biggest clothing empires.",
-          "pubDate": "Wed, 20 May 2026 15:44:41 GMT",
-          "summary": "The son of Mango founder Isak Andic has been arrested in connection with his father's fatal fall while hiking, with the circumstances of the death still unclear. This incident may have implications for the leadership and operations of the Mango clothing empire, potentially affecting the global fashion industry and trade partnerships.",
-          "why": "Indian FMCG companies should monitor the situation for potential changes in the global fashion market",
-          "tag": "Mango Founder"
+          "title": "Iran steps up claim to control Strait of Hormuz",
+          "link": "https://www.bbc.com/news/articles/cq5py64gvwzo?at_medium=RSS&at_campaign=rss",
+          "description": "Iran publishes a map claiming \"armed forces oversight\" across more than 22,000 sq km of the waterway.",
+          "pubDate": "Thu, 21 May 2026 14:37:29 GMT",
+          "summary": "Iran has published a map claiming oversight of a significant portion of the Strait of Hormuz, a critical waterway for global oil trade. This move matters because it could lead to increased tensions and potential disruptions to global energy supplies.",
+          "why": "Indian FMCG companies reliant on international trade should monitor the situation in the Strait of Hormuz for potential supply chain disruptions",
+          "tag": "Iran Strait"
+        },
+        {
+          "title": "Gaza flotilla activists deported from Israel as backlash over treatment grows",
+          "link": "https://www.bbc.com/news/articles/c9d3v2d6p1eo?at_medium=RSS&at_campaign=rss",
+          "description": "A video showing a far-right Israeli minister taunting activists who were kneeling with their hands tied behind their backs has been widely condemned.",
+          "pubDate": "Fri, 22 May 2026 00:21:24 GMT",
+          "summary": "Activists who were part of a flotilla attempting to reach Gaza have been deported from Israel, following widespread condemnation of their treatment by Israeli authorities. This incident matters because it highlights the ongoing tensions and human rights concerns in the Israeli-Palestinian conflict.",
+          "why": "Indian startups should be aware of the potential reputational risks of doing business with companies linked to human rights controversies",
+          "tag": "Israel Gaza"
+        },
+        {
+          "title": "Pair arrested after boys abandoned by road in Portugal",
+          "link": "https://www.bbc.com/news/articles/c9wex9v57ndo?at_medium=RSS&at_campaign=rss",
+          "description": "The children were carrying backpacks with food and water but no identity documents when they were found by a driver.",
+          "pubDate": "Thu, 21 May 2026 18:32:30 GMT",
+          "summary": "Two individuals have been arrested in Portugal after two boys were found abandoned by the side of a road, with no identity documents but with food and water. This incident matters because it raises concerns about child welfare and safety in Europe.",
+          "why": "Indian professionals working with children or families should be aware of local laws and regulations regarding child protection and welfare",
+          "tag": "Child Safety"
         }
       ]
     },
@@ -106,49 +106,49 @@
       "category": "Healthcare",
       "articles": [
         {
-          "title": "Seventy-ninth World Health Assembly – Daily update: 19 May 2026",
-          "link": "https://www.who.int/news/item/19-05-2026-seventy-ninth-world-health-assembly---daily-update--19-may-2026",
-          "description": "Summary of discussions of 19 May at Seventy-ninth World Health Assembly",
-          "pubDate": "Wed, 20 May 2026 15:01:32 Z",
-          "summary": "The Seventy-ninth World Health Assembly held discussions on 19 May, focusing on various global health issues. This assembly is crucial as it sets the tone for international health policies and collaborations, which can impact healthcare systems worldwide, including India.",
-          "why": "Indian healthcare professionals can leverage these global discussions to inform their strategies and stay updated on the latest health trends and policies.",
-          "tag": "Global Health"
+          "title": "Riskiest skin cancer cases hit UK record high",
+          "link": "https://www.bbc.com/news/articles/c4g0ryrewdxo?at_medium=RSS&at_campaign=rss",
+          "description": "The number of melanoma skin cancer cases has risen above 20,000 a year for the first time in the UK.",
+          "pubDate": "Thu, 21 May 2026 23:15:18 GMT",
+          "summary": "The number of melanoma skin cancer cases in the UK has exceeded 20,000 per year for the first time, indicating a rising trend in skin cancer incidence. This increase is concerning and highlights the need for improved awareness and prevention measures to reduce the risk of skin cancer.",
+          "why": "Indian FMCG professionals can leverage this trend to promote sun protection products and raise awareness about skin cancer prevention in their marketing campaigns.",
+          "tag": "Skin Cancer"
         },
         {
-          "title": "Seventy-ninth World Health Assembly honours global champions advancing primary health care",
-          "link": "https://www.who.int/news/item/20-05-2026-seventy-ninth-world-health-assembly-honours-global-champions-advancing-primary-health-care",
-          "description": "Today, the World Health Assembly recognized individuals and institutions whose contributions to global health have gone far beyond the call of duty. Six laureates representing diverse backgrounds and contexts were honoured by the President of the Seventy-ninth World Health Assembly, Dr V&iacute;ctor",
-          "pubDate": "Wed, 20 May 2026 10:57:07 Z",
-          "summary": "The World Health Assembly recognized six laureates for their outstanding contributions to global health, particularly in primary health care. This recognition highlights the importance of primary health care in achieving global health goals and encourages others to follow in their footsteps.",
-          "why": "Indian FMCG and healthcare professionals can draw inspiration from these global champions and focus on developing innovative solutions that strengthen primary health care in India.",
-          "tag": "Primary Care"
+          "title": "Toilets and changing rooms must be used on basis of biological sex, guidance confirms",
+          "link": "https://www.bbc.com/news/articles/c0e2rj3zj02o?at_medium=RSS&at_campaign=rss",
+          "description": "The guidance was published on Thursday following the landmark Supreme Court ruling last year.",
+          "pubDate": "Thu, 21 May 2026 18:30:20 GMT",
+          "summary": "New guidance confirms that toilets and changing rooms in the UK must be used based on biological sex, following a landmark Supreme Court ruling. This guidance aims to clarify the rules and provide a safe environment for all individuals.",
+          "why": "Indian startups can take note of this guidance and ensure that their facilities and policies are inclusive and respectful of all individuals, regardless of their gender identity.",
+          "tag": "Inclusive Policy"
         },
         {
-          "title": "Why illegal children's homes are being paid up to £2m per child by councils",
-          "link": "https://www.bbc.com/news/articles/cwy2vxp48y8o?at_medium=RSS&at_campaign=rss",
-          "description": "A ban was meant to bring an end to the practice - but councils continue to fund illegal placements.",
-          "pubDate": "Wed, 20 May 2026 23:10:10 GMT",
-          "summary": "Despite a ban, councils continue to fund illegal children's homes, with some receiving up to £2m per child. This practice raises concerns about the accountability and effectiveness of social care systems in ensuring the well-being of vulnerable children.",
-          "why": "Indian policymakers and healthcare professionals can learn from this example to strengthen regulatory frameworks and oversight mechanisms in India's social care and healthcare systems.",
-          "tag": "Social Care"
+          "title": "Gonorrhoea and syphilis hit record levels in Europe",
+          "link": "https://www.bbc.com/news/articles/cm2pj07dr7lo?at_medium=RSS&at_campaign=rss",
+          "description": "STIs have surged thanks to record cases and gaps in testing and prevention, a health agency reports.",
+          "pubDate": "Thu, 21 May 2026 12:19:15 GMT",
+          "summary": "Cases of gonorrhoea and syphilis have reached record levels in Europe, due to increased transmission and gaps in testing and prevention. This surge in STIs highlights the need for improved public health measures and awareness campaigns to prevent their spread.",
+          "why": "Indian healthcare professionals can learn from this trend and focus on improving STI testing and prevention measures in India, particularly among high-risk groups.",
+          "tag": "STI Prevention"
         },
         {
-          "title": "What to do if you think someone has heat exhaustion or heatstroke",
-          "link": "https://www.bbc.com/news/articles/ckgl51jjp3jo?at_medium=RSS&at_campaign=rss",
-          "description": "Know the signs and what to do if someone is unwell in hot weather.",
-          "pubDate": "Wed, 20 May 2026 09:14:25 GMT",
-          "summary": "Heat exhaustion and heatstroke can be life-threatening conditions that require prompt recognition and treatment, especially during hot weather. Knowing the signs and taking appropriate action can help prevent serious harm and even save lives.",
-          "why": "Indian healthcare professionals and the general public can benefit from awareness campaigns and education on heat-related illnesses, particularly in regions prone to extreme temperatures.",
-          "tag": "Heat Safety"
+          "title": "Should you eat local yoghurt on holiday to prevent an upset stomach?",
+          "link": "https://www.bbc.com/videos/cpqpy0w5n12o?at_medium=RSS&at_campaign=rss",
+          "description": "You might have heard the tip that eating local yoghurt as soon as your arrive on holiday can help your gut adjust to the new environment. But is it actually true?",
+          "pubDate": "Thu, 21 May 2026 13:28:55 GMT",
+          "summary": "Eating local yoghurt on holiday may help prevent an upset stomach by introducing beneficial bacteria to the gut, but its effectiveness is not scientifically proven. While it may be a useful tip, more research is needed to confirm its benefits.",
+          "why": "Indian FMCG professionals can explore the potential of probiotic products, such as yoghurt, to promote gut health and prevent digestive issues, particularly among travelers.",
+          "tag": "Probiotic Products"
         },
         {
-          "title": "What does hot weather do to the body?",
-          "link": "https://www.bbc.com/news/articles/cy7n6m7y6yvo?at_medium=RSS&at_campaign=rss",
-          "description": "Hot weather during the summer can affect anyone, but some people run a greater risk of serious harm.",
-          "pubDate": "Wed, 20 May 2026 09:13:34 GMT",
-          "summary": "Hot weather can affect anyone, but certain individuals are at a higher risk of serious harm, including the elderly, young children, and people with pre-existing medical conditions. Understanding how hot weather impacts the body can help individuals take preventive measures to stay safe and healthy.",
-          "why": "Indian FMCG companies can develop targeted products and services that cater to the needs of vulnerable populations during hot weather, such as hydration products and cooling solutions.",
-          "tag": "Heat Health"
+          "title": "'I used to be the shy kid'",
+          "link": "https://www.bbc.com/news/videos/cp9pje2zprvo?at_medium=RSS&at_campaign=rss",
+          "description": "Tyler West opens up about his experience of school on Sort Your Life Out Unpacked.",
+          "pubDate": "Thu, 21 May 2026 13:01:11 GMT",
+          "summary": "Tyler West shares his personal experience of being a shy kid in school, highlighting the importance of self-acceptance and confidence. His story aims to inspire and motivate others to overcome their own struggles and build self-esteem.",
+          "why": "Indian startup founders can learn from Tyler West's story and prioritize mental health and wellness in their own lives and companies, fostering a positive and supportive work environment.",
+          "tag": "Mental Health"
         }
       ]
     },
@@ -156,49 +156,49 @@
       "category": "India Business",
       "articles": [
         {
-          "title": "Scapia raises $63 million led by General Catalyst to scale AI-led travel fintech play",
-          "link": "https://www.livemint.com/companies/scapia-general-catalyst-peak-xv-partners-z47-matrix-partners-india-travel-fintech-anil-goteti-11779271021330.html",
-          "description": "Travel fintech startup Scapia has raised $63 million in a Series C round led by General Catalyst to scale AI-led products, expand partnerships and grow its Gen Z user base.",
-          "pubDate": "Thu, 21 May 2026 11:08:27 +0530",
-          "summary": "Scapia has raised $63 million in a Series C round to scale its AI-led products and expand partnerships. This investment will help Scapia grow its Gen Z user base and strengthen its position in the travel fintech market.",
-          "why": "Indian startups can explore opportunities in AI-led fintech to attract investments from global venture capital firms",
-          "tag": "Fintech Investment"
+          "title": "Ola Electric’s home inverter play has a chemistry problem",
+          "link": "https://www.livemint.com/companies/news/ola-electric-shakti-battery-business-revenue-target-11779362761446.html",
+          "description": "The company’s decision to use expensive NMC cells instead of industry-standard LFP chemistry for its lithium-ion batteries has led to a massive revenue shortfall and slowdown in its home energy storage business.",
+          "pubDate": "Fri, 22 May 2026 05:30:12 +0530",
+          "summary": "Ola Electric's decision to use expensive NMC cells for its lithium-ion batteries has led to a revenue shortfall in its home energy storage business. This decision has slowed down the company's growth in the home energy storage market, highlighting the importance of cost-effective technology choices.",
+          "why": "Indian startups should carefully evaluate the cost and benefits of different technologies before making investment decisions",
+          "tag": "Energy Storage"
         },
         {
-          "title": "K Hospitality launches investment arm with  ₹200 cr corpus to back consumer companies",
-          "link": "https://www.livemint.com/companies/k-hospitality-corp-kliff-ventures-karan-kapur-consumer-startups-food-and-beverage-retail-brands-venture-platform-11779330083701.html",
-          "description": "K Hospitality Corp has launched Kliff Ventures with a  ₹200 crore corpus to invest in early-stage consumer and retail brands across food, lifestyle and allied sectors.",
-          "pubDate": "Thu, 21 May 2026 11:00:55 +0530",
-          "summary": "K Hospitality Corp has launched Kliff Ventures with a ₹200 crore corpus to invest in early-stage consumer and retail brands. This investment arm will focus on food, lifestyle, and allied sectors, providing opportunities for Indian consumer companies to grow.",
-          "why": "Indian FMCG companies can leverage investment arms like Kliff Ventures to expand their product offerings and reach new markets",
-          "tag": "Consumer Investment"
+          "title": "Beyond tech: real estate, staffing firms invest in data centres, GCC practice to meet growing needs",
+          "link": "https://www.livemint.com/companies/news/nontech-companies-gcc-practice-data-centres-real-estate-companies-staffing-firms-uber-macrotech-developers-quess-11779362650050.html",
+          "description": "Non-IT companies are seizing the tech wave. Partnerships like Uber and Adani are just the tip of the iceberg. As real estate firms dive into this lucrative market, the potential for growth is immense.&nbsp;",
+          "pubDate": "Fri, 22 May 2026 05:10:12 +0530",
+          "summary": "Non-IT companies are investing in data centers and GCC practices to capitalize on the growing demand for tech services. This trend presents opportunities for partnerships and collaborations between IT and non-IT companies, driving growth and innovation in the industry.",
+          "why": "Indian FMCG and startup professionals should explore opportunities for partnerships and collaborations with non-IT companies to drive growth and innovation",
+          "tag": "Tech Investments"
         },
         {
-          "title": "Jamie Dimon says JPMorgan Chase will hire more AI specialists, fewer traditional bankers",
-          "link": "https://www.livemint.com/companies/people/jamie-dimon-says-jpmorgan-chase-will-hire-more-ai-specialists-fewer-traditional-bankers-11779337360412.html",
-          "description": "Jamie Dimon said JPMorgan will increasingly hire AI specialists and fewer traditional bankers as artificial intelligence reshapes the financial sector. The bank is expanding investments in AI across operations, joining a wider Wall Street trend of prioritising tech talent and automation.",
-          "pubDate": "Thu, 21 May 2026 10:25:39 +0530",
-          "summary": "JPMorgan Chase will hire more AI specialists and fewer traditional bankers as AI reshapes the financial sector. The bank is expanding investments in AI across operations, prioritizing tech talent and automation.",
-          "why": "Indian professionals in the finance sector can upskill in AI to remain relevant in a rapidly changing job market",
-          "tag": "AI Finance"
+          "title": "Air India CEO says successor will have hands full",
+          "link": "https://www.livemint.com/companies/air-india-ceo-says-successor-will-have-hands-full-11779390866858.html",
+          "description": "AIR-INDIA-CEO:Air India CEO says successor will have 'hands full'",
+          "pubDate": "Fri, 22 May 2026 00:44:26 +0530",
+          "summary": "The Air India CEO has stated that the company's successor will face significant challenges, implying that the company is currently dealing with various issues. The statement highlights the need for effective leadership and strategic planning to address the challenges facing the company.",
+          "why": "Indian professionals should develop strong leadership and strategic planning skills to succeed in challenging business environments",
+          "tag": "Aviation Industry"
         },
         {
-          "title": "From Saudi Aramco to Alibaba: 7 biggest IPOs before Elon Musk’s SpaceX market debut",
-          "link": "https://www.livemint.com/companies/news/from-saudi-aramco-to-alibaba-7-biggest-ipos-before-elon-musk-s-spacex-market-debut-11779326227532.html",
-          "description": "SpaceX could become the biggest IPO in history, but before Elon Musk’s space giant hits public markets, companies like Saudi Aramco, Alibaba, Visa and Meta dominated global listings. Here’s a look at the seven largest IPOs ever by funds raised.",
-          "pubDate": "Thu, 21 May 2026 07:36:00 +0530",
-          "summary": "SpaceX could become the biggest IPO in history, with companies like Saudi Aramco and Alibaba dominating global listings. The largest IPOs have raised significant funds, demonstrating the potential for companies to access large amounts of capital through public markets.",
-          "why": "Indian startups can learn from the success of global IPOs and plan their own public listings to raise capital and expand their businesses",
-          "tag": "Global IPOs"
+          "title": "IBM Shares Soar on US Funding for $2 Billion Quantum Push",
+          "link": "https://www.livemint.com/companies/ibm-shares-soar-on-us-funding-for-2-billion-quantum-push-11779389011957.html",
+          "description": "The Trump administration has agreed to award $1 billion to International Business Machines Corp. to build a foundry for producing quantum computing chips, part of a broad strategy to bolster US leadership in an emerging industry.",
+          "pubDate": "Fri, 22 May 2026 00:13:31 +0530",
+          "summary": "The US government has awarded $1 billion to IBM to build a foundry for producing quantum computing chips, part of a broader strategy to promote US leadership in the industry. This investment is expected to drive growth and innovation in the quantum computing sector, with potential applications in various industries.",
+          "why": "Indian startups and professionals should explore opportunities in emerging technologies like quantum computing, which have significant potential for growth and innovation",
+          "tag": "Quantum Computing"
         },
         {
-          "title": "Mark Zuckerberg 'feeling weight of' mass layoffs at Meta, says ‘success isn’t a given’ in memo",
-          "link": "https://www.livemint.com/companies/people/mark-zuckerberg-feeling-weight-of-mass-layoffs-at-meta-says-success-isn-t-a-given-in-memo-11779325313086.html",
-          "description": "Mark Zuckerberg sent a formal email to his staff ahead of the layoffs, addressing it and thanking those who have been sacked for their work.",
-          "pubDate": "Thu, 21 May 2026 07:02:15 +0530",
-          "summary": "Mark Zuckerberg addressed the mass layoffs at Meta in a formal email, thanking those who have been sacked for their work. He acknowledged the challenges faced by the company, emphasizing that success is not guaranteed.",
-          "why": "Indian professionals can learn from Meta's experience and prioritize adaptability and continuous learning to remain relevant in a rapidly changing business environment",
-          "tag": "Corporate Leadership"
+          "title": "Swiggy shareholders push back against board rights change",
+          "link": "https://www.livemint.com/companies/swiggy-shareholders-board-rights-iocc-11779376229393.html",
+          "description": "The move marks the first time Swiggy's shareholders have voted down a resolution since the food delivery and quick commerce firm went public in November 2024.",
+          "pubDate": "Thu, 21 May 2026 23:40:03 +0530",
+          "summary": "Swiggy's shareholders have voted down a resolution proposed by the company's board, marking the first time the company has faced such opposition since going public. The move highlights the importance of shareholder engagement and governance in ensuring the long-term success of a company.",
+          "why": "Indian startup founders and professionals should prioritize shareholder engagement and governance to build trust and ensure the long-term success of their companies",
+          "tag": "Corporate Governance"
         }
       ]
     }
