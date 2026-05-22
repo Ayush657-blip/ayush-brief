@@ -1,206 +1,230 @@
 {
-  "date": "2026-05-22T04:45:38.053Z",
-  "totalStories": 20,
-  "sections": [
+  "generated": "2026-05-22T18:34:58.615Z",
+  "date": "Friday, 22 May 2026",
+  "stories": [
     {
-      "category": "AI & Technology",
-      "articles": [
-        {
-          "title": "Waymo expands pause to four cities as robotaxis keep driving into floods",
-          "link": "https://techcrunch.com/2026/05/21/waymo-pauses-service-in-four-cities-as-robotaxis-keep-driving-into-floods/",
-          "description": "Waymo's robotaxi service is now suspended in both Atlanta and San Antonio, as the company works to stop its vehicles from driving into flooded roads.",
-          "pubDate": "Fri, 22 May 2026 00:37:00 +0000",
-          "summary": "Waymo has suspended its robotaxi service in Atlanta and San Antonio due to issues with vehicles driving into flooded roads. This pause highlights the challenges of autonomous vehicles in navigating complex real-world scenarios, which is crucial for their widespread adoption.",
-          "why": "Indian FMCG companies can learn from Waymo's experience to develop more robust logistics and supply chain management systems that can adapt to unexpected events like natural disasters.",
-          "tag": "Autonomous Vehicles"
-        },
-        {
-          "title": "SpaceX scrubs first Starship V3 launch just before liftoff",
-          "link": "https://techcrunch.com/2026/05/21/spacex-scrubs-first-starship-v3-launch-just-before-liftoff/",
-          "description": "SpaceX fueled the third-generation rocket booster and ship and was just moments away from liftoff, before calling a scrub. It's expected to try again Friday.",
-          "pubDate": "Fri, 22 May 2026 00:07:47 +0000",
-          "summary": "SpaceX has postponed the launch of its Starship V3 rocket booster and ship due to technical issues. The company is expected to try again on Friday, demonstrating the complexities and uncertainties involved in space exploration and technology development.",
-          "why": "Indian startups can draw lessons from SpaceX's experience in iterating and persevering through technical challenges, which is essential for developing innovative and reliable AI-powered solutions.",
-          "tag": "Space Tech"
-        },
-        {
-          "title": "Who will benefit most from SpaceX IPO? Mostly Elon — and a few from his inner circle",
-          "link": "https://techcrunch.com/2026/05/21/who-will-benefit-most-from-spacex-ipo-mostly-elon-and-a-few-from-his-inner-circle/",
-          "description": "Elon Musk has the largest stake in SpaceX by billions of shares. The other biggest shareholders also have longstanding and deep ties to Musk.",
-          "pubDate": "Thu, 21 May 2026 21:39:03 +0000",
-          "summary": "Elon Musk holds the largest stake in SpaceX, and other major shareholders have close ties to him. The company's IPO is expected to benefit Musk and his inner circle significantly, highlighting the importance of leadership and ownership in the success of tech startups.",
-          "why": "Indian professionals can learn from Musk's leadership and vision in building a successful tech company, and consider the role of strong leadership in driving innovation and growth in their own startups.",
-          "tag": "Tech IPO"
-        },
-        {
-          "title": "Waymo halts freeway rides after robotaxis struggle in construction zones",
-          "link": "https://techcrunch.com/2026/05/21/waymo-halts-freeway-rides-after-robotaxis-struggle-in-construction-zones/",
-          "description": "The service suspension comes as Waymo has also paused operations in Atlanta and San Antonio after its robotaxis drove into flooded streets.",
-          "pubDate": "Thu, 21 May 2026 21:13:23 +0000",
-          "summary": "Waymo has suspended its freeway rides due to difficulties faced by its robotaxis in navigating construction zones. This pause underscores the need for autonomous vehicles to be able to handle complex and dynamic environments, which is critical for their safe and efficient operation.",
-          "why": "Indian FMCG companies can apply the insights from Waymo's experience to improve their own logistics and transportation systems, particularly in navigating through congested and construction-prone areas.",
-          "tag": "Autonomous Tech"
-        },
-        {
-          "title": "NYC Mayor Zohran Mamdani takes to Twitch to chat with New Yorkers",
-          "link": "https://techcrunch.com/2026/05/21/nycmayor-zohran-mamdani-takes-to-twitch-to-chat-with-new-yorkers/",
-          "description": "New York City Mayor Zohran Mamdani is launching a Twitch series today at 4 p.m. ET.",
-          "pubDate": "Thu, 21 May 2026 21:00:42 +0000",
-          "summary": "New York City Mayor Zohran Mamdani is launching a Twitch series to engage with New Yorkers. This initiative demonstrates the potential of social media and online platforms in facilitating community outreach and public engagement, which can be leveraged by Indian professionals and startups.",
-          "why": "Indian professionals can explore using social media and online platforms to build stronger connections with their customers and communities, and develop more effective outreach and engagement strategies.",
-          "tag": "Social Media"
-        }
-      ]
+      "category": "Auto",
+      "headline": "Stop blaming young people for being unemployed, says Amazon's UK boss",
+      "link": "https://www.bbc.com/news/articles/c0l2x5351n4o?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 10:56:32 GMT",
+      "voices": {
+        "student": "Stop blaming young people for being unemployed, says Amazon's UK boss — Note kar lo",
+        "field-sales": "Stop blaming young people for being unemployed, says Amazon's UK boss — Abhi move karo",
+        "manager": "Stop blaming young people for being unemployed, says Amazon's UK boss — Team ko brief karo",
+        "fresher": "Stop blaming young people for being unemployed, says Amazon's UK boss — Samajh ke rakhna",
+        "distributor": "Stop blaming young people for being unemployed, says Amazon's UK boss — Dhyan rakh",
+        "agent": "Stop blaming young people for being unemployed, says Amazon's UK boss — Nazar rakhein"
+      }
     },
     {
-      "category": "World News",
-      "articles": [
-        {
-          "title": "Rubio says Cuba is threat to US as Havana accuses him of 'lies'",
-          "link": "https://www.bbc.com/news/articles/ckgpzwkn5jko?at_medium=RSS&at_campaign=rss",
-          "description": "Cuba's foreign minister accused Rubio of trying to \"instigate a military aggression\".",
-          "pubDate": "Fri, 22 May 2026 00:10:44 GMT",
-          "summary": "Cuba's foreign minister has accused US Senator Marco Rubio of trying to instigate a military aggression, after Rubio stated that Cuba is a threat to the US. This escalation in tensions between the two nations could have significant implications for global politics and trade, particularly in the Americas.",
-          "why": "Indian FMCG companies should monitor the situation to assess potential impacts on trade with the US and Cuba",
-          "tag": "US Cuba"
-        },
-        {
-          "title": "Three ways Cuba crisis could play out  after US indictment of Raúl Castro",
-          "link": "https://www.bbc.com/news/articles/ckgplwg3xk3o?at_medium=RSS&at_campaign=rss",
-          "description": "The Trump administration has been putting tremendous economic pressure on the island's Communist government.",
-          "pubDate": "Thu, 21 May 2026 18:40:12 GMT",
-          "summary": "The US indictment of Raúl Castro has increased tensions between the US and Cuba, with the Trump administration applying economic pressure on the island's Communist government. The crisis could play out in various ways, including a potential military conflict or a shift in Cuba's diplomatic alliances.",
-          "why": "Indian startups should consider the potential for increased trade with Cuba if the US eases its embargo, and explore opportunities in the Cuban market",
-          "tag": "Cuba Crisis"
-        },
-        {
-          "title": "'No means no': Greenlanders protest against Trump outside new US consulate",
-          "link": "https://www.bbc.com/news/articles/cwy2gxvnq1zo?at_medium=RSS&at_campaign=rss",
-          "description": "The inauguration of the new consulate comes amid a push by the US president for greater control over the island.",
-          "pubDate": "Fri, 22 May 2026 01:37:02 GMT",
-          "summary": "Greenlanders have protested against the US outside a new consulate, amid a push by the US president for greater control over the island. The protests reflect Greenland's resistance to US influence and its desire to maintain independence.",
-          "why": "Indian companies should be aware of the potential for increased US interest in the Arctic region and the implications for global trade and resources",
-          "tag": "Greenland Protest"
-        },
-        {
-          "title": "Angry crowd sets Ebola hospital tents on fire in DR Congo",
-          "link": "https://www.bbc.com/news/articles/cp8p2g8yp8do?at_medium=RSS&at_campaign=rss",
-          "description": "Grieving relatives and friends of a suspected Ebola victim were prevented from taking his body for burial.",
-          "pubDate": "Thu, 21 May 2026 20:12:25 GMT",
-          "summary": "A crowd in the Democratic Republic of Congo has set fire to Ebola hospital tents, following the prevention of grieving relatives and friends from taking a suspected Ebola victim's body for burial. The incident highlights the challenges faced by healthcare workers in combating the Ebola outbreak in the region.",
-          "why": "Indian healthcare professionals should take note of the challenges in combating Ebola and consider developing strategies for addressing similar public health crises in India",
-          "tag": "Ebola Outbreak"
-        },
-        {
-          "title": "Alberta to hold referendum on whether to remain in Canada",
-          "link": "https://www.bbc.com/news/articles/cvgze8n5dxko?at_medium=RSS&at_campaign=rss",
-          "description": "Voters in the western province will decide next October whether they want to stay in Canada or move ahead with a process for a binding independence referendum.",
-          "pubDate": "Fri, 22 May 2026 02:40:58 GMT",
-          "summary": "The Canadian province of Alberta will hold a referendum next October to decide whether to remain in Canada or pursue independence. The referendum reflects growing tensions between Alberta and the Canadian federal government, particularly over issues of resource management and economic policy.",
-          "why": "Indian FMCG companies should monitor the situation to assess potential impacts on trade with Canada, particularly if Alberta were to become independent",
-          "tag": "Canada Referendum"
-        }
-      ]
+      "category": "Business",
+      "headline": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges",
+      "link": "https://www.livemint.com/companies/company-results/sun-pharma-guides-for-slower-fy27-growth-amid-regulatory-macro-challenges-revenue-profit-11779462372299.html",
+      "pubDate": "Fri, 22 May 2026 22:56:40 +0530",
+      "voices": {
+        "student": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges — Note kar lo",
+        "field-sales": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges — Abhi move karo",
+        "manager": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges — Team ko brief karo",
+        "fresher": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges — Samajh ke rakhna",
+        "distributor": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges — Dhyan rakh",
+        "agent": "Sun Pharma guides for slower FY27 growth amid regulatory, macro challenges — Nazar rakhein"
+      }
     },
     {
-      "category": "Healthcare",
-      "articles": [
-        {
-          "title": "Riskiest skin cancer cases hit UK record high",
-          "link": "https://www.bbc.com/news/articles/c4g0ryrewdxo?at_medium=RSS&at_campaign=rss",
-          "description": "The number of melanoma skin cancer cases has risen above 20,000 a year for the first time in the UK.",
-          "pubDate": "Thu, 21 May 2026 23:15:18 GMT",
-          "summary": "The number of melanoma skin cancer cases in the UK has exceeded 20,000 per year for the first time, indicating a rising trend in skin cancer incidence. This increase is likely due to various factors, including increased exposure to UV radiation and improved detection methods, and it matters because it highlights the need for enhanced awareness and prevention efforts.",
-          "why": "Indian FMCG professionals can leverage this trend to promote sun protection products and educate consumers about skin cancer prevention",
-          "tag": "Skin Cancer"
-        },
-        {
-          "title": "Toilets and changing rooms must be used on basis of biological sex, guidance confirms",
-          "link": "https://www.bbc.com/news/articles/c0e2rj3zj02o?at_medium=RSS&at_campaign=rss",
-          "description": "The guidance was published on Thursday following the landmark Supreme Court ruling last year.",
-          "pubDate": "Thu, 21 May 2026 18:30:20 GMT",
-          "summary": "New guidance in the UK confirms that toilets and changing rooms must be used based on biological sex, following a landmark Supreme Court ruling. This decision may have implications for public facilities and institutions, and it matters because it raises questions about inclusivity and accessibility.",
-          "why": "Indian startups can consider developing inclusive and accessible public facilities, such as gender-neutral toilets, to cater to diverse user needs",
-          "tag": "Public Facilities"
-        },
-        {
-          "title": "Gonorrhoea and syphilis hit record levels in Europe",
-          "link": "https://www.bbc.com/news/articles/cm2pj07dr7lo?at_medium=RSS&at_campaign=rss",
-          "description": "STIs have surged thanks to record cases and gaps in testing and prevention, a health agency reports.",
-          "pubDate": "Thu, 21 May 2026 12:19:15 GMT",
-          "summary": "Cases of gonorrhoea and syphilis have reached record levels in Europe, according to a health agency report, due to gaps in testing and prevention. This surge in STIs matters because it highlights the need for improved public health measures, including education and awareness campaigns, to prevent the spread of these diseases.",
-          "why": "Indian healthcare professionals can focus on developing targeted interventions, such as STI screening programs, to address the rising incidence of STIs in India",
-          "tag": "STI Prevention"
-        },
-        {
-          "title": "Should you eat local yoghurt on holiday to prevent an upset stomach?",
-          "link": "https://www.bbc.com/videos/cpqpy0w5n12o?at_medium=RSS&at_campaign=rss",
-          "description": "You might have heard the tip that eating local yoghurt as soon as your arrive on holiday can help your gut adjust to the new environment. But is it actually true?",
-          "pubDate": "Thu, 21 May 2026 13:28:55 GMT",
-          "summary": "Eating local yoghurt on holiday is often recommended as a way to prevent stomach upset, but the effectiveness of this tip is unclear. While some people swear by its benefits, there is limited scientific evidence to support the claim, and it matters because travelers need reliable advice on how to maintain gut health while abroad.",
-          "why": "Indian FMCG companies can develop probiotic-rich yoghurt products that cater to the needs of travelers, promoting gut health and providing a competitive edge in the market",
-          "tag": "Probiotics"
-        },
-        {
-          "title": "'I used to be the shy kid'",
-          "link": "https://www.bbc.com/news/videos/cp9pje2zprvo?at_medium=RSS&at_campaign=rss",
-          "description": "Tyler West opens up about his experience of school on Sort Your Life Out Unpacked.",
-          "pubDate": "Thu, 21 May 2026 13:01:11 GMT",
-          "summary": "Tyler West shares his personal experience of being a shy kid in school, highlighting the challenges he faced and how he overcame them. His story matters because it raises awareness about the importance of mental health support and self-acceptance, particularly during adolescence.",
-          "why": "Indian startup professionals can develop mental health support platforms or resources that cater to the needs of young people, promoting self-acceptance and emotional well-being",
-          "tag": "Mental Health"
-        }
-      ]
+      "category": "Climate",
+      "headline": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist",
+      "link": "https://www.bbc.com/news/articles/c9v30r0944go?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 14:28:43 GMT",
+      "voices": {
+        "student": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Note kar lo",
+        "field-sales": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Abhi move karo",
+        "manager": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Team ko brief karo",
+        "fresher": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Samajh ke rakhna",
+        "distributor": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Dhyan rakh",
+        "agent": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Nazar rakhein"
+      }
     },
     {
-      "category": "India Business",
-      "articles": [
-        {
-          "title": "Ola Electric’s home inverter play has a chemistry problem",
-          "link": "https://www.livemint.com/companies/news/ola-electric-shakti-battery-business-revenue-target-11779362761446.html",
-          "description": "The company’s decision to use expensive NMC cells instead of industry-standard LFP chemistry for its lithium-ion batteries has led to a massive revenue shortfall and slowdown in its home energy storage business.",
-          "pubDate": "Fri, 22 May 2026 05:30:12 +0530",
-          "summary": "Ola Electric's decision to use expensive NMC cells for its lithium-ion batteries has led to a revenue shortfall in its home energy storage business. This decision has slowed down the company's growth in the home energy storage market, highlighting the importance of cost-effective technology choices.",
-          "why": "Indian FMCG and startup professionals should prioritize cost-effective technology choices to remain competitive",
-          "tag": "Energy Storage"
-        },
-        {
-          "title": "Beyond tech: real estate, staffing firms invest in data centres, GCC practice to meet growing needs",
-          "link": "https://www.livemint.com/companies/news/nontech-companies-gcc-practice-data-centres-real-estate-companies-staffing-firms-uber-macrotech-developers-quess-11779362650050.html",
-          "description": "Non-IT companies are seizing the tech wave. Partnerships like Uber and Adani are just the tip of the iceberg. As real estate firms dive into this lucrative market, the potential for growth is immense.&nbsp;",
-          "pubDate": "Fri, 22 May 2026 05:10:12 +0530",
-          "summary": "Non-IT companies are investing in data centers and GCC practices to meet the growing demand for tech services. This trend presents immense growth opportunities for companies that can adapt to the changing market needs.",
-          "why": "Indian professionals should explore opportunities in emerging tech markets beyond traditional IT sectors",
-          "tag": "Data Centers"
-        },
-        {
-          "title": "Air India CEO says successor will have hands full",
-          "link": "https://www.livemint.com/companies/air-india-ceo-says-successor-will-have-hands-full-11779390866858.html",
-          "description": "AIR-INDIA-CEO:Air India CEO says successor will have 'hands full'",
-          "pubDate": "Fri, 22 May 2026 00:44:26 +0530",
-          "summary": "The current Air India CEO has stated that the company's successor will face significant challenges. The statement highlights the need for effective leadership and strategic planning in the aviation industry.",
-          "why": "Indian professionals in the aviation sector should develop strong leadership and strategic planning skills to succeed",
-          "tag": "Aviation Leadership"
-        },
-        {
-          "title": "IBM Shares Soar on US Funding for $2 Billion Quantum Push",
-          "link": "https://www.livemint.com/companies/ibm-shares-soar-on-us-funding-for-2-billion-quantum-push-11779389011957.html",
-          "description": "The Trump administration has agreed to award $1 billion to International Business Machines Corp. to build a foundry for producing quantum computing chips, part of a broad strategy to bolster US leadership in an emerging industry.",
-          "pubDate": "Fri, 22 May 2026 00:13:31 +0530",
-          "summary": "The US government has awarded $1 billion to IBM to build a foundry for producing quantum computing chips. This investment is part of a broader strategy to enhance US leadership in the emerging quantum computing industry.",
-          "why": "Indian startups and professionals should explore opportunities in emerging technologies like quantum computing",
-          "tag": "Quantum Computing"
-        },
-        {
-          "title": "Swiggy shareholders push back against more power to founder CEO Sriharsha Majety",
-          "link": "https://www.livemint.com/companies/swiggy-shareholders-board-rights-iocc-11779376229393.html",
-          "description": "Swiggy shareholders have rejected a proposal that would’ve given founder CEO Sriharsha Majety disproportionate control of the board, even if his stake fell to 2.45%.",
-          "pubDate": "Thu, 21 May 2026 23:40:03 +0530",
-          "summary": "Swiggy shareholders have rejected a proposal that would have given the founder CEO disproportionate control of the board. The decision highlights the importance of balancing founder control with shareholder interests in startup governance.",
-          "why": "Indian startup founders should balance their control with shareholder interests to ensure sustainable growth and governance",
-          "tag": "Startup Governance"
-        }
-      ]
+      "category": "Culture",
+      "headline": "TV presenter Judith Chalmers dies aged 90",
+      "link": "https://www.bbc.com/news/articles/cvgz8vp28nlo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 13:49:35 GMT",
+      "voices": {
+        "student": "TV presenter Judith Chalmers dies aged 90 — Note kar lo",
+        "field-sales": "TV presenter Judith Chalmers dies aged 90 — Abhi move karo",
+        "manager": "TV presenter Judith Chalmers dies aged 90 — Team ko brief karo",
+        "fresher": "TV presenter Judith Chalmers dies aged 90 — Samajh ke rakhna",
+        "distributor": "TV presenter Judith Chalmers dies aged 90 — Dhyan rakh",
+        "agent": "TV presenter Judith Chalmers dies aged 90 — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Entertainment",
+      "headline": "TV presenter Judith Chalmers dies aged 90",
+      "link": "https://www.bbc.com/news/articles/cvgz8vp28nlo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 13:49:35 GMT",
+      "voices": {
+        "student": "TV presenter Judith Chalmers dies aged 90 — Note kar lo",
+        "field-sales": "TV presenter Judith Chalmers dies aged 90 — Abhi move karo",
+        "manager": "TV presenter Judith Chalmers dies aged 90 — Team ko brief karo",
+        "fresher": "TV presenter Judith Chalmers dies aged 90 — Samajh ke rakhna",
+        "distributor": "TV presenter Judith Chalmers dies aged 90 — Dhyan rakh",
+        "agent": "TV presenter Judith Chalmers dies aged 90 — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Finance",
+      "headline": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways",
+      "link": "https://www.livemint.com/Money/IuUJ4KylX5R559ervLGXFL/Q3-results-of-IndiGo-SpiceJet-Jet-Airways.html",
+      "pubDate": "Fri, 18 Jan 2019 08:30:45 +0530",
+      "voices": {
+        "student": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways — Note kar lo",
+        "field-sales": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways — Abhi move karo",
+        "manager": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways — Team ko brief karo",
+        "fresher": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways — Samajh ke rakhna",
+        "distributor": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways — Dhyan rakh",
+        "agent": "What to expect from Q3 results of IndiGo, SpiceJet, Jet Airways — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Government",
+      "headline": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा",
+      "link": "https://pib.gov.in/PressReleaseIframePage.aspx?PRID=2264362",
+      "pubDate": "",
+      "voices": {
+        "student": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा — Note kar lo",
+        "field-sales": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा — Abhi move karo",
+        "manager": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा — Team ko brief karo",
+        "fresher": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा — Samajh ke rakhna",
+        "distributor": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा — Dhyan rakh",
+        "agent": "रायपुर में आयोजित क्षेत्रीय कार्यशाला में विश्व की सबसे बड़ी अन्न भंडारण योजना, व्हाइट रेवोल्यूशन 2.0 एवं 2 लाख नई सहकारी समितियों के गठन की प्रगति की समीक्षा — Nazar rakhein"
+      }
+    },
+    {
+      "category": "International",
+      "headline": "Ebola risk raised to 'very high' in DR Congo",
+      "link": "https://www.bbc.com/news/articles/cr7p30m1dn1o?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 16:23:08 GMT",
+      "voices": {
+        "student": "Ebola risk raised to 'very high' in DR Congo — Note kar lo",
+        "field-sales": "Ebola risk raised to 'very high' in DR Congo — Abhi move karo",
+        "manager": "Ebola risk raised to 'very high' in DR Congo — Team ko brief karo",
+        "fresher": "Ebola risk raised to 'very high' in DR Congo — Samajh ke rakhna",
+        "distributor": "Ebola risk raised to 'very high' in DR Congo — Dhyan rakh",
+        "agent": "Ebola risk raised to 'very high' in DR Congo — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Lifestyle",
+      "headline": "Ebola risk raised to 'very high' in DR Congo",
+      "link": "https://www.bbc.com/news/articles/cr7p30m1dn1o?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 16:23:08 GMT",
+      "voices": {
+        "student": "Ebola risk raised to 'very high' in DR Congo — Note kar lo",
+        "field-sales": "Ebola risk raised to 'very high' in DR Congo — Abhi move karo",
+        "manager": "Ebola risk raised to 'very high' in DR Congo — Team ko brief karo",
+        "fresher": "Ebola risk raised to 'very high' in DR Congo — Samajh ke rakhna",
+        "distributor": "Ebola risk raised to 'very high' in DR Congo — Dhyan rakh",
+        "agent": "Ebola risk raised to 'very high' in DR Congo — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Media",
+      "headline": "TV presenter Judith Chalmers dies aged 90",
+      "link": "https://www.bbc.com/news/articles/cvgz8vp28nlo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 13:49:35 GMT",
+      "voices": {
+        "student": "TV presenter Judith Chalmers dies aged 90 — Note kar lo",
+        "field-sales": "TV presenter Judith Chalmers dies aged 90 — Abhi move karo",
+        "manager": "TV presenter Judith Chalmers dies aged 90 — Team ko brief karo",
+        "fresher": "TV presenter Judith Chalmers dies aged 90 — Samajh ke rakhna",
+        "distributor": "TV presenter Judith Chalmers dies aged 90 — Dhyan rakh",
+        "agent": "TV presenter Judith Chalmers dies aged 90 — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Real Estate",
+      "headline": "India’s Oscar hopes get a lift as Academy relaxes international film rules",
+      "link": "https://www.livemint.com/industry/media/oscars-2027-academy-awards-indian-cinema-international-feature-film-independent-films-oscar-campaigns-cannes-sundance-11779345203526.html",
+      "pubDate": "Fri, 22 May 2026 10:55:51 +0530",
+      "voices": {
+        "student": "India’s Oscar hopes get a lift as Academy relaxes international film rules — Note kar lo",
+        "field-sales": "India’s Oscar hopes get a lift as Academy relaxes international film rules — Abhi move karo",
+        "manager": "India’s Oscar hopes get a lift as Academy relaxes international film rules — Team ko brief karo",
+        "fresher": "India’s Oscar hopes get a lift as Academy relaxes international film rules — Samajh ke rakhna",
+        "distributor": "India’s Oscar hopes get a lift as Academy relaxes international film rules — Dhyan rakh",
+        "agent": "India’s Oscar hopes get a lift as Academy relaxes international film rules — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Science",
+      "headline": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist",
+      "link": "https://www.bbc.com/news/articles/c9v30r0944go?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 14:28:43 GMT",
+      "voices": {
+        "student": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Note kar lo",
+        "field-sales": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Abhi move karo",
+        "manager": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Team ko brief karo",
+        "fresher": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Samajh ke rakhna",
+        "distributor": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Dhyan rakh",
+        "agent": "Nearly 30 illegal waste 'super sites' revealed in new government watchlist — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Sports",
+      "headline": "'Tuchel's gambles and iron conviction position him as the anti-Southgate'",
+      "link": "https://www.bbc.com/sport/football/articles/ce9p4v50pkko?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 10:34:21 GMT",
+      "voices": {
+        "student": "'Tuchel's gambles and iron conviction position him as the anti-Southgate' — Note kar lo",
+        "field-sales": "'Tuchel's gambles and iron conviction position him as the anti-Southgate' — Abhi move karo",
+        "manager": "'Tuchel's gambles and iron conviction position him as the anti-Southgate' — Team ko brief karo",
+        "fresher": "'Tuchel's gambles and iron conviction position him as the anti-Southgate' — Samajh ke rakhna",
+        "distributor": "'Tuchel's gambles and iron conviction position him as the anti-Southgate' — Dhyan rakh",
+        "agent": "'Tuchel's gambles and iron conviction position him as the anti-Southgate' — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Tech",
+      "headline": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads",
+      "link": "https://www.bbc.com/news/articles/ckgplyxxl75o?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 16:10:21 GMT",
+      "voices": {
+        "student": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads — Note kar lo",
+        "field-sales": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads — Abhi move karo",
+        "manager": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads — Team ko brief karo",
+        "fresher": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads — Samajh ke rakhna",
+        "distributor": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads — Dhyan rakh",
+        "agent": "Waymo pauses robotaxis in five US cities after cars drive into flooded roads — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Travel",
+      "headline": "Stop blaming young people for being unemployed, says Amazon's UK boss",
+      "link": "https://www.bbc.com/news/articles/c0l2x5351n4o?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Fri, 22 May 2026 10:56:32 GMT",
+      "voices": {
+        "student": "Stop blaming young people for being unemployed, says Amazon's UK boss — Note kar lo",
+        "field-sales": "Stop blaming young people for being unemployed, says Amazon's UK boss — Abhi move karo",
+        "manager": "Stop blaming young people for being unemployed, says Amazon's UK boss — Team ko brief karo",
+        "fresher": "Stop blaming young people for being unemployed, says Amazon's UK boss — Samajh ke rakhna",
+        "distributor": "Stop blaming young people for being unemployed, says Amazon's UK boss — Dhyan rakh",
+        "agent": "Stop blaming young people for being unemployed, says Amazon's UK boss — Nazar rakhein"
+      }
+    },
+    {
+      "category": "Indian Economy",
+      "headline": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer",
+      "link": "https://www.livemint.com/economy/rbi-transfers-record-2-87-trillion-dividend-to-centre-raises-risk-buffers-crb-us-iran-11779453498615.html",
+      "pubDate": "Fri, 22 May 2026 20:55:12 +0530",
+      "voices": {
+        "student": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer — Note kar lo",
+        "field-sales": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer — Abhi move karo",
+        "manager": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer — Team ko brief karo",
+        "fresher": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer — Samajh ke rakhna",
+        "distributor": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer — Dhyan rakh",
+        "agent": "RBI transfers record  ₹2.87 trillion dividend to Centre, raises risk buffer — Nazar rakhein"
+      }
     }
   ]
 }
