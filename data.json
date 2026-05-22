@@ -1,17 +1,26 @@
 {
-  "date": "2026-05-22T00:30:57.451Z",
+  "date": "2026-05-22T04:45:38.053Z",
   "totalStories": 20,
   "sections": [
     {
       "category": "AI & Technology",
       "articles": [
         {
+          "title": "Waymo expands pause to four cities as robotaxis keep driving into floods",
+          "link": "https://techcrunch.com/2026/05/21/waymo-pauses-service-in-four-cities-as-robotaxis-keep-driving-into-floods/",
+          "description": "Waymo's robotaxi service is now suspended in both Atlanta and San Antonio, as the company works to stop its vehicles from driving into flooded roads.",
+          "pubDate": "Fri, 22 May 2026 00:37:00 +0000",
+          "summary": "Waymo has suspended its robotaxi service in Atlanta and San Antonio due to issues with vehicles driving into flooded roads. This pause highlights the challenges of autonomous vehicles in navigating complex real-world scenarios, which is crucial for their widespread adoption.",
+          "why": "Indian FMCG companies can learn from Waymo's experience to develop more robust logistics and supply chain management systems that can adapt to unexpected events like natural disasters.",
+          "tag": "Autonomous Vehicles"
+        },
+        {
           "title": "SpaceX scrubs first Starship V3 launch just before liftoff",
           "link": "https://techcrunch.com/2026/05/21/spacex-scrubs-first-starship-v3-launch-just-before-liftoff/",
           "description": "SpaceX fueled the third-generation rocket booster and ship and was just moments away from liftoff, before calling a scrub. It's expected to try again Friday.",
           "pubDate": "Fri, 22 May 2026 00:07:47 +0000",
-          "summary": "SpaceX scrubbed the first Starship V3 launch just before liftoff due to unknown reasons and is expected to try again soon. This delay may impact the company's future launch schedule and plans for space exploration.",
-          "why": "Indian startups can learn from SpaceX's iterative approach to product development and testing",
+          "summary": "SpaceX has postponed the launch of its Starship V3 rocket booster and ship due to technical issues. The company is expected to try again on Friday, demonstrating the complexities and uncertainties involved in space exploration and technology development.",
+          "why": "Indian startups can draw lessons from SpaceX's experience in iterating and persevering through technical challenges, which is essential for developing innovative and reliable AI-powered solutions.",
           "tag": "Space Tech"
         },
         {
@@ -19,36 +28,27 @@
           "link": "https://techcrunch.com/2026/05/21/who-will-benefit-most-from-spacex-ipo-mostly-elon-and-a-few-from-his-inner-circle/",
           "description": "Elon Musk has the largest stake in SpaceX by billions of shares. The other biggest shareholders also have longstanding and deep ties to Musk.",
           "pubDate": "Thu, 21 May 2026 21:39:03 +0000",
-          "summary": "The SpaceX IPO is expected to benefit Elon Musk and his inner circle the most due to their large stakes in the company. This highlights the importance of equity distribution and ownership in startups and their impact on wealth creation.",
-          "why": "Indian FMCG professionals should consider equity distribution when building their own startups",
-          "tag": "Startup IPO"
+          "summary": "Elon Musk holds the largest stake in SpaceX, and other major shareholders have close ties to him. The company's IPO is expected to benefit Musk and his inner circle significantly, highlighting the importance of leadership and ownership in the success of tech startups.",
+          "why": "Indian professionals can learn from Musk's leadership and vision in building a successful tech company, and consider the role of strong leadership in driving innovation and growth in their own startups.",
+          "tag": "Tech IPO"
         },
         {
           "title": "Waymo halts freeway rides after robotaxis struggle in construction zones",
           "link": "https://techcrunch.com/2026/05/21/waymo-halts-freeway-rides-after-robotaxis-struggle-in-construction-zones/",
           "description": "The service suspension comes as Waymo has also paused operations in Atlanta and San Antonio after its robotaxis drove into flooded streets.",
           "pubDate": "Thu, 21 May 2026 21:13:23 +0000",
-          "summary": "Waymo has halted its freeway rides after its robotaxis struggled to navigate construction zones, highlighting the challenges of autonomous driving. This pause will allow Waymo to refine its technology and improve safety features.",
-          "why": "Indian autonomous vehicle startups should focus on developing robust navigation systems for complex scenarios",
-          "tag": "Autonomous Vehicles"
+          "summary": "Waymo has suspended its freeway rides due to difficulties faced by its robotaxis in navigating construction zones. This pause underscores the need for autonomous vehicles to be able to handle complex and dynamic environments, which is critical for their safe and efficient operation.",
+          "why": "Indian FMCG companies can apply the insights from Waymo's experience to improve their own logistics and transportation systems, particularly in navigating through congested and construction-prone areas.",
+          "tag": "Autonomous Tech"
         },
         {
           "title": "NYC Mayor Zohran Mamdani takes to Twitch to chat with New Yorkers",
           "link": "https://techcrunch.com/2026/05/21/nycmayor-zohran-mamdani-takes-to-twitch-to-chat-with-new-yorkers/",
           "description": "New York City Mayor Zohran Mamdani is launching a Twitch series today at 4 p.m. ET.",
           "pubDate": "Thu, 21 May 2026 21:00:42 +0000",
-          "summary": "New York City Mayor Zohran Mamdani is using Twitch to connect with New Yorkers and increase civic engagement. This innovative approach to community outreach can be replicated by other leaders and organizations.",
-          "why": "Indian professionals can leverage social media platforms to build stronger connections with their target audience",
+          "summary": "New York City Mayor Zohran Mamdani is launching a Twitch series to engage with New Yorkers. This initiative demonstrates the potential of social media and online platforms in facilitating community outreach and public engagement, which can be leveraged by Indian professionals and startups.",
+          "why": "Indian professionals can explore using social media and online platforms to build stronger connections with their customers and communities, and develop more effective outreach and engagement strategies.",
           "tag": "Social Media"
-        },
-        {
-          "title": "Spotify and Universal Music strike deal allowing fan-made AI covers and remixes",
-          "link": "https://techcrunch.com/2026/05/21/spotify-and-universal-music-strike-deal-allowing-fan-made-ai-covers-and-remixes/",
-          "description": "Spotify is partnering with  Universal Music Group￼ to let Premium subscribers create AI-generated song covers and remixes, with participating artists receiving a share of the revenue.",
-          "pubDate": "Thu, 21 May 2026 19:45:00 +0000",
-          "summary": "Spotify has partnered with Universal Music Group to allow Premium subscribers to create AI-generated song covers and remixes, with participating artists receiving a share of the revenue. This deal highlights the growing importance of AI in the music industry and its potential for revenue generation.",
-          "why": "Indian music startups can explore AI-generated content as a new revenue stream and partner with music labels to offer innovative services",
-          "tag": "Music AI"
         }
       ]
     },
@@ -60,45 +60,45 @@
           "link": "https://www.bbc.com/news/articles/ckgpzwkn5jko?at_medium=RSS&at_campaign=rss",
           "description": "Cuba's foreign minister accused Rubio of trying to \"instigate a military aggression\".",
           "pubDate": "Fri, 22 May 2026 00:10:44 GMT",
-          "summary": "Cuba's foreign minister has accused US Senator Marco Rubio of trying to instigate a military aggression, after Rubio stated that Cuba is a threat to the US. This escalation in tensions between the US and Cuba matters because it could impact global trade and diplomacy, particularly in the Americas.",
-          "why": "Indian FMCG companies should monitor US-Cuba relations for potential trade disruptions",
+          "summary": "Cuba's foreign minister has accused US Senator Marco Rubio of trying to instigate a military aggression, after Rubio stated that Cuba is a threat to the US. This escalation in tensions between the two nations could have significant implications for global politics and trade, particularly in the Americas.",
+          "why": "Indian FMCG companies should monitor the situation to assess potential impacts on trade with the US and Cuba",
           "tag": "US Cuba"
+        },
+        {
+          "title": "Three ways Cuba crisis could play out  after US indictment of Raúl Castro",
+          "link": "https://www.bbc.com/news/articles/ckgplwg3xk3o?at_medium=RSS&at_campaign=rss",
+          "description": "The Trump administration has been putting tremendous economic pressure on the island's Communist government.",
+          "pubDate": "Thu, 21 May 2026 18:40:12 GMT",
+          "summary": "The US indictment of Raúl Castro has increased tensions between the US and Cuba, with the Trump administration applying economic pressure on the island's Communist government. The crisis could play out in various ways, including a potential military conflict or a shift in Cuba's diplomatic alliances.",
+          "why": "Indian startups should consider the potential for increased trade with Cuba if the US eases its embargo, and explore opportunities in the Cuban market",
+          "tag": "Cuba Crisis"
+        },
+        {
+          "title": "'No means no': Greenlanders protest against Trump outside new US consulate",
+          "link": "https://www.bbc.com/news/articles/cwy2gxvnq1zo?at_medium=RSS&at_campaign=rss",
+          "description": "The inauguration of the new consulate comes amid a push by the US president for greater control over the island.",
+          "pubDate": "Fri, 22 May 2026 01:37:02 GMT",
+          "summary": "Greenlanders have protested against the US outside a new consulate, amid a push by the US president for greater control over the island. The protests reflect Greenland's resistance to US influence and its desire to maintain independence.",
+          "why": "Indian companies should be aware of the potential for increased US interest in the Arctic region and the implications for global trade and resources",
+          "tag": "Greenland Protest"
         },
         {
           "title": "Angry crowd sets Ebola hospital tents on fire in DR Congo",
           "link": "https://www.bbc.com/news/articles/cp8p2g8yp8do?at_medium=RSS&at_campaign=rss",
           "description": "Grieving relatives and friends of a suspected Ebola victim were prevented from taking his body for burial.",
           "pubDate": "Thu, 21 May 2026 20:12:25 GMT",
-          "summary": "A crowd in the Democratic Republic of Congo has set fire to Ebola hospital tents, following a dispute over the burial of a suspected Ebola victim. This incident matters because it highlights the challenges of containing infectious diseases in areas with social unrest and mistrust of authorities.",
-          "why": "Indian healthcare startups should consider the social and cultural context of disease outbreaks when developing interventions",
+          "summary": "A crowd in the Democratic Republic of Congo has set fire to Ebola hospital tents, following the prevention of grieving relatives and friends from taking a suspected Ebola victim's body for burial. The incident highlights the challenges faced by healthcare workers in combating the Ebola outbreak in the region.",
+          "why": "Indian healthcare professionals should take note of the challenges in combating Ebola and consider developing strategies for addressing similar public health crises in India",
           "tag": "Ebola Outbreak"
         },
         {
-          "title": "Iran steps up claim to control Strait of Hormuz",
-          "link": "https://www.bbc.com/news/articles/cq5py64gvwzo?at_medium=RSS&at_campaign=rss",
-          "description": "Iran publishes a map claiming \"armed forces oversight\" across more than 22,000 sq km of the waterway.",
-          "pubDate": "Thu, 21 May 2026 14:37:29 GMT",
-          "summary": "Iran has published a map claiming oversight of a significant portion of the Strait of Hormuz, a critical waterway for global oil trade. This move matters because it could lead to increased tensions and potential disruptions to global energy supplies.",
-          "why": "Indian FMCG companies reliant on international trade should monitor the situation in the Strait of Hormuz for potential supply chain disruptions",
-          "tag": "Iran Strait"
-        },
-        {
-          "title": "Gaza flotilla activists deported from Israel as backlash over treatment grows",
-          "link": "https://www.bbc.com/news/articles/c9d3v2d6p1eo?at_medium=RSS&at_campaign=rss",
-          "description": "A video showing a far-right Israeli minister taunting activists who were kneeling with their hands tied behind their backs has been widely condemned.",
-          "pubDate": "Fri, 22 May 2026 00:21:24 GMT",
-          "summary": "Activists who were part of a flotilla attempting to reach Gaza have been deported from Israel, following widespread condemnation of their treatment by Israeli authorities. This incident matters because it highlights the ongoing tensions and human rights concerns in the Israeli-Palestinian conflict.",
-          "why": "Indian startups should be aware of the potential reputational risks of doing business with companies linked to human rights controversies",
-          "tag": "Israel Gaza"
-        },
-        {
-          "title": "Pair arrested after boys abandoned by road in Portugal",
-          "link": "https://www.bbc.com/news/articles/c9wex9v57ndo?at_medium=RSS&at_campaign=rss",
-          "description": "The children were carrying backpacks with food and water but no identity documents when they were found by a driver.",
-          "pubDate": "Thu, 21 May 2026 18:32:30 GMT",
-          "summary": "Two individuals have been arrested in Portugal after two boys were found abandoned by the side of a road, with no identity documents but with food and water. This incident matters because it raises concerns about child welfare and safety in Europe.",
-          "why": "Indian professionals working with children or families should be aware of local laws and regulations regarding child protection and welfare",
-          "tag": "Child Safety"
+          "title": "Alberta to hold referendum on whether to remain in Canada",
+          "link": "https://www.bbc.com/news/articles/cvgze8n5dxko?at_medium=RSS&at_campaign=rss",
+          "description": "Voters in the western province will decide next October whether they want to stay in Canada or move ahead with a process for a binding independence referendum.",
+          "pubDate": "Fri, 22 May 2026 02:40:58 GMT",
+          "summary": "The Canadian province of Alberta will hold a referendum next October to decide whether to remain in Canada or pursue independence. The referendum reflects growing tensions between Alberta and the Canadian federal government, particularly over issues of resource management and economic policy.",
+          "why": "Indian FMCG companies should monitor the situation to assess potential impacts on trade with Canada, particularly if Alberta were to become independent",
+          "tag": "Canada Referendum"
         }
       ]
     },
@@ -110,8 +110,8 @@
           "link": "https://www.bbc.com/news/articles/c4g0ryrewdxo?at_medium=RSS&at_campaign=rss",
           "description": "The number of melanoma skin cancer cases has risen above 20,000 a year for the first time in the UK.",
           "pubDate": "Thu, 21 May 2026 23:15:18 GMT",
-          "summary": "The number of melanoma skin cancer cases in the UK has exceeded 20,000 per year for the first time, indicating a rising trend in skin cancer incidence. This increase is concerning and highlights the need for improved awareness and prevention measures to reduce the risk of skin cancer.",
-          "why": "Indian FMCG professionals can leverage this trend to promote sun protection products and raise awareness about skin cancer prevention in their marketing campaigns.",
+          "summary": "The number of melanoma skin cancer cases in the UK has exceeded 20,000 per year for the first time, indicating a rising trend in skin cancer incidence. This increase is likely due to various factors, including increased exposure to UV radiation and improved detection methods, and it matters because it highlights the need for enhanced awareness and prevention efforts.",
+          "why": "Indian FMCG professionals can leverage this trend to promote sun protection products and educate consumers about skin cancer prevention",
           "tag": "Skin Cancer"
         },
         {
@@ -119,17 +119,17 @@
           "link": "https://www.bbc.com/news/articles/c0e2rj3zj02o?at_medium=RSS&at_campaign=rss",
           "description": "The guidance was published on Thursday following the landmark Supreme Court ruling last year.",
           "pubDate": "Thu, 21 May 2026 18:30:20 GMT",
-          "summary": "New guidance confirms that toilets and changing rooms in the UK must be used based on biological sex, following a landmark Supreme Court ruling. This guidance aims to clarify the rules and provide a safe environment for all individuals.",
-          "why": "Indian startups can take note of this guidance and ensure that their facilities and policies are inclusive and respectful of all individuals, regardless of their gender identity.",
-          "tag": "Inclusive Policy"
+          "summary": "New guidance in the UK confirms that toilets and changing rooms must be used based on biological sex, following a landmark Supreme Court ruling. This decision may have implications for public facilities and institutions, and it matters because it raises questions about inclusivity and accessibility.",
+          "why": "Indian startups can consider developing inclusive and accessible public facilities, such as gender-neutral toilets, to cater to diverse user needs",
+          "tag": "Public Facilities"
         },
         {
           "title": "Gonorrhoea and syphilis hit record levels in Europe",
           "link": "https://www.bbc.com/news/articles/cm2pj07dr7lo?at_medium=RSS&at_campaign=rss",
           "description": "STIs have surged thanks to record cases and gaps in testing and prevention, a health agency reports.",
           "pubDate": "Thu, 21 May 2026 12:19:15 GMT",
-          "summary": "Cases of gonorrhoea and syphilis have reached record levels in Europe, due to increased transmission and gaps in testing and prevention. This surge in STIs highlights the need for improved public health measures and awareness campaigns to prevent their spread.",
-          "why": "Indian healthcare professionals can learn from this trend and focus on improving STI testing and prevention measures in India, particularly among high-risk groups.",
+          "summary": "Cases of gonorrhoea and syphilis have reached record levels in Europe, according to a health agency report, due to gaps in testing and prevention. This surge in STIs matters because it highlights the need for improved public health measures, including education and awareness campaigns, to prevent the spread of these diseases.",
+          "why": "Indian healthcare professionals can focus on developing targeted interventions, such as STI screening programs, to address the rising incidence of STIs in India",
           "tag": "STI Prevention"
         },
         {
@@ -137,17 +137,17 @@
           "link": "https://www.bbc.com/videos/cpqpy0w5n12o?at_medium=RSS&at_campaign=rss",
           "description": "You might have heard the tip that eating local yoghurt as soon as your arrive on holiday can help your gut adjust to the new environment. But is it actually true?",
           "pubDate": "Thu, 21 May 2026 13:28:55 GMT",
-          "summary": "Eating local yoghurt on holiday may help prevent an upset stomach by introducing beneficial bacteria to the gut, but its effectiveness is not scientifically proven. While it may be a useful tip, more research is needed to confirm its benefits.",
-          "why": "Indian FMCG professionals can explore the potential of probiotic products, such as yoghurt, to promote gut health and prevent digestive issues, particularly among travelers.",
-          "tag": "Probiotic Products"
+          "summary": "Eating local yoghurt on holiday is often recommended as a way to prevent stomach upset, but the effectiveness of this tip is unclear. While some people swear by its benefits, there is limited scientific evidence to support the claim, and it matters because travelers need reliable advice on how to maintain gut health while abroad.",
+          "why": "Indian FMCG companies can develop probiotic-rich yoghurt products that cater to the needs of travelers, promoting gut health and providing a competitive edge in the market",
+          "tag": "Probiotics"
         },
         {
           "title": "'I used to be the shy kid'",
           "link": "https://www.bbc.com/news/videos/cp9pje2zprvo?at_medium=RSS&at_campaign=rss",
           "description": "Tyler West opens up about his experience of school on Sort Your Life Out Unpacked.",
           "pubDate": "Thu, 21 May 2026 13:01:11 GMT",
-          "summary": "Tyler West shares his personal experience of being a shy kid in school, highlighting the importance of self-acceptance and confidence. His story aims to inspire and motivate others to overcome their own struggles and build self-esteem.",
-          "why": "Indian startup founders can learn from Tyler West's story and prioritize mental health and wellness in their own lives and companies, fostering a positive and supportive work environment.",
+          "summary": "Tyler West shares his personal experience of being a shy kid in school, highlighting the challenges he faced and how he overcame them. His story matters because it raises awareness about the importance of mental health support and self-acceptance, particularly during adolescence.",
+          "why": "Indian startup professionals can develop mental health support platforms or resources that cater to the needs of young people, promoting self-acceptance and emotional well-being",
           "tag": "Mental Health"
         }
       ]
@@ -161,7 +161,7 @@
           "description": "The company’s decision to use expensive NMC cells instead of industry-standard LFP chemistry for its lithium-ion batteries has led to a massive revenue shortfall and slowdown in its home energy storage business.",
           "pubDate": "Fri, 22 May 2026 05:30:12 +0530",
           "summary": "Ola Electric's decision to use expensive NMC cells for its lithium-ion batteries has led to a revenue shortfall in its home energy storage business. This decision has slowed down the company's growth in the home energy storage market, highlighting the importance of cost-effective technology choices.",
-          "why": "Indian startups should carefully evaluate the cost and benefits of different technologies before making investment decisions",
+          "why": "Indian FMCG and startup professionals should prioritize cost-effective technology choices to remain competitive",
           "tag": "Energy Storage"
         },
         {
@@ -169,36 +169,36 @@
           "link": "https://www.livemint.com/companies/news/nontech-companies-gcc-practice-data-centres-real-estate-companies-staffing-firms-uber-macrotech-developers-quess-11779362650050.html",
           "description": "Non-IT companies are seizing the tech wave. Partnerships like Uber and Adani are just the tip of the iceberg. As real estate firms dive into this lucrative market, the potential for growth is immense.&nbsp;",
           "pubDate": "Fri, 22 May 2026 05:10:12 +0530",
-          "summary": "Non-IT companies are investing in data centers and GCC practices to capitalize on the growing demand for tech services. This trend presents opportunities for partnerships and collaborations between IT and non-IT companies, driving growth and innovation in the industry.",
-          "why": "Indian FMCG and startup professionals should explore opportunities for partnerships and collaborations with non-IT companies to drive growth and innovation",
-          "tag": "Tech Investments"
+          "summary": "Non-IT companies are investing in data centers and GCC practices to meet the growing demand for tech services. This trend presents immense growth opportunities for companies that can adapt to the changing market needs.",
+          "why": "Indian professionals should explore opportunities in emerging tech markets beyond traditional IT sectors",
+          "tag": "Data Centers"
         },
         {
           "title": "Air India CEO says successor will have hands full",
           "link": "https://www.livemint.com/companies/air-india-ceo-says-successor-will-have-hands-full-11779390866858.html",
           "description": "AIR-INDIA-CEO:Air India CEO says successor will have 'hands full'",
           "pubDate": "Fri, 22 May 2026 00:44:26 +0530",
-          "summary": "The Air India CEO has stated that the company's successor will face significant challenges, implying that the company is currently dealing with various issues. The statement highlights the need for effective leadership and strategic planning to address the challenges facing the company.",
-          "why": "Indian professionals should develop strong leadership and strategic planning skills to succeed in challenging business environments",
-          "tag": "Aviation Industry"
+          "summary": "The current Air India CEO has stated that the company's successor will face significant challenges. The statement highlights the need for effective leadership and strategic planning in the aviation industry.",
+          "why": "Indian professionals in the aviation sector should develop strong leadership and strategic planning skills to succeed",
+          "tag": "Aviation Leadership"
         },
         {
           "title": "IBM Shares Soar on US Funding for $2 Billion Quantum Push",
           "link": "https://www.livemint.com/companies/ibm-shares-soar-on-us-funding-for-2-billion-quantum-push-11779389011957.html",
           "description": "The Trump administration has agreed to award $1 billion to International Business Machines Corp. to build a foundry for producing quantum computing chips, part of a broad strategy to bolster US leadership in an emerging industry.",
           "pubDate": "Fri, 22 May 2026 00:13:31 +0530",
-          "summary": "The US government has awarded $1 billion to IBM to build a foundry for producing quantum computing chips, part of a broader strategy to promote US leadership in the industry. This investment is expected to drive growth and innovation in the quantum computing sector, with potential applications in various industries.",
-          "why": "Indian startups and professionals should explore opportunities in emerging technologies like quantum computing, which have significant potential for growth and innovation",
+          "summary": "The US government has awarded $1 billion to IBM to build a foundry for producing quantum computing chips. This investment is part of a broader strategy to enhance US leadership in the emerging quantum computing industry.",
+          "why": "Indian startups and professionals should explore opportunities in emerging technologies like quantum computing",
           "tag": "Quantum Computing"
         },
         {
-          "title": "Swiggy shareholders push back against board rights change",
+          "title": "Swiggy shareholders push back against more power to founder CEO Sriharsha Majety",
           "link": "https://www.livemint.com/companies/swiggy-shareholders-board-rights-iocc-11779376229393.html",
-          "description": "The move marks the first time Swiggy's shareholders have voted down a resolution since the food delivery and quick commerce firm went public in November 2024.",
+          "description": "Swiggy shareholders have rejected a proposal that would’ve given founder CEO Sriharsha Majety disproportionate control of the board, even if his stake fell to 2.45%.",
           "pubDate": "Thu, 21 May 2026 23:40:03 +0530",
-          "summary": "Swiggy's shareholders have voted down a resolution proposed by the company's board, marking the first time the company has faced such opposition since going public. The move highlights the importance of shareholder engagement and governance in ensuring the long-term success of a company.",
-          "why": "Indian startup founders and professionals should prioritize shareholder engagement and governance to build trust and ensure the long-term success of their companies",
-          "tag": "Corporate Governance"
+          "summary": "Swiggy shareholders have rejected a proposal that would have given the founder CEO disproportionate control of the board. The decision highlights the importance of balancing founder control with shareholder interests in startup governance.",
+          "why": "Indian startup founders should balance their control with shareholder interests to ensure sustainable growth and governance",
+          "tag": "Startup Governance"
         }
       ]
     }
