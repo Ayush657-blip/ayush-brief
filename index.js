@@ -166,7 +166,7 @@ async function generateVoice(title, summary, voiceKey) {
   const voice = VOICE_PROMPTS[voiceKey];
   try {
     const completion = await groq.chat.completions.create({
-      model: 'llama3-8b-8192',
+      model: 'llama-3.3-70b-versatile',
       max_tokens: 200,
       messages: [
         { role: 'system', content: voice.prompt },
