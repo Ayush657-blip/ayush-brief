@@ -1,14 +1,15 @@
 {
-  "name": "ayush-brief-newsletter",
+  "name": "dawn-brief",
   "version": "1.0.0",
-  "description": "Ayush's Brief — Daily AI-powered morning newsletter",
+  "description": "The Dawn Brief — India's Daily Intelligence Newsletter",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "groq-sdk": "^0.9.0",
-    "resend": "^3.2.0"
+    "resend": "^3.2.0",
+    "rss-parser": "^3.13.0"
   },
   "engines": {
     "node": ">=18.0.0"
