@@ -88,9 +88,9 @@ const RSS_FEEDS = {
 const VOICE_PROMPTS = {
 
   'student-frustrated': {
-    label: '🎓 Student',
-    color: '#4A7FE8',
-    bg: '#EEF4FF',
+    label: '😤 Frustrated Student',
+    color: '#FF4D6D',
+    bg: '#FFF0F3',
     prompt: `You are texting a frustrated Indian student (20-24 years old) who is stressed about exams, placements, and life in general.
 They don't want to be taught. They want 10 minutes of relief and something to smile about.
 Write like their funniest, most relaxed friend who just read the news — casual Hinglish, warm, slightly funny.
@@ -101,43 +101,43 @@ Output ONLY the text, nothing else.`
   },
 
   'student-happy': {
-    label: '🎓 Student',
-    color: '#4A7FE8',
+    label: '😊 Happy Student',
+    color: '#2979FF',
     bg: '#EEF4FF',
     prompt: `You are writing for an Indian student (20-24 years old) who is in a good mood today.
 Write in clear simple Hinglish. Explain what happened and why it matters for their career or studies.
-Give one interview or GD-worthy insight.
+Give one interview or GD-worthy insight they can use immediately.
 Max 3 lines. Straightforward. Respectful. No forced jokes.
 Output ONLY the text, nothing else.`
   },
 
   'employee-frustrated': {
-    label: '💼 Employee',
-    color: '#D4521A',
-    bg: '#FFF4EE',
+    label: '😤 Frustrated Employee',
+    color: '#FFAA55',
+    bg: '#FFF8EE',
     prompt: `You are texting a frustrated Indian FMCG employee who is having a tough week.
 Targets are not met. Manager is asking. Life is hard.
 Write like their street-smart colleague who just read the news on his chai break — punchy, slightly funny, real.
-Find what this news means for their actual work day TODAY. One action or one observation.
+Find what this news means for their actual work day TODAY. One action or one sharp observation.
 Max 3 lines. Hinglish. No jargon. End naturally. No catchphrase.
 Output ONLY the text, nothing else.`
   },
 
   'employee-happy': {
-    label: '💼 Employee',
-    color: '#D4521A',
-    bg: '#FFF4EE',
+    label: '😊 Happy Employee',
+    color: '#00C896',
+    bg: '#EEFAF5',
     prompt: `You are writing for an Indian FMCG employee who is having a good week — confident, open, ready to learn.
 Write in professional but warm Hinglish. Give them one sharp business insight from this news.
-What does this mean for their work, their market, their targets?
+What does this mean for their work, their market, their targets? One clear action.
 Max 3 lines. Clean and direct. No fluff.
 Output ONLY the text, nothing else.`
   },
 
   'agent': {
     label: '🌾 Commission Agent',
-    color: '#C94A1A',
-    bg: '#FEF3EE',
+    color: '#E8C558',
+    bg: '#FFFBEE',
     prompt: `You are writing for an Indian commission agent (arhatiya) in their late 40s who works at a mandi or wholesale market.
 Write in very simple, easy Hinglish — the kind of language used at a chai stall near the mandi.
 No English business words. No jargon. Short sentences.
@@ -147,11 +147,18 @@ Output ONLY the text, nothing else.`
   }
 };
 
-// ── GET VOICE KEY FROM IDENTITY + MOOD ───────────────────────────────────────
-function getVoiceKey(identity, mood) {
+// ── VALID VOICE KEYS ──────────────────────────────────────────────────────────
+const VALID_VOICE_KEYS = ['student-frustrated', 'student-happy', 'employee-frustrated', 'employee-happy', 'agent'];
+
+// ── GET VOICE KEY — role column first, identity+mood as fallback ──────────────
+function getVoiceKey(role, identity, mood) {
+  // New subscribers: role column has the exact voice key
+  if (role && VALID_VOICE_KEYS.includes(role)) return role;
+  // Old subscribers: derive from identity + mood
   if (identity === 'agent') return 'agent';
   if (identity === 'student') return mood === 'happy' ? 'student-happy' : 'student-frustrated';
   if (identity === 'employee') return mood === 'happy' ? 'employee-happy' : 'employee-frustrated';
+  // Final fallback
   return 'student-frustrated';
 }
 
@@ -192,12 +199,11 @@ async function generateVoice(title, summary, voiceKey) {
 
 // ── GENERATE ALL 5 VOICES FOR ONE ARTICLE ────────────────────────────────────
 async function generateAllVoices(title, summary) {
-  const voiceKeys = Object.keys(VOICE_PROMPTS);
   const voices = {};
   const results = await Promise.allSettled(
-    voiceKeys.map(key => generateVoice(title, summary, key))
+    VALID_VOICE_KEYS.map(key => generateVoice(title, summary, key))
   );
-  voiceKeys.forEach((key, i) => {
+  VALID_VOICE_KEYS.forEach((key, i) => {
     voices[key] = results[i].status === 'fulfilled' ? results[i].value : summary.slice(0, 150);
   });
   return voices;
@@ -227,7 +233,7 @@ async function processCategory(category, urls) {
 async function fetchSubscribers() {
   try {
     const res = await fetch(
-      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,identity,mood`,
+      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,role,identity,mood`,
       {
         headers: {
           'apikey': SUPA_KEY,
@@ -241,8 +247,9 @@ async function fetchSubscribers() {
     return data;
   } catch (err) {
     console.log(`❌ Failed to fetch subscribers: ${err.message}`);
+    // Fallback to MY_EMAIL for testing
     if (process.env.MY_EMAIL) {
-      return [{ email: process.env.MY_EMAIL, name: 'Ayush', identity: 'student', mood: 'frustrated' }];
+      return [{ email: process.env.MY_EMAIL, name: 'Ayush', role: 'student-frustrated', identity: 'student', mood: 'frustrated' }];
     }
     return [];
   }
@@ -250,25 +257,27 @@ async function fetchSubscribers() {
 
 // ── BUILD EMAIL HTML FOR ONE SUBSCRIBER ──────────────────────────────────────
 function buildEmailHTML(stories, date, subscriber) {
-  const { name, identity, mood } = subscriber;
-  const voiceKey = getVoiceKey(identity, mood);
+  const { name, role, identity, mood } = subscriber;
+  const voiceKey = getVoiceKey(role, identity, mood);
   const voice = VOICE_PROMPTS[voiceKey];
   const firstName = (name || 'friend').split(' ')[0];
+  firstName.charAt(0).toUpperCase() + firstName.slice(1);
   const topStories = stories.slice(0, 6);
 
   const greetings = {
-    'student-frustrated': `Yaar ${firstName}, ek dum chill kar — aaj ki brief padh aur 10 minute ke liye sab bhool ja.`,
-    'student-happy': `Good morning ${firstName}! Aaj ki brief — sharp aur useful.`,
-    'employee-frustrated': `Aye ${firstName}, chai le aur yeh padh — aaj ki brief mein kuch kaam ki cheezein hain.`,
-    'employee-happy': `Good morning ${firstName}! Aaj ka brief — teri morning ka best 7 minutes.`,
-    'agent': `${firstName} bhai, aaj ki zaroori khabrein — mandi ke kaam ki.`
+    'student-frustrated': `Yaar ${firstName}, ek dum chill kar — aaj ki brief padh aur 10 minute ke liye sab bhool ja. 😤`,
+    'student-happy':      `Good morning ${firstName}! Aaj ki brief — sharp, useful, aur tere kaam ki. 😊`,
+    'employee-frustrated': `Aye ${firstName}, chai le aur yeh padh — aaj ki brief mein kuch kaam ki cheezein hain. ☕`,
+    'employee-happy':     `Good morning ${firstName}! Aaj ka brief — teri morning ka best 7 minutes. 📊`,
+    'agent':              `${firstName} bhai, aaj ki zaroori khabrein — mandi ke kaam ki. 🌾`
   };
 
   const greeting = greetings[voiceKey] || `Good morning ${firstName}!`;
 
-  const moodToggle = identity !== 'agent'
+  const moodToggle = (identity !== 'agent' && identity)
     ? `<p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.35);">
-        Reading in <strong style="color:rgba(255,255,255,.5);">${mood === 'frustrated' ? 'Fun' : 'Normal'} mode</strong> &nbsp;·&nbsp;
+        Reading in <strong style="color:rgba(255,255,255,.5);">${voiceKey.includes('frustrated') ? 'Frustrated' : 'Happy'} mode</strong>
+        &nbsp;·&nbsp;
         <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">Switch mood on website</a>
        </p>`
     : '';
@@ -363,13 +372,13 @@ function buildEmailHTML(stories, date, subscriber) {
 
 // ── SEND EMAIL TO ONE SUBSCRIBER ──────────────────────────────────────────────
 async function sendToSubscriber(subscriber, stories, date) {
-  const { email, identity, mood } = subscriber;
-  const voiceKey = getVoiceKey(identity, mood);
+  const { email, role, identity, mood } = subscriber;
+  const voiceKey = getVoiceKey(role, identity, mood);
 
   const subjects = {
     'student-frustrated': `☀ Yaar sun — aaj ki brief aai hai`,
     'student-happy':      `☀ The Dawn Brief — ${date}`,
-    'employee-frustrated':`☀ Chai le aur padh — aaj ki brief`,
+    'employee-frustrated': `☀ Chai le aur padh — aaj ki brief`,
     'employee-happy':     `☀ The Dawn Brief — ${date}`,
     'agent':              `☀ Aaj ki zaroori khabrein — The Dawn Brief`
   };
@@ -387,7 +396,7 @@ async function sendToSubscriber(subscriber, stories, date) {
     if (error) {
       console.log(`❌ Failed for ${email}: ${JSON.stringify(error)}`);
     } else {
-      console.log(`✅ Sent → ${email} [${identity}/${mood || 'no-mood'}] ID: ${data?.id}`);
+      console.log(`✅ Sent → ${email} [${voiceKey}] ID: ${data?.id}`);
     }
   } catch (err) {
     console.log(`❌ Error for ${email}: ${err.message}`);
