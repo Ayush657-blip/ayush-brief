@@ -11,7 +11,7 @@
   --bg:#07070F;--bg2:#0C0C1A;--bg3:#10101E;
   --blue:#2979FF;--blue-b:#00B4FF;--blue-p:#5CC8FF;
   --gold-d:#B8902A;--gold-m:#E8C558;--gold-l:#FFE878;
-  --red:#FF4D6D;--green:#00C896;
+  --red:#FF4D6D;--green:#00C896;--orange:#FFAA55;
   --w:#fff;--w9:rgba(255,255,255,.9);--w7:rgba(255,255,255,.7);
   --w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--w1:rgba(255,255,255,.1);
   --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
@@ -100,18 +100,15 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;ali
 .voice-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;opacity:.75;}
 .voice-txt{color:var(--w7);}
 .voice-end{display:inline-block;margin-top:7px;font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px;}
-.voice.student-frustrated .voice-bubble{background:rgba(255,77,109,.08);border-left:2.5px solid var(--red);}
-.voice.student-frustrated .voice-lbl{color:var(--red);}
-.voice.student-frustrated .voice-end{background:rgba(255,77,109,.15);color:var(--red);}
-.voice.student-happy .voice-bubble{background:rgba(92,200,255,.08);border-left:2.5px solid var(--blue-p);}
-.voice.student-happy .voice-lbl{color:var(--blue-p);}
-.voice.student-happy .voice-end{background:rgba(92,200,255,.12);color:var(--blue-p);}
-.voice.employee-frustrated .voice-bubble{background:rgba(255,165,50,.08);border-left:2.5px solid #FFAA55;}
-.voice.employee-frustrated .voice-lbl{color:#FFAA55;}
-.voice.employee-frustrated .voice-end{background:rgba(255,165,50,.12);color:#FFAA55;}
-.voice.employee-happy .voice-bubble{background:rgba(0,200,150,.08);border-left:2.5px solid var(--green);}
-.voice.employee-happy .voice-lbl{color:var(--green);}
-.voice.employee-happy .voice-end{background:rgba(0,200,150,.12);color:var(--green);}
+/* Student voice — red */
+.voice.student .voice-bubble{background:rgba(255,77,109,.08);border-left:2.5px solid var(--red);}
+.voice.student .voice-lbl{color:var(--red);}
+.voice.student .voice-end{background:rgba(255,77,109,.15);color:var(--red);}
+/* Employee voice — orange */
+.voice.employee .voice-bubble{background:rgba(255,165,50,.08);border-left:2.5px solid var(--orange);}
+.voice.employee .voice-lbl{color:var(--orange);}
+.voice.employee .voice-end{background:rgba(255,165,50,.12);color:var(--orange);}
+/* Agent voice — gold */
 .voice.agent .voice-bubble{background:rgba(232,197,88,.07);border-left:2.5px solid var(--gold-m);font-family:'Noto Sans Devanagari','DM Sans',sans-serif;}
 .voice.agent .voice-lbl{color:var(--gold-m);}
 .voice.agent .voice-end{background:rgba(232,197,88,.12);color:var(--gold-m);}
@@ -193,14 +190,6 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
 .ob-id-icon{width:50px;height:50px;border-radius:50%;background:rgba(41,121,255,.15);border:1px solid rgba(92,200,255,.25);display:flex;align-items:center;justify-content:center;font-size:22px;}
 .ob-id-title{font-size:16px;font-weight:500;color:var(--w);}
 .ob-id-desc{font-size:12px;color:var(--w3);line-height:1.5;}
-.ob-mood-cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
-.ob-mood-card{width:220px;padding:30px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;transition:all .2s;}
-.ob-mood-card:hover{transform:translateY(-3px);}
-.ob-mood-card.frustrated:hover{background:rgba(255,77,109,.08);border-color:rgba(255,77,109,.4);}
-.ob-mood-card.happy:hover{background:rgba(0,200,150,.08);border-color:rgba(0,200,150,.4);}
-.ob-mood-emoji{font-size:40px;}
-.ob-mood-title{font-size:18px;font-weight:500;color:var(--w);}
-.ob-mood-desc{font-size:12px;color:var(--w3);line-height:1.55;}
 #welcome{position:fixed;inset:0;z-index:600;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;}
 #welcome.show{display:flex;}
 .wlc-emoji{font-size:56px;animation:wlc-scale .6s ease forwards;}
@@ -242,7 +231,7 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
   <div class="nav-right">
     <span class="nav-link">Today's Brief</span>
     <span class="nav-link">Archive</span>
-    <div id="voice-pill"><div class="vp-dot"></div><span id="vp-label">Student · Frustrated</span></div>
+    <div id="voice-pill"><div class="vp-dot"></div><span id="vp-label">Student</span></div>
     <button class="nav-cta sub-btn">Subscribe Free →</button>
   </div>
 </nav>
@@ -256,7 +245,7 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
   <div class="hero-diff">
     <div class="diff-card"><div class="diff-icon">✍️</div><div class="diff-title">From the field</div><div class="diff-body">Written by someone actually in the field, not a journalist behind a desk.</div></div>
     <div class="diff-div"></div>
-    <div class="diff-card"><div class="diff-icon">🗣️</div><div class="diff-title">Voice + Mood</div><div class="diff-body">Student, Employee or Agent. Frustrated or happy. We match your energy every morning.</div></div>
+    <div class="diff-card"><div class="diff-icon">🗣️</div><div class="diff-title">Your Voice</div><div class="diff-body">Student, Employee or Commission Agent. We write in your language every morning.</div></div>
     <div class="diff-div"></div>
     <div class="diff-card"><div class="diff-icon">🎯</div><div class="diff-title">Zero noise</div><div class="diff-body">Only what matters for your world. No filler, no fluff.</div></div>
     <div class="diff-div"></div>
@@ -275,7 +264,7 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
   <div class="pb-dot"></div>
   <div class="pb-text">Reading as</div>
   <div class="pb-badge" id="pb-badge">Student Edition</div>
-  <div class="pb-mood" id="pb-mood">😤 Frustrated</div>
+  <div class="pb-mood" id="pb-mood"></div>
   <div class="pb-switch" id="pb-switch">Change voice →</div>
 </div>
 
@@ -309,10 +298,8 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="card-body">
         <div class="card-meta"><span class="card-cat">Indian Economy</span><span class="card-time">6:00 AM</span></div>
         <div class="card-headline">RBI Cuts Repo Rate by 25bps to 6% — EMIs to Drop, Growth to Accelerate</div>
-        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">Bhai RBI ne rate ghata diya 6% pe. Matlab loan sasta hoga. But koi aam language mein kyu nahi samjhata? Note kar: repo rate down = cheaper money = market khush. Interview mein yeh example dena.</div><span class="voice-end">📝 Note kar lo</span></div></div>
-        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">RBI cuts repo rate to 6%. Banks will pass lower EMIs to borrowers. For exams: repo rate down = growth stimulus = bullish economic signal. Clean policy example.</div><span class="voice-end">📚 Exam ready</span></div></div>
-        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Rate cut aaya. EMIs giregi. Consumer spending badhega. Par office mein koi nahi batayega iska matlab tumhare targets pe kya hoga. Khud samjho aur apna area prepare karo.</div><span class="voice-end">☕ Chai break mein soch</span></div></div>
-        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">RBI's rate cut signals consumer spending uptick in Q2. Discretionary FMCG and white goods will see demand acceleration in 60-90 days. Review your territory targets accordingly.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice student active"><div class="voice-bubble"><div class="voice-lbl">🎓 Student</div><div class="voice-txt">Sensex 1200 points upar gaya ek hi din mein. Kaash meri attendance bhi itni fast recover hoti. 43% se 75% — ek hi session mein. Par nahi — market ke paas algorithm hai, mere paas sirf ek proxy dene wala dost tha. Woh bhi fail ho gaya.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice employee"><div class="voice-bubble"><div class="voice-lbl">💼 Employee</div><div class="voice-txt">Rate cut aaya. EMIs giregi. Consumer spending badhega. Par office mein koi nahi batayega iska matlab tumhare targets pe kya hoga. Khud samjho aur apna area prepare karo.</div><span class="voice-end">☕ Chai break mein soch</span></div></div>
         <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">RBI ne byaj dar ghata diya. Jinka loan hai unki EMI thodi kam hogi. Mandi mein credit flow behtar hoga. Retailers stock badhayenge — acha mauka hai.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
@@ -323,10 +310,8 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="card-body">
         <div class="card-meta"><span class="card-cat">Tech</span><span class="card-time">6:30 AM</span></div>
         <div class="card-headline">India's UPI Crosses 20 Billion Monthly Transactions — NPCI Eyes Global Push</div>
-        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">20 billion transactions aur log UPI ka credit India ko nahi dete. Duniya ka sabse fast scaled payment system hai yeh. NPCI ab UAE, Singapore mein expand karega. Proud hona chahiye bhai.</div><span class="voice-end">📝 Note kar lo</span></div></div>
-        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">UPI hits 20 billion monthly transactions — a global record. NPCI expanding to UAE and Singapore. India's fintech stack is now a global export. Interview-ready insight.</div><span class="voice-end">📚 Exam ready</span></div></div>
-        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">20 billion transactions aur koi retailer abhi bhi UPI nahi leta? Cash collection ka dard khatam ho sakta tha. New kirana onboarding mein yeh angle use karo. Zero excuses.</div><span class="voice-end">☕ Abhi move karo</span></div></div>
-        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">UPI at 20B/month means digital-first retailer penetration is mainstream. Cash-dependency in your territory is a distribution gap. Use this data to make your case today.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice student active"><div class="voice-bubble"><div class="voice-lbl">🎓 Student</div><div class="voice-txt">20 billion transactions aur log UPI ka credit India ko nahi dete. Duniya ka sabse fast scaled payment system hai yeh. NPCI ab UAE, Singapore mein expand karega. Proud hona chahiye bhai.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice employee"><div class="voice-bubble"><div class="voice-lbl">💼 Employee</div><div class="voice-txt">20 billion transactions aur koi retailer abhi bhi UPI nahi leta? Cash collection ka dard khatam ho sakta tha. New kirana onboarding mein yeh angle use karo. Zero excuses.</div><span class="voice-end">☕ Abhi move karo</span></div></div>
         <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">UPI se mandi ke chhote traders bhi digital ho rahe hain. Raqam transfer asaan ho gaya. Commission aur payment ka hisaab ab phone se. Jo pehle sikhega woh aage rahega.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
@@ -337,10 +322,8 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="card-body">
         <div class="card-meta"><span class="card-cat">Business</span><span class="card-time">7:00 AM</span></div>
         <div class="card-headline">Reliance Jio Launches JioAI Suite — Taking on Microsoft Copilot in Indian Market</div>
-        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">Jio ne AI launch kar diya. Microsoft aur Google dono tension mein. Hum yahan slow internet pe struggle kar rahe hain. JioAI Hindi mein kaam karega — that's actually a big deal for real India.</div><span class="voice-end">📝 Note kar lo</span></div></div>
-        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">JioAI challenges Microsoft Copilot in India. Works in Hindi and regional languages. India is building its own AI stack now. Massive opportunity for Indian startups — know this.</div><span class="voice-end">📚 Exam ready</span></div></div>
-        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Jio AI aa gaya. Retailer ko samjhao yeh sirf phone nahi, business tool hai. Par honestly — relationship pehle banao before competitor does. Wahi practical sach hai.</div><span class="voice-end">☕ Abhi move karo</span></div></div>
-        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">Jio's AI push means vernacular business tools hit tier-2/3 markets within 18 months. Field teams will use AI assistants routinely. Plan this into your team upskilling roadmap.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice student active"><div class="voice-bubble"><div class="voice-lbl">🎓 Student</div><div class="voice-txt">Jio ne AI launch kar diya. Microsoft aur Google dono tension mein. Hum yahan slow internet pe struggle kar rahe hain. JioAI Hindi mein kaam karega — that's actually a big deal for real India.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice employee"><div class="voice-bubble"><div class="voice-lbl">💼 Employee</div><div class="voice-txt">Jio AI aa gaya. Retailer ko samjhao yeh sirf phone nahi, business tool hai. Par honestly — relationship pehle banao before competitor does. Wahi practical sach hai.</div><span class="voice-end">☕ Abhi move karo</span></div></div>
         <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">Jio ke nayi technology se chhote vyapariyon ko madad milegi. Mandi mein bhi digital tools aayenge. Apne bachhon ko yeh seekhne do — future mein kaam aayega.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
@@ -351,10 +334,8 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="card-body">
         <div class="card-meta"><span class="card-cat">Finance</span><span class="card-time">7:30 AM</span></div>
         <div class="card-headline">Sensex Hits 82,000 — FII Inflows Surge as Rupee Stabilises at 83.4</div>
-        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">82 hazaar Sensex. FII aa rahe hain. Aur main soch raha hoon kab job milegi. Jokes apart — FII = Foreign investors trusting India. Bullish market = economy theek chal rahi. Note karo.</div><span class="voice-end">📝 Note kar lo</span></div></div>
-        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">Sensex at 82,000. FII inflows signal strong global confidence in India. Stable rupee means cheaper imports. Clean equation for exams: FII in + Rupee stable = positive macro signal.</div><span class="voice-end">📚 Exam ready</span></div></div>
-        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Market up, rupee stable. Consumer confidence high hogi aaj. Premium product pitch land karega. Par boss target toh kal bhi badha dega. Anyway — beat plan mein premium SKU priority do.</div><span class="voice-end">☕ Chai pe soch</span></div></div>
-        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">Stable rupee means lower import costs for raw materials. Expect margin improvement in Q2. Plan your premium SKU push now before competitors react to the same signal.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice student active"><div class="voice-bubble"><div class="voice-lbl">🎓 Student</div><div class="voice-txt">Sensex 1200 points upar gaya ek hi din mein. Kaash meri attendance bhi itni fast recover hoti. 43% se 75% — ek hi session mein. Par nahi — market ke paas algorithm hai, mere paas sirf proxy wala dost tha. Woh bhi fail ho gaya.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice employee"><div class="voice-bubble"><div class="voice-lbl">💼 Employee</div><div class="voice-txt">Market up, rupee stable. Consumer confidence high hogi aaj. Premium product pitch land karega. Par boss target toh kal bhi badha dega. Anyway — beat plan mein premium SKU priority do.</div><span class="voice-end">☕ Chai pe soch</span></div></div>
         <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">Rupee theek hai toh bahar se aane waala maal mehenga nahi hoga. Mandi mein bhi stability dikhegi. Sahi waqt hai bada deal karne ka.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
@@ -365,10 +346,8 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="card-body">
         <div class="card-meta"><span class="card-cat">Sports</span><span class="card-time">8:00 AM</span></div>
         <div class="card-headline">India Beat England by 7 Wickets — Shubman Gill's 134* Seals ODI Series</div>
-        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">Gill ne 134 maara aur hum padh rahe hain. Classic. Series 3-1 jeet li India ne. Champions Trophy ke liye confidence solid. Highlights dekho — Instagram nahi, actual highlights.</div><span class="voice-end">📝 Good distraction</span></div></div>
-        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">India wins ODI series 3-1. Gill's 134* was a masterclass in anchor batting with acceleration. Strong team morale ahead of Champions Trophy. Classic professional icebreaker.</div><span class="voice-end">📚 Good vibes</span></div></div>
-        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">India jeeti. Office mein aaj sab cricket expert hain. Good — use karo. Retailer mood extra good hoga. Cricket se baat shuru karo, order size khud badh jaayega. Itna toh kar sakte ho.</div><span class="voice-end">☕ Use this energy</span></div></div>
-        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">India's win = positive market sentiment for 24-48 hrs. FMCG brands with cricket tie-ins should push activations today. Retailer footfall will be higher — deploy teams strategically.</div><span class="voice-end">📊 Activate now</span></div></div>
+        <div class="voice student active"><div class="voice-bubble"><div class="voice-lbl">🎓 Student</div><div class="voice-txt">Gill ne 134 maara aur hum padh rahe hain. Classic. Series 3-1 jeet li India ne. Champions Trophy ke liye confidence solid. Highlights dekho — Instagram nahi, actual highlights.</div><span class="voice-end">📝 Good distraction</span></div></div>
+        <div class="voice employee"><div class="voice-bubble"><div class="voice-lbl">💼 Employee</div><div class="voice-txt">India jeeti. Office mein aaj sab cricket expert hain. Good — use karo. Retailer mood extra good hoga. Cricket se baat shuru karo, order size khud badh jaayega.</div><span class="voice-end">☕ Use this energy</span></div></div>
         <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">India ki jeet — sab khush hain. Mandi mein bhi aaj atmosphere acha rahega. Chhoti meetings aur baat-chit ke liye bahut acha din. Rishte banao aaj.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
@@ -379,10 +358,8 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="card-body">
         <div class="card-meta"><span class="card-cat">Government</span><span class="card-time">8:30 AM</span></div>
         <div class="card-headline">Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Mandi Upgrades Included</div>
-        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">2.1 lakh crore announce kar diya. Implement kab karenge koi nahi jaanta. Par exams ke liye important hai — PM GatiShakti se linked. Roads, mandis, cold storage. Likh lo yeh.</div><span class="voice-end">📝 Note kar lo</span></div></div>
-        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">Govt's 2.1L Cr rural infra package covers roads, mandis, cold storage — linked to PM GatiShakti. Supply chain infrastructure at this scale means rural GDP will accelerate. Big policy moment.</div><span class="voice-end">📚 Exam ready</span></div></div>
-        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Rural infra spend aaya. Hamara rural beat under-served hai. Company rural push karti hai par resources nahi deti. Phir bhi — yeh package real hai toh tier-3 gold ban jaayegi. Rural beat solid karo ab.</div><span class="voice-end">☕ Soch ke dekho</span></div></div>
-        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">2.1L Cr rural infra means rural GDP grows 1.5-2x faster over 3 years. Brands without rural distribution will regret it. This is the moment to build that network before the demand wave.</div><span class="voice-end">📊 Build now</span></div></div>
+        <div class="voice student active"><div class="voice-bubble"><div class="voice-lbl">🎓 Student</div><div class="voice-txt">2.1 lakh crore announce kar diya. Implement kab karenge koi nahi jaanta. Par exams ke liye important hai — PM GatiShakti se linked. Roads, mandis, cold storage. Likh lo yeh.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice employee"><div class="voice-bubble"><div class="voice-lbl">💼 Employee</div><div class="voice-txt">Rural infra spend aaya. Hamara rural beat under-served hai. Company rural push karti hai par resources nahi deti. Phir bhi — yeh package real hai toh tier-3 gold ban jaayegi. Rural beat solid karo ab.</div><span class="voice-end">☕ Soch ke dekho</span></div></div>
         <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">Sarkar ne mandi sudharne ke liye itne paise diye — seedha faayda hamare liye. Nayi mandi bhavan, cold storage sab aane wala hai Kaithal jaise shaharon mein bhi. Khushi ki baat hai.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
@@ -397,7 +374,7 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
     <div class="sec-title">Four steps to your <strong>daily edge</strong></div>
     <div class="how-grid">
       <div class="how-step" data-n="01"><div class="how-icon">📡</div><div class="how-title">200+ trusted sources scanned daily</div><div class="how-body">ET, Business Standard, Mint, BBC and more — every morning without fail.</div><div class="how-time">Every morning</div></div>
-      <div class="how-step" data-n="02"><div class="how-icon">🤖</div><div class="how-title">AI writes in your voice + mood</div><div class="how-body">5 voices. Frustrated or happy. Same news, completely different experience.</div><div class="how-time">Every morning</div></div>
+      <div class="how-step" data-n="02"><div class="how-icon">🤖</div><div class="how-title">AI writes in your voice</div><div class="how-body">3 voices. Student, Employee, Commission Agent. Same news, completely different experience.</div><div class="how-time">Every morning</div></div>
       <div class="how-step" data-n="03"><div class="how-icon">✍️</div><div class="how-title">Ground Reality added</div><div class="how-body">One real field observation. Written by a human. No AI can replicate this.</div><div class="how-time">Every morning</div></div>
       <div class="how-step" data-n="04"><div class="how-icon">📬</div><div class="how-title">In your inbox before 6 AM</div><div class="how-body">Read in 7 minutes. Know what matters. Move with confidence all day.</div><div class="how-time">Every morning</div></div>
     </div>
@@ -406,48 +383,40 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
 
 <section class="voice-demo-sec">
   <div class="si">
-    <div class="sec-eyebrow">The 5 Voices</div>
-    <div class="sec-title">Same news.<br><strong>Your energy.</strong></div>
+    <div class="sec-eyebrow">The 3 Voices</div>
+    <div class="sec-title">Same news.<br><strong>Your language.</strong></div>
     <p style="font-size:14px;color:var(--w3);line-height:1.75;margin-bottom:32px;">Click any voice to feel the difference. Same story, completely different experience.</p>
     <div class="vtabs" id="vtabs">
-      <button class="vtab active" data-v="sf">😤 Frustrated Student</button>
-      <button class="vtab" data-v="sh">😊 Happy Student</button>
-      <button class="vtab" data-v="ef">😤 Frustrated Employee</button>
-      <button class="vtab" data-v="eh">😊 Happy Employee</button>
+      <button class="vtab active" data-v="st">🎓 Student</button>
+      <button class="vtab" data-v="em">💼 Employee</button>
       <button class="vtab" data-v="ag">🌾 Commission Agent</button>
     </div>
     <div class="vdemo-box">
       <div class="vdemo-hdr">
-        <div class="vdemo-badge" id="vd-badge" style="background:rgba(255,77,109,.1);color:#FF4D6D;border:.5px solid rgba(255,77,109,.25);">😤 Frustrated Student</div>
+        <div class="vdemo-badge" id="vd-badge" style="background:rgba(255,77,109,.1);color:#FF4D6D;border:.5px solid rgba(255,77,109,.25);">🎓 Student</div>
         <div class="vdemo-hl">HUL cuts Wheel price by 8% · Today's lead story</div>
       </div>
       <div class="vdemo-grid">
         <div class="vdemo-story">
           <div class="vdemo-tag">HUL · 2 HRS AGO</div>
           <div class="vdemo-title">HUL cuts Wheel price by 8%</div>
-          <div class="demo-voice-set active" data-dv="sf"><div class="vdemo-body" style="color:#FF6B8A;">Bhai yaar HUL ne Wheel sasta kar diya. Monsoon se pehle rural volume pakadne ki chaal hai. Interview mein yeh example do — examiner impress guaranteed.</div></div>
-          <div class="demo-voice-set" data-dv="sh"><div class="vdemo-body">HUL reduces Wheel 8% before monsoon — classic pre-season volume strategy. Rural push. Interview example: demand creation through price elasticity.</div></div>
-          <div class="demo-voice-set" data-dv="ef"><div class="vdemo-body" style="color:#FFAA55;">Rate cut aaya. Retailer confused hai. Tu pehle ja. Shelf pakad. Competitor se pehle. Itna simple.</div></div>
-          <div class="demo-voice-set" data-dv="eh"><div class="vdemo-body" style="color:#00C896;">HUL Wheel price cut. Brief your team. Retailer objections incoming. Handle proactively — opportunity window is 72 hours.</div></div>
-          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">HUL ne Wheel ka bhaav ghata diya. Koi deal pending hai toh jaldi karo — daam badalne se pehle.</div></div>
+          <div class="demo-voice-set active" data-dv="st"><div class="vdemo-body" style="color:#FF6B8A;">Bhai yaar HUL ne Wheel sasta kar diya. Monsoon se pehle rural volume pakadne ki chaal hai. Interview mein yeh example do — examiner impress guaranteed.</div></div>
+          <div class="demo-voice-set" data-dv="em"><div class="vdemo-body" style="color:#FFAA55;">Rate cut aaya. Retailer confused hai. Tu pehle ja. Shelf pakad. Competitor se pehle. Itna simple.</div></div>
+          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Bhaiyo, HUL ne Wheel ka bhaav ghata diya. Koi deal pending hai toh jaldi karo — daam badalne se pehle.</div></div>
         </div>
         <div class="vdemo-story">
           <div class="vdemo-tag">RETAIL · 4 HRS AGO</div>
           <div class="vdemo-title">Blinkit crosses 1,000 dark stores</div>
-          <div class="demo-voice-set active" data-dv="sf"><div class="vdemo-body" style="color:#FF6B8A;">1000 dark stores ho gaye Blinkit ke. 14% urban volume le raha hai. GT vs Q-commerce poochha toh yeh answer hai bhai.</div></div>
-          <div class="demo-voice-set" data-dv="sh"><div class="vdemo-body">Blinkit at 1,000 stores = 14% urban consumer volume is now Q-commerce. Traditional distribution strategy needs rethinking. Key metric.</div></div>
-          <div class="demo-voice-set" data-dv="ef"><div class="vdemo-body" style="color:#FFAA55;">Urban retailer tera compare kar raha hai Blinkit se. Scheme tight karo. Visit badhao. Warna sab online order ho jaayega.</div></div>
-          <div class="demo-voice-set" data-dv="eh"><div class="vdemo-body" style="color:#00C896;">Q-commerce at 14% of urban volumes = retailer loyalty eroding. Counter: deeper relationship, faster replenishment, exclusive schemes.</div></div>
-          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Blinkit ke 1000 dark stores ho gaye. Shehar mein log ghar baithe order kar rahe hain. Mandi ki aavak pe seedha asar padega.</div></div>
+          <div class="demo-voice-set active" data-dv="st"><div class="vdemo-body" style="color:#FF6B8A;">1000 dark stores ho gaye Blinkit ke. 14% urban volume le raha hai. GT vs Q-commerce poochha toh yeh answer hai bhai.</div></div>
+          <div class="demo-voice-set" data-dv="em"><div class="vdemo-body" style="color:#FFAA55;">Urban retailer tera compare kar raha hai Blinkit se. Scheme tight karo. Visit badhao. Warna sab online order ho jaayega.</div></div>
+          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Bhaiyo, Blinkit ke 1000 dark stores ho gaye. Shehar mein log ghar baithe order kar rahe hain. Mandi ki aavak pe seedha asar padega.</div></div>
         </div>
         <div class="vdemo-story">
           <div class="vdemo-tag">MACRO · 3 HRS AGO</div>
           <div class="vdemo-title">Rural consumption hits 3-year high</div>
-          <div class="demo-voice-set active" data-dv="sf"><div class="vdemo-body" style="color:#FF6B8A;">Rural consumption 3 saal ki high pe hai. Tumhara rural posting wala friend actually sahi jagah hai. Sochna padega yaar.</div></div>
-          <div class="demo-voice-set" data-dv="sh"><div class="vdemo-body">Rural consumption at 3-year high. FMCG companies rebalancing toward rural. Rural posting = opportunity, not punishment. Remember this.</div></div>
-          <div class="demo-voice-set" data-dv="ef"><div class="vdemo-body" style="color:#FFAA55;">Rural mein demand hai. Tera rural territory pe focus nahi hai toh start karo ab. Baad mein bologe pehle kyu nahi kiya.</div></div>
-          <div class="demo-voice-set" data-dv="eh"><div class="vdemo-body" style="color:#00C896;">Rural consumption surge = territory expansion opportunity. Brands without rural distribution lose share in next 18 months. Build now.</div></div>
-          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Rural mein log zyada khareed rahe hain. Tera seedha faida — gaon se aavak badhegi, demand strong rahegi.</div></div>
+          <div class="demo-voice-set active" data-dv="st"><div class="vdemo-body" style="color:#FF6B8A;">Rural consumption 3 saal ki high pe hai. Tumhara rural posting wala friend actually sahi jagah hai. Sochna padega yaar.</div></div>
+          <div class="demo-voice-set" data-dv="em"><div class="vdemo-body" style="color:#FFAA55;">Rural mein demand hai. Tera rural territory pe focus nahi hai toh start karo ab. Baad mein bologe pehle kyu nahi kiya.</div></div>
+          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Bhaiyo, rural mein log zyada khareed rahe hain. Tera seedha faida — gaon se aavak badhegi, demand strong rahegi.</div></div>
         </div>
       </div>
     </div>
@@ -458,7 +427,7 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
   <div class="si">
     <div class="cta-box">
       <div class="cta-title">Your daily edge<br>starts <em>tomorrow.</em></div>
-      <p class="cta-sub">Join thousands who start their morning smarter. Choose your voice. Pick your mood.</p>
+      <p class="cta-sub">Join thousands who start their morning smarter. Choose your voice. Know what matters.</p>
       <button class="cta-btn sub-btn">Subscribe Free →</button>
     </div>
   </div>
@@ -469,9 +438,9 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
     <div class="ft-grid">
       <div>
         <a class="logo" href="#" style="margin-bottom:14px;display:inline-flex;"><svg width="36" height="28" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c2"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g2)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g2)" stroke-width="1.5" fill="none" clip-path="url(#c2)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
-        <div class="ft-desc">India's sharpest daily brief. Written for the field, for the floor, for the future. In your voice, your mood, every morning.</div>
+        <div class="ft-desc">India's sharpest daily brief. Written for the field, for the floor, for the future. In your voice, every morning.</div>
       </div>
-      <div><div class="ft-col-title">Product</div><div class="ft-links"><span class="ft-link">Today's Brief</span><span class="ft-link">Archive</span><span class="ft-link">The 5 Voices</span><span class="ft-link">Ground Reality</span></div></div>
+      <div><div class="ft-col-title">Product</div><div class="ft-links"><span class="ft-link">Today's Brief</span><span class="ft-link">Archive</span><span class="ft-link">The 3 Voices</span><span class="ft-link">Ground Reality</span></div></div>
       <div><div class="ft-col-title">Company</div><div class="ft-links"><span class="ft-link">About</span><span class="ft-link">Advertise</span><span class="ft-link">Contact</span></div></div>
       <div><div class="ft-col-title">Follow</div><div class="ft-links"><span class="ft-link">LinkedIn</span><span class="ft-link">Twitter / X</span><span class="ft-link">Instagram</span><span class="ft-link">WhatsApp</span></div></div>
     </div>
@@ -480,15 +449,16 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
 </footer>
 </div>
 
+<!-- ONBOARDING — 2 steps now (no mood step) -->
 <div id="ob">
   <div class="ob-nav">
     <a class="logo" href="#"><svg width="36" height="28" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c3"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g3)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g3)" stroke-width="1.5" fill="none" clip-path="url(#c3)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
     <span class="ob-back" id="ob-back">← Back</span>
   </div>
-  <div class="ob-prog-wrap"><div class="ob-prog-fill" id="ob-prog" style="width:33%"></div></div>
+  <div class="ob-prog-wrap"><div class="ob-prog-fill" id="ob-prog" style="width:50%"></div></div>
   <div class="ob-body">
     <div class="ob-step active" id="step-1">
-      <div class="ob-eyebrow">Step 1 of 3</div>
+      <div class="ob-eyebrow">Step 1 of 2</div>
       <div class="ob-head">Your daily <em>edge</em><br>starts here.</div>
       <div class="ob-sub">The brief written for people in the field. Every single morning.</div>
       <div class="ob-input-wrap">
@@ -500,7 +470,7 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="ob-trust"><span>No spam</span><div class="ob-trust-dot"></div><span>Free forever</span><div class="ob-trust-dot"></div><span>Unsubscribe anytime</span></div>
     </div>
     <div class="ob-step" id="step-2">
-      <div class="ob-eyebrow">Step 2 of 3</div>
+      <div class="ob-eyebrow">Step 2 of 2</div>
       <div class="ob-head">You are a…</div>
       <div class="ob-sub">We'll write The Dawn Brief in exactly your language and context.</div>
       <div class="ob-id-cards">
@@ -509,26 +479,18 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
         <div class="ob-id-card" id="id-agent"><div class="ob-id-icon">🌾</div><div class="ob-id-title">Commission Agent</div><div class="ob-id-desc">Arhatiya, dalal, mandi agent. Yeh aapke liye likha gaya hai.</div></div>
       </div>
     </div>
-    <div class="ob-step" id="step-3">
-      <div class="ob-eyebrow">Step 3 of 3</div>
-      <div class="ob-head">How are you<br>feeling today?</div>
-      <div class="ob-sub" id="mood-sub">We match your energy. Frustrated days get sharper, punchier news.</div>
-      <div class="ob-mood-cards">
-        <div class="ob-mood-card frustrated" id="mood-frustrated"><div class="ob-mood-emoji">😤</div><div class="ob-mood-title">Frustrated</div><div class="ob-mood-desc">Punchy, real talk. News like a friend who gets it. Entertainment + information combined.</div></div>
-        <div class="ob-mood-card happy" id="mood-happy"><div class="ob-mood-emoji">😊</div><div class="ob-mood-title">Happy</div><div class="ob-mood-desc">Clean, sharp, useful. Professional tone. Just the insights, delivered well.</div></div>
-      </div>
-    </div>
   </div>
 </div>
 
 <div id="welcome">
   <div class="wlc-emoji">☀️</div>
   <div class="wlc-head">Welcome, <em id="wlc-name">friend</em>.</div>
-  <div class="wlc-badge" id="wlc-badge">😤 Frustrated Student</div>
+  <div class="wlc-badge" id="wlc-badge">🎓 Student</div>
   <div class="wlc-sub" id="wlc-sub">Your personalised brief is loading in your voice.</div>
   <div class="wlc-bar-wrap"><div class="wlc-bar" id="wlc-bar"></div></div>
 </div>
 
+<!-- MODAL — 3 voice tabs -->
 <div class="modal-ov" id="story-modal">
   <div class="modal-box">
     <div class="modal-top-bar" id="modal-top-bar" style="background:#2979FF;"></div>
@@ -537,17 +499,13 @@ footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative
       <div class="modal-cat" id="modal-cat">Category</div>
       <div class="modal-headline" id="modal-headline">Headline</div>
       <div class="modal-voice-tabs">
-        <button class="mvt active" data-mv="student-frustrated">😤 Frustrated Student</button>
-        <button class="mvt" data-mv="student-happy">😊 Happy Student</button>
-        <button class="mvt" data-mv="employee-frustrated">😤 Frustrated Employee</button>
-        <button class="mvt" data-mv="employee-happy">😊 Happy Employee</button>
+        <button class="mvt active" data-mv="student">🎓 Student</button>
+        <button class="mvt" data-mv="employee">💼 Employee</button>
         <button class="mvt" data-mv="agent">🌾 Agent</button>
       </div>
       <div class="modal-voice-label" id="modal-voice-label">Your Voice</div>
-      <div class="modal-voice-panel active" data-mp="student-frustrated"><div class="modal-voice-body" id="mp-sf"></div></div>
-      <div class="modal-voice-panel" data-mp="student-happy"><div class="modal-voice-body" id="mp-sh"></div></div>
-      <div class="modal-voice-panel" data-mp="employee-frustrated"><div class="modal-voice-body" id="mp-ef"></div></div>
-      <div class="modal-voice-panel" data-mp="employee-happy"><div class="modal-voice-body" id="mp-eh"></div></div>
+      <div class="modal-voice-panel active" data-mp="student"><div class="modal-voice-body" id="mp-st"></div></div>
+      <div class="modal-voice-panel" data-mp="employee"><div class="modal-voice-body" id="mp-em"></div></div>
       <div class="modal-voice-panel" data-mp="agent"><div class="modal-voice-body" id="mp-ag"></div></div>
     </div>
   </div>
@@ -559,8 +517,8 @@ var SUPA_KEY='sb_publishable_mklkZ61P5MmwCA7UyIEOEQ_rmFbaV3k';
 function supaInsert(t,d){fetch(SUPA_URL+'/rest/v1/'+t,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=minimal'},body:JSON.stringify(d)}).catch(function(){});}
 try{supaInsert('page_visits',{page:'homepage',referrer:document.referrer||'direct'});}catch(e){}
 
-var userData={name:'',email:'',identity:'',voiceKey:''};
-var currentVoice='student-frustrated';
+var userData={name:'',email:'',identity:''};
+var currentVoice='student';
 var obStep=1;
 
 var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -569,9 +527,8 @@ var now=new Date();
 var nd=document.getElementById('news-date');
 if(nd)nd.textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
 
-var VOICE_LABELS={'student-frustrated':'😤 Frustrated Student','student-happy':'😊 Happy Student','employee-frustrated':'😤 Frustrated Employee','employee-happy':'😊 Happy Employee','agent':'🌾 Commission Agent'};
-var VOICE_MOODS={'student-frustrated':'😤 Frustrated','student-happy':'😊 Happy','employee-frustrated':'😤 Frustrated','employee-happy':'😊 Happy','agent':'Mandi Voice'};
-var VOICE_ID={'student-frustrated':'Student','student-happy':'Student','employee-frustrated':'Employee','employee-happy':'Employee','agent':'Commission Agent'};
+var VOICE_LABELS={'student':'🎓 Student','employee':'💼 Employee','agent':'🌾 Commission Agent'};
+var VOICE_ID={'student':'Student Edition','employee':'Employee Edition','agent':'Commission Agent Edition'};
 
 function activateVoice(vk){
   currentVoice=vk;
@@ -579,8 +536,8 @@ function activateVoice(vk){
   document.querySelectorAll('.voice.'+vk).forEach(function(el){el.classList.add('active');});
   var banner=document.getElementById('pers-banner');
   banner.classList.add('show');
-  document.getElementById('pb-badge').textContent=VOICE_ID[vk]+' Edition';
-  document.getElementById('pb-mood').textContent=VOICE_MOODS[vk]||'';
+  document.getElementById('pb-badge').textContent=VOICE_ID[vk];
+  document.getElementById('pb-mood').textContent='';
   var pill=document.getElementById('voice-pill');
   pill.classList.add('show');
   document.getElementById('vp-label').textContent=VOICE_LABELS[vk]||vk;
@@ -597,7 +554,7 @@ function showStep(n){
 function openOnboarding(){
   document.getElementById('hp').classList.add('hide');
   document.getElementById('ob').classList.add('show');
-  showStep(1);setProgress(33);
+  showStep(1);setProgress(50);
 }
 function closeOnboarding(){
   document.getElementById('ob').classList.remove('show');
@@ -611,21 +568,18 @@ document.getElementById('ob-continue').addEventListener('click',function(){
   if(!valid){document.getElementById('ob-err').style.display='block';return;}
   document.getElementById('ob-err').style.display='none';
   userData.name=name||'friend';userData.email=email;
-  showStep(2);setProgress(66);
+  showStep(2);setProgress(100);
 });
 document.getElementById('ob-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-continue').click();});
 
-document.getElementById('id-student').addEventListener('click',function(){userData.identity='student';showStep(3);setProgress(100);document.getElementById('mood-sub').textContent='Frustrated mornings get punchy, fun news. Happy days get clean, sharp briefs.';});
-document.getElementById('id-employee').addEventListener('click',function(){userData.identity='employee';showStep(3);setProgress(100);document.getElementById('mood-sub').textContent='Your mood shapes how we frame every story. Chai break energy or strategic briefing.';});
-document.getElementById('id-agent').addEventListener('click',function(){userData.identity='agent';userData.voiceKey='agent';completeOnboarding();});
-document.getElementById('mood-frustrated').addEventListener('click',function(){userData.voiceKey=userData.identity+'-frustrated';completeOnboarding();});
-document.getElementById('mood-happy').addEventListener('click',function(){userData.voiceKey=userData.identity+'-happy';completeOnboarding();});
+document.getElementById('id-student').addEventListener('click',function(){userData.identity='student';completeOnboarding('student');});
+document.getElementById('id-employee').addEventListener('click',function(){userData.identity='employee';completeOnboarding('employee');});
+document.getElementById('id-agent').addEventListener('click',function(){userData.identity='agent';completeOnboarding('agent');});
 
-function completeOnboarding(){
-  var vk=userData.voiceKey;
+function completeOnboarding(vk){
   var name=userData.name.split(' ')[0];
   name=name.charAt(0).toUpperCase()+name.slice(1);
-  try{supaInsert('subscribers',{email:userData.email,name:userData.name,role:vk,segment:userData.identity,source:'website'});}catch(e){}
+  try{supaInsert('subscribers',{email:userData.email,name:userData.name,role:vk,segment:vk,source:'website'});}catch(e){}
   document.getElementById('ob').classList.remove('show');
   document.getElementById('wlc-name').textContent=name;
   document.getElementById('wlc-badge').textContent=VOICE_LABELS[vk]||vk;
@@ -644,8 +598,7 @@ function completeOnboarding(){
 
 document.getElementById('ob-back').addEventListener('click',function(){
   if(obStep===1)closeOnboarding();
-  else if(obStep===2){showStep(1);setProgress(33);}
-  else if(obStep===3){showStep(2);setProgress(66);}
+  else if(obStep===2){showStep(1);setProgress(50);}
 });
 
 document.querySelectorAll('.sub-btn').forEach(function(btn){btn.addEventListener('click',openOnboarding);});
@@ -660,7 +613,11 @@ function filterCat(btn,cat){
   });
 }
 
-var demoMap={sf:{badge:'😤 Frustrated Student',bg:'rgba(255,77,109,.1)',color:'#FF4D6D',border:'rgba(255,77,109,.25)'},sh:{badge:'😊 Happy Student',bg:'rgba(92,200,255,.1)',color:'#5CC8FF',border:'rgba(92,200,255,.25)'},ef:{badge:'😤 Frustrated Employee',bg:'rgba(255,165,50,.1)',color:'#FFAA55',border:'rgba(255,165,50,.25)'},eh:{badge:'😊 Happy Employee',bg:'rgba(0,200,150,.1)',color:'#00C896',border:'rgba(0,200,150,.25)'},ag:{badge:'🌾 Commission Agent',bg:'rgba(232,197,88,.08)',color:'#E8C558',border:'rgba(232,197,88,.25)'}};
+var demoMap={
+  st:{badge:'🎓 Student',bg:'rgba(255,77,109,.1)',color:'#FF4D6D',border:'rgba(255,77,109,.25)'},
+  em:{badge:'💼 Employee',bg:'rgba(255,165,50,.1)',color:'#FFAA55',border:'rgba(255,165,50,.25)'},
+  ag:{badge:'🌾 Commission Agent',bg:'rgba(232,197,88,.08)',color:'#E8C558',border:'rgba(232,197,88,.25)'}
+};
 document.querySelectorAll('.vtab').forEach(function(btn){
   btn.addEventListener('click',function(){
     document.querySelectorAll('.vtab').forEach(function(b){b.classList.remove('active');});
@@ -674,12 +631,12 @@ document.querySelectorAll('.vtab').forEach(function(btn){
 });
 
 var storyData=[
-  {cat:'Indian Economy',color:'#D97706',headline:'RBI Cuts Repo Rate by 25bps to 6% — EMIs to Drop, Growth to Accelerate',voices:{'student-frustrated':'Bhai RBI ne rate ghata diya 6% pe. Matlab loan sasta hoga. Home loan, car loan — thoda cheap. But seriously koi explain kyu nahi karta yeh aam language mein? Note kar: repo rate down = cheaper money = market khush. Interview mein yeh example dena — 100% aayega question.','student-happy':'RBI cuts repo rate to 6%. Banks will pass lower EMIs to borrowers, making home loans and auto loans cheaper. For exams: repo rate down = growth stimulus = bullish economic signal. Key monetary policy tool. Consumer spending will increase in 60-90 days.','employee-frustrated':'Rate cut aaya. EMIs giregi. Log thoda zyada khareedenge. Par office mein koi nahi batayega iska matlab tumhare targets pe kya hoga. Khud samjho — consumer spending badhega, FMCG demand badhega. Apna area prepare karo before boss realises this himself.','employee-happy':'RBI\'s rate cut signals consumer spending uptick in Q2. Discretionary FMCG, auto, and white goods verticals will see demand acceleration in 60–90 days. Brief your team today — proactive territory preparation is your competitive edge this quarter.','agent':'RBI ne byaj dar ghata diya. Jinka loan hai unki EMI thodi kam hogi. Mandi mein bhi credit flow behtar hoga is quarter. Retailers stock badhayenge — acha mauka hai nayi deals karne ka. Sahi waqt hai.'}},
-  {cat:'Tech',color:'#7C3AED',headline:"India's UPI Crosses 20 Billion Monthly Transactions — NPCI Eyes Global Push",voices:{'student-frustrated':'20 billion transactions aur abhi bhi log UPI ka full credit India ko nahi dete. Yaar yeh duniya ka sabse fast scaled payment system hai. NPCI ab UAE, Singapore mein bhi expand karna chahta hai. Proud hona chahiye — aur interview mein yeh example zaroor dena.','student-happy':'UPI hits 20 billion monthly transactions — a global record in digital payments. NPCI is now expanding to UAE and Singapore. Key insight: India\'s fintech infrastructure is now a global export product. Interview-ready fact: UPI processes more than most countries combined.','employee-frustrated':'20 billion transactions aur tumhara koi retailer abhi bhi UPI nahi leta? Matlab cash collection ka dard apne aap khatam ho sakta tha. New kirana onboarding mein yeh angle use karo. Zero excuses ab for cash-only retailers in your territory.','employee-happy':'UPI at 20B/month means digital-first retailer penetration is now mainstream. If your territory has cash-dependency gaps, that\'s a distribution strategy vulnerability. Use this milestone as your pitch angle for digitizing resistant retailers.','agent':'UPI se mandi ke chhote traders bhi digital ho rahe hain. Raqam transfer asaan ho gaya hai. Commission aur payment ka hisaab ab phone se hi ho sakta hai. Jo pehle sikhega woh aage rahega — yeh sach hai.'}},
-  {cat:'Business',color:'#2563EB',headline:'Reliance Jio Launches JioAI Suite — Taking on Microsoft Copilot in Indian Market',voices:{'student-frustrated':'Jio ne AI launch kar diya. Matlab ab Microsoft aur Google dono tension mein hain Indian market ke liye. Aur hum yahan abhi bhi slow internet pe struggle kar rahe hain. JioAI Hindi mein kaam karega though — that\'s actually a big deal for real India, not just metro India.','student-happy':'JioAI challenges Microsoft Copilot directly in India. Works in Hindi and regional languages — critical for mass adoption beyond metros. Key insight: India is now building its own AI stack. Massive opportunity for Indian startups in the AI application layer.','employee-frustrated':'Jio AI aa gaya. Kirana shops ko AI-powered inventory tips milenge. Retailer ko samjhao yeh sirf phone nahi, business tool hai. Par honestly — relationship pehle banao before competitor does yeh same pitch. Wahi sach hai.','employee-happy':'Jio\'s AI push means vernacular-language business tools will hit tier-2/3 markets within 18 months. Your field teams and distributors will use AI assistants routinely. Plan this into your team upskilling roadmap now — don\'t get caught unprepared.','agent':'Jio ke nayi technology se chhote vyapariyon ko bhi madad milegi. Mandi mein bhi digital tools aane waale hain. Apne bachhon ko yeh seekhne do — future mein bahut kaam aayega unhe.'}},
-  {cat:'Finance',color:'#059669',headline:'Sensex Hits 82,000 — FII Inflows Surge as Rupee Stabilises at 83.4',voices:{'student-frustrated':'82 hazaar Sensex. FII aa rahe hain. Rupee stable. Aur main soch raha hoon kab job milegi? Jokes apart — FII = Foreign Institutional Investors. Yeh India mein invest kar rahe hain = economy pe trust. Bullish market = economy theek chal rahi hai. Note karo yaar.','student-happy':'Sensex at 82,000. FII inflows signal strong global confidence in India as an investment destination. Stable rupee means cheaper imports. Clean equation for exams: strong FII + stable Rupee = positive macro environment for consumer spending.','employee-frustrated':'Market up, rupee stable. Matlab consumer confidence high hogi aaj. Premium product ka pitch aaj zyada land karega. Par target toh kal bhi badha denge boss log. Chhodo — beat plan mein premium SKU ko priority do aaj. Bas itna control hai hamare paas.','employee-happy':'Stable rupee means lower import costs for raw materials. If your brand sources internationally, expect margin improvement in Q2. Ideal timing to plan premium SKU push and capture the consumer confidence wave before competition reacts.','agent':'Rupee theek hai toh bahar se aane waala maal mehenga nahi hoga. Mandi mein bhi stability ka asar dikhega. Sahi waqt hai bada deal karne ka. Suppliers se negotiate karo abhi — rate theek milega.'}},
-  {cat:'Sports',color:'#DC2626',headline:"India Beat England by 7 Wickets — Shubman Gill's 134* Seals ODI Series",voices:{'student-frustrated':'Gill ne 134 maara aur hum padh rahe hain. Classic India ki jeet, meri neend kharab raat bhar. Seriously though — series 3-1 jeet li. Champions Trophy ke liye squad confidence solid hai. Highlights zaroor dekho. Instagram nahi, actual highlights.','student-happy':'India wins ODI series 3-1. Shubman Gill\'s 134* was a masterclass in anchor batting with acceleration. Strong team morale going into Champions Trophy. Classic professional conversation icebreaker — know this and use it.','employee-frustrated':'India jeeti. Office mein aaj sab cricket expert hain. Good — use karo. Retailer mood aaj extra good hoga. Cricket se conversation shuru karo, order size khud badh jaayega. Itna toh hum kar sakte hain aaj. Minimum effort, maximum result.','employee-happy':'India\'s win = positive market sentiment for 24-48 hours. FMCG brands with cricket tie-ins should push activations today. Retailer footfall will be higher than usual — deploy your field teams strategically for maximum territory impact.','agent':'India ki jeet — sab khush hain aaj. Mandi mein bhi atmosphere acha rahega. Chhoti meetings aur baat-chit ke liye bahut acha din hai. Rishte banane ka sahi waqt — log khule dil se milte hain jab khushi mein hote hain.'}},
-  {cat:'Government',color:'#4F46E5',headline:'Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Mandi Upgrades Included',voices:{'student-frustrated':'2.1 lakh crore ka package announce kar diya. Implement kab karenge koi nahi jaanta. But for exams yeh important hai — PM GatiShakti se directly linked. Roads, mandis, cold storage sab hai ismein. Likh lo — answer mein zaroor aayega.','student-happy':'Govt\'s 2.1L Cr rural infra package covers roads, mandis, cold storage — directly linked to PM GatiShakti infrastructure program. Supply chain investment at this scale means rural GDP growth of 1.5-2x. Big policy moment — know this.','employee-frustrated':'Rural infra spend announce ho gaya. Hamara rural beat abhi bhi under-served hai. Company bhi rural push karti hai but resources nahi deti properly. Anyway — yeh package real hai toh tier-3 territory gold ban jaayegi. Apna rural beat solid karo ab before someone else does.','employee-happy':'2.1L Cr rural infra = rural GDP grows 1.5–2x faster over next 3 years. Brands without rural distribution infrastructure will regret it. This is the moment to build that network before the demand wave arrives in 18-24 months.','agent':'Sarkar ne mandi sudharne ke liye itne paise diye — seedha faayda hamare liye hai. Nayi mandi bhavan, cold storage, digital weighing — sab aane wala hai Kaithal jaise shaharon mein bhi. Bahut khushi ki baat hai yeh.'}},
+  {cat:'Indian Economy',color:'#D97706',headline:'RBI Cuts Repo Rate by 25bps to 6% — EMIs to Drop, Growth to Accelerate',voices:{student:'Bhai RBI ne rate ghata diya 6% pe. Matlab loan sasta hoga. But koi aam language mein kyu nahi samjhata? Note kar: repo rate down = cheaper money = market khush. Interview mein yeh example dena.',employee:'Rate cut aaya. EMIs giregi. Consumer spending badhega. Par office mein koi nahi batayega iska matlab tumhare targets pe kya hoga. Khud samjho aur apna area prepare karo before boss realises this himself.',agent:'RBI ne byaj dar ghata diya. Jinka loan hai unki EMI thodi kam hogi. Mandi mein bhi credit flow behtar hoga is quarter. Retailers stock badhayenge — acha mauka hai nayi deals karne ka.'}},
+  {cat:'Tech',color:'#7C3AED',headline:"India's UPI Crosses 20 Billion Monthly Transactions — NPCI Eyes Global Push",voices:{student:'20 billion transactions aur abhi bhi log UPI ka full credit India ko nahi dete. Yaar yeh duniya ka sabse fast scaled payment system hai. NPCI ab UAE, Singapore mein bhi expand karna chahta hai. Proud hona chahiye.',employee:'20 billion transactions aur tumhara koi retailer abhi bhi UPI nahi leta? Matlab cash collection ka dard apne aap khatam ho sakta tha. New kirana onboarding mein yeh angle use karo. Zero excuses ab.',agent:'UPI se mandi ke chhote traders bhi digital ho rahe hain. Raqam transfer asaan ho gaya hai. Commission aur payment ka hisaab ab phone se hi ho sakta hai. Jo pehle sikhega woh aage rahega.'}},
+  {cat:'Business',color:'#2563EB',headline:'Reliance Jio Launches JioAI Suite — Taking on Microsoft Copilot in Indian Market',voices:{student:'Jio ne AI launch kar diya. Matlab ab Microsoft aur Google dono tension mein hain Indian market ke liye. JioAI Hindi mein kaam karega — that\'s actually a big deal for real India, not just metro India.',employee:'Jio AI aa gaya. Kirana shops ko AI-powered inventory tips milenge. Retailer ko samjhao yeh sirf phone nahi, business tool hai. Par honestly — relationship pehle banao before competitor does yeh same pitch.',agent:'Bhaiyo, Jio ke nayi technology se chhote vyapariyon ko bhi madad milegi. Mandi mein bhi digital tools aane waale hain. Apne bachhon ko yeh seekhne do — future mein bahut kaam aayega.'}},
+  {cat:'Finance',color:'#059669',headline:'Sensex Hits 82,000 — FII Inflows Surge as Rupee Stabilises at 83.4',voices:{student:'82 hazaar Sensex. FII aa rahe hain. Rupee stable. Aur main soch raha hoon kab job milegi? Jokes apart — FII = Foreign Institutional Investors. Bullish market = economy theek chal rahi hai. Note karo yaar.',employee:'Market up, rupee stable. Matlab consumer confidence high hogi aaj. Premium product ka pitch aaj zyada land karega. Par target toh kal bhi badha denge boss log. Beat plan mein premium SKU ko priority do aaj.',agent:'Rupee theek hai toh bahar se aane waala maal mehenga nahi hoga. Mandi mein bhi stability ka asar dikhega. Sahi waqt hai bada deal karne ka. Suppliers se negotiate karo abhi.'}},
+  {cat:'Sports',color:'#DC2626',headline:"India Beat England by 7 Wickets — Shubman Gill's 134* Seals ODI Series",voices:{student:'Gill ne 134 maara aur hum padh rahe hain. Classic India ki jeet, meri neend kharab raat bhar. Seriously though — series 3-1 jeet li. Champions Trophy ke liye squad confidence solid hai.',employee:'India jeeti. Office mein aaj sab cricket expert hain. Good — use karo. Retailer mood aaj extra good hoga. Cricket se conversation shuru karo, order size khud badh jaayega. Minimum effort, maximum result.',agent:'India ki jeet — sab khush hain aaj. Mandi mein bhi atmosphere acha rahega. Chhoti meetings aur baat-chit ke liye bahut acha din hai. Rishte banane ka sahi waqt.'}},
+  {cat:'Government',color:'#4F46E5',headline:'Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Mandi Upgrades Included',voices:{student:'2.1 lakh crore ka package announce kar diya. Implement kab karenge koi nahi jaanta. But for exams yeh important hai — PM GatiShakti se directly linked. Roads, mandis, cold storage sab hai ismein. Likh lo.',employee:'Rural infra spend announce ho gaya. Hamara rural beat abhi bhi under-served hai. Company bhi rural push karti hai but resources nahi deti properly. Yeh package real hai toh tier-3 territory gold ban jaayegi.',agent:'Sarkar ne mandi sudharne ke liye itne paise diye — seedha faayda hamare liye hai. Nayi mandi bhavan, cold storage, digital weighing — sab aane wala hai Kaithal jaise shaharon mein bhi. Bahut khushi ki baat hai.'}},
 ];
 
 function openModal(idx){
@@ -687,10 +644,8 @@ function openModal(idx){
   document.getElementById('modal-cat').textContent=s.cat;
   document.getElementById('modal-headline').textContent=s.headline;
   document.getElementById('modal-top-bar').style.background=s.color;
-  document.getElementById('mp-sf').textContent=s.voices['student-frustrated']||'';
-  document.getElementById('mp-sh').textContent=s.voices['student-happy']||'';
-  document.getElementById('mp-ef').textContent=s.voices['employee-frustrated']||'';
-  document.getElementById('mp-eh').textContent=s.voices['employee-happy']||'';
+  document.getElementById('mp-st').textContent=s.voices['student']||'';
+  document.getElementById('mp-em').textContent=s.voices['employee']||'';
   document.getElementById('mp-ag').textContent=s.voices['agent']||'';
   document.querySelectorAll('.modal-voice-panel').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.mvt').forEach(function(b){b.classList.remove('active');});
@@ -747,7 +702,7 @@ function frame(){
 resize();window.addEventListener('resize',resize);frame();
 
 var savedVoice=localStorage.getItem('db_voice');
-if(savedVoice)activateVoice(savedVoice);
+if(savedVoice&&['student','employee','agent'].indexOf(savedVoice)>=0)activateVoice(savedVoice);
 </script>
 </body>
 </html>
