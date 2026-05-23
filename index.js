@@ -8,6 +8,10 @@ const parser = new Parser({ timeout: 10000, headers: { 'User-Agent': 'Mozilla/5.
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// ── SUPABASE CONFIG ───────────────────────────────────────────────────────────
+const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
+const SUPA_KEY = process.env.SUPABASE_KEY || 'sb_publishable_mklkZ61P5MmwCA7UyIEOEQ_rmFbaV3k';
+
 // ── 16 CATEGORIES WITH RSS FEEDS ─────────────────────────────────────────────
 const RSS_FEEDS = {
   'Auto': [
@@ -80,70 +84,76 @@ const RSS_FEEDS = {
   ]
 };
 
-// ── 6 VOICE PROMPTS ───────────────────────────────────────────────────────────
+// ── 5 VOICE PROMPTS ───────────────────────────────────────────────────────────
 const VOICE_PROMPTS = {
-  student: {
-    label: 'Student',
-    icon: '🎓',
-    ending: 'Note kar lo',
-    prompt: `You are writing for Indian MBA/PGDM/B.Com students (20-24 years old) preparing for placements and competitive exams.
-Write in casual Hinglish (mix of Hindi and English). 2-3 sentences max.
-Give exam-relevant context, policy angles, and interview-worthy insight.
-End with: "Note kar lo" as a standalone line.
+
+  'student-frustrated': {
+    label: '🎓 Student',
+    color: '#4A7FE8',
+    bg: '#EEF4FF',
+    prompt: `You are texting a frustrated Indian student (20-24 years old) who is stressed about exams, placements, and life in general.
+They don't want to be taught. They want 10 minutes of relief and something to smile about.
+Write like their funniest, most relaxed friend who just read the news — casual Hinglish, warm, slightly funny.
+Find the most relatable or absurd angle in this news. Make them smile or go "yaar sahi hai."
+ONE sharp useful thing at the end — something they can actually use.
+Max 3 lines. No catchphrase at the end. End naturally like a WhatsApp message.
 Output ONLY the text, nothing else.`
   },
-  'field-sales': {
-    label: 'Field Sales',
-    icon: '🚴',
-    ending: 'Abhi move karo',
-    prompt: `You are writing for Indian FMCG field sales representatives doing daily beat plans in tier-2/3 cities.
-Write in casual Hinglish. 2-3 sentences max.
-Focus on: what this means for retailer conversations TODAY, stock decisions, customer pitch angles.
-Be action-oriented — tell them what to DO on their beat.
-End with: "Abhi move karo" as a standalone line.
+
+  'student-happy': {
+    label: '🎓 Student',
+    color: '#4A7FE8',
+    bg: '#EEF4FF',
+    prompt: `You are writing for an Indian student (20-24 years old) who is in a good mood today.
+Write in clear simple Hinglish. Explain what happened and why it matters for their career or studies.
+Give one interview or GD-worthy insight.
+Max 3 lines. Straightforward. Respectful. No forced jokes.
 Output ONLY the text, nothing else.`
   },
-  manager: {
-    label: 'Manager',
-    icon: '📋',
-    ending: 'Team ko brief karo',
-    prompt: `You are writing for Indian FMCG/Sales managers who brief their teams and make strategic decisions.
-Write in professional Hinglish or English. 2-3 sentences max.
-Focus on: business impact, team briefing angles, strategic implications, numbers where relevant.
-End with: "Team ko brief karo" as a standalone line.
+
+  'employee-frustrated': {
+    label: '💼 Employee',
+    color: '#D4521A',
+    bg: '#FFF4EE',
+    prompt: `You are texting a frustrated Indian FMCG employee who is having a tough week.
+Targets are not met. Manager is asking. Life is hard.
+Write like their street-smart colleague who just read the news on his chai break — punchy, slightly funny, real.
+Find what this news means for their actual work day TODAY. One action or one observation.
+Max 3 lines. Hinglish. No jargon. End naturally. No catchphrase.
 Output ONLY the text, nothing else.`
   },
-  fresher: {
-    label: 'Fresher',
-    icon: '🌱',
-    ending: 'Samajh ke rakhna',
-    prompt: `You are writing for freshers (0-1 year experience) just starting their careers in FMCG, sales, or business.
-Write in simple Hinglish. 2-3 sentences max.
-Explain the "why this matters" clearly. Help them connect news to their career world.
-End with: "Samajh ke rakhna" as a standalone line.
+
+  'employee-happy': {
+    label: '💼 Employee',
+    color: '#D4521A',
+    bg: '#FFF4EE',
+    prompt: `You are writing for an Indian FMCG employee who is having a good week — confident, open, ready to learn.
+Write in professional but warm Hinglish. Give them one sharp business insight from this news.
+What does this mean for their work, their market, their targets?
+Max 3 lines. Clean and direct. No fluff.
 Output ONLY the text, nothing else.`
   },
-  distributor: {
-    label: 'Distributor',
-    icon: '📦',
-    ending: 'Dhyan rakh',
-    prompt: `You are writing for Indian FMCG distributors who manage stock, credit, and retailer relationships.
-Write in simple Hinglish. 2-3 sentences max.
-Focus on: stock decisions, demand signals, credit/payment implications, supply chain impact.
-End with: "Dhyan rakh" as a standalone line.
-Output ONLY the text, nothing else.`
-  },
-  agent: {
-    label: 'Commission Agent',
-    icon: '🌾',
-    ending: 'Nazar rakhein',
-    prompt: `You are writing for Indian commission agents (arhatiya) who work in agricultural mandis and wholesale markets.
-Write in simple, clear Hindi (Devanagari script is fine, but use simple words). 2-3 sentences max.
-Focus on: mandi impact, trade implications, credit flow, seasonal angles relevant to agricultural markets.
-End with: "Nazar rakhein" as a standalone line.
+
+  'agent': {
+    label: '🌾 Commission Agent',
+    color: '#C94A1A',
+    bg: '#FEF3EE',
+    prompt: `You are writing for an Indian commission agent (arhatiya) in their late 40s who works at a mandi or wholesale market.
+Write in very simple, easy Hinglish — the kind of language used at a chai stall near the mandi.
+No English business words. No jargon. Short sentences.
+Tell them ONE thing from this news that affects their trade, their buyers, or the market price.
+Max 2-3 lines. Warm and honest. Like a trusted friend at the mandi telling them something useful.
 Output ONLY the text, nothing else.`
   }
 };
+
+// ── GET VOICE KEY FROM IDENTITY + MOOD ───────────────────────────────────────
+function getVoiceKey(identity, mood) {
+  if (identity === 'agent') return 'agent';
+  if (identity === 'student') return mood === 'happy' ? 'student-happy' : 'student-frustrated';
+  if (identity === 'employee') return mood === 'happy' ? 'employee-happy' : 'employee-frustrated';
+  return 'student-frustrated';
+}
 
 // ── FETCH RSS FEED ────────────────────────────────────────────────────────────
 async function fetchFeed(url) {
@@ -176,24 +186,20 @@ async function generateVoice(title, summary, voiceKey) {
     return completion.choices[0]?.message?.content?.trim() || '';
   } catch (err) {
     console.log(`⚠️  Groq failed for ${voiceKey}: ${err.message}`);
-    return `${title} — ${voice.ending}`;
+    return summary.slice(0, 150);
   }
 }
 
-// ── GENERATE ALL 6 VOICES FOR ONE ARTICLE ────────────────────────────────────
+// ── GENERATE ALL 5 VOICES FOR ONE ARTICLE ────────────────────────────────────
 async function generateAllVoices(title, summary) {
   const voiceKeys = Object.keys(VOICE_PROMPTS);
   const voices = {};
-
-  // Run all 6 in parallel
   const results = await Promise.allSettled(
     voiceKeys.map(key => generateVoice(title, summary, key))
   );
-
   voiceKeys.forEach((key, i) => {
-    voices[key] = results[i].status === 'fulfilled' ? results[i].value : `${title}`;
+    voices[key] = results[i].status === 'fulfilled' ? results[i].value : summary.slice(0, 150);
   });
-
   return voices;
 }
 
@@ -201,110 +207,149 @@ async function generateAllVoices(title, summary) {
 async function processCategory(category, urls) {
   console.log(`\n📰 Processing: ${category}`);
   const allItems = [];
-
   for (const url of urls) {
     const items = await fetchFeed(url);
     allItems.push(...items);
   }
-
   if (allItems.length === 0) {
     console.log(`   No items found for ${category}`);
     return null;
   }
-
-  // Take the best article (first one with decent title + summary)
   const best = allItems.find(i => i.title && i.summary && i.summary.length > 50) || allItems[0];
-
   if (!best || !best.title) return null;
-
-  console.log(`   ✓ Article: ${best.title.slice(0, 60)}...`);
-  console.log(`   Generating 6 voices via Groq...`);
-
+  console.log(`   ✓ ${best.title.slice(0, 60)}...`);
   const voices = await generateAllVoices(best.title, best.summary);
-
-  console.log(`   ✓ All 6 voices generated`);
-
-  return {
-    category,
-    headline: best.title,
-    link: best.link,
-    pubDate: best.pubDate,
-    voices
-  };
+  console.log(`   ✓ All 5 voices generated`);
+  return { category, headline: best.title, link: best.link, pubDate: best.pubDate, voices };
 }
 
-// ── BUILD EMAIL HTML ──────────────────────────────────────────────────────────
-function buildEmailHTML(stories, date) {
-  const voiceInfo = VOICE_PROMPTS;
+// ── FETCH ALL ACTIVE SUBSCRIBERS FROM SUPABASE ────────────────────────────────
+async function fetchSubscribers() {
+  try {
+    const res = await fetch(
+      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,identity,mood`,
+      {
+        headers: {
+          'apikey': SUPA_KEY,
+          'Authorization': `Bearer ${SUPA_KEY}`
+        }
+      }
+    );
+    if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+    const data = await res.json();
+    console.log(`✅ ${data.length} active subscribers fetched`);
+    return data;
+  } catch (err) {
+    console.log(`❌ Failed to fetch subscribers: ${err.message}`);
+    if (process.env.MY_EMAIL) {
+      return [{ email: process.env.MY_EMAIL, name: 'Ayush', identity: 'student', mood: 'frustrated' }];
+    }
+    return [];
+  }
+}
+
+// ── BUILD EMAIL HTML FOR ONE SUBSCRIBER ──────────────────────────────────────
+function buildEmailHTML(stories, date, subscriber) {
+  const { name, identity, mood } = subscriber;
+  const voiceKey = getVoiceKey(identity, mood);
+  const voice = VOICE_PROMPTS[voiceKey];
+  const firstName = (name || 'friend').split(' ')[0];
   const topStories = stories.slice(0, 6);
 
-  const storyCards = topStories.map(s => `
+  const greetings = {
+    'student-frustrated': `Yaar ${firstName}, ek dum chill kar — aaj ki brief padh aur 10 minute ke liye sab bhool ja.`,
+    'student-happy': `Good morning ${firstName}! Aaj ki brief — sharp aur useful.`,
+    'employee-frustrated': `Aye ${firstName}, chai le aur yeh padh — aaj ki brief mein kuch kaam ki cheezein hain.`,
+    'employee-happy': `Good morning ${firstName}! Aaj ka brief — teri morning ka best 7 minutes.`,
+    'agent': `${firstName} bhai, aaj ki zaroori khabrein — mandi ke kaam ki.`
+  };
+
+  const greeting = greetings[voiceKey] || `Good morning ${firstName}!`;
+
+  const moodToggle = identity !== 'agent'
+    ? `<p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.35);">
+        Reading in <strong style="color:rgba(255,255,255,.5);">${mood === 'frustrated' ? 'Fun' : 'Normal'} mode</strong> &nbsp;·&nbsp;
+        <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">Switch mood on website</a>
+       </p>`
+    : '';
+
+  const storyCards = topStories.map(s => {
+    const voiceText = s.voices[voiceKey] || s.headline;
+    return `
     <tr>
-      <td style="padding:0 0 24px 0;">
+      <td style="padding:0 0 16px 0;">
         <table width="100%" cellpadding="0" cellspacing="0" border="0"
-          style="background:#FFFFFF;border-radius:12px;border:1px solid #E8DCC8;overflow:hidden;">
+          style="background:#0C0C18;border-radius:12px;border:.5px solid rgba(255,255,255,.07);overflow:hidden;">
+          <tr><td style="height:2px;background:linear-gradient(90deg,#2979FF,#00B4FF);"></td></tr>
           <tr>
-            <td style="height:4px;background:#E8A200;"></td>
-          </tr>
-          <tr>
-            <td style="padding:20px 24px;">
-              <p style="margin:0 0 8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#D4521A;font-weight:700;">${s.category}</p>
-              <h3 style="margin:0 0 16px;font-family:Georgia,serif;font-size:18px;color:#1A1208;line-height:1.3;">${s.headline}</h3>
+            <td style="padding:18px 22px;">
+              <p style="margin:0 0 8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(92,200,255,.55);font-weight:600;">${s.category}</p>
+              <h3 style="margin:0 0 12px;font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,.9);line-height:1.4;">${s.headline}</h3>
               <table width="100%" cellpadding="0" cellspacing="0" border="0"
-                style="background:#EEF4FF;border-radius:8px;border-left:3px solid #4A7FE8;">
+                style="background:${voice.bg};border-radius:8px;border-left:3px solid ${voice.color};">
                 <tr>
-                  <td style="padding:14px 16px;">
-                    <p style="margin:0 0 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#4A7FE8;font-weight:700;">🎓 Student Voice</p>
-                    <p style="margin:0;font-size:14px;color:#1A1208;line-height:1.65;">${s.voices.student}</p>
+                  <td style="padding:12px 14px;">
+                    <p style="margin:0 0 5px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:${voice.color};font-weight:700;">${voice.label}</p>
+                    <p style="margin:0;font-size:14px;color:#1A1208;line-height:1.7;">${voiceText}</p>
                   </td>
                 </tr>
               </table>
-              <p style="margin:12px 0 0;">
-                <a href="${s.link}" style="color:#E8A200;font-size:13px;font-weight:600;text-decoration:none;">Read full story →</a>
+              <p style="margin:10px 0 0;">
+                <a href="${s.link}" style="color:#5CC8FF;font-size:12px;font-weight:600;text-decoration:none;">Read full story →</a>
               </p>
             </td>
           </tr>
         </table>
       </td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 
   return `<!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#F5EDD8;font-family:'DM Sans',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F5EDD8;padding:24px 0;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body style="margin:0;padding:0;background:#07070F;font-family:-apple-system,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#07070F;padding:24px 0;">
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
 
-        <!-- HEADER -->
+        <tr><td style="height:1.5px;background:linear-gradient(90deg,transparent,#5CC8FF,#fff,#5CC8FF,transparent);"></td></tr>
+
         <tr>
-          <td style="background:#0D0A05;border-radius:16px 16px 0 0;padding:32px 32px 28px;text-align:center;">
-            <p style="margin:0 0 8px;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#E8A200;">Daily Intelligence</p>
-            <h1 style="margin:0 0 8px;font-family:Georgia,serif;font-size:32px;font-weight:900;color:#E8A200;">☀ The Dawn Brief</h1>
-            <p style="margin:0;font-size:14px;color:rgba(255,255,255,0.4);">${date} · India's Morning Intelligence</p>
+          <td style="background:#07070F;border-radius:16px 16px 0 0;padding:28px 32px 20px;text-align:center;border:.5px solid rgba(255,255,255,.05);">
+            <p style="margin:0 0 6px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(92,200,255,.5);">Daily Intelligence · India</p>
+            <h1 style="margin:0 0 6px;font-family:Georgia,serif;font-size:28px;font-weight:900;color:#E8C558;">☀ The Dawn Brief</h1>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,.35);">${date}</p>
+            ${moodToggle}
           </td>
         </tr>
 
-        <!-- BODY -->
         <tr>
-          <td style="background:#FAF6EE;padding:32px;">
-            <p style="margin:0 0 24px;font-size:15px;color:#5C4A2A;line-height:1.6;">
-              Good morning. Here are today's most important stories — written in your voice.
-            </p>
+          <td style="background:#0C0C18;padding:18px 32px;border-left:.5px solid rgba(255,255,255,.05);border-right:.5px solid rgba(255,255,255,.05);">
+            <p style="margin:0;font-size:14px;color:rgba(255,255,255,.7);line-height:1.65;">${greeting}</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="background:#07070F;padding:20px 32px;border:.5px solid rgba(255,255,255,.05);border-top:none;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               ${storyCards}
             </table>
           </td>
         </tr>
 
-        <!-- FOOTER -->
         <tr>
-          <td style="background:#0D0A05;border-radius:0 0 16px 16px;padding:24px 32px;text-align:center;">
-            <p style="margin:0 0 8px;font-family:Georgia,serif;font-size:18px;color:#E8A200;">☀ The Dawn Brief</p>
-            <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.3);">
-              India's daily intelligence · Built by Ayush Bansal · Kaithal, Haryana<br>
-              <a href="https://ayushbrief.online" style="color:#E8A200;">ayushbrief.online</a>
+          <td style="background:#07070F;border-radius:0 0 16px 16px;padding:20px 32px;text-align:center;border:.5px solid rgba(255,255,255,.05);border-top:none;">
+            <p style="margin:0 0 4px;font-family:Georgia,serif;font-size:15px;color:#E8C558;">☀ The Dawn Brief</p>
+            <p style="margin:0 0 10px;font-size:11px;color:rgba(255,255,255,.2);">Built by Ayush Bansal · Kaithal, Haryana</p>
+            <p style="margin:0;font-size:11px;color:rgba(255,255,255,.2);">
+              <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">ayushbrief.online</a>
+              &nbsp;·&nbsp;
+              <a href="https://ayushbrief.online" style="color:rgba(255,255,255,.2);text-decoration:none;">Change mood</a>
+              &nbsp;·&nbsp;
+              <a href="https://ayushbrief.online" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
             </p>
           </td>
         </tr>
@@ -316,6 +361,39 @@ function buildEmailHTML(stories, date) {
 </html>`;
 }
 
+// ── SEND EMAIL TO ONE SUBSCRIBER ──────────────────────────────────────────────
+async function sendToSubscriber(subscriber, stories, date) {
+  const { email, identity, mood } = subscriber;
+  const voiceKey = getVoiceKey(identity, mood);
+
+  const subjects = {
+    'student-frustrated': `☀ Yaar sun — aaj ki brief aai hai`,
+    'student-happy':      `☀ The Dawn Brief — ${date}`,
+    'employee-frustrated':`☀ Chai le aur padh — aaj ki brief`,
+    'employee-happy':     `☀ The Dawn Brief — ${date}`,
+    'agent':              `☀ Aaj ki zaroori khabrein — The Dawn Brief`
+  };
+
+  const subject = subjects[voiceKey] || `☀ The Dawn Brief — ${date}`;
+
+  try {
+    const html = buildEmailHTML(stories, date, subscriber);
+    const { data, error } = await resend.emails.send({
+      from: 'The Dawn Brief <newsletter@ayushbrief.online>',
+      to: [email],
+      subject,
+      html
+    });
+    if (error) {
+      console.log(`❌ Failed for ${email}: ${JSON.stringify(error)}`);
+    } else {
+      console.log(`✅ Sent → ${email} [${identity}/${mood || 'no-mood'}] ID: ${data?.id}`);
+    }
+  } catch (err) {
+    console.log(`❌ Error for ${email}: ${err.message}`);
+  }
+}
+
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('\n🌅 The Dawn Brief — Starting build...');
@@ -325,63 +403,46 @@ async function main() {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  const stories = [];
+  // Step 1 — Subscribers
+  console.log('\n👥 Fetching subscribers from Supabase...');
+  const subscribers = await fetchSubscribers();
+  if (subscribers.length === 0) { console.log('❌ No subscribers. Exiting.'); return; }
 
-  // Process all 16 categories
+  // Step 2 — News
+  console.log('\n📰 Fetching news...');
+  const stories = [];
   for (const [category, urls] of Object.entries(RSS_FEEDS)) {
     try {
       const story = await processCategory(category, urls);
       if (story) stories.push(story);
-      // Small delay to be polite to RSS servers
       await new Promise(r => setTimeout(r, 500));
     } catch (err) {
-      console.log(`❌ Failed: ${category} — ${err.message}`);
+      console.log(`❌ ${category}: ${err.message}`);
     }
   }
-
   console.log(`\n✅ ${stories.length} stories processed`);
 
-  // Save data.json for the website to fetch
-  const dataOutput = {
-    generated: new Date().toISOString(),
-    date,
-    stories
-  };
-
+  // Step 3 — Save data.json
   fs.writeFileSync(
     path.join(__dirname, 'data.json'),
-    JSON.stringify(dataOutput, null, 2)
+    JSON.stringify({ generated: new Date().toISOString(), date, totalStories: stories.length, stories }, null, 2)
   );
   console.log('✅ data.json saved');
 
-  // Send email if stories exist
-  if (stories.length > 0 && process.env.MY_EMAIL) {
-    try {
-      console.log('\n📧 Sending email via Resend...');
-      const emailHTML = buildEmailHTML(stories, date);
-
-      const { data, error } = await resend.emails.send({
-        from: 'The Dawn Brief <newsletter@ayushbrief.online>',
-        to: [process.env.MY_EMAIL],
-        subject: `☀ The Dawn Brief — ${date}`,
-        html: emailHTML
-      });
-
-      if (error) {
-        console.log('❌ Email error:', error);
-      } else {
-        console.log('✅ Email sent! ID:', data?.id);
-      }
-    } catch (err) {
-      console.log('❌ Email failed:', err.message);
+  // Step 4 — Send personalised emails
+  if (stories.length > 0) {
+    console.log(`\n📧 Sending to ${subscribers.length} subscribers...`);
+    console.log('─'.repeat(50));
+    for (const subscriber of subscribers) {
+      await sendToSubscriber(subscriber, stories, date);
+      await new Promise(r => setTimeout(r, 300));
     }
+    console.log('─'.repeat(50));
+    console.log('✅ All emails sent');
   }
 
   console.log('\n🌅 Build complete!');
   console.log('='.repeat(50));
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+main().catch(err => { console.error('Fatal error:', err); process.exit(1); });
