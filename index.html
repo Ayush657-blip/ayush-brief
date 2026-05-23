@@ -1,1638 +1,753 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Dawn Brief — India's Daily Intelligence</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ===== ROOT VARIABLES ===== */
-    :root {
-      --dawn-gold: #E8A200;
-      --dawn-amber: #F4C04A;
-      --dawn-orange: #D4521A;
-      --dawn-deep: #0D0A05;
-      --dawn-ink: #1A1208;
-      --dawn-dusk: #2C1F0A;
-      --dawn-mist: #F5EDD8;
-      --dawn-paper: #FAF6EE;
-      --dawn-sky: #8BA7C7;
-      --text-primary: #1A1208;
-      --text-secondary: #5C4A2A;
-      --text-muted: #9A8060;
-      --card-bg: #FFFFFF;
-      --border: #E8DCC8;
-      --tag-bg: #FFF8EC;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--dawn-paper);
-      color: var(--text-primary);
-      overflow-x: hidden;
-    }
-
-    /* ===== ONBOARDING OVERLAY ===== */
-    #onboarding-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(13, 10, 5, 0.96);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(8px);
-    }
-
-    #onboarding-overlay.hidden { display: none; }
-
-    .onboarding-box {
-      background: var(--dawn-paper);
-      border-radius: 20px;
-      padding: 48px 40px;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-      border: 1px solid var(--border);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-    }
-
-    .onboarding-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--dawn-gold);
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .onboarding-step { display: none; }
-    .onboarding-step.active { display: block; }
-
-    .onboarding-step h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--dawn-ink);
-      margin: 20px 0 8px;
-      line-height: 1.3;
-    }
-
-    .onboarding-step p {
-      color: var(--text-secondary);
-      font-size: 15px;
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-
-    .ob-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      font-size: 16px;
-      font-family: 'DM Sans', sans-serif;
-      background: white;
-      color: var(--text-primary);
-      outline: none;
-      transition: border-color 0.2s;
-      margin-bottom: 16px;
-    }
-
-    .ob-input:focus { border-color: var(--dawn-gold); }
-
-    .ob-btn {
-      width: 100%;
-      padding: 15px;
-      background: var(--dawn-gold);
-      color: var(--dawn-ink);
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
-
-    .ob-btn:hover { background: var(--dawn-amber); transform: translateY(-1px); }
-
-    .role-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .role-btn {
-      padding: 16px 12px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      background: white;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-align: center;
-    }
-
-    .role-btn .role-icon { font-size: 24px; display: block; margin-bottom: 6px; }
-
-    .role-btn:hover {
-      border-color: var(--dawn-gold);
-      background: var(--tag-bg);
-      color: var(--text-primary);
-    }
-
-    /* Welcome screen */
-    .welcome-screen {
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    .welcome-sun {
-      font-size: 60px;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.08); opacity: 0.9; }
-    }
-
-    .welcome-screen h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      margin: 16px 0 8px;
-      color: var(--dawn-ink);
-    }
-
-    .welcome-screen p { color: var(--text-secondary); font-size: 15px; }
-
-    /* ===== PERSONALIZED BANNER ===== */
-    #personalized-banner {
-      display: none;
-      background: linear-gradient(135deg, var(--dawn-gold) 0%, var(--dawn-amber) 100%);
-      padding: 12px 24px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--dawn-ink);
-    }
-
-    #personalized-banner.show { display: block; }
-
-    /* ===== NAVBAR ===== */
-    .navbar {
-      background: var(--dawn-deep);
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(232,162,0,0.2);
-    }
-
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--dawn-gold);
-      letter-spacing: 0.5px;
-      text-decoration: none;
-    }
-
-    .nav-logo span {
-      color: rgba(255,255,255,0.4);
-      font-weight: 300;
-      font-size: 13px;
-      margin-left: 12px;
-      font-family: 'DM Sans', sans-serif;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .nav-right { display: flex; align-items: center; gap: 20px; }
-
-    .nav-subscribe-btn {
-      background: var(--dawn-gold);
-      color: var(--dawn-ink);
-      border: none;
-      padding: 9px 20px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .nav-subscribe-btn:hover { background: var(--dawn-amber); transform: translateY(-1px); }
-
-    #voice-indicator {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      background: rgba(232,162,0,0.1);
-      border: 1px solid rgba(232,162,0,0.3);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 13px;
-      color: var(--dawn-gold);
-      font-weight: 500;
-    }
-
-    #voice-indicator.show { display: flex; }
-    #voice-indicator .dot { width: 7px; height: 7px; background: var(--dawn-gold); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    /* ===== HERO ===== */
-    .hero {
-      background: linear-gradient(180deg, var(--dawn-deep) 0%, var(--dawn-dusk) 60%, var(--dawn-paper) 100%);
-      padding: 80px 32px 64px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(232,162,0,0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-sun {
-      font-size: 56px;
-      margin-bottom: 20px;
-      display: block;
-      animation: rise 1s ease-out;
-    }
-
-    @keyframes rise {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--dawn-gold);
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 6vw, 68px);
-      font-weight: 900;
-      color: white;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--dawn-gold);
-    }
-
-    .hero-sub {
-      color: rgba(255,255,255,0.55);
-      font-size: 17px;
-      max-width: 520px;
-      margin: 0 auto 36px;
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    .hero-date {
-      display: inline-block;
-      background: rgba(232,162,0,0.1);
-      border: 1px solid rgba(232,162,0,0.3);
-      color: var(--dawn-amber);
-      font-size: 13px;
-      padding: 6px 18px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-    }
-
-    /* ===== CATEGORIES ===== */
-    .categories-bar {
-      background: white;
-      border-bottom: 1px solid var(--border);
-      padding: 0 32px;
-      overflow-x: auto;
-      white-space: nowrap;
-      scrollbar-width: none;
-      position: sticky;
-      top: 64px;
-      z-index: 90;
-    }
-
-    .categories-bar::-webkit-scrollbar { display: none; }
-
-    .cat-btn {
-      display: inline-block;
-      padding: 16px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-      white-space: nowrap;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .cat-btn:hover { color: var(--text-primary); }
-    .cat-btn.active { color: var(--dawn-gold); border-bottom-color: var(--dawn-gold); font-weight: 600; }
-
-    /* ===== MAIN CONTENT ===== */
-    .main-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 48px 32px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--dawn-ink);
-    }
-
-    .section-header .section-tag {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    /* ===== NEWS GRID ===== */
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 48px;
-    }
-
-    @media (max-width: 900px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .news-grid { grid-template-columns: 1fr; } }
-
-    /* ===== STORY CARD ===== */
-    .story-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.25s, box-shadow 0.25s;
-      position: relative;
-    }
-
-    .story-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
-    }
-
-    .card-category-bar {
-      height: 4px;
-    }
-
-    .card-body { padding: 20px; }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .card-cat-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 3px 10px;
-      border-radius: 4px;
-      background: var(--tag-bg);
-      color: var(--dawn-orange);
-    }
-
-    .card-time {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .card-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--dawn-ink);
-      line-height: 1.35;
-      margin-bottom: 14px;
-    }
-
-    /* ===== THE VOICE SYSTEM — CORE ===== */
-    /*
-      All 6 voices are ALWAYS in the DOM.
-      Only the active voice class is shown.
-      Switching is ONE line of JS — cannot fail.
-      No fetch, no API, no timing issues.
-    */
-
-    .voice { display: none; }
-    .voice.active { display: block; }
-
-    /* Voice bubble styling */
-    .voice-content {
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 14px;
-      line-height: 1.65;
-      position: relative;
-      margin-bottom: 14px;
-    }
-
-    .voice-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      opacity: 0.7;
-    }
-
-    .voice-text { color: var(--text-primary); }
-
-    .voice-ending {
-      display: inline-block;
-      margin-top: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-
-    /* Voice-specific colors */
-    .voice.student .voice-content { background: #EEF4FF; border-left: 3px solid #4A7FE8; }
-    .voice.student .voice-label { color: #4A7FE8; }
-    .voice.student .voice-ending { background: #4A7FE8; color: white; }
-
-    .voice.field-sales .voice-content { background: #FFF4EE; border-left: 3px solid var(--dawn-orange); }
-    .voice.field-sales .voice-label { color: var(--dawn-orange); }
-    .voice.field-sales .voice-ending { background: var(--dawn-orange); color: white; }
-
-    .voice.manager .voice-content { background: #EEFAF4; border-left: 3px solid #2EA869; }
-    .voice.manager .voice-label { color: #2EA869; }
-    .voice.manager .voice-ending { background: #2EA869; color: white; }
-
-    .voice.fresher .voice-content { background: #F5EEFF; border-left: 3px solid #8B5CF6; }
-    .voice.fresher .voice-label { color: #8B5CF6; }
-    .voice.fresher .voice-ending { background: #8B5CF6; color: white; }
-
-    .voice.distributor .voice-content { background: #FFF9EE; border-left: 3px solid var(--dawn-gold); }
-    .voice.distributor .voice-label { color: var(--dawn-gold); }
-    .voice.distributor .voice-ending { background: var(--dawn-gold); color: var(--dawn-ink); }
-
-    .voice.agent .voice-content {
-      background: #FEF3EE;
-      border-left: 3px solid #C94A1A;
-      font-family: 'Noto Sans Devanagari', 'DM Sans', sans-serif;
-    }
-    .voice.agent .voice-label { color: #C94A1A; }
-    .voice.agent .voice-ending { background: #C94A1A; color: white; }
-
-    .card-readmore {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--dawn-gold);
-    }
-
-    .card-readmore::after { content: '→'; }
-
-    /* ===== VOICE DEMO SECTION ===== */
-    .voice-demo {
-      background: var(--dawn-deep);
-      border-radius: 20px;
-      padding: 48px;
-      margin-bottom: 48px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .voice-demo::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(232,162,0,0.07) 0%, transparent 70%);
-    }
-
-    .voice-demo h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 30px;
-      color: white;
-      margin-bottom: 8px;
-    }
-
-    .voice-demo p {
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 28px;
-      font-size: 15px;
-    }
-
-    .voice-tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .voice-tab {
-      padding: 9px 18px;
-      border: 1px solid rgba(232,162,0,0.3);
-      border-radius: 20px;
-      background: transparent;
-      color: rgba(255,255,255,0.55);
-      font-size: 13px;
-      font-weight: 500;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .voice-tab:hover { border-color: var(--dawn-gold); color: var(--dawn-gold); }
-    .voice-tab.active { background: var(--dawn-gold); border-color: var(--dawn-gold); color: var(--dawn-ink); font-weight: 700; }
-
-    .demo-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 24px;
-    }
-
-    .demo-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      color: white;
-      margin-bottom: 16px;
-    }
-
-    .demo-voice { display: none; }
-    .demo-voice.active { display: block; }
-
-    .demo-voice-content {
-      padding: 16px;
-      border-radius: 10px;
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .demo-ending {
-      margin-top: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      font-style: italic;
-    }
-
-    /* ===== HOW IT WORKS ===== */
-    .how-section {
-      margin-bottom: 64px;
-    }
-
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 28px;
-    }
-
-    @media (max-width: 700px) { .how-grid { grid-template-columns: 1fr; } }
-
-    .how-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px 24px;
-    }
-
-    .how-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 40px;
-      font-weight: 900;
-      color: var(--dawn-gold);
-      opacity: 0.4;
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-
-    .how-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      margin-bottom: 8px;
-      color: var(--dawn-ink);
-    }
-
-    .how-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
-
-    /* ===== MODAL ===== */
-    #story-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(13,10,5,0.85);
-      z-index: 500;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      backdrop-filter: blur(6px);
-    }
-
-    #story-modal.open { display: flex; }
-
-    .modal-box {
-      background: var(--dawn-paper);
-      border-radius: 20px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 36px 32px;
-      position: relative;
-      border: 1px solid var(--border);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: var(--border);
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-secondary);
-    }
-
-    .modal-cat { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--dawn-orange); font-weight: 700; margin-bottom: 12px; }
-
-    .modal-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 20px;
-      color: var(--dawn-ink);
-    }
-
-    .modal-voice-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-
-    .mvt {
-      padding: 7px 14px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      background: white;
-      color: var(--text-secondary);
-      transition: all 0.2s;
-    }
-
-    .mvt.active { background: var(--dawn-gold); border-color: var(--dawn-gold); color: var(--dawn-ink); }
-
-    .modal-voice-content { font-size: 15px; line-height: 1.75; color: var(--text-primary); }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--dawn-deep);
-      padding: 48px 32px 32px;
-      text-align: center;
-    }
-
-    footer .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--dawn-gold);
-      margin-bottom: 12px;
-    }
-
-    footer p {
-      color: rgba(255,255,255,0.3);
-      font-size: 13px;
-      margin-bottom: 24px;
-    }
-
-    footer .footer-links {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-
-    footer .footer-links a {
-      color: rgba(255,255,255,0.4);
-      text-decoration: none;
-      font-size: 13px;
-      transition: color 0.2s;
-    }
-
-    footer .footer-links a:hover { color: var(--dawn-gold); }
-
-    footer .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 24px;
-      color: rgba(255,255,255,0.2);
-      font-size: 12px;
-    }
-
-    /* ===== CATEGORY BAR COLORS ===== */
-    [data-cat="Auto"] { background: #E8691A; }
-    [data-cat="Business"] { background: #2563EB; }
-    [data-cat="Finance"] { background: #059669; }
-    [data-cat="Tech"] { background: #7C3AED; }
-    [data-cat="Sports"] { background: #DC2626; }
-    [data-cat="Indian Economy"] { background: #D97706; }
-    [data-cat="Science"] { background: #0891B2; }
-    [data-cat="Government"] { background: #4F46E5; }
-    [data-cat="Climate"] { background: #16A34A; }
-    [data-cat="Entertainment"] { background: #DB2777; }
-    [data-cat="International"] { background: #1D4ED8; }
-    [data-cat="Lifestyle"] { background: #EC4899; }
-    [data-cat="Media"] { background: #9333EA; }
-    [data-cat="Real Estate"] { background: #B45309; }
-    [data-cat="Culture"] { background: #0F766E; }
-    [data-cat="Travel"] { background: #0369A1; }
-
-    /* ===== UTILITIES ===== */
-    .hidden { display: none !important; }
-
-    /* ===== CATEGORY FILTER ===== */
-    .story-card[data-category] { transition: opacity 0.3s, transform 0.3s; }
-    .story-card.filtered-out { display: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dawn Brief — India's Daily Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07070F;--bg2:#0C0C1A;--bg3:#10101E;
+  --blue:#2979FF;--blue-b:#00B4FF;--blue-p:#5CC8FF;
+  --gold-d:#B8902A;--gold-m:#E8C558;--gold-l:#FFE878;
+  --red:#FF4D6D;--green:#00C896;
+  --w:#fff;--w9:rgba(255,255,255,.9);--w7:rgba(255,255,255,.7);
+  --w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--w1:rgba(255,255,255,.1);
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+}
+html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes modal-in{from{opacity:0;transform:translateY(20px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes wlc-scale{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(0,180,255,.2) 10%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,rgba(0,180,255,.2) 90%,transparent 100%);}
+.glow-a{position:fixed;top:-100px;left:0;right:0;height:320px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 200px at 50% 0%,rgba(0,90,255,.18) 0%,transparent 100%);}
+.glow-b{position:fixed;top:-20px;left:50%;transform:translateX(-50%);width:520px;height:140px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(41,121,255,.35) 0%,transparent 70%);filter:blur(10px);}
+#particles{position:fixed;top:0;left:0;width:100%;height:220px;z-index:1;pointer-events:none;}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
+.logo-text{display:flex;align-items:baseline;gap:5px;}
+.logo-the,.logo-brief{font-family:'Cormorant SC',serif;font-size:10px;font-weight:400;letter-spacing:.22em;color:rgba(220,185,100,.7);}
+.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;background:linear-gradient(90deg,#C8960E 0%,#F0C830 25%,#FFE878 50%,#F0C830 75%,#C8960E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;backdrop-filter:blur(20px);background:rgba(7,7,15,.8);border-bottom:.5px solid rgba(255,255,255,.06);}
+.nav-right{display:flex;align-items:center;gap:24px;}
+.nav-link{font-size:13px;color:var(--w5);cursor:pointer;transition:color .2s;}
+.nav-link:hover{color:var(--w9);}
+.nav-cta{padding:9px 22px;border-radius:100px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.nav-cta:hover{background:var(--blue-b);}
+#voice-pill{display:none;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);font-size:12px;color:var(--blue-p);}
+#voice-pill.show{display:flex;}
+#voice-pill .vp-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;}
+#hp{transition:opacity .4s;}
+#hp.hide{opacity:0;pointer-events:none;}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 48px 80px;position:relative;z-index:5;}
+.hero-bg{position:absolute;inset:0;z-index:0;background-image:url('https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1920&q=80');background-size:cover;background-position:center;opacity:.08;pointer-events:none;}
+.hero-bg-fade{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(7,7,15,.4) 0%,rgba(7,7,15,.7) 60%,rgba(7,7,15,1) 100%);pointer-events:none;}
+.hero>*:not(.hero-bg):not(.hero-bg-fade){position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-p);border:.5px solid rgba(92,200,255,.25);background:rgba(41,121,255,.07);padding:6px 16px;border-radius:100px;margin-bottom:28px;}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--blue-b);box-shadow:0 0 6px var(--blue-b);animation:blink 2s infinite;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,80px);font-weight:300;font-style:italic;letter-spacing:-.02em;line-height:1.05;color:var(--w);margin-bottom:10px;max-width:800px;}
+.hero-h1 em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l),var(--gold-m),var(--gold-d));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:16px;color:var(--w5);line-height:1.75;max-width:500px;font-weight:300;margin-bottom:40px;}
+.hero-sub b{color:var(--w7);font-weight:400;}
+.hero-cta{padding:16px 40px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.02em;transition:background .2s;}
+.hero-cta:hover{background:var(--blue-b);}
+.hero-diff{display:flex;align-items:flex-start;margin-top:56px;padding-top:44px;border-top:.5px solid var(--border);width:100%;max-width:760px;}
+.diff-card{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:0 20px;}
+.diff-icon{font-size:22px;}
+.diff-title{font-size:13px;font-weight:500;color:var(--w9);}
+.diff-body{font-size:11.5px;color:var(--w3);line-height:1.6;}
+.diff-div{width:.5px;height:80px;background:var(--border);flex-shrink:0;align-self:center;}
+.ticker-wrap{background:rgba(41,121,255,.07);border-top:.5px solid rgba(92,200,255,.1);border-bottom:.5px solid rgba(92,200,255,.1);overflow:hidden;padding:10px 0;position:relative;z-index:5;}
+.ticker-inner{display:flex;animation:ticker 30s linear infinite;white-space:nowrap;}
+.ti{padding:0 36px;font-size:11px;color:var(--blue-p);letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px;}
+.ts{width:4px;height:4px;border-radius:50%;background:rgba(92,200,255,.35);flex-shrink:0;}
+#pers-banner{display:none;position:relative;z-index:5;padding:10px 52px;background:rgba(41,121,255,.06);border-bottom:.5px solid rgba(92,200,255,.1);}
+#pers-banner.show{display:flex;align-items:center;gap:10px;}
+.pb-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;}
+.pb-text{font-size:12px;color:var(--blue-p);}
+.pb-badge{font-size:11px;padding:2px 10px;border-radius:100px;background:rgba(41,121,255,.15);border:.5px solid rgba(92,200,255,.25);color:var(--blue-p);}
+.pb-mood{font-size:12px;color:var(--w5);}
+.pb-switch{font-size:11px;color:var(--w3);cursor:pointer;margin-left:auto;transition:color .2s;}
+.pb-switch:hover{color:var(--w7);}
+.cat-tabs-wrap{position:relative;z-index:5;overflow:hidden;}
+.cat-tabs{display:flex;gap:8px;overflow-x:auto;padding:16px 52px;scrollbar-width:none;}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{flex-shrink:0;padding:7px 16px;border-radius:100px;font-size:12px;border:.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;background:transparent;outline:none;}
+.cat-tab:hover{border-color:rgba(92,200,255,.3);color:rgba(255,255,255,.8);}
+.cat-tab.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.4);color:var(--blue-p);font-weight:500;}
+.cat-fade{position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(to left,var(--bg) 40%,transparent);pointer-events:none;z-index:2;}
+.news-section{max-width:1100px;margin:0 auto;padding:32px 52px 80px;position:relative;z-index:5;}
+.news-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;}
+.news-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:6px;}
+.news-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;font-style:italic;color:var(--w);}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.news-grid{grid-template-columns:1fr;}.cat-tabs{padding:12px 20px;}.news-section{padding:24px 20px 60px;}nav{padding:0 20px;}.hero{padding:100px 24px 60px;}.si{padding:0 24px;}}
+.story-card{background:var(--bg2);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;display:flex;flex-direction:column;}
+.story-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4);border-color:rgba(92,200,255,.25);}
+.story-card.filtered-out{display:none;}
+.card-top-bar{height:3px;width:100%;}
+.card-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+.card-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.card-cat{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:100px;background:rgba(92,200,255,.08);border:.5px solid rgba(92,200,255,.2);color:var(--blue-p);}
+.card-time{font-size:11px;color:var(--w3);}
+.card-headline{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:14px;}
+.voice{display:none;}
+.voice.active{display:block;}
+.voice-bubble{border-radius:10px;padding:13px 14px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+.voice-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;opacity:.75;}
+.voice-txt{color:var(--w7);}
+.voice-end{display:inline-block;margin-top:7px;font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px;}
+.voice.student-frustrated .voice-bubble{background:rgba(255,77,109,.08);border-left:2.5px solid var(--red);}
+.voice.student-frustrated .voice-lbl{color:var(--red);}
+.voice.student-frustrated .voice-end{background:rgba(255,77,109,.15);color:var(--red);}
+.voice.student-happy .voice-bubble{background:rgba(92,200,255,.08);border-left:2.5px solid var(--blue-p);}
+.voice.student-happy .voice-lbl{color:var(--blue-p);}
+.voice.student-happy .voice-end{background:rgba(92,200,255,.12);color:var(--blue-p);}
+.voice.employee-frustrated .voice-bubble{background:rgba(255,165,50,.08);border-left:2.5px solid #FFAA55;}
+.voice.employee-frustrated .voice-lbl{color:#FFAA55;}
+.voice.employee-frustrated .voice-end{background:rgba(255,165,50,.12);color:#FFAA55;}
+.voice.employee-happy .voice-bubble{background:rgba(0,200,150,.08);border-left:2.5px solid var(--green);}
+.voice.employee-happy .voice-lbl{color:var(--green);}
+.voice.employee-happy .voice-end{background:rgba(0,200,150,.12);color:var(--green);}
+.voice.agent .voice-bubble{background:rgba(232,197,88,.07);border-left:2.5px solid var(--gold-m);font-family:'Noto Sans Devanagari','DM Sans',sans-serif;}
+.voice.agent .voice-lbl{color:var(--gold-m);}
+.voice.agent .voice-end{background:rgba(232,197,88,.12);color:var(--gold-m);}
+.card-readmore{font-size:12px;color:rgba(92,200,255,.6);font-weight:500;margin-top:auto;display:flex;align-items:center;gap:5px;}
+.card-readmore::after{content:'→';}
+.how-sec{padding:80px 0;background:rgba(255,255,255,.015);border-top:.5px solid var(--border);position:relative;z-index:5;}
+.si{max-width:1100px;margin:0 auto;padding:0 52px;}
+.sec-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:10px;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;font-style:italic;color:var(--w);margin-bottom:10px;}
+.sec-title strong{font-style:normal;font-weight:600;}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;margin-top:44px;}
+@media(max-width:800px){.how-grid{grid-template-columns:repeat(2,1fr);}}
+.how-step{background:var(--bg2);padding:32px 24px;position:relative;overflow:hidden;}
+.how-step::before{content:attr(data-n);position:absolute;top:-10px;right:14px;font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:rgba(41,121,255,.05);line-height:1;pointer-events:none;}
+.how-icon{width:42px;height:42px;border-radius:10px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:19px;}
+.how-title{font-size:14px;font-weight:500;color:var(--w);margin-bottom:8px;line-height:1.3;}
+.how-body{font-size:12px;color:var(--w3);line-height:1.65;}
+.how-time{display:inline-block;font-size:10px;color:var(--blue-p);letter-spacing:.1em;margin-top:10px;border:.5px solid rgba(92,200,255,.2);padding:3px 10px;border-radius:100px;}
+.voice-demo-sec{padding:80px 0;position:relative;z-index:5;}
+.vtabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+.vtab{padding:8px 18px;border-radius:100px;font-size:12px;border:.5px solid var(--border);color:var(--w5);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;background:transparent;outline:none;}
+.vtab.active,.vtab:hover{background:rgba(41,121,255,.1);border-color:rgba(92,200,255,.3);color:var(--w);}
+.vtab.active{font-weight:500;}
+.vdemo-box{background:var(--bg2);border:.5px solid var(--border);border-radius:16px;overflow:hidden;}
+.vdemo-hdr{padding:18px 24px;border-bottom:.5px solid var(--border);display:flex;align-items:center;gap:12px;}
+.vdemo-badge{font-size:11px;padding:4px 12px;border-radius:100px;font-weight:500;}
+.vdemo-hl{font-size:13px;color:var(--w5);}
+.vdemo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+@media(max-width:700px){.vdemo-grid{grid-template-columns:1fr;}}
+.vdemo-story{background:var(--bg2);padding:22px;}
+.vdemo-tag{font-size:9px;letter-spacing:.1em;color:rgba(92,200,255,.5);margin-bottom:7px;text-transform:uppercase;}
+.vdemo-title{font-size:13px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:8px;line-height:1.4;}
+.vdemo-body{font-size:12px;color:var(--w5);line-height:1.7;}
+.demo-voice-set{display:none;}
+.demo-voice-set.active{display:block;}
+.cta-sec{padding:100px 0;position:relative;z-index:5;}
+.cta-box{background:linear-gradient(135deg,rgba(41,121,255,.1) 0%,rgba(0,100,200,.05) 50%,rgba(41,121,255,.1) 100%);border:.5px solid rgba(92,200,255,.18);border-radius:24px;padding:80px;text-align:center;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;font-style:italic;line-height:1.1;margin-bottom:14px;}
+.cta-title em{font-style:normal;font-weight:600;background:linear-gradient(135deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.cta-sub{font-size:15px;color:var(--w3);line-height:1.75;margin-bottom:36px;}
+.cta-btn{padding:16px 40px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+.cta-btn:hover{background:var(--blue-b);}
+footer{border-top:.5px solid var(--border);padding:56px 0 36px;position:relative;z-index:5;}
+.ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px;}
+@media(max-width:700px){.ft-grid{grid-template-columns:1fr 1fr;gap:28px;}}
+.ft-desc{font-size:13px;color:var(--w3);line-height:1.7;max-width:250px;margin-top:14px;}
+.ft-col-title{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--w3);margin-bottom:14px;}
+.ft-links{display:flex;flex-direction:column;gap:10px;}
+.ft-link{font-size:13px;color:var(--w5);cursor:pointer;transition:color .2s;}
+.ft-link:hover{color:var(--w9);}
+.ft-bottom{border-top:.5px solid var(--border);padding-top:22px;display:flex;align-items:center;justify-content:space-between;}
+.ft-copy{font-size:12px;color:var(--w3);}
+#ob{position:fixed;inset:0;z-index:500;background:var(--bg);display:none;flex-direction:column;}
+#ob.show{display:flex;}
+.ob-nav{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;flex-shrink:0;}
+.ob-back{font-size:13px;color:var(--w3);cursor:pointer;transition:color .2s;}
+.ob-back:hover{color:var(--w7);}
+.ob-prog-wrap{height:2.5px;background:rgba(255,255,255,.06);flex-shrink:0;}
+.ob-prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-b));transition:width .4s ease;}
+.ob-body{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;overflow-y:auto;}
+.ob-step{display:none;flex-direction:column;align-items:center;gap:22px;width:100%;animation:fadeIn .35s ease forwards;}
+.ob-step.active{display:flex;}
+.ob-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(92,200,255,.65);}
+.ob-head{font-size:clamp(28px,5vw,42px);font-weight:200;letter-spacing:-.025em;line-height:1.1;text-align:center;}
+.ob-head em{font-style:normal;font-weight:400;color:transparent;background:linear-gradient(135deg,#5CC8FF 0%,#fff 55%,#5CC8FF 100%);-webkit-background-clip:text;background-clip:text;}
+.ob-sub{font-size:14px;color:var(--w3);text-align:center;line-height:1.7;max-width:400px;}
+.ob-input-wrap{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;}
+.ob-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;font-size:15px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.ob-input::placeholder{color:rgba(255,255,255,.22);}
+.ob-input:focus{border-color:rgba(92,200,255,.4);}
+.ob-btn{width:100%;padding:14px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+.ob-btn:hover{background:var(--blue-b);}
+.ob-err{font-size:12px;color:#FF6B6B;display:none;text-align:center;}
+.ob-trust{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--w3);}
+.ob-trust-dot{width:3px;height:3px;border-radius:50%;background:rgba(92,200,255,.4);}
+.ob-id-cards{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:680px;}
+.ob-id-card{width:190px;padding:26px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;transition:all .2s;}
+.ob-id-card:hover{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);transform:translateY(-3px);}
+.ob-id-icon{width:50px;height:50px;border-radius:50%;background:rgba(41,121,255,.15);border:1px solid rgba(92,200,255,.25);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.ob-id-title{font-size:16px;font-weight:500;color:var(--w);}
+.ob-id-desc{font-size:12px;color:var(--w3);line-height:1.5;}
+.ob-mood-cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+.ob-mood-card{width:220px;padding:30px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;transition:all .2s;}
+.ob-mood-card:hover{transform:translateY(-3px);}
+.ob-mood-card.frustrated:hover{background:rgba(255,77,109,.08);border-color:rgba(255,77,109,.4);}
+.ob-mood-card.happy:hover{background:rgba(0,200,150,.08);border-color:rgba(0,200,150,.4);}
+.ob-mood-emoji{font-size:40px;}
+.ob-mood-title{font-size:18px;font-weight:500;color:var(--w);}
+.ob-mood-desc{font-size:12px;color:var(--w3);line-height:1.55;}
+#welcome{position:fixed;inset:0;z-index:600;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;}
+#welcome.show{display:flex;}
+.wlc-emoji{font-size:56px;animation:wlc-scale .6s ease forwards;}
+.wlc-head{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;font-style:italic;color:var(--w);line-height:1.15;}
+.wlc-head em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.wlc-badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:8px 22px;border-radius:100px;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);color:var(--blue-p);letter-spacing:.04em;}
+.wlc-sub{font-size:14px;color:var(--w3);line-height:1.7;}
+.wlc-bar-wrap{width:260px;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.wlc-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-b));border-radius:2px;transition:width 2s linear;}
+.modal-ov{position:fixed;inset:0;z-index:1000;background:rgba(7,7,15,.9);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:24px;}
+.modal-ov.show{display:flex;}
+.modal-box{background:var(--bg2);border:.5px solid var(--border2);border-radius:20px;width:100%;max-width:620px;max-height:88vh;overflow-y:auto;position:relative;animation:modal-in .3s ease forwards;}
+.modal-top-bar{height:3px;width:100%;border-radius:20px 20px 0 0;}
+.modal-inner{padding:28px 28px 24px;}
+.modal-cat{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(92,200,255,.6);margin-bottom:10px;}
+.modal-headline{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:20px;}
+.modal-voice-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:18px;border-bottom:.5px solid var(--border);}
+.mvt{padding:6px 13px;border:.5px solid var(--border);border-radius:100px;font-size:11px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;background:transparent;color:var(--w3);transition:all .2s;}
+.mvt.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.3);color:var(--blue-p);}
+.modal-voice-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(92,200,255,.5);margin-bottom:12px;}
+.modal-voice-body{font-size:15px;color:var(--w7);line-height:1.85;}
+.modal-voice-panel{display:none;}
+.modal-voice-panel.active{display:block;}
+.modal-close-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--w5);transition:all .2s;}
+.modal-close-btn:hover{background:rgba(255,255,255,.12);color:#fff;}
+</style>
 </head>
 <body>
+<div class="top-line"></div>
+<div class="glow-a"></div><div class="glow-b"></div>
+<canvas id="particles"></canvas>
 
-<!-- ===== ONBOARDING OVERLAY ===== -->
-<div id="onboarding-overlay">
-  <div class="onboarding-box">
-    <div class="onboarding-logo">☀ The Dawn Brief</div>
-
-    <!-- Step 1: Email -->
-    <div class="onboarding-step active" id="step-email">
-      <h2>Your morning intelligence starts here.</h2>
-      <p>Get India's most relevant news, filtered for your world — not everyone else's.</p>
-      <input type="email" class="ob-input" id="email-input" placeholder="Enter your email address" />
-      <button class="ob-btn" onclick="goToStep2()">Continue →</button>
-    </div>
-
-    <!-- Step 2: Who are you? -->
-    <div class="onboarding-step" id="step-role">
-      <h2>Who are you?</h2>
-      <p>We personalise every story in your voice. Pick the one that fits best.</p>
-      <div class="role-grid">
-        <div class="role-btn" onclick="setRole('student', 'Student 🎓')">
-          <span class="role-icon">🎓</span>Student
-        </div>
-        <div class="role-btn" onclick="showProfessionalSub()">
-          <span class="role-icon">💼</span>Professional
-        </div>
-        <div class="role-btn" onclick="setRole('distributor', 'Distributor 📦')">
-          <span class="role-icon">📦</span>Distributor
-        </div>
-        <div class="role-btn" onclick="setRole('agent', 'Commission Agent 🌾')">
-          <span class="role-icon">🌾</span>Commission Agent
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2b: Professional sub -->
-    <div class="onboarding-step" id="step-professional">
-      <h2>What kind of professional?</h2>
-      <p>This makes a huge difference in how we frame every story.</p>
-      <div class="role-grid">
-        <div class="role-btn" onclick="setRole('field-sales', 'Field Sales 🚴')">
-          <span class="role-icon">🚴</span>Field Sales
-        </div>
-        <div class="role-btn" onclick="setRole('manager', 'Manager 📋')">
-          <span class="role-icon">📋</span>Manager
-        </div>
-        <div class="role-btn" onclick="setRole('fresher', 'Fresher 🌱')">
-          <span class="role-icon">🌱</span>Fresher
-        </div>
-        <div class="role-btn" onclick="setRole('distributor', 'Distributor 📦')">
-          <span class="role-icon">📦</span>Distributor
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Welcome -->
-    <div class="onboarding-step" id="step-welcome">
-      <div class="welcome-screen">
-        <div class="welcome-sun">☀️</div>
-        <h2 id="welcome-headline">Welcome aboard!</h2>
-        <p id="welcome-sub">Setting up your personalised brief...</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== PERSONALIZED BANNER ===== -->
-<div id="personalized-banner">
-  Reading as: <strong id="banner-role-name">Student</strong> &nbsp;·&nbsp; Stories tuned to your world &nbsp;·&nbsp; <span style="opacity:0.7;font-weight:400;">Change voice anytime in settings</span>
-</div>
-
-<!-- ===== NAVBAR ===== -->
-<nav class="navbar">
-  <a class="nav-logo" href="#">The Dawn Brief <span>India's Intelligence</span></a>
+<div id="hp">
+<nav>
+  <a class="logo" href="#">
+    <svg width="38" height="30" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g1)" stroke-width="1.5" fill="none" clip-path="url(#c1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
+  </a>
   <div class="nav-right">
-    <div id="voice-indicator">
-      <div class="dot"></div>
-      <span id="voice-name-display">Student</span>
-    </div>
-    <button class="nav-subscribe-btn" onclick="openOnboarding()">Subscribe Free</button>
+    <span class="nav-link">Today's Brief</span>
+    <span class="nav-link">Archive</span>
+    <div id="voice-pill"><div class="vp-dot"></div><span id="vp-label">Student · Frustrated</span></div>
+    <button class="nav-cta sub-btn">Subscribe Free →</button>
   </div>
 </nav>
 
-<!-- ===== HERO ===== -->
 <section class="hero">
-  <span class="hero-sun">☀️</span>
-  <div class="hero-eyebrow">Daily • Personalised • Intelligent</div>
-  <h1>India's Morning<br/><em>Intelligence Brief</em></h1>
-  <p class="hero-sub">16 categories. 6 voices. One brief that speaks your language — before the world starts moving.</p>
-  <span class="hero-date" id="hero-date"></span>
+  <div class="hero-bg"></div><div class="hero-bg-fade"></div>
+  <div class="hero-badge"><div class="hero-dot"></div>Today's edition is live</div>
+  <h1 class="hero-h1">Read it before<br>your retailer <em>does.</em></h1>
+  <p class="hero-sub">The brief that speaks <b>your</b> language.<br>Written for those who move fast.</p>
+  <button class="hero-cta sub-btn">Subscribe Free →</button>
+  <div class="hero-diff">
+    <div class="diff-card"><div class="diff-icon">✍️</div><div class="diff-title">From the field</div><div class="diff-body">Written by someone actually in the field, not a journalist behind a desk.</div></div>
+    <div class="diff-div"></div>
+    <div class="diff-card"><div class="diff-icon">🗣️</div><div class="diff-title">Voice + Mood</div><div class="diff-body">Student, Employee or Agent. Frustrated or happy. We match your energy every morning.</div></div>
+    <div class="diff-div"></div>
+    <div class="diff-card"><div class="diff-icon">🎯</div><div class="diff-title">Zero noise</div><div class="diff-body">Only what matters for your world. No filler, no fluff.</div></div>
+    <div class="diff-div"></div>
+    <div class="diff-card"><div class="diff-icon">⏰</div><div class="diff-title">Always on time</div><div class="diff-body">Before your day starts. Every single day.</div></div>
+  </div>
 </section>
 
-<!-- ===== CATEGORIES BAR ===== -->
-<div class="categories-bar" id="cat-bar">
-  <span class="cat-btn active" onclick="filterCat(this,'all')">All</span>
-  <span class="cat-btn" onclick="filterCat(this,'Auto')">Auto</span>
-  <span class="cat-btn" onclick="filterCat(this,'Business')">Business</span>
-  <span class="cat-btn" onclick="filterCat(this,'Climate')">Climate</span>
-  <span class="cat-btn" onclick="filterCat(this,'Culture')">Culture</span>
-  <span class="cat-btn" onclick="filterCat(this,'Entertainment')">Entertainment</span>
-  <span class="cat-btn" onclick="filterCat(this,'Finance')">Finance</span>
-  <span class="cat-btn" onclick="filterCat(this,'Government')">Government</span>
-  <span class="cat-btn" onclick="filterCat(this,'Indian Economy')">Indian Economy</span>
-  <span class="cat-btn" onclick="filterCat(this,'International')">International</span>
-  <span class="cat-btn" onclick="filterCat(this,'Lifestyle')">Lifestyle</span>
-  <span class="cat-btn" onclick="filterCat(this,'Media')">Media</span>
-  <span class="cat-btn" onclick="filterCat(this,'Real Estate')">Real Estate</span>
-  <span class="cat-btn" onclick="filterCat(this,'Science')">Science</span>
-  <span class="cat-btn" onclick="filterCat(this,'Sports')">Sports</span>
-  <span class="cat-btn" onclick="filterCat(this,'Tech')">Tech</span>
-  <span class="cat-btn" onclick="filterCat(this,'Travel')">Travel</span>
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <div class="ti">HUL <div class="ts"></div></div><div class="ti">Wheel price cut 8% <div class="ts"></div></div><div class="ti">Blinkit 1,000 dark stores <div class="ts"></div></div><div class="ti">Rural consumption 3-yr high <div class="ts"></div></div><div class="ti">Marico Saffola Edge <div class="ts"></div></div><div class="ti">GST rationalisation <div class="ts"></div></div><div class="ti">Nielsen AI tracker <div class="ts"></div></div><div class="ti">RBI rate cut <div class="ts"></div></div>
+    <div class="ti">HUL <div class="ts"></div></div><div class="ti">Wheel price cut 8% <div class="ts"></div></div><div class="ti">Blinkit 1,000 dark stores <div class="ts"></div></div><div class="ti">Rural consumption 3-yr high <div class="ts"></div></div><div class="ti">Marico Saffola Edge <div class="ts"></div></div><div class="ti">GST rationalisation <div class="ts"></div></div><div class="ti">Nielsen AI tracker <div class="ts"></div></div><div class="ti">RBI rate cut <div class="ts"></div></div>
+  </div>
 </div>
 
-<!-- ===== MAIN CONTENT ===== -->
-<main class="main-content">
+<div id="pers-banner">
+  <div class="pb-dot"></div>
+  <div class="pb-text">Reading as</div>
+  <div class="pb-badge" id="pb-badge">Student Edition</div>
+  <div class="pb-mood" id="pb-mood">😤 Frustrated</div>
+  <div class="pb-switch" id="pb-switch">Change voice →</div>
+</div>
 
-  <div class="section-header">
-    <h2>Today's Stories</h2>
-    <span class="section-tag">May 22, 2026</span>
+<div class="cat-tabs-wrap">
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="filterCat(this,'All')">🌐 All</button>
+    <button class="cat-tab" onclick="filterCat(this,'Business')">💼 Business</button>
+    <button class="cat-tab" onclick="filterCat(this,'Indian Economy')">🇮🇳 Indian Economy</button>
+    <button class="cat-tab" onclick="filterCat(this,'Finance')">📈 Finance</button>
+    <button class="cat-tab" onclick="filterCat(this,'Tech')">💻 Tech</button>
+    <button class="cat-tab" onclick="filterCat(this,'Auto')">🚗 Auto</button>
+    <button class="cat-tab" onclick="filterCat(this,'Sports')">⚽ Sports</button>
+    <button class="cat-tab" onclick="filterCat(this,'Government')">🏛️ Government</button>
+    <button class="cat-tab" onclick="filterCat(this,'Climate')">🌿 Climate</button>
+    <button class="cat-tab" onclick="filterCat(this,'Entertainment')">🎬 Entertainment</button>
+    <button class="cat-tab" onclick="filterCat(this,'International')">🌍 International</button>
+    <button class="cat-tab" onclick="filterCat(this,'Science')">🔬 Science</button>
   </div>
+  <div class="cat-fade"></div>
+</div>
 
-  <!-- ===== NEWS GRID ===== -->
+<div class="news-section">
+  <div class="news-hdr">
+    <div><div class="news-eyebrow">Daily Intelligence</div><div class="news-title">Today's <strong>Stories</strong></div></div>
+    <div id="news-date" style="font-size:12px;color:var(--w3);"></div>
+  </div>
   <div class="news-grid" id="news-grid">
 
-    <!-- CARD 1: Indian Economy -->
     <div class="story-card" data-category="Indian Economy" onclick="openModal(0)">
-      <div class="card-category-bar" data-cat="Indian Economy"></div>
+      <div class="card-top-bar" style="background:#D97706;"></div>
       <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat-label">Indian Economy</span>
-          <span class="card-time">6:00 AM</span>
-        </div>
+        <div class="card-meta"><span class="card-cat">Indian Economy</span><span class="card-time">6:00 AM</span></div>
         <div class="card-headline">RBI Cuts Repo Rate by 25bps to 6% — EMIs to Drop, Growth to Accelerate</div>
-
-        <!-- STUDENT voice -->
-        <div class="voice student active">
-          <div class="voice-content">
-            <div class="voice-label">🎓 Student Voice</div>
-            <div class="voice-text">RBI ne repo rate 6% kar diya — matlab bank se loan sasta hoga. Home loan, car loan — sab thoda cheap. Exam ke liye yaad rakho: repo rate down = growth stimulus = market positive signal.</div>
-            <span class="voice-ending">📝 Note kar lo</span>
-          </div>
-        </div>
-
-        <!-- FIELD SALES voice -->
-        <div class="voice field-sales">
-          <div class="voice-content">
-            <div class="voice-label">🚴 Field Sales Voice</div>
-            <div class="voice-text">EMIs gir rahi hain. Customers ke haath mein zyada paise rahenge. Ghar aur gaadi ki demand badhegi — distributor ko fast move karna chahiye. Aaj beat pe retailers ko yeh bolo.</div>
-            <span class="voice-ending">⚡ Abhi move karo</span>
-          </div>
-        </div>
-
-        <!-- MANAGER voice -->
-        <div class="voice manager">
-          <div class="voice-content">
-            <div class="voice-label">📋 Manager Voice</div>
-            <div class="voice-text">RBI's rate cut signals consumer spending uptick. Review your Q1 targets — discretionary FMCG, auto, and white goods verticals will see demand acceleration in 60–90 days.</div>
-            <span class="voice-ending">📊 Team ko brief karo</span>
-          </div>
-        </div>
-
-        <!-- FRESHER voice -->
-        <div class="voice fresher">
-          <div class="voice-content">
-            <div class="voice-label">🌱 Fresher Voice</div>
-            <div class="voice-text">RBI ne interest rate kam ki — iska matlab loan lena sasta hua. Economy mein more spending hogi. FMCG aur consumer goods sectors ke liye positive news hai.</div>
-            <span class="voice-ending">💡 Samajh ke rakhna</span>
-          </div>
-        </div>
-
-        <!-- DISTRIBUTOR voice -->
-        <div class="voice distributor">
-          <div class="voice-content">
-            <div class="voice-label">📦 Distributor Voice</div>
-            <div class="voice-text">Loan sasta hoga — retailers apna stock barhayenge. Credit lene mein asani hogi. Is mahine ka order size badhao. Channel financing bhi easy hogi.</div>
-            <span class="voice-ending">📦 Dhyan rakh</span>
-          </div>
-        </div>
-
-        <!-- AGENT voice (Hindi) -->
-        <div class="voice agent">
-          <div class="voice-content">
-            <div class="voice-label">🌾 Commission Agent</div>
-            <div class="voice-text">RBI ne byaj dar ghataya — kiski madad hogi? Kisan jinka loan hai unki EMI thodi kam hogi. Mandi mein bhi credit flow thoda behtar hoga is quarter.</div>
-            <span class="voice-ending">🌾 Nazar rakhein</span>
-          </div>
-        </div>
-
+        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">Bhai RBI ne rate ghata diya 6% pe. Matlab loan sasta hoga. But koi aam language mein kyu nahi samjhata? Note kar: repo rate down = cheaper money = market khush. Interview mein yeh example dena.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">RBI cuts repo rate to 6%. Banks will pass lower EMIs to borrowers. For exams: repo rate down = growth stimulus = bullish economic signal. Clean policy example.</div><span class="voice-end">📚 Exam ready</span></div></div>
+        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Rate cut aaya. EMIs giregi. Consumer spending badhega. Par office mein koi nahi batayega iska matlab tumhare targets pe kya hoga. Khud samjho aur apna area prepare karo.</div><span class="voice-end">☕ Chai break mein soch</span></div></div>
+        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">RBI's rate cut signals consumer spending uptick in Q2. Discretionary FMCG and white goods will see demand acceleration in 60-90 days. Review your territory targets accordingly.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">RBI ne byaj dar ghata diya. Jinka loan hai unki EMI thodi kam hogi. Mandi mein credit flow behtar hoga. Retailers stock badhayenge — acha mauka hai.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
     </div>
 
-    <!-- CARD 2: Tech -->
     <div class="story-card" data-category="Tech" onclick="openModal(1)">
-      <div class="card-category-bar" data-cat="Tech"></div>
+      <div class="card-top-bar" style="background:#7C3AED;"></div>
       <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat-label">Tech</span>
-          <span class="card-time">6:30 AM</span>
-        </div>
+        <div class="card-meta"><span class="card-cat">Tech</span><span class="card-time">6:30 AM</span></div>
         <div class="card-headline">India's UPI Crosses 20 Billion Monthly Transactions — NPCI Eyes Global Push</div>
-
-        <div class="voice student active">
-          <div class="voice-content">
-            <div class="voice-label">🎓 Student Voice</div>
-            <div class="voice-text">UPI ka usage record level pe pahunch gaya. India ka payment system duniya mein sabse fast scale hua hai. NPCI ab UAE, Singapore jaisi countries mein UPI expand karna chahta hai.</div>
-            <span class="voice-ending">📝 Note kar lo</span>
-          </div>
-        </div>
-
-        <div class="voice field-sales">
-          <div class="voice-content">
-            <div class="voice-label">🚴 Field Sales Voice</div>
-            <div class="voice-text">Aapka har retailer UPI accept kar raha hai — matlab cash collection tension khatam. New kirana onboarding mein payment barrier zero. Use this angle today.</div>
-            <span class="voice-ending">⚡ Abhi move karo</span>
-          </div>
-        </div>
-
-        <div class="voice manager">
-          <div class="voice-content">
-            <div class="voice-label">📋 Manager Voice</div>
-            <div class="voice-text">UPI at 20B/month means digital-first retailer penetration is mainstream now. If your territory still has cash-dependency, it's a gap in your distribution strategy.</div>
-            <span class="voice-ending">📊 Team ko brief karo</span>
-          </div>
-        </div>
-
-        <div class="voice fresher">
-          <div class="voice-content">
-            <div class="voice-label">🌱 Fresher Voice</div>
-            <div class="voice-text">UPI is India's pride — 20 billion transactions in one month is more than most countries do in a year. NPCI wants to make UPI the global standard for payments.</div>
-            <span class="voice-ending">💡 Samajh ke rakhna</span>
-          </div>
-        </div>
-
-        <div class="voice distributor">
-          <div class="voice-content">
-            <div class="voice-label">📦 Distributor Voice</div>
-            <div class="voice-text">UPI payments matlab instant settlement. Retailers se paise milne mein delay nahi. Cash handling ka risk zero. Distribution business ke liye bohot achhi news.</div>
-            <span class="voice-ending">📦 Dhyan rakh</span>
-          </div>
-        </div>
-
-        <div class="voice agent">
-          <div class="voice-content">
-            <div class="voice-label">🌾 Commission Agent</div>
-            <div class="voice-text">UPI se mandi ke chhote traders bhi digital ho rahe hain. Raqam transfer mein zyada asaani. Commission aur payment ka hisaab ab phone se hi ho sakta hai.</div>
-            <span class="voice-ending">🌾 Nazar rakhein</span>
-          </div>
-        </div>
-
+        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">20 billion transactions aur log UPI ka credit India ko nahi dete. Duniya ka sabse fast scaled payment system hai yeh. NPCI ab UAE, Singapore mein expand karega. Proud hona chahiye bhai.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">UPI hits 20 billion monthly transactions — a global record. NPCI expanding to UAE and Singapore. India's fintech stack is now a global export. Interview-ready insight.</div><span class="voice-end">📚 Exam ready</span></div></div>
+        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">20 billion transactions aur koi retailer abhi bhi UPI nahi leta? Cash collection ka dard khatam ho sakta tha. New kirana onboarding mein yeh angle use karo. Zero excuses.</div><span class="voice-end">☕ Abhi move karo</span></div></div>
+        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">UPI at 20B/month means digital-first retailer penetration is mainstream. Cash-dependency in your territory is a distribution gap. Use this data to make your case today.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">UPI se mandi ke chhote traders bhi digital ho rahe hain. Raqam transfer asaan ho gaya. Commission aur payment ka hisaab ab phone se. Jo pehle sikhega woh aage rahega.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
     </div>
 
-    <!-- CARD 3: Business -->
     <div class="story-card" data-category="Business" onclick="openModal(2)">
-      <div class="card-category-bar" data-cat="Business"></div>
+      <div class="card-top-bar" style="background:#2563EB;"></div>
       <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat-label">Business</span>
-          <span class="card-time">7:00 AM</span>
-        </div>
+        <div class="card-meta"><span class="card-cat">Business</span><span class="card-time">7:00 AM</span></div>
         <div class="card-headline">Reliance Jio Launches JioAI Suite — Taking on Microsoft Copilot in Indian Market</div>
-
-        <div class="voice student active">
-          <div class="voice-content">
-            <div class="voice-label">🎓 Student Voice</div>
-            <div class="voice-text">Jio ne AI tools launch kiye — Microsoft aur Google ko India mein seedha challenge diya. JioAI Hindi aur regional languages mein kaam karega. Startup opportunities bhi khulengi.</div>
-            <span class="voice-ending">📝 Note kar lo</span>
-          </div>
-        </div>
-
-        <div class="voice field-sales">
-          <div class="voice-content">
-            <div class="voice-label">🚴 Field Sales Voice</div>
-            <div class="voice-text">Kirana shops ko AI-powered inventory tips milenge Jio ke through. Retailers ko samjhao — yeh sirf phone nahi, business tool hai. Relationship banao before competitor does.</div>
-            <span class="voice-ending">⚡ Abhi move karo</span>
-          </div>
-        </div>
-
-        <div class="voice manager">
-          <div class="voice-content">
-            <div class="voice-label">📋 Manager Voice</div>
-            <div class="voice-text">Jio's AI push means vernacular-language business tools will hit tier-2/3 markets fast. Your field teams and distributors will be using AI assistants within 18 months. Plan for it.</div>
-            <span class="voice-ending">📊 Team ko brief karo</span>
-          </div>
-        </div>
-
-        <div class="voice fresher">
-          <div class="voice-content">
-            <div class="voice-label">🌱 Fresher Voice</div>
-            <div class="voice-text">Jio entering AI means India will have local-language AI tools. For freshers entering FMCG or sales, AI literacy will be a must-have skill in 2 years.</div>
-            <span class="voice-ending">💡 Samajh ke rakhna</span>
-          </div>
-        </div>
-
-        <div class="voice distributor">
-          <div class="voice-content">
-            <div class="voice-label">📦 Distributor Voice</div>
-            <div class="voice-text">Jio ka AI tool aayega toh retailers apni demand forecast khud kar sakenge. Distributor ko bhi yeh tools seekhne chahiye — warna aap peeche rah jaoge.</div>
-            <span class="voice-ending">📦 Dhyan rakh</span>
-          </div>
-        </div>
-
-        <div class="voice agent">
-          <div class="voice-content">
-            <div class="voice-label">🌾 Commission Agent</div>
-            <div class="voice-text">Jio ke nayi technology se chhote vyapariyon ko bhi madad milegi. Mandi mein bhi ab digital tools aane waale hain. Apne bachhon ko yeh seekhne do.</div>
-            <span class="voice-ending">🌾 Nazar rakhein</span>
-          </div>
-        </div>
-
+        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">Jio ne AI launch kar diya. Microsoft aur Google dono tension mein. Hum yahan slow internet pe struggle kar rahe hain. JioAI Hindi mein kaam karega — that's actually a big deal for real India.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">JioAI challenges Microsoft Copilot in India. Works in Hindi and regional languages. India is building its own AI stack now. Massive opportunity for Indian startups — know this.</div><span class="voice-end">📚 Exam ready</span></div></div>
+        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Jio AI aa gaya. Retailer ko samjhao yeh sirf phone nahi, business tool hai. Par honestly — relationship pehle banao before competitor does. Wahi practical sach hai.</div><span class="voice-end">☕ Abhi move karo</span></div></div>
+        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">Jio's AI push means vernacular business tools hit tier-2/3 markets within 18 months. Field teams will use AI assistants routinely. Plan this into your team upskilling roadmap.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">Jio ke nayi technology se chhote vyapariyon ko madad milegi. Mandi mein bhi digital tools aayenge. Apne bachhon ko yeh seekhne do — future mein kaam aayega.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
     </div>
 
-    <!-- CARD 4: Finance -->
     <div class="story-card" data-category="Finance" onclick="openModal(3)">
-      <div class="card-category-bar" data-cat="Finance"></div>
+      <div class="card-top-bar" style="background:#059669;"></div>
       <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat-label">Finance</span>
-          <span class="card-time">7:30 AM</span>
-        </div>
+        <div class="card-meta"><span class="card-cat">Finance</span><span class="card-time">7:30 AM</span></div>
         <div class="card-headline">Sensex Hits 82,000 — FII Inflows Surge as Rupee Stabilises at 83.4</div>
-
-        <div class="voice student active">
-          <div class="voice-content">
-            <div class="voice-label">🎓 Student Voice</div>
-            <div class="voice-text">Sensex ek aur record — 82 hazaar cross kar gaya. FII matlab foreign investors India mein paise laga rahe hain. Rupee stable hai, toh imports cheap rahenge. Bullish market = economy theek chal rahi hai.</div>
-            <span class="voice-ending">📝 Note kar lo</span>
-          </div>
-        </div>
-
-        <div class="voice field-sales">
-          <div class="voice-content">
-            <div class="voice-label">🚴 Field Sales Voice</div>
-            <div class="voice-text">Market up, Rupee stable — consumer confidence high hogi. Premium product ka pitch aaj zyada land karega. Beat plan mein premium SKU ko priority do.</div>
-            <span class="voice-ending">⚡ Abhi move karo</span>
-          </div>
-        </div>
-
-        <div class="voice manager">
-          <div class="voice-content">
-            <div class="voice-label">📋 Manager Voice</div>
-            <div class="voice-text">Stable rupee = lower import costs for raw materials. If your brand sources internationally, expect slight margin improvement in Q2. Plan your pricing strategy accordingly.</div>
-            <span class="voice-ending">📊 Team ko brief karo</span>
-          </div>
-        </div>
-
-        <div class="voice fresher">
-          <div class="voice-content">
-            <div class="voice-label">🌱 Fresher Voice</div>
-            <div class="voice-text">Sensex aur Rupee dono strong — economy ki health achhi hai. FII inflows matlab global trust in India. FMCG, auto, finance sector mein job market bhi improve hoga.</div>
-            <span class="voice-ending">💡 Samajh ke rakhna</span>
-          </div>
-        </div>
-
-        <div class="voice distributor">
-          <div class="voice-content">
-            <div class="voice-label">📦 Distributor Voice</div>
-            <div class="voice-text">Market achha hai — retailers mein confidence high hai. Iss waqt credit extend karne mein risk kam hai. Stock badhao, demand badhegi is quarter.</div>
-            <span class="voice-ending">📦 Dhyan rakh</span>
-          </div>
-        </div>
-
-        <div class="voice agent">
-          <div class="voice-content">
-            <div class="voice-label">🌾 Commission Agent</div>
-            <div class="voice-text">Rupee theek hai toh bahar se aane waala maal mehenga nahi hoga. Mandi mein bhi stability ka asar dikhai deta hai. Sahi waqt hai ki bada deal karein.</div>
-            <span class="voice-ending">🌾 Nazar rakhein</span>
-          </div>
-        </div>
-
+        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">82 hazaar Sensex. FII aa rahe hain. Aur main soch raha hoon kab job milegi. Jokes apart — FII = Foreign investors trusting India. Bullish market = economy theek chal rahi. Note karo.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">Sensex at 82,000. FII inflows signal strong global confidence in India. Stable rupee means cheaper imports. Clean equation for exams: FII in + Rupee stable = positive macro signal.</div><span class="voice-end">📚 Exam ready</span></div></div>
+        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Market up, rupee stable. Consumer confidence high hogi aaj. Premium product pitch land karega. Par boss target toh kal bhi badha dega. Anyway — beat plan mein premium SKU priority do.</div><span class="voice-end">☕ Chai pe soch</span></div></div>
+        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">Stable rupee means lower import costs for raw materials. Expect margin improvement in Q2. Plan your premium SKU push now before competitors react to the same signal.</div><span class="voice-end">📊 Plan karo</span></div></div>
+        <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">Rupee theek hai toh bahar se aane waala maal mehenga nahi hoga. Mandi mein bhi stability dikhegi. Sahi waqt hai bada deal karne ka.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
     </div>
 
-    <!-- CARD 5: Sports -->
     <div class="story-card" data-category="Sports" onclick="openModal(4)">
-      <div class="card-category-bar" data-cat="Sports"></div>
+      <div class="card-top-bar" style="background:#DC2626;"></div>
       <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat-label">Sports</span>
-          <span class="card-time">8:00 AM</span>
-        </div>
+        <div class="card-meta"><span class="card-cat">Sports</span><span class="card-time">8:00 AM</span></div>
         <div class="card-headline">India Beat England by 7 Wickets — Shubman Gill's 134* Seals ODI Series</div>
-
-        <div class="voice student active">
-          <div class="voice-content">
-            <div class="voice-label">🎓 Student Voice</div>
-            <div class="voice-text">Shubman Gill ne 134 not out maara — India ne series 3-1 se jeet li! Rohit bhi achha khela. Champions Trophy ke liye squad confidence high rahega. Watch highlights on Hotstar.</div>
-            <span class="voice-ending">📝 Note kar lo</span>
-          </div>
-        </div>
-
-        <div class="voice field-sales">
-          <div class="voice-content">
-            <div class="voice-label">🚴 Field Sales Voice</div>
-            <div class="voice-text">India jeeti — retailer mood aaj extra good hoga. Festive sales pitch ka acha din hai. Customer conversation cricket se shuru karo — order size khud badh jayega.</div>
-            <span class="voice-ending">⚡ Abhi move karo</span>
-          </div>
-        </div>
-
-        <div class="voice manager">
-          <div class="voice-content">
-            <div class="voice-label">📋 Manager Voice</div>
-            <div class="voice-text">India's win = positive market sentiment for 24-48 hrs. FMCG brands with cricket tie-ins should push activations today. Retailer footfall will be higher — use it.</div>
-            <span class="voice-ending">📊 Team ko brief karo</span>
-          </div>
-        </div>
-
-        <div class="voice fresher">
-          <div class="voice-content">
-            <div class="voice-label">🌱 Fresher Voice</div>
-            <div class="voice-text">Gill ka 134 ek masterclass tha. India series dominant way se jeeti. Office mein aaj cricket discussion inevitable — ice-breaker ke liye ready raho!</div>
-            <span class="voice-ending">💡 Samajh ke rakhna</span>
-          </div>
-        </div>
-
-        <div class="voice distributor">
-          <div class="voice-content">
-            <div class="voice-label">📦 Distributor Voice</div>
-            <div class="voice-text">Match ke baad celebration mood hai. Cold drinks, snacks, chips — demand spike expected. Retailers ko aaj hi stock replenish karne ka suggestion do. Miss mat karo.</div>
-            <span class="voice-ending">📦 Dhyan rakh</span>
-          </div>
-        </div>
-
-        <div class="voice agent">
-          <div class="voice-content">
-            <div class="voice-label">🌾 Commission Agent</div>
-            <div class="voice-text">India ki jeet — sab khush hain. Mandi mein bhi aaj atmosphere acha rahega. Chhoti meetings aur baat-chit ke liye acha din hai.</div>
-            <span class="voice-ending">🌾 Nazar rakhein</span>
-          </div>
-        </div>
-
+        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">Gill ne 134 maara aur hum padh rahe hain. Classic. Series 3-1 jeet li India ne. Champions Trophy ke liye confidence solid. Highlights dekho — Instagram nahi, actual highlights.</div><span class="voice-end">📝 Good distraction</span></div></div>
+        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">India wins ODI series 3-1. Gill's 134* was a masterclass in anchor batting with acceleration. Strong team morale ahead of Champions Trophy. Classic professional icebreaker.</div><span class="voice-end">📚 Good vibes</span></div></div>
+        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">India jeeti. Office mein aaj sab cricket expert hain. Good — use karo. Retailer mood extra good hoga. Cricket se baat shuru karo, order size khud badh jaayega. Itna toh kar sakte ho.</div><span class="voice-end">☕ Use this energy</span></div></div>
+        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">India's win = positive market sentiment for 24-48 hrs. FMCG brands with cricket tie-ins should push activations today. Retailer footfall will be higher — deploy teams strategically.</div><span class="voice-end">📊 Activate now</span></div></div>
+        <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">India ki jeet — sab khush hain. Mandi mein bhi aaj atmosphere acha rahega. Chhoti meetings aur baat-chit ke liye bahut acha din. Rishte banao aaj.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
     </div>
 
-    <!-- CARD 6: Government -->
     <div class="story-card" data-category="Government" onclick="openModal(5)">
-      <div class="card-category-bar" data-cat="Government"></div>
+      <div class="card-top-bar" style="background:#4F46E5;"></div>
       <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat-label">Government</span>
-          <span class="card-time">8:30 AM</span>
-        </div>
-        <div class="card-headline">Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Focus on Mandi Upgrades</div>
-
-        <div class="voice student active">
-          <div class="voice-content">
-            <div class="voice-label">🎓 Student Voice</div>
-            <div class="voice-text">Sarkar ne 2.1 lakh crore ka package announce kiya rural areas ke liye — roads, mandis, cold storage. This is direct PM GatiShakti linkage. Important for Economics and Policy exams.</div>
-            <span class="voice-ending">📝 Note kar lo</span>
-          </div>
-        </div>
-
-        <div class="voice field-sales">
-          <div class="voice-content">
-            <div class="voice-label">🚴 Field Sales Voice</div>
-            <div class="voice-text">Rural infra spend = more money in village hands = FMCG demand in tier-3 towns. Your rural beat is about to become gold territory. Increase visit frequency there NOW.</div>
-            <span class="voice-ending">⚡ Abhi move karo</span>
-          </div>
-        </div>
-
-        <div class="voice manager">
-          <div class="voice-content">
-            <div class="voice-label">📋 Manager Voice</div>
-            <div class="voice-text">₹2.1L Cr rural infra means rural GDP will grow 1.5–2x faster over next 3 years. Brands without rural distribution will regret it. Now is the time to build that network.</div>
-            <span class="voice-ending">📊 Team ko brief karo</span>
-          </div>
-        </div>
-
-        <div class="voice fresher">
-          <div class="voice-content">
-            <div class="voice-label">🌱 Fresher Voice</div>
-            <div class="voice-text">Yeh package India ke rural economy ko badlega — better roads, mandis, internet. If you're joining FMCG sales, rural territory mein bahut opportunity hai aane waale saalon mein.</div>
-            <span class="voice-ending">💡 Samajh ke rakhna</span>
-          </div>
-        </div>
-
-        <div class="voice distributor">
-          <div class="voice-content">
-            <div class="voice-label">📦 Distributor Voice</div>
-            <div class="voice-text">Mandi upgrades matlab tumhara supply chain smooth hoga. Road better hogi toh delivery cost kaifi. Yeh package directly tumhare business ke liye achhi khabar hai.</div>
-            <span class="voice-ending">📦 Dhyan rakh</span>
-          </div>
-        </div>
-
-        <div class="voice agent">
-          <div class="voice-content">
-            <div class="voice-label">🌾 Commission Agent</div>
-            <div class="voice-text">Sarkar ne mandi sudharne ke liye itne paise diye — yeh hamare liye seedha faayda hai. Nayi mandi bhavan, cold storage, digital weighing — sab aane wala hai Kaithal jaise shaharon mein bhi.</div>
-            <span class="voice-ending">🌾 Nazar rakhein</span>
-          </div>
-        </div>
-
+        <div class="card-meta"><span class="card-cat">Government</span><span class="card-time">8:30 AM</span></div>
+        <div class="card-headline">Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Mandi Upgrades Included</div>
+        <div class="voice student-frustrated active"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Student</div><div class="voice-txt">2.1 lakh crore announce kar diya. Implement kab karenge koi nahi jaanta. Par exams ke liye important hai — PM GatiShakti se linked. Roads, mandis, cold storage. Likh lo yeh.</div><span class="voice-end">📝 Note kar lo</span></div></div>
+        <div class="voice student-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Student</div><div class="voice-txt">Govt's 2.1L Cr rural infra package covers roads, mandis, cold storage — linked to PM GatiShakti. Supply chain infrastructure at this scale means rural GDP will accelerate. Big policy moment.</div><span class="voice-end">📚 Exam ready</span></div></div>
+        <div class="voice employee-frustrated"><div class="voice-bubble"><div class="voice-lbl">😤 Frustrated Employee</div><div class="voice-txt">Rural infra spend aaya. Hamara rural beat under-served hai. Company rural push karti hai par resources nahi deti. Phir bhi — yeh package real hai toh tier-3 gold ban jaayegi. Rural beat solid karo ab.</div><span class="voice-end">☕ Soch ke dekho</span></div></div>
+        <div class="voice employee-happy"><div class="voice-bubble"><div class="voice-lbl">😊 Happy Employee</div><div class="voice-txt">2.1L Cr rural infra means rural GDP grows 1.5-2x faster over 3 years. Brands without rural distribution will regret it. This is the moment to build that network before the demand wave.</div><span class="voice-end">📊 Build now</span></div></div>
+        <div class="voice agent"><div class="voice-bubble"><div class="voice-lbl">🌾 Commission Agent</div><div class="voice-txt">Sarkar ne mandi sudharne ke liye itne paise diye — seedha faayda hamare liye. Nayi mandi bhavan, cold storage sab aane wala hai Kaithal jaise shaharon mein bhi. Khushi ki baat hai.</div><span class="voice-end">🌾 Nazar rakhein</span></div></div>
         <div class="card-readmore">Read full story</div>
       </div>
     </div>
 
-  </div><!-- end news-grid -->
-
-  <!-- ===== VOICE DEMO SECTION ===== -->
-  <div class="voice-demo">
-    <h2>6 Voices. One Story. Your World.</h2>
-    <p>Same news. Different lens. Pick your voice and feel the difference.</p>
-
-    <div class="voice-tabs" id="voice-tabs">
-      <button class="voice-tab active" onclick="switchDemoVoice(this,'student')">🎓 Student</button>
-      <button class="voice-tab" onclick="switchDemoVoice(this,'field-sales')">🚴 Field Sales</button>
-      <button class="voice-tab" onclick="switchDemoVoice(this,'manager')">📋 Manager</button>
-      <button class="voice-tab" onclick="switchDemoVoice(this,'fresher')">🌱 Fresher</button>
-      <button class="voice-tab" onclick="switchDemoVoice(this,'distributor')">📦 Distributor</button>
-      <button class="voice-tab" onclick="switchDemoVoice(this,'agent')">🌾 Commission Agent</button>
-    </div>
-
-    <div class="demo-card">
-      <div class="demo-headline">📰 "India's EV Sales Surpass 1 Million Units in FY26 — Ola, Tata Lead Charge"</div>
-
-      <div class="demo-voice student active">
-        <div class="demo-voice-content" style="background:rgba(74,127,232,0.1);border-left:3px solid #4A7FE8;border-radius:10px;">
-          <div style="color:#4A7FE8;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">🎓 Student Voice</div>
-          EV market ne 10 lakh unit ka milestone cross kar liya! Ola Electric aur Tata Motors ne market lead kiya. India ab world ka 3rd largest EV market ban gaya. Policy angle: FAME-III scheme ka direct result hai yeh growth.
-          <div class="demo-ending" style="color:#4A7FE8;">📝 Note kar lo</div>
-        </div>
-      </div>
-
-      <div class="demo-voice field-sales">
-        <div class="demo-voice-content" style="background:rgba(212,82,26,0.1);border-left:3px solid #D4521A;border-radius:10px;">
-          <div style="color:#D4521A;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">🚴 Field Sales Voice</div>
-          EV wave aa raha hai — toh 2W and 3W retailers mein EV charging infrastructure ki baat shuru karo. Kirana stores aur dukaans charging point bana sakti hain. Yeh angle next year ki selling story hai.
-          <div class="demo-ending" style="color:#D4521A;">⚡ Abhi move karo</div>
-        </div>
-      </div>
-
-      <div class="demo-voice manager">
-        <div class="demo-voice-content" style="background:rgba(46,168,105,0.1);border-left:3px solid #2EA869;border-radius:10px;">
-          <div style="color:#2EA869;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">📋 Manager Voice</div>
-          1M EV units signals structural shift in transport costs. Your distribution fleet planning for next 24 months should factor EV economics — 40% lower per-km running costs vs petrol.
-          <div class="demo-ending" style="color:#2EA869;">📊 Team ko brief karo</div>
-        </div>
-      </div>
-
-      <div class="demo-voice fresher">
-        <div class="demo-voice-content" style="background:rgba(139,92,246,0.1);border-left:3px solid #8B5CF6;border-radius:10px;">
-          <div style="color:#8B5CF6;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">🌱 Fresher Voice</div>
-          EV adoption is exploding in India. For freshers — EV sector has massive job creation: engineers, sales, service. If your company sells FMCG, your delivery fleet will go electric within 3–5 years.
-          <div class="demo-ending" style="color:#8B5CF6;">💡 Samajh ke rakhna</div>
-        </div>
-      </div>
-
-      <div class="demo-voice distributor">
-        <div class="demo-voice-content" style="background:rgba(232,162,0,0.12);border-left:3px solid #E8A200;border-radius:10px;">
-          <div style="color:#E8A200;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">📦 Distributor Voice</div>
-          Petrol 3-wheelers ab slowly EV se replace honge. Distribution wahan ke liye: agle 2 saalo mein EV van ka cost analyze karo. Fuel saving = net margin improvement. Early movers benefit karte hain.
-          <div class="demo-ending" style="color:#E8A200;">📦 Dhyan rakh</div>
-        </div>
-      </div>
-
-      <div class="demo-voice agent">
-        <div class="demo-voice-content" style="background:rgba(201,74,26,0.1);border-left:3px solid #C94A1A;border-radius:10px;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">
-          <div style="color:#C94A1A;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">🌾 Commission Agent</div>
-          EV gaadiyaan ab zyada bik rahi hain — petrol mehanga tha, isiliye log switch kar rahe hain. Mandi mein bhi chhote tempo aur thela wale EV ki taraf jaenge. Transport cost kam hogi, toh maal lane-le jaane mein fayda hoga.
-          <div class="demo-ending" style="color:#C94A1A;">🌾 Nazar rakhein</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ===== HOW IT WORKS ===== -->
-  <div class="how-section">
-    <div class="section-header">
-      <h2>How The Dawn Brief Works</h2>
-    </div>
-    <div class="how-grid">
-      <div class="how-card">
-        <div class="how-num">01</div>
-        <h3>16 Categories, Filtered Daily</h3>
-        <p>We scan 200+ Indian and global sources every morning — from business wire to regional news — and surface only what matters for your day.</p>
-      </div>
-      <div class="how-card">
-        <div class="how-num">02</div>
-        <h3>AI Rewrites in Your Voice</h3>
-        <p>Every story is rewritten 6 times — once for each persona. Same facts, different frame. A student needs context. A field sales rep needs action. We give both.</p>
-      </div>
-      <div class="how-card">
-        <div class="how-num">03</div>
-        <h3>In Your Inbox by 6 AM</h3>
-        <p>The Dawn Brief lands before you leave home. Read in 7 minutes. Know what matters. Move with confidence.</p>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<!-- ===== STORY MODAL ===== -->
-<div id="story-modal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-cat" id="modal-cat">Category</div>
-    <div class="modal-headline" id="modal-headline">Headline</div>
-    <div class="modal-voice-tabs" id="modal-voice-tabs">
-      <button class="mvt active" onclick="switchModalVoice(this,'student')">🎓 Student</button>
-      <button class="mvt" onclick="switchModalVoice(this,'field-sales')">🚴 Field Sales</button>
-      <button class="mvt" onclick="switchModalVoice(this,'manager')">📋 Manager</button>
-      <button class="mvt" onclick="switchModalVoice(this,'fresher')">🌱 Fresher</button>
-      <button class="mvt" onclick="switchModalVoice(this,'distributor')">📦 Distributor</button>
-      <button class="mvt" onclick="switchModalVoice(this,'agent')">🌾 Agent</button>
-    </div>
-    <div class="modal-voice-content" id="modal-body">Loading...</div>
   </div>
 </div>
 
-<!-- ===== FOOTER ===== -->
-<footer>
-  <div class="footer-logo">☀ The Dawn Brief</div>
-  <p>India's daily intelligence, delivered in your voice.</p>
-  <div class="footer-links">
-    <a href="#">About</a>
-    <a href="#">Archive</a>
-    <a href="#">Privacy</a>
-    <a href="#">Unsubscribe</a>
-    <a href="#">ayushbrief.online</a>
+<section class="how-sec">
+  <div class="si">
+    <div class="sec-eyebrow">How it works</div>
+    <div class="sec-title">Four steps to your <strong>daily edge</strong></div>
+    <div class="how-grid">
+      <div class="how-step" data-n="01"><div class="how-icon">📡</div><div class="how-title">200+ trusted sources scanned daily</div><div class="how-body">ET, Business Standard, Mint, BBC and more — every morning without fail.</div><div class="how-time">Every morning</div></div>
+      <div class="how-step" data-n="02"><div class="how-icon">🤖</div><div class="how-title">AI writes in your voice + mood</div><div class="how-body">5 voices. Frustrated or happy. Same news, completely different experience.</div><div class="how-time">Every morning</div></div>
+      <div class="how-step" data-n="03"><div class="how-icon">✍️</div><div class="how-title">Ground Reality added</div><div class="how-body">One real field observation. Written by a human. No AI can replicate this.</div><div class="how-time">Every morning</div></div>
+      <div class="how-step" data-n="04"><div class="how-icon">📬</div><div class="how-title">In your inbox before 6 AM</div><div class="how-body">Read in 7 minutes. Know what matters. Move with confidence all day.</div><div class="how-time">Every morning</div></div>
+    </div>
   </div>
-  <div class="footer-bottom">© 2026 The Dawn Brief · Built by Ayush Bansal · Kaithal, Haryana</div>
+</section>
+
+<section class="voice-demo-sec">
+  <div class="si">
+    <div class="sec-eyebrow">The 5 Voices</div>
+    <div class="sec-title">Same news.<br><strong>Your energy.</strong></div>
+    <p style="font-size:14px;color:var(--w3);line-height:1.75;margin-bottom:32px;">Click any voice to feel the difference. Same story, completely different experience.</p>
+    <div class="vtabs" id="vtabs">
+      <button class="vtab active" data-v="sf">😤 Frustrated Student</button>
+      <button class="vtab" data-v="sh">😊 Happy Student</button>
+      <button class="vtab" data-v="ef">😤 Frustrated Employee</button>
+      <button class="vtab" data-v="eh">😊 Happy Employee</button>
+      <button class="vtab" data-v="ag">🌾 Commission Agent</button>
+    </div>
+    <div class="vdemo-box">
+      <div class="vdemo-hdr">
+        <div class="vdemo-badge" id="vd-badge" style="background:rgba(255,77,109,.1);color:#FF4D6D;border:.5px solid rgba(255,77,109,.25);">😤 Frustrated Student</div>
+        <div class="vdemo-hl">HUL cuts Wheel price by 8% · Today's lead story</div>
+      </div>
+      <div class="vdemo-grid">
+        <div class="vdemo-story">
+          <div class="vdemo-tag">HUL · 2 HRS AGO</div>
+          <div class="vdemo-title">HUL cuts Wheel price by 8%</div>
+          <div class="demo-voice-set active" data-dv="sf"><div class="vdemo-body" style="color:#FF6B8A;">Bhai yaar HUL ne Wheel sasta kar diya. Monsoon se pehle rural volume pakadne ki chaal hai. Interview mein yeh example do — examiner impress guaranteed.</div></div>
+          <div class="demo-voice-set" data-dv="sh"><div class="vdemo-body">HUL reduces Wheel 8% before monsoon — classic pre-season volume strategy. Rural push. Interview example: demand creation through price elasticity.</div></div>
+          <div class="demo-voice-set" data-dv="ef"><div class="vdemo-body" style="color:#FFAA55;">Rate cut aaya. Retailer confused hai. Tu pehle ja. Shelf pakad. Competitor se pehle. Itna simple.</div></div>
+          <div class="demo-voice-set" data-dv="eh"><div class="vdemo-body" style="color:#00C896;">HUL Wheel price cut. Brief your team. Retailer objections incoming. Handle proactively — opportunity window is 72 hours.</div></div>
+          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">HUL ne Wheel ka bhaav ghata diya. Koi deal pending hai toh jaldi karo — daam badalne se pehle.</div></div>
+        </div>
+        <div class="vdemo-story">
+          <div class="vdemo-tag">RETAIL · 4 HRS AGO</div>
+          <div class="vdemo-title">Blinkit crosses 1,000 dark stores</div>
+          <div class="demo-voice-set active" data-dv="sf"><div class="vdemo-body" style="color:#FF6B8A;">1000 dark stores ho gaye Blinkit ke. 14% urban volume le raha hai. GT vs Q-commerce poochha toh yeh answer hai bhai.</div></div>
+          <div class="demo-voice-set" data-dv="sh"><div class="vdemo-body">Blinkit at 1,000 stores = 14% urban consumer volume is now Q-commerce. Traditional distribution strategy needs rethinking. Key metric.</div></div>
+          <div class="demo-voice-set" data-dv="ef"><div class="vdemo-body" style="color:#FFAA55;">Urban retailer tera compare kar raha hai Blinkit se. Scheme tight karo. Visit badhao. Warna sab online order ho jaayega.</div></div>
+          <div class="demo-voice-set" data-dv="eh"><div class="vdemo-body" style="color:#00C896;">Q-commerce at 14% of urban volumes = retailer loyalty eroding. Counter: deeper relationship, faster replenishment, exclusive schemes.</div></div>
+          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Blinkit ke 1000 dark stores ho gaye. Shehar mein log ghar baithe order kar rahe hain. Mandi ki aavak pe seedha asar padega.</div></div>
+        </div>
+        <div class="vdemo-story">
+          <div class="vdemo-tag">MACRO · 3 HRS AGO</div>
+          <div class="vdemo-title">Rural consumption hits 3-year high</div>
+          <div class="demo-voice-set active" data-dv="sf"><div class="vdemo-body" style="color:#FF6B8A;">Rural consumption 3 saal ki high pe hai. Tumhara rural posting wala friend actually sahi jagah hai. Sochna padega yaar.</div></div>
+          <div class="demo-voice-set" data-dv="sh"><div class="vdemo-body">Rural consumption at 3-year high. FMCG companies rebalancing toward rural. Rural posting = opportunity, not punishment. Remember this.</div></div>
+          <div class="demo-voice-set" data-dv="ef"><div class="vdemo-body" style="color:#FFAA55;">Rural mein demand hai. Tera rural territory pe focus nahi hai toh start karo ab. Baad mein bologe pehle kyu nahi kiya.</div></div>
+          <div class="demo-voice-set" data-dv="eh"><div class="vdemo-body" style="color:#00C896;">Rural consumption surge = territory expansion opportunity. Brands without rural distribution lose share in next 18 months. Build now.</div></div>
+          <div class="demo-voice-set" data-dv="ag"><div class="vdemo-body" style="color:#E8C558;font-family:'Noto Sans Devanagari','DM Sans',sans-serif;">Rural mein log zyada khareed rahe hain. Tera seedha faida — gaon se aavak badhegi, demand strong rahegi.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec">
+  <div class="si">
+    <div class="cta-box">
+      <div class="cta-title">Your daily edge<br>starts <em>tomorrow.</em></div>
+      <p class="cta-sub">Join thousands who start their morning smarter. Choose your voice. Pick your mood.</p>
+      <button class="cta-btn sub-btn">Subscribe Free →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="si">
+    <div class="ft-grid">
+      <div>
+        <a class="logo" href="#" style="margin-bottom:14px;display:inline-flex;"><svg width="36" height="28" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c2"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g2)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g2)" stroke-width="1.5" fill="none" clip-path="url(#c2)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
+        <div class="ft-desc">India's sharpest daily brief. Written for the field, for the floor, for the future. In your voice, your mood, every morning.</div>
+      </div>
+      <div><div class="ft-col-title">Product</div><div class="ft-links"><span class="ft-link">Today's Brief</span><span class="ft-link">Archive</span><span class="ft-link">The 5 Voices</span><span class="ft-link">Ground Reality</span></div></div>
+      <div><div class="ft-col-title">Company</div><div class="ft-links"><span class="ft-link">About</span><span class="ft-link">Advertise</span><span class="ft-link">Contact</span></div></div>
+      <div><div class="ft-col-title">Follow</div><div class="ft-links"><span class="ft-link">LinkedIn</span><span class="ft-link">Twitter / X</span><span class="ft-link">Instagram</span><span class="ft-link">WhatsApp</span></div></div>
+    </div>
+    <div class="ft-bottom"><div class="ft-copy">© 2026 The Dawn Brief · Made in Kaithal, Haryana</div><div class="ft-copy">ayushbrief.online</div></div>
+  </div>
 </footer>
+</div>
 
-<!-- ===== JAVASCRIPT ===== -->
+<div id="ob">
+  <div class="ob-nav">
+    <a class="logo" href="#"><svg width="36" height="28" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c3"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g3)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g3)" stroke-width="1.5" fill="none" clip-path="url(#c3)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
+    <span class="ob-back" id="ob-back">← Back</span>
+  </div>
+  <div class="ob-prog-wrap"><div class="ob-prog-fill" id="ob-prog" style="width:33%"></div></div>
+  <div class="ob-body">
+    <div class="ob-step active" id="step-1">
+      <div class="ob-eyebrow">Step 1 of 3</div>
+      <div class="ob-head">Your daily <em>edge</em><br>starts here.</div>
+      <div class="ob-sub">The brief written for people in the field. Every single morning.</div>
+      <div class="ob-input-wrap">
+        <input class="ob-input" type="text" id="ob-name" placeholder="Your name" />
+        <input class="ob-input" type="email" id="ob-email" placeholder="Work or personal email" />
+        <div class="ob-err" id="ob-err">Please enter a valid email address.</div>
+        <button class="ob-btn" id="ob-continue">Continue →</button>
+      </div>
+      <div class="ob-trust"><span>No spam</span><div class="ob-trust-dot"></div><span>Free forever</span><div class="ob-trust-dot"></div><span>Unsubscribe anytime</span></div>
+    </div>
+    <div class="ob-step" id="step-2">
+      <div class="ob-eyebrow">Step 2 of 3</div>
+      <div class="ob-head">You are a…</div>
+      <div class="ob-sub">We'll write The Dawn Brief in exactly your language and context.</div>
+      <div class="ob-id-cards">
+        <div class="ob-id-card" id="id-student"><div class="ob-id-icon">🎓</div><div class="ob-id-title">Student</div><div class="ob-id-desc">MBA, PGDM, B.Com. Learning the business and sales world.</div></div>
+        <div class="ob-id-card" id="id-employee"><div class="ob-id-icon">💼</div><div class="ob-id-title">Employee</div><div class="ob-id-desc">Working in sales, distribution, FMCG, or any corporate role.</div></div>
+        <div class="ob-id-card" id="id-agent"><div class="ob-id-icon">🌾</div><div class="ob-id-title">Commission Agent</div><div class="ob-id-desc">Arhatiya, dalal, mandi agent. Yeh aapke liye likha gaya hai.</div></div>
+      </div>
+    </div>
+    <div class="ob-step" id="step-3">
+      <div class="ob-eyebrow">Step 3 of 3</div>
+      <div class="ob-head">How are you<br>feeling today?</div>
+      <div class="ob-sub" id="mood-sub">We match your energy. Frustrated days get sharper, punchier news.</div>
+      <div class="ob-mood-cards">
+        <div class="ob-mood-card frustrated" id="mood-frustrated"><div class="ob-mood-emoji">😤</div><div class="ob-mood-title">Frustrated</div><div class="ob-mood-desc">Punchy, real talk. News like a friend who gets it. Entertainment + information combined.</div></div>
+        <div class="ob-mood-card happy" id="mood-happy"><div class="ob-mood-emoji">😊</div><div class="ob-mood-title">Happy</div><div class="ob-mood-desc">Clean, sharp, useful. Professional tone. Just the insights, delivered well.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="welcome">
+  <div class="wlc-emoji">☀️</div>
+  <div class="wlc-head">Welcome, <em id="wlc-name">friend</em>.</div>
+  <div class="wlc-badge" id="wlc-badge">😤 Frustrated Student</div>
+  <div class="wlc-sub" id="wlc-sub">Your personalised brief is loading in your voice.</div>
+  <div class="wlc-bar-wrap"><div class="wlc-bar" id="wlc-bar"></div></div>
+</div>
+
+<div class="modal-ov" id="story-modal">
+  <div class="modal-box">
+    <div class="modal-top-bar" id="modal-top-bar" style="background:#2979FF;"></div>
+    <div class="modal-inner">
+      <div class="modal-close-btn" id="modal-close">✕</div>
+      <div class="modal-cat" id="modal-cat">Category</div>
+      <div class="modal-headline" id="modal-headline">Headline</div>
+      <div class="modal-voice-tabs">
+        <button class="mvt active" data-mv="student-frustrated">😤 Frustrated Student</button>
+        <button class="mvt" data-mv="student-happy">😊 Happy Student</button>
+        <button class="mvt" data-mv="employee-frustrated">😤 Frustrated Employee</button>
+        <button class="mvt" data-mv="employee-happy">😊 Happy Employee</button>
+        <button class="mvt" data-mv="agent">🌾 Agent</button>
+      </div>
+      <div class="modal-voice-label" id="modal-voice-label">Your Voice</div>
+      <div class="modal-voice-panel active" data-mp="student-frustrated"><div class="modal-voice-body" id="mp-sf"></div></div>
+      <div class="modal-voice-panel" data-mp="student-happy"><div class="modal-voice-body" id="mp-sh"></div></div>
+      <div class="modal-voice-panel" data-mp="employee-frustrated"><div class="modal-voice-body" id="mp-ef"></div></div>
+      <div class="modal-voice-panel" data-mp="employee-happy"><div class="modal-voice-body" id="mp-eh"></div></div>
+      <div class="modal-voice-panel" data-mp="agent"><div class="modal-voice-body" id="mp-ag"></div></div>
+    </div>
+  </div>
+</div>
+
 <script>
-  // ===== STATE =====
-  let currentRole = 'student';
-  let currentRoleName = 'Student';
+var SUPA_URL='https://ygkviidhuqicfnvyuiiu.supabase.co';
+var SUPA_KEY='sb_publishable_mklkZ61P5MmwCA7UyIEOEQ_rmFbaV3k';
+function supaInsert(t,d){fetch(SUPA_URL+'/rest/v1/'+t,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=minimal'},body:JSON.stringify(d)}).catch(function(){});}
+try{supaInsert('page_visits',{page:'homepage',referrer:document.referrer||'direct'});}catch(e){}
 
-  // ===== DATE =====
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const now = new Date();
-  document.getElementById('hero-date').textContent =
-    `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+var userData={name:'',email:'',identity:'',voiceKey:''};
+var currentVoice='student-frustrated';
+var obStep=1;
 
-  // ===== ONBOARDING FLOW =====
-  function goToStep2() {
-    const email = document.getElementById('email-input').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('email-input').style.borderColor = '#DC2626';
-      document.getElementById('email-input').placeholder = 'Please enter a valid email';
-      return;
-    }
-    document.getElementById('step-email').classList.remove('active');
-    document.getElementById('step-role').classList.add('active');
-  }
+var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var now=new Date();
+var nd=document.getElementById('news-date');
+if(nd)nd.textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
 
-  function showProfessionalSub() {
-    document.getElementById('step-role').classList.remove('active');
-    document.getElementById('step-professional').classList.add('active');
-  }
+var VOICE_LABELS={'student-frustrated':'😤 Frustrated Student','student-happy':'😊 Happy Student','employee-frustrated':'😤 Frustrated Employee','employee-happy':'😊 Happy Employee','agent':'🌾 Commission Agent'};
+var VOICE_MOODS={'student-frustrated':'😤 Frustrated','student-happy':'😊 Happy','employee-frustrated':'😤 Frustrated','employee-happy':'😊 Happy','agent':'Mandi Voice'};
+var VOICE_ID={'student-frustrated':'Student','student-happy':'Student','employee-frustrated':'Employee','employee-happy':'Employee','agent':'Commission Agent'};
 
-  function setRole(role, displayName) {
-    currentRole = role;
-    currentRoleName = displayName;
+function activateVoice(vk){
+  currentVoice=vk;
+  document.querySelectorAll('.voice').forEach(function(el){el.classList.remove('active');});
+  document.querySelectorAll('.voice.'+vk).forEach(function(el){el.classList.add('active');});
+  var banner=document.getElementById('pers-banner');
+  banner.classList.add('show');
+  document.getElementById('pb-badge').textContent=VOICE_ID[vk]+' Edition';
+  document.getElementById('pb-mood').textContent=VOICE_MOODS[vk]||'';
+  var pill=document.getElementById('voice-pill');
+  pill.classList.add('show');
+  document.getElementById('vp-label').textContent=VOICE_LABELS[vk]||vk;
+  localStorage.setItem('db_voice',vk);
+  try{supaInsert('voice_selections',{role:vk});}catch(e){}
+}
 
-    // Show welcome
-    document.querySelectorAll('.onboarding-step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-welcome').classList.add('active');
+function setProgress(pct){document.getElementById('ob-prog').style.width=pct+'%';}
+function showStep(n){
+  document.querySelectorAll('.ob-step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('step-'+n).classList.add('active');
+  obStep=n;
+}
+function openOnboarding(){
+  document.getElementById('hp').classList.add('hide');
+  document.getElementById('ob').classList.add('show');
+  showStep(1);setProgress(33);
+}
+function closeOnboarding(){
+  document.getElementById('ob').classList.remove('show');
+  document.getElementById('hp').classList.remove('hide');
+}
 
-    const welcomeMessages = {
-      'student': ['Your brief is ready, scholar. 📚', 'Every story explained with context — so you understand, not just read.'],
-      'field-sales': ['Beat plan + brief. Combo unlocked. 🚴', 'Every story ends with one action for your day.'],
-      'manager': ['Your intel dashboard is ready. 📋', 'Strategic lens. Business impact. Every morning.'],
-      'fresher': ['Welcome to your morning edge. 🌱', 'Every story teaches you something you can use.'],
-      'distributor': ['Your supply chain intel is live. 📦', 'Demand signals, market moves — filtered for you.'],
-      'agent': ['आपकी सुबह की रिपोर्ट तैयार है। 🌾', 'हर खबर — आपके काम की भाषा में।']
-    };
+document.getElementById('ob-continue').addEventListener('click',function(){
+  var name=document.getElementById('ob-name').value.trim();
+  var email=document.getElementById('ob-email').value.trim();
+  var valid=email.length>3&&email.indexOf('@')>0&&email.lastIndexOf('.')>email.indexOf('@');
+  if(!valid){document.getElementById('ob-err').style.display='block';return;}
+  document.getElementById('ob-err').style.display='none';
+  userData.name=name||'friend';userData.email=email;
+  showStep(2);setProgress(66);
+});
+document.getElementById('ob-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-continue').click();});
 
-    document.getElementById('welcome-headline').textContent = welcomeMessages[role][0];
-    document.getElementById('welcome-sub').textContent = welcomeMessages[role][1];
+document.getElementById('id-student').addEventListener('click',function(){userData.identity='student';showStep(3);setProgress(100);document.getElementById('mood-sub').textContent='Frustrated mornings get punchy, fun news. Happy days get clean, sharp briefs.';});
+document.getElementById('id-employee').addEventListener('click',function(){userData.identity='employee';showStep(3);setProgress(100);document.getElementById('mood-sub').textContent='Your mood shapes how we frame every story. Chai break energy or strategic briefing.';});
+document.getElementById('id-agent').addEventListener('click',function(){userData.identity='agent';userData.voiceKey='agent';completeOnboarding();});
+document.getElementById('mood-frustrated').addEventListener('click',function(){userData.voiceKey=userData.identity+'-frustrated';completeOnboarding();});
+document.getElementById('mood-happy').addEventListener('click',function(){userData.voiceKey=userData.identity+'-happy';completeOnboarding();});
 
-    // Auto-close after 2.4s and activate voice
-    setTimeout(() => {
-      document.getElementById('onboarding-overlay').classList.add('hidden');
-      activateVoice(role, displayName);
-    }, 2400);
-  }
+function completeOnboarding(){
+  var vk=userData.voiceKey;
+  var name=userData.name.split(' ')[0];
+  name=name.charAt(0).toUpperCase()+name.slice(1);
+  try{supaInsert('subscribers',{email:userData.email,name:userData.name,role:vk,segment:userData.identity,source:'website'});}catch(e){}
+  document.getElementById('ob').classList.remove('show');
+  document.getElementById('wlc-name').textContent=name;
+  document.getElementById('wlc-badge').textContent=VOICE_LABELS[vk]||vk;
+  document.getElementById('wlc-sub').textContent="Your personalised brief is ready. Loading today's stories in your voice.";
+  var wlc=document.getElementById('welcome');
+  wlc.classList.add('show');
+  setTimeout(function(){document.getElementById('wlc-bar').style.width='100%';},60);
+  setTimeout(function(){
+    wlc.classList.remove('show');
+    document.getElementById('wlc-bar').style.width='0';
+    document.getElementById('hp').classList.remove('hide');
+    activateVoice(vk);
+    window.scrollTo({top:0,behavior:'smooth'});
+  },2500);
+}
 
-  // ===== CORE VOICE ACTIVATION =====
-  // THE PERMANENT SOLUTION — one CSS class toggle, cannot fail
-  function activateVoice(role, displayName) {
-    currentRole = role;
-    currentRoleName = displayName;
+document.getElementById('ob-back').addEventListener('click',function(){
+  if(obStep===1)closeOnboarding();
+  else if(obStep===2){showStep(1);setProgress(33);}
+  else if(obStep===3){showStep(2);setProgress(66);}
+});
 
-    // Hide ALL voice divs, show only active role
-    document.querySelectorAll('.voice').forEach(el => {
-      el.classList.remove('active');
-    });
-    document.querySelectorAll('.voice.' + role).forEach(el => {
-      el.classList.add('active');
-    });
+document.querySelectorAll('.sub-btn').forEach(function(btn){btn.addEventListener('click',openOnboarding);});
+document.getElementById('pb-switch').addEventListener('click',openOnboarding);
 
-    // Show personalized banner
-    document.getElementById('personalized-banner').classList.add('show');
-    document.getElementById('banner-role-name').textContent = displayName;
-
-    // Show voice indicator in nav
-    const vi = document.getElementById('voice-indicator');
-    vi.classList.add('show');
-    document.getElementById('voice-name-display').textContent = displayName.split(' ')[0];
-  }
-
-  function openOnboarding() {
-    document.getElementById('onboarding-overlay').classList.remove('hidden');
-    document.querySelectorAll('.onboarding-step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-email').classList.add('active');
-  }
-
-  // ===== CATEGORY FILTER =====
-  function filterCat(btn, cat) {
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    document.querySelectorAll('.story-card').forEach(card => {
-      if (cat === 'all' || card.dataset.category === cat) {
-        card.classList.remove('filtered-out');
-      } else {
-        card.classList.add('filtered-out');
-      }
-    });
-  }
-
-  // ===== DEMO VOICE TABS =====
-  function switchDemoVoice(btn, voice) {
-    document.querySelectorAll('#voice-tabs .voice-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.demo-voice').forEach(d => d.classList.remove('active'));
-    document.querySelector('.demo-voice.' + voice)?.classList.add('active');
-  }
-
-  // ===== MODAL =====
-  const storyData = [
-    { cat: 'Indian Economy', headline: 'RBI Cuts Repo Rate by 25bps to 6% — EMIs to Drop, Growth to Accelerate' },
-    { cat: 'Tech', headline: "India's UPI Crosses 20 Billion Monthly Transactions — NPCI Eyes Global Push" },
-    { cat: 'Business', headline: 'Reliance Jio Launches JioAI Suite — Taking on Microsoft Copilot in Indian Market' },
-    { cat: 'Finance', headline: 'Sensex Hits 82,000 — FII Inflows Surge as Rupee Stabilises at 83.4' },
-    { cat: 'Sports', headline: "India Beat England by 7 Wickets — Shubman Gill's 134* Seals ODI Series" },
-    { cat: 'Government', headline: 'Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Focus on Mandi Upgrades' }
-  ];
-
-  function openModal(idx) {
-    const story = storyData[idx];
-    document.getElementById('modal-cat').textContent = story.cat;
-    document.getElementById('modal-headline').textContent = story.headline;
-
-    // Get all voices for this card from DOM
-    const card = document.querySelectorAll('.story-card')[idx];
-    const voiceOrder = ['student','field-sales','manager','fresher','distributor','agent'];
-    const activeVoice = currentRole;
-
-    // Build modal body from card's voice content
-    let bodyHTML = '';
-    voiceOrder.forEach(v => {
-      const vEl = card.querySelector('.voice.' + v + ' .voice-content');
-      if (vEl) {
-        bodyHTML += `<div class="modal-voice-display ${v}" style="display:${v===activeVoice?'block':'none'}">${vEl.innerHTML}</div>`;
-      }
-    });
-
-    document.getElementById('modal-body').innerHTML = bodyHTML;
-
-    // Set active modal tab
-    document.querySelectorAll('.mvt').forEach(b => {
-      b.classList.remove('active');
-      if (b.getAttribute('onclick').includes(activeVoice)) b.classList.add('active');
-    });
-
-    document.getElementById('story-modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('story-modal').classList.remove('open');
-  }
-
-  function switchModalVoice(btn, voice) {
-    document.querySelectorAll('.mvt').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.modal-voice-display').forEach(d => d.style.display='none');
-    const target = document.querySelector('.modal-voice-display.' + voice);
-    if (target) target.style.display = 'block';
-  }
-
-  // Close modal on outside click
-  document.getElementById('story-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
+function filterCat(btn,cat){
+  document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.story-card').forEach(function(card){
+    if(cat==='All'||card.dataset.category===cat)card.classList.remove('filtered-out');
+    else card.classList.add('filtered-out');
   });
+}
 
-  // Close with Escape
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+var demoMap={sf:{badge:'😤 Frustrated Student',bg:'rgba(255,77,109,.1)',color:'#FF4D6D',border:'rgba(255,77,109,.25)'},sh:{badge:'😊 Happy Student',bg:'rgba(92,200,255,.1)',color:'#5CC8FF',border:'rgba(92,200,255,.25)'},ef:{badge:'😤 Frustrated Employee',bg:'rgba(255,165,50,.1)',color:'#FFAA55',border:'rgba(255,165,50,.25)'},eh:{badge:'😊 Happy Employee',bg:'rgba(0,200,150,.1)',color:'#00C896',border:'rgba(0,200,150,.25)'},ag:{badge:'🌾 Commission Agent',bg:'rgba(232,197,88,.08)',color:'#E8C558',border:'rgba(232,197,88,.25)'}};
+document.querySelectorAll('.vtab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.vtab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var v=btn.getAttribute('data-v'),d=demoMap[v];
+    var badge=document.getElementById('vd-badge');
+    badge.textContent=d.badge;badge.style.background=d.bg;badge.style.color=d.color;badge.style.border='.5px solid '+d.border;
+    document.querySelectorAll('.demo-voice-set').forEach(function(el){el.classList.remove('active');});
+    document.querySelectorAll('.demo-voice-set[data-dv="'+v+'"]').forEach(function(el){el.classList.add('active');});
+  });
+});
 
-  // ===== APPLY VOICE ON LOAD (if returning user) =====
-  const savedRole = localStorage.getItem('dawnbrief_role');
-  const savedRoleName = localStorage.getItem('dawnbrief_rolename');
-  if (savedRole && savedRoleName) {
-    document.getElementById('onboarding-overlay').classList.add('hidden');
-    activateVoice(savedRole, savedRoleName);
+var storyData=[
+  {cat:'Indian Economy',color:'#D97706',headline:'RBI Cuts Repo Rate by 25bps to 6% — EMIs to Drop, Growth to Accelerate',voices:{'student-frustrated':'Bhai RBI ne rate ghata diya 6% pe. Matlab loan sasta hoga. Home loan, car loan — thoda cheap. But seriously koi explain kyu nahi karta yeh aam language mein? Note kar: repo rate down = cheaper money = market khush. Interview mein yeh example dena — 100% aayega question.','student-happy':'RBI cuts repo rate to 6%. Banks will pass lower EMIs to borrowers, making home loans and auto loans cheaper. For exams: repo rate down = growth stimulus = bullish economic signal. Key monetary policy tool. Consumer spending will increase in 60-90 days.','employee-frustrated':'Rate cut aaya. EMIs giregi. Log thoda zyada khareedenge. Par office mein koi nahi batayega iska matlab tumhare targets pe kya hoga. Khud samjho — consumer spending badhega, FMCG demand badhega. Apna area prepare karo before boss realises this himself.','employee-happy':'RBI\'s rate cut signals consumer spending uptick in Q2. Discretionary FMCG, auto, and white goods verticals will see demand acceleration in 60–90 days. Brief your team today — proactive territory preparation is your competitive edge this quarter.','agent':'RBI ne byaj dar ghata diya. Jinka loan hai unki EMI thodi kam hogi. Mandi mein bhi credit flow behtar hoga is quarter. Retailers stock badhayenge — acha mauka hai nayi deals karne ka. Sahi waqt hai.'}},
+  {cat:'Tech',color:'#7C3AED',headline:"India's UPI Crosses 20 Billion Monthly Transactions — NPCI Eyes Global Push",voices:{'student-frustrated':'20 billion transactions aur abhi bhi log UPI ka full credit India ko nahi dete. Yaar yeh duniya ka sabse fast scaled payment system hai. NPCI ab UAE, Singapore mein bhi expand karna chahta hai. Proud hona chahiye — aur interview mein yeh example zaroor dena.','student-happy':'UPI hits 20 billion monthly transactions — a global record in digital payments. NPCI is now expanding to UAE and Singapore. Key insight: India\'s fintech infrastructure is now a global export product. Interview-ready fact: UPI processes more than most countries combined.','employee-frustrated':'20 billion transactions aur tumhara koi retailer abhi bhi UPI nahi leta? Matlab cash collection ka dard apne aap khatam ho sakta tha. New kirana onboarding mein yeh angle use karo. Zero excuses ab for cash-only retailers in your territory.','employee-happy':'UPI at 20B/month means digital-first retailer penetration is now mainstream. If your territory has cash-dependency gaps, that\'s a distribution strategy vulnerability. Use this milestone as your pitch angle for digitizing resistant retailers.','agent':'UPI se mandi ke chhote traders bhi digital ho rahe hain. Raqam transfer asaan ho gaya hai. Commission aur payment ka hisaab ab phone se hi ho sakta hai. Jo pehle sikhega woh aage rahega — yeh sach hai.'}},
+  {cat:'Business',color:'#2563EB',headline:'Reliance Jio Launches JioAI Suite — Taking on Microsoft Copilot in Indian Market',voices:{'student-frustrated':'Jio ne AI launch kar diya. Matlab ab Microsoft aur Google dono tension mein hain Indian market ke liye. Aur hum yahan abhi bhi slow internet pe struggle kar rahe hain. JioAI Hindi mein kaam karega though — that\'s actually a big deal for real India, not just metro India.','student-happy':'JioAI challenges Microsoft Copilot directly in India. Works in Hindi and regional languages — critical for mass adoption beyond metros. Key insight: India is now building its own AI stack. Massive opportunity for Indian startups in the AI application layer.','employee-frustrated':'Jio AI aa gaya. Kirana shops ko AI-powered inventory tips milenge. Retailer ko samjhao yeh sirf phone nahi, business tool hai. Par honestly — relationship pehle banao before competitor does yeh same pitch. Wahi sach hai.','employee-happy':'Jio\'s AI push means vernacular-language business tools will hit tier-2/3 markets within 18 months. Your field teams and distributors will use AI assistants routinely. Plan this into your team upskilling roadmap now — don\'t get caught unprepared.','agent':'Jio ke nayi technology se chhote vyapariyon ko bhi madad milegi. Mandi mein bhi digital tools aane waale hain. Apne bachhon ko yeh seekhne do — future mein bahut kaam aayega unhe.'}},
+  {cat:'Finance',color:'#059669',headline:'Sensex Hits 82,000 — FII Inflows Surge as Rupee Stabilises at 83.4',voices:{'student-frustrated':'82 hazaar Sensex. FII aa rahe hain. Rupee stable. Aur main soch raha hoon kab job milegi? Jokes apart — FII = Foreign Institutional Investors. Yeh India mein invest kar rahe hain = economy pe trust. Bullish market = economy theek chal rahi hai. Note karo yaar.','student-happy':'Sensex at 82,000. FII inflows signal strong global confidence in India as an investment destination. Stable rupee means cheaper imports. Clean equation for exams: strong FII + stable Rupee = positive macro environment for consumer spending.','employee-frustrated':'Market up, rupee stable. Matlab consumer confidence high hogi aaj. Premium product ka pitch aaj zyada land karega. Par target toh kal bhi badha denge boss log. Chhodo — beat plan mein premium SKU ko priority do aaj. Bas itna control hai hamare paas.','employee-happy':'Stable rupee means lower import costs for raw materials. If your brand sources internationally, expect margin improvement in Q2. Ideal timing to plan premium SKU push and capture the consumer confidence wave before competition reacts.','agent':'Rupee theek hai toh bahar se aane waala maal mehenga nahi hoga. Mandi mein bhi stability ka asar dikhega. Sahi waqt hai bada deal karne ka. Suppliers se negotiate karo abhi — rate theek milega.'}},
+  {cat:'Sports',color:'#DC2626',headline:"India Beat England by 7 Wickets — Shubman Gill's 134* Seals ODI Series",voices:{'student-frustrated':'Gill ne 134 maara aur hum padh rahe hain. Classic India ki jeet, meri neend kharab raat bhar. Seriously though — series 3-1 jeet li. Champions Trophy ke liye squad confidence solid hai. Highlights zaroor dekho. Instagram nahi, actual highlights.','student-happy':'India wins ODI series 3-1. Shubman Gill\'s 134* was a masterclass in anchor batting with acceleration. Strong team morale going into Champions Trophy. Classic professional conversation icebreaker — know this and use it.','employee-frustrated':'India jeeti. Office mein aaj sab cricket expert hain. Good — use karo. Retailer mood aaj extra good hoga. Cricket se conversation shuru karo, order size khud badh jaayega. Itna toh hum kar sakte hain aaj. Minimum effort, maximum result.','employee-happy':'India\'s win = positive market sentiment for 24-48 hours. FMCG brands with cricket tie-ins should push activations today. Retailer footfall will be higher than usual — deploy your field teams strategically for maximum territory impact.','agent':'India ki jeet — sab khush hain aaj. Mandi mein bhi atmosphere acha rahega. Chhoti meetings aur baat-chit ke liye bahut acha din hai. Rishte banane ka sahi waqt — log khule dil se milte hain jab khushi mein hote hain.'}},
+  {cat:'Government',color:'#4F46E5',headline:'Govt Announces ₹2.1 Lakh Crore Rural Infrastructure Package — Mandi Upgrades Included',voices:{'student-frustrated':'2.1 lakh crore ka package announce kar diya. Implement kab karenge koi nahi jaanta. But for exams yeh important hai — PM GatiShakti se directly linked. Roads, mandis, cold storage sab hai ismein. Likh lo — answer mein zaroor aayega.','student-happy':'Govt\'s 2.1L Cr rural infra package covers roads, mandis, cold storage — directly linked to PM GatiShakti infrastructure program. Supply chain investment at this scale means rural GDP growth of 1.5-2x. Big policy moment — know this.','employee-frustrated':'Rural infra spend announce ho gaya. Hamara rural beat abhi bhi under-served hai. Company bhi rural push karti hai but resources nahi deti properly. Anyway — yeh package real hai toh tier-3 territory gold ban jaayegi. Apna rural beat solid karo ab before someone else does.','employee-happy':'2.1L Cr rural infra = rural GDP grows 1.5–2x faster over next 3 years. Brands without rural distribution infrastructure will regret it. This is the moment to build that network before the demand wave arrives in 18-24 months.','agent':'Sarkar ne mandi sudharne ke liye itne paise diye — seedha faayda hamare liye hai. Nayi mandi bhavan, cold storage, digital weighing — sab aane wala hai Kaithal jaise shaharon mein bhi. Bahut khushi ki baat hai yeh.'}},
+];
+
+function openModal(idx){
+  var s=storyData[idx];
+  document.getElementById('modal-cat').textContent=s.cat;
+  document.getElementById('modal-headline').textContent=s.headline;
+  document.getElementById('modal-top-bar').style.background=s.color;
+  document.getElementById('mp-sf').textContent=s.voices['student-frustrated']||'';
+  document.getElementById('mp-sh').textContent=s.voices['student-happy']||'';
+  document.getElementById('mp-ef').textContent=s.voices['employee-frustrated']||'';
+  document.getElementById('mp-eh').textContent=s.voices['employee-happy']||'';
+  document.getElementById('mp-ag').textContent=s.voices['agent']||'';
+  document.querySelectorAll('.modal-voice-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.mvt').forEach(function(b){b.classList.remove('active');});
+  var activePanel=document.querySelector('.modal-voice-panel[data-mp="'+currentVoice+'"]');
+  var activeTab=document.querySelector('.mvt[data-mv="'+currentVoice+'"]');
+  if(activePanel)activePanel.classList.add('active');
+  if(activeTab)activeTab.classList.add('active');
+  document.getElementById('modal-voice-label').textContent=VOICE_LABELS[currentVoice]||'Your Voice';
+  document.getElementById('story-modal').classList.add('show');
+  try{supaInsert('story_clicks',{story_title:s.headline.slice(0,200),category:s.cat,role:currentVoice});}catch(e){}
+}
+function closeModal(){document.getElementById('story-modal').classList.remove('show');}
+
+document.querySelectorAll('.mvt').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.mvt').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var v=btn.getAttribute('data-mv');
+    document.querySelectorAll('.modal-voice-panel').forEach(function(p){p.classList.remove('active');});
+    var panel=document.querySelector('.modal-voice-panel[data-mp="'+v+'"]');
+    if(panel)panel.classList.add('active');
+    document.getElementById('modal-voice-label').textContent=VOICE_LABELS[v]||v;
+  });
+});
+document.getElementById('modal-close').addEventListener('click',closeModal);
+document.getElementById('story-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+var cvs=document.getElementById('particles'),ctx=cvs.getContext('2d'),W,H;
+var COLS=[[0,180,255],[41,121,255],[92,200,255],[255,255,255],[0,229,255],[100,160,255]];
+var pts=[];
+function resize(){W=cvs.width=window.innerWidth;H=cvs.height=220;}
+function mkp(){var c=COLS[Math.floor(Math.random()*COLS.length)];return{x:Math.random()*W,y:Math.random()*80,sz:Math.random()*1.5+.2,vx:(Math.random()-.5)*.2,vy:Math.random()*.1-.02,life:0,max:120+Math.random()*120,c:c,ph:Math.random()*Math.PI*2,ts:.03+Math.random()*.03};}
+for(var i=0;i<100;i++){var p=mkp();p.life=Math.random()*p.max;pts.push(p);}
+function frame(){
+  if(!W||!H){requestAnimationFrame(frame);return;}
+  ctx.clearRect(0,0,W,H);
+  for(var i=pts.length-1;i>=0;i--){
+    var p=pts[i];p.life++;p.x+=p.vx;p.y+=p.vy;p.ph+=p.ts;
+    if(!isFinite(p.x)||p.sz<=0){pts.splice(i,1);pts.push(mkp());continue;}
+    var pr=p.life/p.max,tw=(Math.sin(p.ph)+1)/2;
+    var a=pr<.15?(pr/.15)*tw:pr>.72?((1-pr)/.28)*tw:.5+tw*.5;
+    var ct=1-Math.abs((p.x/W)-.5)*1.4,hf=1-Math.max(0,(p.y-20)/60);
+    a=Math.min(1,Math.max(0,a*(Math.max(0,ct)*.8*Math.max(0,hf)+.2)));
+    var rv=p.c[0],gv=p.c[1],bv=p.c[2],r=Math.max(.1,p.sz*4);
+    var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r);
+    g.addColorStop(0,'rgba('+rv+','+gv+','+bv+','+a*.5+')');g.addColorStop(1,'rgba('+rv+','+gv+','+bv+',0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba('+rv+','+gv+','+bv+','+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);ctx.fill();
+    if(p.life>=p.max||p.x<-20||p.x>W+20){pts.splice(i,1);pts.push(mkp());}
   }
+  requestAnimationFrame(frame);
+}
+resize();window.addEventListener('resize',resize);frame();
 
-  // Save role to localStorage when set
-  const origActivateVoice = activateVoice;
-  function activateVoiceAndSave(role, displayName) {
-    localStorage.setItem('dawnbrief_role', role);
-    localStorage.setItem('dawnbrief_rolename', displayName);
-    origActivateVoice(role, displayName);
-  }
-
-  // Override setRole to save
-  const origSetRole = setRole;
-  // setRole already calls activateVoice — patch it
-  window.setRole = function(role, displayName) {
-    localStorage.setItem('dawnbrief_role', role);
-    localStorage.setItem('dawnbrief_rolename', displayName);
-    origSetRole(role, displayName);
-  };
+var savedVoice=localStorage.getItem('db_voice');
+if(savedVoice)activateVoice(savedVoice);
 </script>
 </body>
 </html>
