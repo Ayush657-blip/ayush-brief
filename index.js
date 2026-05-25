@@ -1,11 +1,9 @@
 const Parser = require('rss-parser');
-const { Groq } = require('groq-sdk');
 const { Resend } = require('resend');
 const fs = require('fs');
 const path = require('path');
 
 const parser = new Parser({ timeout: 10000, headers: { 'User-Agent': 'Mozilla/5.0' } });
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ── SUPABASE CONFIG ───────────────────────────────────────────────────────────
@@ -84,82 +82,36 @@ const RSS_FEEDS = {
   ]
 };
 
-// ── 5 VOICE PROMPTS ───────────────────────────────────────────────────────────
-const VOICE_PROMPTS = {
-
-  'student-frustrated': {
-    label: '😤 Frustrated Student',
+// ── 3 VOICE CONFIG ────────────────────────────────────────────────────────────
+const VOICE_CONFIG = {
+  'student': {
+    label: '🎓 Student',
     color: '#FF4D6D',
-    bg: '#FFF0F3',
-    prompt: `You are texting a frustrated Indian student (20-24 years old) who is stressed about exams, placements, and life in general.
-They don't want to be taught. They want 10 minutes of relief and something to smile about.
-Write like their funniest, most relaxed friend who just read the news — casual Hinglish, warm, slightly funny.
-Find the most relatable or absurd angle in this news. Make them smile or go "yaar sahi hai."
-ONE sharp useful thing at the end — something they can actually use.
-Max 3 lines. No catchphrase at the end. End naturally like a WhatsApp message.
-Output ONLY the text, nothing else.`
+    bg: '#FFF0F3'
   },
-
-  'student-happy': {
-    label: '😊 Happy Student',
-    color: '#2979FF',
-    bg: '#EEF4FF',
-    prompt: `You are writing for an Indian student (20-24 years old) who is in a good mood today.
-Write in clear simple Hinglish. Explain what happened and why it matters for their career or studies.
-Give one interview or GD-worthy insight they can use immediately.
-Max 3 lines. Straightforward. Respectful. No forced jokes.
-Output ONLY the text, nothing else.`
-  },
-
-  'employee-frustrated': {
-    label: '😤 Frustrated Employee',
+  'employee': {
+    label: '💼 Employee',
     color: '#FFAA55',
-    bg: '#FFF8EE',
-    prompt: `You are texting a frustrated Indian FMCG employee who is having a tough week.
-Targets are not met. Manager is asking. Life is hard.
-Write like their street-smart colleague who just read the news on his chai break — punchy, slightly funny, real.
-Find what this news means for their actual work day TODAY. One action or one sharp observation.
-Max 3 lines. Hinglish. No jargon. End naturally. No catchphrase.
-Output ONLY the text, nothing else.`
+    bg: '#FFF8EE'
   },
-
-  'employee-happy': {
-    label: '😊 Happy Employee',
-    color: '#00C896',
-    bg: '#EEFAF5',
-    prompt: `You are writing for an Indian FMCG employee who is having a good week — confident, open, ready to learn.
-Write in professional but warm Hinglish. Give them one sharp business insight from this news.
-What does this mean for their work, their market, their targets? One clear action.
-Max 3 lines. Clean and direct. No fluff.
-Output ONLY the text, nothing else.`
-  },
-
   'agent': {
     label: '🌾 Commission Agent',
     color: '#E8C558',
-    bg: '#FFFBEE',
-    prompt: `You are writing for an Indian commission agent (arhatiya) in their late 40s who works at a mandi or wholesale market.
-Write in very simple, easy Hinglish — the kind of language used at a chai stall near the mandi.
-No English business words. No jargon. Short sentences.
-Tell them ONE thing from this news that affects their trade, their buyers, or the market price.
-Max 2-3 lines. Warm and honest. Like a trusted friend at the mandi telling them something useful.
-Output ONLY the text, nothing else.`
+    bg: '#FFFBEE'
   }
 };
 
 // ── VALID VOICE KEYS ──────────────────────────────────────────────────────────
-const VALID_VOICE_KEYS = ['student-frustrated', 'student-happy', 'employee-frustrated', 'employee-happy', 'agent'];
+const VALID_VOICE_KEYS = ['student', 'employee', 'agent'];
 
-// ── GET VOICE KEY — role column first, identity+mood as fallback ──────────────
-function getVoiceKey(role, identity, mood) {
-  // New subscribers: role column has the exact voice key
+// ── GET VOICE KEY ─────────────────────────────────────────────────────────────
+function getVoiceKey(role) {
   if (role && VALID_VOICE_KEYS.includes(role)) return role;
-  // Old subscribers: derive from identity + mood
-  if (identity === 'agent') return 'agent';
-  if (identity === 'student') return mood === 'happy' ? 'student-happy' : 'student-frustrated';
-  if (identity === 'employee') return mood === 'happy' ? 'employee-happy' : 'employee-frustrated';
-  // Final fallback
-  return 'student-frustrated';
+  // Fallback for old subscribers
+  if (role && role.includes('student')) return 'student';
+  if (role && role.includes('employee')) return 'employee';
+  if (role === 'agent') return 'agent';
+  return 'student';
 }
 
 // ── FETCH RSS FEED ────────────────────────────────────────────────────────────
@@ -178,35 +130,174 @@ async function fetchFeed(url) {
   }
 }
 
-// ── GENERATE ONE VOICE ────────────────────────────────────────────────────────
-async function generateVoice(title, summary, voiceKey) {
-  const voice = VOICE_PROMPTS[voiceKey];
-  try {
-    const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      max_tokens: 200,
-      messages: [
-        { role: 'system', content: voice.prompt },
-        { role: 'user', content: `News: ${title}\n\nContext: ${summary.slice(0, 400)}` }
-      ]
-    });
-    return completion.choices[0]?.message?.content?.trim() || '';
-  } catch (err) {
-    console.log(`⚠️  Groq failed for ${voiceKey}: ${err.message}`);
-    return summary.slice(0, 150);
-  }
+// ── DETECT NEWS TYPE ──────────────────────────────────────────────────────────
+function detectNewsType(title, category) {
+  const t = title.toLowerCase();
+
+  // Economy & Money
+  if (t.includes('sensex') && (t.includes('up') || t.includes('rise') || t.includes('gain') || t.includes('high') || t.includes('surge'))) return 1;
+  if (t.includes('sensex') && (t.includes('down') || t.includes('fall') || t.includes('crash') || t.includes('drop') || t.includes('plunge'))) return 2;
+  if (t.includes('interest rate') || t.includes('repo rate') || t.includes('rbi rate')) return 3;
+  if (t.includes('inflation') && (t.includes('rise') || t.includes('high') || t.includes('up') || t.includes('surge'))) return 4;
+  if (t.includes('inflation') && (t.includes('fall') || t.includes('low') || t.includes('down') || t.includes('ease'))) return 5;
+  if (t.includes('rupee') && (t.includes('fall') || t.includes('weak') || t.includes('low') || t.includes('drop'))) return 6;
+  if (t.includes('rupee') && (t.includes('rise') || t.includes('strong') || t.includes('high') || t.includes('gain'))) return 7;
+  if (t.includes('tax') && t.includes('polic')) return 8;
+  if (t.includes('budget')) return 9;
+  if (t.includes('bank') && (t.includes('scam') || t.includes('fraud'))) return 10;
+
+  // Government & Politics
+  if (t.includes('government') && t.includes('polic')) return 11;
+  if (t.includes('election') && t.includes('result')) return 12;
+  if (t.includes('scam') || t.includes('corruption')) return 13;
+  if (t.includes('scheme') && t.includes('launch')) return 14;
+  if (t.includes('court') || t.includes('judgment') || t.includes('verdict')) return 15;
+  if (t.includes('parliament') || t.includes('lok sabha') || t.includes('rajya sabha')) return 16;
+
+  // Business & Corporate
+  if (t.includes('profit') || t.includes('record quarter') || t.includes('earnings up')) return 17;
+  if (t.includes('loss') || t.includes('earnings down') || t.includes('revenue fall')) return 18;
+  if (t.includes('launch') && (t.includes('product') || t.includes('new'))) return 19;
+  if (t.includes('price') && (t.includes('hike') || t.includes('rise') || t.includes('increase'))) return 20;
+  if (t.includes('price') && (t.includes('cut') || t.includes('fall') || t.includes('reduce'))) return 21;
+  if (t.includes('merger') || t.includes('acquisition') || t.includes('acqui')) return 22;
+  if (t.includes('funding') || t.includes('investment') || t.includes('series')) return 23;
+  if (t.includes('layoff') || t.includes('shutdown') || t.includes('fired') || t.includes('job cut')) return 24;
+  if (t.includes('ceo') && (t.includes('resign') || t.includes('quit') || t.includes('step'))) return 25;
+
+  // FMCG & Retail
+  if (t.includes('fmcg') || t.includes('hul') || t.includes('itc') || t.includes('nestle') || t.includes('marico')) return 26;
+  if (t.includes('rural') && (t.includes('demand') || t.includes('growth') || t.includes('consumption')) && !t.includes('fall') && !t.includes('down')) return 27;
+  if (t.includes('rural') && (t.includes('demand') || t.includes('slow')) && (t.includes('fall') || t.includes('down') || t.includes('decline'))) return 28;
+  if (t.includes('blinkit') || t.includes('zepto') || t.includes('quick commerce') || t.includes('q-commerce')) return 29;
+  if (t.includes('supply chain') || t.includes('distribution')) return 30;
+  if (t.includes('gst') && t.includes('consumer')) return 31;
+
+  // International
+  if (t.includes('war') || t.includes('attack') || t.includes('missile') || t.includes('strike')) return 32;
+  if (t.includes('ceasefire') || t.includes('peace') || t.includes('deal')) return 33;
+  if (t.includes('recession') || t.includes('global slowdown')) return 34;
+  if (t.includes('oil') && (t.includes('rise') || t.includes('high') || t.includes('up'))) return 35;
+  if (t.includes('oil') && (t.includes('fall') || t.includes('low') || t.includes('down'))) return 36;
+  if (t.includes('trade') && (t.includes('deal') || t.includes('tariff'))) return 37;
+  if (t.includes('tension') || t.includes('geopolit')) return 38;
+
+  // Technology
+  if (t.includes('ai') || t.includes('artificial intelligence') || t.includes('tech launch')) return 39;
+  if (t.includes('cyber') || t.includes('hack') || t.includes('data breach')) return 40;
+  if (t.includes('social media') || t.includes('instagram') || t.includes('twitter') || t.includes('facebook')) return 41;
+  if (t.includes('isro') || t.includes('space') || t.includes('satellite')) return 42;
+
+  // Society & India
+  if (t.includes('flood') || t.includes('earthquake') || t.includes('cyclone') || t.includes('disaster')) return 43;
+  if (t.includes('accident') || t.includes('crash') || t.includes('tragedy')) return 44;
+  if (t.includes('death') || t.includes('died') || t.includes('passes away')) return 45;
+  if (t.includes('communal') || t.includes('riot') || t.includes('religious')) return 46;
+  if (t.includes('disease') || t.includes('virus') || t.includes('outbreak') || t.includes('health')) return 47;
+  if (t.includes('education') && t.includes('polic')) return 48;
+  if (t.includes('farmer') || t.includes('agriculture') || t.includes('kisan')) return 49;
+  if (t.includes('weather') || t.includes('climate') || t.includes('monsoon') || t.includes('rain')) return 50;
+
+  // Sports
+  if (t.includes('india') && t.includes('win') && t.includes('cricket')) return 51;
+  if (t.includes('india') && t.includes('lose') && t.includes('cricket')) return 52;
+  if (t.includes('india') && t.includes('win') && !t.includes('cricket')) return 53;
+  if (t.includes('india') && t.includes('lose') && !t.includes('cricket')) return 54;
+  if (t.includes('injur') || t.includes('controversy') && t.includes('player')) return 55;
+  if (t.includes('ipl') || t.includes('tournament')) return 56;
+
+  // Entertainment & Culture
+  if (t.includes('film') || t.includes('movie') || t.includes('bollywood') || t.includes('release')) return 57;
+  if (t.includes('celebrity') || t.includes('actor') || t.includes('controversy')) return 58;
+  if (t.includes('ott') || t.includes('netflix') || t.includes('amazon prime') || t.includes('streaming')) return 59;
+  if (t.includes('music') || t.includes('award') || t.includes('grammy')) return 60;
+
+  // Jobs & Career
+  if (t.includes('layoff') || t.includes('job cut') || t.includes('retrench')) return 61;
+  if (t.includes('hiring') || t.includes('job') && t.includes('creat')) return 62;
+  if (t.includes('salary') || t.includes('appraisal') || t.includes('increment')) return 63;
+  if (t.includes('work from home') || t.includes('wfh') || t.includes('remote work') || t.includes('office')) return 64;
+
+  // Health & Medicine
+  if (t.includes('drug') || t.includes('medicine') || t.includes('breakthrough') || t.includes('vaccine')) return 65;
+  if (t.includes('hospital') && (t.includes('scam') || t.includes('fraud'))) return 66;
+  if (t.includes('mental health') || t.includes('depression') || t.includes('anxiety')) return 67;
+  if (t.includes('food') && (t.includes('safety') || t.includes('adulterat'))) return 68;
+
+  // Infrastructure
+  if (t.includes('road') || t.includes('highway') || t.includes('bridge')) return 69;
+  if (t.includes('railway') || t.includes('metro') || t.includes('train')) return 70;
+  if (t.includes('airport') || t.includes('aviation') || t.includes('airline')) return 71;
+  if (t.includes('power') || t.includes('electricity') || t.includes('energy')) return 72;
+
+  // Mandi & Agriculture
+  if (t.includes('crop') && (t.includes('price') || t.includes('rate')) && !t.includes('fall') && !t.includes('down')) return 73;
+  if (t.includes('crop') && (t.includes('price') || t.includes('rate')) && (t.includes('fall') || t.includes('down'))) return 74;
+  if (t.includes('monsoon') || t.includes('rainfall') || t.includes('forecast')) return 75;
+  if (t.includes('fertiliser') || t.includes('pesticide') || t.includes('fertilizer')) return 76;
+  if (t.includes('grain') && (t.includes('export') || t.includes('import'))) return 77;
+
+  // Banking & Personal Finance
+  if (t.includes('home loan') || t.includes('emi') || t.includes('mortgage')) return 78;
+  if (t.includes('gold') && (t.includes('rise') || t.includes('high') || t.includes('up'))) return 79;
+  if (t.includes('gold') && (t.includes('fall') || t.includes('low') || t.includes('down'))) return 80;
+  if (t.includes('petrol') || t.includes('diesel') || t.includes('fuel')) return 81;
+  if (t.includes('lpg') || t.includes('cng') || t.includes('gas price')) return 82;
+
+  // Social Media & Viral
+  if (t.includes('viral') || t.includes('cancel') || t.includes('trend')) return 83;
+  if (t.includes('influencer') || t.includes('creator') || t.includes('youtuber')) return 84;
+
+  // Crime
+  if (t.includes('scam') && t.includes('expos')) return 85;
+  if (t.includes('kidnap') || t.includes('murder') || t.includes('crime')) return 86;
+  if (t.includes('cyber fraud') || t.includes('online fraud') || t.includes('phishing')) return 87;
+
+  // Category-based fallback
+  const categoryMap = {
+    'Finance': 1,
+    'Business': 17,
+    'Indian Economy': 9,
+    'Government': 11,
+    'International': 38,
+    'Tech': 39,
+    'Sports': 56,
+    'Entertainment': 57,
+    'Auto': 19,
+    'Science': 42,
+    'Climate': 50,
+    'Real Estate': 78,
+    'Travel': 71,
+    'Lifestyle': 47,
+    'Media': 41,
+    'Culture': 57
+  };
+
+  return categoryMap[category] || 17;
 }
 
-// ── GENERATE ALL 5 VOICES FOR ONE ARTICLE ────────────────────────────────────
-async function generateAllVoices(title, summary) {
-  const voices = {};
-  const results = await Promise.allSettled(
-    VALID_VOICE_KEYS.map(key => generateVoice(title, summary, key))
-  );
-  VALID_VOICE_KEYS.forEach((key, i) => {
-    voices[key] = results[i].status === 'fulfilled' ? results[i].value : summary.slice(0, 150);
-  });
-  return voices;
+// ── FETCH VOICE FROM SUPABASE ─────────────────────────────────────────────────
+async function fetchVoiceFromSupabase(newsTypeId, voiceKey) {
+  try {
+    const res = await fetch(
+      `${SUPA_URL}/rest/v1/voice_library?news_type_id=eq.${newsTypeId}&voice=eq.${voiceKey}&select=content,status`,
+      {
+        headers: {
+          'apikey': SUPA_KEY,
+          'Authorization': `Bearer ${SUPA_KEY}`
+        }
+      }
+    );
+    if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+    const data = await res.json();
+    if (data.length > 0 && data[0].content && data[0].status === 'approved') {
+      return data[0].content;
+    }
+    return null;
+  } catch (err) {
+    console.log(`⚠️  Supabase voice fetch failed: ${err.message}`);
+    return null;
+  }
 }
 
 // ── PROCESS ONE CATEGORY ──────────────────────────────────────────────────────
@@ -223,17 +314,30 @@ async function processCategory(category, urls) {
   }
   const best = allItems.find(i => i.title && i.summary && i.summary.length > 50) || allItems[0];
   if (!best || !best.title) return null;
-  console.log(`   ✓ ${best.title.slice(0, 60)}...`);
-  const voices = await generateAllVoices(best.title, best.summary);
-  console.log(`   ✓ All 5 voices generated`);
-  return { category, headline: best.title, link: best.link, pubDate: best.pubDate, voices };
+
+  const newsTypeId = detectNewsType(best.title, category);
+  console.log(`   ✓ ${best.title.slice(0, 60)}... [Type: ${newsTypeId}]`);
+
+  // Fetch voices from Supabase for all 3 voice keys
+  const voices = {};
+  for (const voiceKey of VALID_VOICE_KEYS) {
+    const content = await fetchVoiceFromSupabase(newsTypeId, voiceKey);
+    voices[voiceKey] = content || best.summary.slice(0, 150);
+    if (content) {
+      console.log(`   ✓ ${voiceKey} voice loaded from Supabase`);
+    } else {
+      console.log(`   ⚠️  ${voiceKey} voice not found — using summary fallback`);
+    }
+  }
+
+  return { category, headline: best.title, link: best.link, pubDate: best.pubDate, newsTypeId, voices };
 }
 
 // ── FETCH ALL ACTIVE SUBSCRIBERS FROM SUPABASE ────────────────────────────────
 async function fetchSubscribers() {
   try {
     const res = await fetch(
-      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,role,identity,mood`,
+      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,role`,
       {
         headers: {
           'apikey': SUPA_KEY,
@@ -247,9 +351,8 @@ async function fetchSubscribers() {
     return data;
   } catch (err) {
     console.log(`❌ Failed to fetch subscribers: ${err.message}`);
-    // Fallback to MY_EMAIL for testing
     if (process.env.MY_EMAIL) {
-      return [{ email: process.env.MY_EMAIL, name: 'Ayush', role: 'student-frustrated', identity: 'student', mood: 'frustrated' }];
+      return [{ email: process.env.MY_EMAIL, name: 'Ayush', role: 'student' }];
     }
     return [];
   }
@@ -257,30 +360,19 @@ async function fetchSubscribers() {
 
 // ── BUILD EMAIL HTML FOR ONE SUBSCRIBER ──────────────────────────────────────
 function buildEmailHTML(stories, date, subscriber) {
-  const { name, role, identity, mood } = subscriber;
-  const voiceKey = getVoiceKey(role, identity, mood);
-  const voice = VOICE_PROMPTS[voiceKey];
-  const firstName = (name || 'friend').split(' ')[0];
-  firstName.charAt(0).toUpperCase() + firstName.slice(1);
+  const { name, role } = subscriber;
+  const voiceKey = getVoiceKey(role);
+  const voice = VOICE_CONFIG[voiceKey];
+  const firstName = ((name || 'friend').split(' ')[0].charAt(0).toUpperCase() + (name || 'friend').split(' ')[0].slice(1));
   const topStories = stories.slice(0, 6);
 
   const greetings = {
-    'student-frustrated': `Yaar ${firstName}, ek dum chill kar — aaj ki brief padh aur 10 minute ke liye sab bhool ja. 😤`,
-    'student-happy':      `Good morning ${firstName}! Aaj ki brief — sharp, useful, aur tere kaam ki. 😊`,
-    'employee-frustrated': `Aye ${firstName}, chai le aur yeh padh — aaj ki brief mein kuch kaam ki cheezein hain. ☕`,
-    'employee-happy':     `Good morning ${firstName}! Aaj ka brief — teri morning ka best 7 minutes. 📊`,
-    'agent':              `${firstName} bhai, aaj ki zaroori khabrein — mandi ke kaam ki. 🌾`
+    'student':  `Yaar ${firstName}, aaj ki brief aa gayi — 7 minute mein poori duniya. ☀`,
+    'employee': `${firstName} bhai, chai le aur yeh padh — aaj ki brief ready hai. ☕`,
+    'agent':    `${firstName} bhai, aaj ki zaroori khabrein — mandi ke kaam ki. 🌾`
   };
 
   const greeting = greetings[voiceKey] || `Good morning ${firstName}!`;
-
-  const moodToggle = (identity !== 'agent' && identity)
-    ? `<p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.35);">
-        Reading in <strong style="color:rgba(255,255,255,.5);">${voiceKey.includes('frustrated') ? 'Frustrated' : 'Happy'} mode</strong>
-        &nbsp;·&nbsp;
-        <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">Switch mood on website</a>
-       </p>`
-    : '';
 
   const storyCards = topStories.map(s => {
     const voiceText = s.voices[voiceKey] || s.headline;
@@ -331,7 +423,6 @@ function buildEmailHTML(stories, date, subscriber) {
             <p style="margin:0 0 6px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(92,200,255,.5);">Daily Intelligence · India</p>
             <h1 style="margin:0 0 6px;font-family:Georgia,serif;font-size:28px;font-weight:900;color:#E8C558;">☀ The Dawn Brief</h1>
             <p style="margin:0;font-size:13px;color:rgba(255,255,255,.35);">${date}</p>
-            ${moodToggle}
           </td>
         </tr>
 
@@ -356,9 +447,7 @@ function buildEmailHTML(stories, date, subscriber) {
             <p style="margin:0;font-size:11px;color:rgba(255,255,255,.2);">
               <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">ayushbrief.online</a>
               &nbsp;·&nbsp;
-              <a href="https://ayushbrief.online" style="color:rgba(255,255,255,.2);text-decoration:none;">Change mood</a>
-              &nbsp;·&nbsp;
-              <a href="https://ayushbrief.online" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
+              <a href="https://ayushbrief.online/unsubscribe" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
             </p>
           </td>
         </tr>
@@ -372,15 +461,13 @@ function buildEmailHTML(stories, date, subscriber) {
 
 // ── SEND EMAIL TO ONE SUBSCRIBER ──────────────────────────────────────────────
 async function sendToSubscriber(subscriber, stories, date) {
-  const { email, role, identity, mood } = subscriber;
-  const voiceKey = getVoiceKey(role, identity, mood);
+  const { email, role } = subscriber;
+  const voiceKey = getVoiceKey(role);
 
   const subjects = {
-    'student-frustrated': `☀ Yaar sun — aaj ki brief aai hai`,
-    'student-happy':      `☀ The Dawn Brief — ${date}`,
-    'employee-frustrated': `☀ Chai le aur padh — aaj ki brief`,
-    'employee-happy':     `☀ The Dawn Brief — ${date}`,
-    'agent':              `☀ Aaj ki zaroori khabrein — The Dawn Brief`
+    'student':  `☀ Yaar sun — aaj ki brief aai hai`,
+    'employee': `☀ Chai le aur padh — aaj ki brief`,
+    'agent':    `☀ Aaj ki zaroori khabrein — The Dawn Brief`
   };
 
   const subject = subjects[voiceKey] || `☀ The Dawn Brief — ${date}`;
