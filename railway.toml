@@ -2,8 +2,8 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "node index.js"
-restartPolicyType = "never"
+startCommand = "node server.js"
+restartPolicyType = "on_failure"
 
 [[cronjobs]]
 schedule = "30 0 * * *"
