@@ -72,12 +72,6 @@ app.post('/send-otp', async (req, res) => {
   }
 
   try {
-    // Check if email already subscribed
-    const existing = await supabaseQuery(`subscribers?email=eq.${encodeURIComponent(email)}&select=email`);
-    if (existing && existing.length > 0) {
-      return res.status(400).json({ error: 'Email already subscribed.' });
-    }
-
     // Generate OTP
     const otp = generateOTP();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
@@ -200,16 +194,17 @@ app.post('/subscribe', async (req, res) => {
   }
 
   try {
-    // Check email unique
+    // Check email — if already subscribed, return success silently (user retrying after failed attempt)
     const emailCheck = await supabaseQuery(`subscribers?email=eq.${encodeURIComponent(email)}&select=email`);
     if (emailCheck && emailCheck.length > 0) {
-      return res.status(400).json({ error: 'Email already subscribed.' });
+      console.log(`Already subscribed: ${email} — returning success`);
+      return res.json({ success: true, message: 'Subscribed successfully!' });
     }
 
     // Check phone unique
     const phoneCheck = await supabaseQuery(`subscribers?phone=eq.${phoneClean}&select=phone`);
     if (phoneCheck && phoneCheck.length > 0) {
-      return res.status(400).json({ error: 'Phone number already registered.' });
+      return res.status(400).json({ error: 'Phone number already registered. Use a different number.' });
     }
 
     // Save subscriber — THIS MUST SUCCEED FIRST
