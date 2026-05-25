@@ -75,7 +75,7 @@ app.post('/send-otp', async (req, res) => {
     res.json({ success: true, message: 'OTP sent successfully.' });
   } catch (err) {
     console.error(`❌ Send OTP error: ${err.message}`);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 });
 
@@ -96,7 +96,7 @@ app.post('/verify-otp', async (req, res) => {
     res.json({ success: true, message: 'Email verified successfully.' });
   } catch (err) {
     console.error(`❌ Verify OTP error: ${err.message}`);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 });
 
@@ -136,7 +136,7 @@ app.post('/subscribe', async (req, res) => {
     res.json({ success: true, message: 'Subscribed successfully!' });
   } catch (err) {
     console.error(`❌ Subscribe FINAL error: ${err.message}`);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 });
 
