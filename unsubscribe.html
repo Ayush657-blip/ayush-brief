@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unsubscribe — The Dawn Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#07070F;--bg2:#0C0C1A;--blue:#2979FF;--blue-b:#00B4FF;--blue-p:#5CC8FF;--gold-d:#B8902A;--gold-m:#E8C558;--gold-l:#FFE878;--red:#FF4D6D;--green:#00C896;--w:#fff;--w9:rgba(255,255,255,.9);--w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--border:rgba(255,255,255,.07);}
+html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,transparent 100%);}
+.glow{position:fixed;top:-100px;left:0;right:0;height:320px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 200px at 50% 0%,rgba(0,90,255,.15) 0%,transparent 100%);}
+nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;backdrop-filter:blur(20px);background:rgba(7,7,15,.8);border-bottom:.5px solid rgba(255,255,255,.06);}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-text{display:flex;align-items:baseline;gap:5px;}
+.logo-the,.logo-brief{font-family:'Cormorant SC',serif;font-size:10px;letter-spacing:.22em;color:rgba(220,185,100,.7);}
+.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;background:linear-gradient(90deg,#C8960E,#F0C830,#FFE878,#F0C830,#C8960E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.nav-back{font-size:13px;color:var(--w5);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--w9);}
+.wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;position:relative;z-index:5;}
+.box{width:100%;max-width:480px;animation:fadeIn .6s ease forwards;}
+.icon{font-size:48px;margin-bottom:24px;display:block;}
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,44px);font-weight:300;font-style:italic;margin-bottom:10px;line-height:1.1;}
+.title em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.sub{font-size:14px;color:var(--w3);line-height:1.7;margin-bottom:36px;}
+.input-wrap{display:flex;flex-direction:column;gap:10px;}
+.ob-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;font-size:15px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.ob-input::placeholder{color:rgba(255,255,255,.22);}
+.ob-input:focus{border-color:rgba(92,200,255,.4);}
+.btn{width:100%;padding:14px;border-radius:12px;background:var(--red);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;}
+.btn:hover{opacity:.85;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.msg{font-size:13px;text-align:center;display:none;margin-top:4px;}
+.msg.success{color:var(--green);display:block;}
+.msg.error{color:var(--red);display:block;}
+.divider{margin:36px 0;border:none;border-top:.5px solid var(--border);}
+.comeback{font-size:13px;color:var(--w3);text-align:center;line-height:1.7;}
+.comeback a{color:var(--blue-p);text-decoration:none;}
+.comeback a:hover{text-decoration:underline;}
+footer{border-top:.5px solid var(--border);padding:28px 52px;text-align:center;position:relative;z-index:5;font-size:12px;color:var(--w3);}
+footer a{color:var(--blue-p);text-decoration:none;}
+@media(max-width:600px){nav{padding:0 20px;}footer{padding:24px 20px;}}
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+<div class="glow"></div>
+
+<nav>
+  <a class="logo" href="/">
+    <svg width="38" height="30" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g1)" stroke-width="1.5" fill="none" clip-path="url(#c1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
+  </a>
+  <a class="nav-back" href="/">← Back to home</a>
+</nav>
+
+<div class="wrap">
+  <div class="box">
+    <span class="icon">👋</span>
+    <h1 class="title">Sorry to see you <em>go.</em></h1>
+    <p class="sub">Enter your email below and we'll remove you immediately. No questions asked.</p>
+
+    <div class="input-wrap">
+      <input class="ob-input" type="email" id="email" placeholder="Your email address" />
+      <div class="msg" id="msg"></div>
+      <button class="btn" id="unsub-btn">Unsubscribe me</button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="comeback">
+      Changed your mind? &nbsp;<a href="/">Subscribe again →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 The Dawn Brief · <a href="/privacy.html">Privacy Policy</a> · <a href="/">ayushbrief.online</a>
+</footer>
+
+<script>
+var API_URL = 'https://ayush-brief-production.up.railway.app';
+
+document.getElementById('unsub-btn').addEventListener('click', async function() {
+  var email = document.getElementById('email').value.trim();
+  var msg = document.getElementById('msg');
+  msg.className = 'msg';
+  msg.style.display = 'none';
+
+  if (!email || email.indexOf('@') < 0) {
+    msg.textContent = 'Please enter a valid email address.';
+    msg.className = 'msg error';
+    return;
+  }
+
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = 'Removing you...';
+
+  try {
+    var res = await fetch(API_URL + '/unsubscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
+    var data = await res.json();
+    if (!res.ok) {
+      msg.textContent = data.error || 'Something went wrong. Please try again.';
+      msg.className = 'msg error';
+      btn.disabled = false;
+      btn.textContent = 'Unsubscribe me';
+    } else {
+      msg.textContent = 'Done. You have been unsubscribed. Take care. ☀';
+      msg.className = 'msg success';
+      btn.textContent = 'Unsubscribed ✓';
+      document.getElementById('email').disabled = true;
+    }
+  } catch(e) {
+    msg.textContent = 'Network error. Please try again.';
+    msg.className = 'msg error';
+    btn.disabled = false;
+    btn.textContent = 'Unsubscribe me';
+  }
+});
+
+document.getElementById('email').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('unsub-btn').click();
+});
+</script>
+</body>
+</html>
