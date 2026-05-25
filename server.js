@@ -11,7 +11,7 @@ const SUPA_KEY = process.env.SUPABASE_KEY || 'sb_publishable_mklkZ61P5MmwCA7UyIE
 const PORT = process.env.PORT || 3000;
 
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
-app.use(cors({ origin: ['https://ayushbrief.online', 'http://localhost:3000'] }));
+app.use(cors());
 app.use(express.json());
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
