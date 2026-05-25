@@ -7,7 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
-const SUPA_KEY = process.env.SUPABASE_KEY || 'sb_publishable_mklkZ61P5MmwCA7UyIEOEQ_rmFbaV3k';
+const SUPA_KEY = process.env.SUPABASE_KEY;
 const PORT = process.env.PORT || 3000;
 
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
@@ -80,7 +80,7 @@ app.post('/send-otp', async (req, res) => {
 
     // Generate OTP
     const otp = generateOTP();
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 min
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
     // Delete old OTPs for this email
     await fetch(`${SUPA_URL}/rest/v1/otp_store?email=eq.${encodeURIComponent(email)}`, {
@@ -194,7 +194,6 @@ app.post('/subscribe', async (req, res) => {
     return res.status(400).json({ error: 'Invalid role.' });
   }
 
-  // Validate phone — 10 digits
   const phoneClean = phone.replace(/\D/g, '');
   if (phoneClean.length !== 10) {
     return res.status(400).json({ error: 'Valid 10 digit phone number required.' });
@@ -213,7 +212,7 @@ app.post('/subscribe', async (req, res) => {
       return res.status(400).json({ error: 'Phone number already registered.' });
     }
 
-    // Save subscriber
+    // Save subscriber — THIS MUST SUCCEED FIRST
     await supabaseQuery('subscribers', 'POST', {
       email,
       name,
@@ -224,14 +223,17 @@ app.post('/subscribe', async (req, res) => {
       is_active: true
     });
 
-    // Send welcome email
-    const firstName = name.split(' ')[0];
-    const voiceLabels = { student: '🎓 Student', employee: '💼 Employee', agent: '🌾 Commission Agent' };
-    await resend.emails.send({
-      from: 'The Dawn Brief <newsletter@ayushbrief.online>',
-      to: [email],
-      subject: `☀ Welcome to The Dawn Brief, ${firstName}!`,
-      html: `
+    console.log(`✅ Subscribed: ${email} [${role}]`);
+
+    // Send welcome email — failure here does NOT affect subscription
+    try {
+      const firstName = name.split(' ')[0];
+      const voiceLabels = { student: '🎓 Student', employee: '💼 Employee', agent: '🌾 Commission Agent' };
+      await resend.emails.send({
+        from: 'The Dawn Brief <newsletter@ayushbrief.online>',
+        to: [email],
+        subject: `☀ Welcome to The Dawn Brief, ${firstName}!`,
+        html: `
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
@@ -259,9 +261,13 @@ app.post('/subscribe', async (req, res) => {
   </table>
 </body>
 </html>`
-    });
+      });
+      console.log(`✅ Welcome email sent to ${email}`);
+    } catch (emailErr) {
+      console.error(`⚠️ Welcome email failed (subscription still saved): ${emailErr.message}`);
+    }
 
-    console.log(`✅ Subscribed: ${email} [${role}]`);
+    // Always return success if subscriber was saved
     res.json({ success: true, message: 'Subscribed successfully!' });
 
   } catch (err) {
