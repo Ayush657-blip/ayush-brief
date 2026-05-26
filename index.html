@@ -783,7 +783,15 @@ function showCategory(btn,cat){
     document.getElementById('news-list').style.display='none';
     document.getElementById('news-title').innerHTML="Today's <strong>Stories</strong>";
     if(allStories&&allStories.length>0){
-      renderNewsGrid(allStories.slice(0,9));
+      document.getElementById('news-grid').style.display='grid';
+      var colors=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
+      var display=allStories.slice(0,9);
+      storyData=display;
+      document.getElementById('news-grid').innerHTML=display.map(function(s,idx){
+        var col=colors[idx%colors.length];
+        var summary=s.summary||s.headline||'';
+        return '<div class="story-card" onclick="openModal('+idx+')"><div class="card-top-bar" style="background:'+col+';"></div><div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary" style="font-size:13px;color:var(--w5);line-height:1.7;margin-bottom:12px;">'+summary+'</div><div class="card-readmore">Read full story</div></div></div>';
+      }).join('');
     } else {
       loadNewsFromData();
     }
@@ -846,7 +854,14 @@ async function loadNewsFromData(){
     // Update date
     var nd=document.getElementById('news-date');
     if(nd&&data.date)nd.textContent=data.date;
-    renderNewsGrid('All');
+    var colors=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
+    var display=allStories.slice(0,9);
+    storyData=display;
+    document.getElementById('news-grid').innerHTML=display.map(function(s,idx){
+      var col=colors[idx%colors.length];
+      var summary=s.summary||s.headline||'';
+      return '<div class="story-card" onclick="openModal('+idx+')"><div class="card-top-bar" style="background:'+col+';"></div><div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary" style="font-size:13px;color:var(--w5);line-height:1.7;margin-bottom:12px;">'+summary+'</div><div class="card-readmore">Read full story</div></div></div>';
+    }).join('');
   }catch(e){
     // data.json not available — keep placeholder cards hidden, show message
     grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">Stories loading... Check back after 6 AM.</div>';
