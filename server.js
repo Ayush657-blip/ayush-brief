@@ -140,6 +140,23 @@ app.post('/subscribe', async (req, res) => {
   }
 });
 
+// ── DATA.JSON PROXY ──────────────────────────────────────────────────────────
+app.get('/data', async (req, res) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const dataPath = path.join(__dirname, 'data.json');
+    if (fs.existsSync(dataPath)) {
+      const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+      res.json(data);
+    } else {
+      res.json({ stories: [], date: '' });
+    }
+  } catch (err) {
+    res.json({ stories: [], date: '' });
+  }
+});
+
 app.post('/unsubscribe', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email required.' });
