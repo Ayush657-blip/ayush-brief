@@ -701,7 +701,7 @@ async function loadPersonalisedNews(vk){
   var grid=document.getElementById('pers-news-grid');
   grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Loading your brief...</div>';
   try{
-    var res=await fetch('https://raw.githubusercontent.com/Ayush657-blip/ayush-brief/main/data.json');
+    var res=await fetch('https://ayush-brief-production.up.railway.app/data');
     var data=await res.json();
     var stories=data.stories||[];
     if(stories.length===0){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">No stories available yet. Check back after 6 AM.</div>';return;}
@@ -844,7 +844,7 @@ function renderNewsList(cat){
 async function loadNewsFromData(){
   var grid=document.getElementById('news-grid');
   try{
-    var res=await fetch('https://raw.githubusercontent.com/Ayush657-blip/ayush-brief/main/data.json');
+    var res=await fetch('https://ayush-brief-production.up.railway.app/data');
     var data=await res.json();
     allStories=data.stories||[];
     if(allStories.length===0){
