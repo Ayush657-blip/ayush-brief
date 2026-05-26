@@ -556,6 +556,10 @@ function closeOnboarding(){
 }
 
 document.querySelectorAll('.sub-btn').forEach(function(btn){btn.addEventListener('click',openOnboarding);});
+// Also handle dynamically added sub-btn buttons (e.g. inside modal)
+document.addEventListener('click',function(e){
+  if(e.target&&e.target.classList.contains('sub-btn')){openOnboarding();}
+});
 document.getElementById('ob-back').addEventListener('click',function(){
   if(obStep===1)closeOnboarding();else showStep(obStep-1);
 });
@@ -890,7 +894,7 @@ function openModal(idx){
   document.getElementById('modal-headline').textContent=s.headline||'';
   document.getElementById('modal-top-bar').style.background='#2979FF';
   // For non-subscribers — show plain English summary only, NEVER voice content
-  var summary=s.summary||'This story is from today's Dawn Brief. Subscribe to read the full analysis in your voice — Student, Employee, or Commission Agent.';
+  var summary=s.summary||'Subscribe to read this story in your voice — Student, Employee, or Commission Agent.';
   document.getElementById('modal-summary').textContent=summary;
   document.getElementById('story-modal').classList.add('show');
 }
