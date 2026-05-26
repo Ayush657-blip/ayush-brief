@@ -330,7 +330,7 @@ async function processCategory(category, urls) {
     }
   }
 
-  return { category, headline: best.title, link: best.link, pubDate: best.pubDate, newsTypeId, voices };
+  return { category, headline: best.title, link: best.link, pubDate: best.pubDate, newsTypeId, summary: best.summary ? best.summary.slice(0, 200) : '', voices };
 }
 
 // ── FETCH ALL ACTIVE SUBSCRIBERS FROM SUPABASE ────────────────────────────────
