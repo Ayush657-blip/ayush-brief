@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-26T00:31:12.626Z",
+  "generated": "2026-05-26T03:37:06.041Z",
   "date": "Tuesday, 26 May 2026",
   "totalStories": 16,
   "stories": [
@@ -9,6 +9,7 @@
       "link": "https://www.bbc.com/news/articles/c2024r6lzyro?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 23:51:24 GMT",
       "newsTypeId": 32,
+      "summary": "Lord Wolfson tells the BBC Next now typically receives double the number of applicants for one role than it did two years ago.",
       "voices": {
         "student": "\"India ne Operation Sindoor kiya — Pakistan ki hawa nikal di. Soch raha hoon ek Operation main bhi kar deta hoon — school mein. Target lock. Strike complete. Result? Supplementary cancel.\"",
         "employee": "\"Dono desh war mein hain. Company wale bhi missile nahi — mail naam ka bomb daalte hain. Nishana hum log. Result — You are fired. Mission accomplished.\"",
@@ -17,14 +18,15 @@
     },
     {
       "category": "Business",
-      "headline": "The Father of Japan’s Conbini Was Right to Ignore His Critics",
-      "link": "https://www.livemint.com/companies/the-father-of-japan-s-conbini-was-right-to-ignore-hiscritics-11779744231861.html",
-      "pubDate": "Tue, 26 May 2026 02:53:51 +0530",
-      "newsTypeId": 17,
+      "headline": "After a milestone year, realty's big four aim for  ₹1.2 tn home sales in FY27",
+      "link": "https://www.livemint.com/companies/real-estate-sales-target-housing-sales-dlf-godrej-lodha-prestige-11779691959648.html",
+      "pubDate": "Tue, 26 May 2026 09:00:41 +0530",
+      "newsTypeId": 39,
+      "summary": "Though the FY27 sales targets of the four developers show a modest increase of around 13% from last year’s high sales achievement, analysts believe there would be several factors at play.",
       "voices": {
-        "student": "\"Company ne record profit announce kiya. CEO khush. Shareholders khush. Employees? Yeh toh college ke topper wala haal ho gaya — gold medal zaroor milega, job nahi milegi.\"",
-        "employee": "\"Company ne record profit announce kiya. CEO ne bola 'yeh tumhari mehnat ka result hai.' Yeh toh wahi baat ho gayi — mere paas paisa hai, par tere liye nahi hai. Mehnat teri, paisa mera.\"",
-        "agent": "\"Company ne record profit announce kiya. Profit aaye ya loss — yeh paise ki bheek hamesha maangte rehte hain. Mandi mein ek hi rule hain — jitna kaam, utna daam. Bheek nahi, hisaab hota hain.\""
+        "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
+        "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
+        "agent": "\"Nayi AI launch ho gayi. Sab bol rahe hain duniya badal jaayegi. Mandi mein AI aaya toh ek hi kaam karega — bags count karna. Baaki sab hum hi karenge.\""
       }
     },
     {
@@ -33,6 +35,7 @@
       "link": "https://www.bbc.com/news/articles/cjep159x1njo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 23:35:26 GMT",
       "newsTypeId": 39,
+      "summary": "The charity says more than half of attacks happened on or near land managed for game shooting.",
       "voices": {
         "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
         "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
@@ -45,6 +48,7 @@
       "link": "https://www.bbc.com/news/articles/cj6p0wx70rxo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 09:55:09 GMT",
       "newsTypeId": 57,
+      "summary": "Olivia Dean, Zara Larsson and Fatboy Slim topped the bill - but it wasn't all about the music.",
       "voices": {
         "student": "\"Nayi Bollywood film release hui. 200 crore budget. Dekhne ka mann toh hai — par exam chal rahe hain. Par agar fail ho gaya toh mam bhi film release karegi — bina paise ke. Aur woh picture super duper hit hogi.\"",
         "employee": "\"Nayi Bollywood film release hui. 200 crore budget. Main movie dekhne gaya — wahan boss ko HR ke saath pakad liya. Ab boss mujhe 50% increment de raha hai. Movie ticket ka sabse achha return on investment.\"",
@@ -57,6 +61,7 @@
       "link": "https://www.bbc.com/news/articles/cj6p0wx70rxo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 09:55:09 GMT",
       "newsTypeId": 57,
+      "summary": "Olivia Dean, Zara Larsson and Fatboy Slim topped the bill - but it wasn't all about the music.",
       "voices": {
         "student": "\"Nayi Bollywood film release hui. 200 crore budget. Dekhne ka mann toh hai — par exam chal rahe hain. Par agar fail ho gaya toh mam bhi film release karegi — bina paise ke. Aur woh picture super duper hit hogi.\"",
         "employee": "\"Nayi Bollywood film release hui. 200 crore budget. Main movie dekhne gaya — wahan boss ko HR ke saath pakad liya. Ab boss mujhe 50% increment de raha hai. Movie ticket ka sabse achha return on investment.\"",
@@ -69,6 +74,7 @@
       "link": "https://www.livemint.com/Money/IuUJ4KylX5R559ervLGXFL/Q3-results-of-IndiGo-SpiceJet-Jet-Airways.html",
       "pubDate": "Fri, 18 Jan 2019 08:30:45 +0530",
       "newsTypeId": 39,
+      "summary": "SpiceJet, IndiGo and Jet Airways will benefit from the reduction in ATF prices, but in the long run.Q3 is a seasonally strong period and that could help offset the impact of high crude oil prices and ",
       "voices": {
         "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
         "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
@@ -81,6 +87,7 @@
       "link": "https://pib.gov.in/PressReleaseIframePage.aspx?PRID=2265165",
       "pubDate": "",
       "newsTypeId": 11,
+      "summary": "",
       "voices": {
         "student": "\"Sarkar ne nayi policy laayi. Press conference mein ghante bhar bola. Implementation 2027 mein hoga. Yeh toh wahi baat ho gayi — government exam 2026 mein hua, joining 2028 mein. Itne mein selected candidate 2 bacchon ka baap ho gaya.\"",
         "employee": "\"Sarkar ne nayi policy laayi. Tarika wahi — loot nayi. Bas form alag hota hai.\"",
@@ -89,10 +96,11 @@
     },
     {
       "category": "International",
-      "headline": "US military launches new strikes on targets in southern Iran, US Central Command says",
+      "headline": "US military says it has launched new strikes on southern Iran",
       "link": "https://www.bbc.com/news/articles/cvgzzn4y1n8o?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Mon, 25 May 2026 23:51:35 GMT",
+      "pubDate": "Tue, 26 May 2026 02:44:19 GMT",
       "newsTypeId": 19,
+      "summary": "The strikes on Iranian missile launch sites and boats were taken in \"self-defence\", US Central Command says.",
       "voices": {
         "student": "Company ne nayi product launch ki. 4 C-grade stars bulaye, item song karwaya, biryani khilaya.Kharcha crores ka, kaam 2 star wala.\"",
         "employee": "\"Company ne nayi product launch ki. Boss ne bola 'game changer hai.' Field mein pata chala — yeh game changer nahi, company changer hai. Aabaad company ko barbaad karega.\"",
@@ -105,6 +113,7 @@
       "link": "https://www.bbc.com/news/articles/cr7p30m1dn1o?at_medium=RSS&at_campaign=rss",
       "pubDate": "Fri, 22 May 2026 16:23:08 GMT",
       "newsTypeId": 39,
+      "summary": "The head of the UN health agency says the risk in the wider region is \"high\", but it remains \"low\" at the global level.",
       "voices": {
         "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
         "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
@@ -117,6 +126,7 @@
       "link": "https://www.bbc.com/news/articles/cj6p0wx70rxo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 09:55:09 GMT",
       "newsTypeId": 41,
+      "summary": "Olivia Dean, Zara Larsson and Fatboy Slim topped the bill - but it wasn't all about the music.",
       "voices": {
         "student": "\"Instagram ne reels ki limit badha di. Agar meri supplementary aayi toh isme Instagram ki galti hai — meri nahi. Zuckerberg ke khilaf case hona chahiye.\"",
         "employee": "\"Instagram ne reels ki limit badha di. Koi boss ki bolne ki limit bhi kam karo — balance zaroori hai. Ek taraf unlimited reels, doosri taraf unlimited bakwaas. Dono se kaam nahi hota.\"",
@@ -125,14 +135,15 @@
     },
     {
       "category": "Real Estate",
-      "headline": "FMCG firms brace for slower volume growth, look to shield margins",
-      "link": "https://www.livemint.com/industry/retail/fmcg-volume-growth-price-hikes-margins-inflation-crisil-11779698829654.html",
-      "pubDate": "Tue, 26 May 2026 05:54:38 +0530",
-      "newsTypeId": 26,
+      "headline": "Can Indian airlines look far east amid disruptions from West Asia?",
+      "link": "https://www.livemint.com/industry/india-aviation-west-asia-war-iran-us-conflict-airline-losses-indigo-air-india-international-flights-gulf-routes-11779724762871.html",
+      "pubDate": "Tue, 26 May 2026 09:00:41 +0530",
+      "newsTypeId": 39,
+      "summary": "West Asia has been the engine of growth for the international segment of Indian aviation. The war in the area is now biting India’s high dependence.",
       "voices": {
-        "student": "HUL ne rural market pe focus badhaya. Matlab job mili toh gaon ki location pakki. Gaon se bachke shehar aaye the — yeh phir gaon bhej rahe hain. Circle of life complete.\"",
-        "employee": "HUL ne rural market pe focus badhaya. Paise company ko milenge — gaon mein gobar aur bhains hum dekhenge. Rural growth unka, rural posting hamari.\"",
-        "agent": "\"HUL ne rural market pe focus badhaya. Ab toh company ko bhi pata chal gaya — paisa gaon mein hai. Hum toh pehle se jaante the.\""
+        "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
+        "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
+        "agent": "\"Nayi AI launch ho gayi. Sab bol rahe hain duniya badal jaayegi. Mandi mein AI aaya toh ek hi kaam karega — bags count karna. Baaki sab hum hi karenge.\""
       }
     },
     {
@@ -141,6 +152,7 @@
       "link": "https://www.bbc.com/news/articles/cjep159x1njo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 23:35:26 GMT",
       "newsTypeId": 39,
+      "summary": "The charity says more than half of attacks happened on or near land managed for game shooting.",
       "voices": {
         "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
         "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
@@ -153,6 +165,7 @@
       "link": "https://www.bbc.com/sport/football/articles/c74rrwj9gdzo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 21:34:21 GMT",
       "newsTypeId": 56,
+      "summary": "Basketball legend Michael Jordan leads the cast of star names to pay tribute to Pep Guardiola at the Manchester City manager's farewell party.",
       "voices": {
         "student": "\"IPL shuru ho gaya. Students ki priority clear hai — pehle IPL, phir sab. Study secondary, girlfriend secondary, sutta bhi secondary. IPL ke season mein sirf ek religion hoti hai — cricket.\"",
         "employee": "\"IPL shuru ho gaya. Boss biwi ko hi nahi — girlfriend HR ko bhi bhool gaya. Sirf IPL yaad hain. Ek season mein boss insaan ban jaata hain — priorities set hain.\"",
@@ -161,10 +174,11 @@
     },
     {
       "category": "Tech",
-      "headline": "Government vows to bring in under-16 social media restrictions by end of year",
+      "headline": "Social media as bad for young people as smoking, top doctors say ",
       "link": "https://www.bbc.com/news/articles/c5y7r9gqp6jo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Mon, 25 May 2026 23:28:20 GMT",
+      "pubDate": "Tue, 26 May 2026 01:13:57 GMT",
       "newsTypeId": 41,
+      "summary": "The Academy of Medical Royal Colleges says doctors should routinely check on screen time and social media use when seeing younger patients.",
       "voices": {
         "student": "\"Instagram ne reels ki limit badha di. Agar meri supplementary aayi toh isme Instagram ki galti hai — meri nahi. Zuckerberg ke khilaf case hona chahiye.\"",
         "employee": "\"Instagram ne reels ki limit badha di. Koi boss ki bolne ki limit bhi kam karo — balance zaroori hai. Ek taraf unlimited reels, doosri taraf unlimited bakwaas. Dono se kaam nahi hota.\"",
@@ -177,6 +191,7 @@
       "link": "https://www.bbc.com/news/articles/c2024r6lzyro?at_medium=RSS&at_campaign=rss",
       "pubDate": "Mon, 25 May 2026 23:51:24 GMT",
       "newsTypeId": 32,
+      "summary": "Lord Wolfson tells the BBC Next now typically receives double the number of applicants for one role than it did two years ago.",
       "voices": {
         "student": "\"India ne Operation Sindoor kiya — Pakistan ki hawa nikal di. Soch raha hoon ek Operation main bhi kar deta hoon — school mein. Target lock. Strike complete. Result? Supplementary cancel.\"",
         "employee": "\"Dono desh war mein hain. Company wale bhi missile nahi — mail naam ka bomb daalte hain. Nishana hum log. Result — You are fired. Mission accomplished.\"",
@@ -189,6 +204,7 @@
       "link": "https://www.livemint.com/economy/govt-open-to-views-on-capital-gains-tax-cuts-amid-fpi-outflows-sitharaman-11779720981320.html",
       "pubDate": "Mon, 25 May 2026 22:39:18 +0530",
       "newsTypeId": 39,
+      "summary": "FPIs were net sellers of securities worth a record  ₹1.8 trillion in FY26, the highest in 34 years and up from  ₹1.3 trillion in FY25. The highest outflows were seen in March 2026 at around  ₹1.18 tri",
       "voices": {
         "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
         "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
