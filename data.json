@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-26T03:37:06.041Z",
+  "generated": "2026-05-26T04:46:10.206Z",
   "date": "Tuesday, 26 May 2026",
   "totalStories": 16,
   "stories": [
@@ -18,15 +18,15 @@
     },
     {
       "category": "Business",
-      "headline": "After a milestone year, realty's big four aim for  ₹1.2 tn home sales in FY27",
-      "link": "https://www.livemint.com/companies/real-estate-sales-target-housing-sales-dlf-godrej-lodha-prestige-11779691959648.html",
-      "pubDate": "Tue, 26 May 2026 09:00:41 +0530",
-      "newsTypeId": 39,
-      "summary": "Though the FY27 sales targets of the four developers show a modest increase of around 13% from last year’s high sales achievement, analysts believe there would be several factors at play.",
+      "headline": "Q&A: Anna Gomez is the sole Democrat on the FCC. She has a warning for big media companies",
+      "link": "https://www.livemint.com/companies/qa-anna-gomez-is-the-sole-democrat-on-the-fcc-she-has-a-warning-for-big-media-companies-11779768217618.html",
+      "pubDate": "Tue, 26 May 2026 09:33:37 +0530",
+      "newsTypeId": 32,
+      "summary": "Q&A: Anna Gomez is the sole Democrat on the FCC. She has a warning for big media companies",
       "voices": {
-        "student": "\"Nayi AI launch ho gayi. Sab bol rahe hain — 'jobs jaayengi.' Bhai pehle job milne do — tab jaane ki chinta karenge. Abhi toh AI aur hum dono berozgar hain. Competition equal hai.\"",
-        "employee": "\"Nayi AI launch ho gayi. Boss bol raha hai AI tumhari job lega. Bhai hum toh ready hain — bas koi AI boss ko replace kar de. Woh din aaye toh sach mein technology ka fayda hoga.\"",
-        "agent": "\"Nayi AI launch ho gayi. Sab bol rahe hain duniya badal jaayegi. Mandi mein AI aaya toh ek hi kaam karega — bags count karna. Baaki sab hum hi karenge.\""
+        "student": "\"India ne Operation Sindoor kiya — Pakistan ki hawa nikal di. Soch raha hoon ek Operation main bhi kar deta hoon — school mein. Target lock. Strike complete. Result? Supplementary cancel.\"",
+        "employee": "\"Dono desh war mein hain. Company wale bhi missile nahi — mail naam ka bomb daalte hain. Nishana hum log. Result — You are fired. Mission accomplished.\"",
+        "agent": "\"Do desh ladte hain toh poori economy pe farak padta hai. Aur jab do log mandi mein ladte hain — poori mandi mein mazaak ka mahaul hota hai. Dono mein darshak hum hain.\""
       }
     },
     {
@@ -83,8 +83,8 @@
     },
     {
       "category": "Government",
-      "headline": "प्रधानमंत्री श्री नरेंद्र मोदी पर केंद्रित केंद्रीय मंत्री शिवराज सिंह चौहान की पुस्तक 'अपनापन' का लोकार्पण",
-      "link": "https://pib.gov.in/PressReleaseIframePage.aspx?PRID=2265165",
+      "headline": "प्रधानमंत्री श्री नरेन्द्र मोदी ने पद्म पुरस्कार समारोह की झलकियां साझा कीं ",
+      "link": "https://pib.gov.in/PressReleaseIframePage.aspx?PRID=2265251",
       "pubDate": "",
       "newsTypeId": 11,
       "summary": "",
@@ -96,11 +96,11 @@
     },
     {
       "category": "International",
-      "headline": "US military says it has launched new strikes on southern Iran",
+      "headline": "US launches new strikes on Iran, targeting missile sites and boats",
       "link": "https://www.bbc.com/news/articles/cvgzzn4y1n8o?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Tue, 26 May 2026 02:44:19 GMT",
+      "pubDate": "Tue, 26 May 2026 04:31:31 GMT",
       "newsTypeId": 19,
-      "summary": "The strikes on Iranian missile launch sites and boats were taken in \"self-defence\", US Central Command says.",
+      "summary": "US Central Command says the strikes were taken in \"self-defense\". It comes as senior Iranian negotiators arrive in Qatar for talks to end the war.",
       "voices": {
         "student": "Company ne nayi product launch ki. 4 C-grade stars bulaye, item song karwaya, biryani khilaya.Kharcha crores ka, kaam 2 star wala.\"",
         "employee": "\"Company ne nayi product launch ki. Boss ne bola 'game changer hai.' Field mein pata chala — yeh game changer nahi, company changer hai. Aabaad company ko barbaad karega.\"",
