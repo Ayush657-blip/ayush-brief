@@ -3,8 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Dawn Brief — India's Daily Intelligence</title>
+<title>The Dawn Brief — News that feels like a friend</title>
+<meta name="description" content="The Dawn Brief delivers daily news written like a message from your smartest friend. Funny, sharp, personalised for students and professionals in India.">
+<meta property="og:title" content="The Dawn Brief — News that feels like a friend">
+<meta property="og:description" content="Your smartest friend reads everything so you don't have to. Daily news in your voice. Subscribe free.">
+<meta property="og:image" content="https://ayushbrief.online/og-image.png">
+<meta property="og:url" content="https://ayushbrief.online">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Dawn Brief — News that feels like a friend">
+<meta name="twitter:description" content="Your smartest friend reads everything so you don't have to.">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -15,538 +29,875 @@
   --w:#fff;--w9:rgba(255,255,255,.9);--w7:rgba(255,255,255,.7);
   --w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--w1:rgba(255,255,255,.1);
   --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --card-bg:var(--bg2);--nav-bg:rgba(7,7,15,.85);
+  --text:var(--w);--text-sub:var(--w5);--text-body:var(--w7);
 }
-html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1;}
+[data-theme="light"]{
+  --bg:#F5F5F0;--bg2:#FFFFFF;--bg3:#EFEFEA;
+  --w:#0A0A14;--w9:rgba(10,10,20,.9);--w7:rgba(10,10,20,.7);
+  --w5:rgba(10,10,20,.5);--w3:rgba(10,10,20,.3);--w1:rgba(10,10,20,.1);
+  --border:rgba(10,10,20,.08);--border2:rgba(10,10,20,.14);
+  --card-bg:#FFFFFF;--nav-bg:rgba(245,245,240,.92);
+  --text:#0A0A14;--text-sub:rgba(10,10,20,.5);--text-body:rgba(10,10,20,.7);
+}
+html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1;transition:background .3s,color .3s;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 @keyframes modal-in{from{opacity:0;transform:translateY(20px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
 @keyframes wlc-scale{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+@keyframes pulse-glow{0%,100%{opacity:.6;}50%{opacity:1;}}
+@keyframes shimmer{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
+
+/* ── AMBIENT GLOW (Gemini style) ── */
+.glow-wrap{position:fixed;top:0;left:0;right:0;height:500px;z-index:0;pointer-events:none;overflow:hidden;}
+.glow-a{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.22) 0%,rgba(41,121,255,.08) 50%,transparent 100%);animation:pulse-glow 4s ease-in-out infinite;}
+.glow-b{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse 50% 40% at 50% 10%,rgba(0,180,255,.18) 0%,transparent 70%);filter:blur(40px);animation:pulse-glow 4s ease-in-out infinite .5s;}
+.glow-c{position:absolute;top:0;left:50%;transform:translateX(-50%);width:300px;height:200px;background:radial-gradient(ellipse 40% 30% at 50% 0%,rgba(92,200,255,.25) 0%,transparent 70%);filter:blur(20px);animation:pulse-glow 3s ease-in-out infinite 1s;}
 .top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(0,180,255,.2) 10%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,rgba(0,180,255,.2) 90%,transparent 100%);}
-.glow-a{position:fixed;top:-100px;left:0;right:0;height:320px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 200px at 50% 0%,rgba(0,90,255,.18) 0%,transparent 100%);}
-.glow-b{position:fixed;top:-20px;left:50%;transform:translateX(-50%);width:520px;height:140px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(41,121,255,.35) 0%,transparent 70%);filter:blur(10px);}
-#particles{position:fixed;top:0;left:0;width:100%;height:220px;z-index:1;pointer-events:none;}
-.logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
-.logo-text{display:flex;align-items:baseline;gap:5px;}
+[data-theme="light"] .top-line{background:linear-gradient(90deg,transparent 0%,rgba(41,121,255,.3) 10%,rgba(41,121,255,.9) 38%,#2979FF 50%,rgba(41,121,255,.9) 62%,rgba(41,121,255,.3) 90%,transparent 100%);}
+
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(24px);background:var(--nav-bg);border-bottom:.5px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;flex-shrink:0;}
+.logo-text{display:flex;align-items:baseline;gap:4px;}
 .logo-the,.logo-brief{font-family:'Cormorant SC',serif;font-size:10px;font-weight:400;letter-spacing:.22em;color:rgba(220,185,100,.7);}
-.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;background:linear-gradient(90deg,#C8960E 0%,#F0C830 25%,#FFE878 50%,#F0C830 75%,#C8960E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
-nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;backdrop-filter:blur(20px);background:rgba(7,7,15,.8);border-bottom:.5px solid rgba(255,255,255,.06);}
-.nav-right{display:flex;align-items:center;gap:16px;}
-.nav-cta{padding:9px 22px;border-radius:100px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;font-style:italic;background:linear-gradient(90deg,#C8960E 0%,#F0C830 25%,#FFE878 50%,#F0C830 75%,#C8960E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.logo-tag{font-size:9px;color:rgba(92,200,255,.5);letter-spacing:.08em;margin-left:2px;font-family:'DM Sans',sans-serif;-webkit-text-fill-color:initial;}
+.nav-center{display:flex;align-items:center;gap:4px;}
+.nav-topic-btn{background:transparent;border:none;color:var(--w5);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:5px;transition:all .2s;}
+.nav-topic-btn:hover{background:var(--w1);color:var(--w);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-icon-btn{width:36px;height:36px;border-radius:10px;background:transparent;border:.5px solid var(--border);color:var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s;}
+.nav-icon-btn:hover{background:var(--w1);color:var(--w);border-color:var(--border2);}
+.nav-login{padding:8px 16px;border-radius:100px;background:transparent;color:var(--w5);border:.5px solid var(--border);cursor:pointer;font-size:13px;font-weight:400;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.nav-login:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
+.nav-cta{padding:8px 20px;border-radius:100px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;}
 .nav-cta:hover{background:var(--blue-b);}
-.nav-login{padding:9px 18px;border-radius:100px;background:transparent;color:rgba(255,255,255,.6);border:.5px solid rgba(255,255,255,.15);cursor:pointer;font-size:13px;font-weight:400;font-family:'DM Sans',sans-serif;transition:all .2s;}
-.nav-login:hover{border-color:rgba(92,200,255,.4);color:#fff;}
-#voice-pill{display:none;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);font-size:12px;color:var(--blue-p);}
-#voice-pill.show{display:flex;}
-#voice-pill .vp-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;}
-#hp{transition:opacity .4s;}
+
+/* Topics Dropdown */
+.topics-dropdown{position:fixed;top:64px;left:0;right:0;z-index:190;background:var(--bg2);border-bottom:.5px solid var(--border);padding:28px 48px;display:none;animation:fadeIn .2s ease;}
+.topics-dropdown.show{display:block;}
+.td-inner{max-width:900px;margin:0 auto;}
+.td-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--w3);margin-bottom:16px;}
+.td-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 16px;}
+.td-item{font-size:14px;color:var(--w7);cursor:pointer;padding:6px 0;transition:color .2s;text-decoration:none;display:block;}
+.td-item:hover{color:var(--blue-p);}
+
+/* Search Bar */
+.search-bar{position:fixed;top:64px;left:0;right:0;z-index:190;background:var(--bg2);border-bottom:.5px solid var(--border);padding:16px 48px;display:none;animation:fadeIn .2s ease;}
+.search-bar.show{display:flex;align-items:center;gap:12px;}
+.search-input{flex:1;background:var(--bg3);border:.5px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--w);font-family:'DM Sans',sans-serif;outline:none;max-width:600px;}
+.search-input::placeholder{color:var(--w3);}
+.search-input:focus{border-color:rgba(92,200,255,.4);}
+.search-results{position:fixed;top:128px;left:48px;right:48px;z-index:185;background:var(--bg2);border:.5px solid var(--border2);border-radius:12px;max-height:400px;overflow-y:auto;display:none;}
+.search-results.show{display:block;}
+.sr-item{padding:14px 20px;border-bottom:.5px solid var(--border);cursor:pointer;transition:background .2s;}
+.sr-item:hover{background:var(--w1);}
+.sr-item:last-child{border-bottom:none;}
+.sr-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-p);margin-bottom:4px;}
+.sr-headline{font-size:14px;color:var(--w9);}
+
+/* ── HERO ── */
+#hp{transition:opacity .3s;}
 #hp.hide{opacity:0;pointer-events:none;}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 48px 80px;position:relative;z-index:5;}
-.hero-bg{position:absolute;inset:0;z-index:0;background-image:url('https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1920&q=80');background-size:cover;background-position:center;opacity:.08;pointer-events:none;}
-.hero-bg-fade{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(7,7,15,.4) 0%,rgba(7,7,15,.7) 60%,rgba(7,7,15,1) 100%);pointer-events:none;}
-.hero>*:not(.hero-bg):not(.hero-bg-fade){position:relative;z-index:2;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-p);border:.5px solid rgba(92,200,255,.25);background:rgba(41,121,255,.07);padding:6px 16px;border-radius:100px;margin-bottom:28px;}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 48px 60px;position:relative;z-index:5;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);border:.5px solid rgba(92,200,255,.25);background:rgba(41,121,255,.07);padding:6px 16px;border-radius:100px;margin-bottom:24px;}
 .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--blue-b);box-shadow:0 0 6px var(--blue-b);animation:blink 2s infinite;}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,80px);font-weight:300;font-style:italic;letter-spacing:-.02em;line-height:1.05;color:var(--w);margin-bottom:10px;max-width:800px;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;font-style:italic;letter-spacing:-.02em;line-height:1.05;color:var(--w);margin-bottom:8px;max-width:800px;}
 .hero-h1 em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l),var(--gold-m),var(--gold-d));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.hero-sub{font-size:16px;color:var(--w5);line-height:1.75;max-width:500px;font-weight:300;margin-bottom:40px;}
-.hero-sub b{color:var(--w7);font-weight:400;}
-.hero-btns{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:0;}
-.hero-cta{padding:16px 40px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.02em;transition:background .2s;}
+.hero-sub{font-size:16px;color:var(--w5);line-height:1.75;max-width:480px;font-weight:300;margin-bottom:12px;}
+.sub-count{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--w3);margin-bottom:32px;}
+.sc-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);}
+.sc-num{color:var(--green);font-weight:600;}
+.hero-btns{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.hero-cta{padding:15px 38px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .hero-cta:hover{background:var(--blue-b);}
-.hero-login{padding:16px 32px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:15px;font-weight:400;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;}
-.hero-login:hover{border-color:rgba(92,200,255,.4);color:#fff;}
-.hero-diff{display:flex;align-items:flex-start;margin-top:56px;padding-top:44px;border-top:.5px solid var(--border);width:100%;max-width:760px;}
-.diff-card{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:0 20px;}
-.diff-icon{font-size:22px;}
-.diff-title{font-size:13px;font-weight:500;color:var(--w9);}
-.diff-body{font-size:11.5px;color:var(--w3);line-height:1.6;}
-.diff-div{width:.5px;height:80px;background:var(--border);flex-shrink:0;align-self:center;}
-.ticker-wrap{background:rgba(41,121,255,.07);border-top:.5px solid rgba(92,200,255,.1);border-bottom:.5px solid rgba(92,200,255,.1);overflow:hidden;padding:10px 0;position:relative;z-index:5;}
-.ticker-inner{display:flex;animation:ticker 30s linear infinite;white-space:nowrap;}
-.ti{padding:0 36px;font-size:11px;color:var(--blue-p);letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px;}
-.ts{width:4px;height:4px;border-radius:50%;background:rgba(92,200,255,.35);flex-shrink:0;}
-#pers-banner{display:none;position:relative;z-index:5;padding:10px 52px;background:rgba(41,121,255,.06);border-bottom:.5px solid rgba(92,200,255,.1);}
-#pers-banner.show{display:flex;align-items:center;gap:10px;}
-.pb-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;}
-.pb-text{font-size:12px;color:var(--blue-p);}
-.pb-badge{font-size:11px;padding:2px 10px;border-radius:100px;background:rgba(41,121,255,.15);border:.5px solid rgba(92,200,255,.25);color:var(--blue-p);}
-.pb-switch{font-size:11px;color:var(--w3);cursor:pointer;margin-left:auto;transition:color .2s;}
-.pb-switch:hover{color:var(--w7);}
+.hero-login-btn{padding:15px 28px;border-radius:12px;background:transparent;border:1px solid var(--border2);color:var(--w5);font-size:15px;font-weight:400;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;}
+.hero-login-btn:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
+
+/* ── TICKER ── */
+.ticker-wrap{background:rgba(41,121,255,.06);border-top:.5px solid rgba(92,200,255,.1);border-bottom:.5px solid rgba(92,200,255,.1);overflow:hidden;padding:10px 0;position:relative;z-index:5;}
+.ticker-inner{display:flex;animation:ticker 35s linear infinite;white-space:nowrap;}
+.ti{padding:0 32px;font-size:11px;color:var(--blue-p);letter-spacing:.09em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;}
+.ts{width:3px;height:3px;border-radius:50%;background:rgba(92,200,255,.4);flex-shrink:0;}
+
+/* ── CATEGORY TABS ── */
 .cat-tabs-wrap{position:relative;z-index:5;overflow:hidden;}
-.cat-tabs{display:flex;gap:8px;overflow-x:auto;padding:16px 52px;scrollbar-width:none;}
+.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 48px;scrollbar-width:none;}
 .cat-tabs::-webkit-scrollbar{display:none;}
-.cat-tab{flex-shrink:0;padding:7px 16px;border-radius:100px;font-size:12px;border:.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;background:transparent;outline:none;}
-.cat-tab:hover{border-color:rgba(92,200,255,.3);color:rgba(255,255,255,.8);}
+.cat-tab{flex-shrink:0;padding:7px 15px;border-radius:100px;font-size:12px;border:.5px solid var(--border);color:var(--w3);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;background:transparent;outline:none;}
+.cat-tab:hover{border-color:rgba(92,200,255,.3);color:var(--w7);}
 .cat-tab.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.4);color:var(--blue-p);font-weight:500;}
-.cat-fade{position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(to left,var(--bg) 40%,transparent);pointer-events:none;z-index:2;}
-.news-section{max-width:1100px;margin:0 auto;padding:32px 52px 80px;position:relative;z-index:5;}
-.news-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;}
-.news-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:6px;}
-.news-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;font-style:italic;color:var(--w);}
-.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.news-grid{grid-template-columns:1fr;}.cat-tabs{padding:12px 20px;}.news-section{padding:24px 20px 60px;}nav{padding:0 20px;}.hero{padding:100px 24px 60px;}.si{padding:0 24px;}.hero-diff{flex-direction:column;gap:24px;}.diff-div{display:none;}}
-.story-card{background:var(--bg2);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;display:flex;flex-direction:column;}
-.story-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4);border-color:rgba(92,200,255,.25);}
-.story-card.filtered-out{display:none;}
-.card-top-bar{height:3px;width:100%;}
-.card-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+.cat-fade-r{position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to left,var(--bg),transparent);pointer-events:none;}
+
+/* ── NEWS GRID ── */
+.news-section{max-width:1100px;margin:0 auto;padding:28px 48px 80px;position:relative;z-index:5;}
+.news-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;}
+.news-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:5px;}
+.news-title-txt{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;color:var(--w);}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+
+/* ── STORY CARD ── */
+.story-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column;text-decoration:none;}
+.story-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35);border-color:rgba(92,200,255,.25);}
+.card-top-bar{height:3px;width:100%;flex-shrink:0;}
+.card-img{width:100%;height:160px;object-fit:cover;display:block;background:var(--bg3);}
+.card-img-placeholder{width:100%;height:160px;background:linear-gradient(135deg,var(--bg3),var(--bg2));display:flex;align-items:center;justify-content:center;font-size:32px;opacity:.3;}
+.card-body{padding:18px;flex:1;display:flex;flex-direction:column;}
 .card-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.card-cat{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:100px;background:rgba(92,200,255,.08);border:.5px solid rgba(92,200,255,.2);color:var(--blue-p);}
+.card-cat{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:100px;background:rgba(92,200,255,.08);border:.5px solid rgba(92,200,255,.2);color:var(--blue-p);}
 .card-time{font-size:11px;color:var(--w3);}
-.card-headline{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:14px;}
-.voice{display:none;}
-.voice.active{display:block;}
-.voice-bubble{border-radius:10px;padding:13px 14px;font-size:13px;line-height:1.65;margin-bottom:12px;}
-.voice-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;opacity:.75;}
-.voice-txt{color:var(--w7);}
-.voice-end{display:inline-block;margin-top:7px;font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px;}
-.voice.student .voice-bubble{background:rgba(255,77,109,.08);border-left:2.5px solid var(--red);}
-.voice.student .voice-lbl{color:var(--red);}
-.voice.student .voice-end{background:rgba(255,77,109,.15);color:var(--red);}
-.voice.employee .voice-bubble{background:rgba(255,165,50,.08);border-left:2.5px solid var(--orange);}
-.voice.employee .voice-lbl{color:var(--orange);}
-.voice.employee .voice-end{background:rgba(255,165,50,.12);color:var(--orange);}
-.voice.agent .voice-bubble{background:rgba(232,197,88,.07);border-left:2.5px solid var(--gold-m);}
-.voice.agent .voice-lbl{color:var(--gold-m);}
-.voice.agent .voice-end{background:rgba(232,197,88,.12);color:var(--gold-m);}
-.card-readmore{font-size:12px;color:rgba(92,200,255,.6);font-weight:500;margin-top:auto;display:flex;align-items:center;gap:5px;}
+.card-headline{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.35;margin-bottom:10px;}
+.card-summary{font-size:12.5px;color:var(--w5);line-height:1.7;margin-bottom:12px;flex:1;}
+.card-readmore{font-size:11px;color:rgba(92,200,255,.6);font-weight:500;display:flex;align-items:center;gap:4px;margin-top:auto;}
 .card-readmore::after{content:'→';}
 
-.news-list-item{display:flex;gap:20px;padding:24px 0;border-bottom:.5px solid var(--border);cursor:pointer;transition:opacity .2s;}
+/* Skeleton */
+.skel{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:1000px 100%;animation:shimmer 1.5s infinite;}
+.skel-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;}
+.skel-img{height:160px;}
+.skel-body{padding:18px;}
+.skel-line{height:12px;border-radius:6px;margin-bottom:10px;}
+.skel-line.short{width:40%;}
+.skel-line.med{width:70%;}
+.skel-line.full{width:100%;}
+
+/* News List (category view) */
+.news-list-item{display:flex;gap:16px;padding:20px 0;border-bottom:.5px solid var(--border);cursor:pointer;transition:opacity .2s;text-decoration:none;}
 .news-list-item:hover{opacity:.8;}
 .news-list-item:last-child{border-bottom:none;}
-.nli-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:rgba(92,200,255,.2);flex-shrink:0;width:40px;line-height:1;}
+.nli-img{width:120px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0;background:var(--bg3);}
 .nli-body{flex:1;}
-.nli-cat{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-p);margin-bottom:6px;}
-.nli-headline{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:8px;}
-.nli-summary{font-size:13px;color:var(--w5);line-height:1.7;}
-.nli-read{font-size:11px;color:rgba(92,200,255,.6);font-weight:500;margin-top:8px;}
-.cat-page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:.5px solid var(--border);}
-.cat-page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;color:var(--w);margin-bottom:8px;}
-.cat-page-desc{font-size:14px;color:var(--w3);line-height:1.7;}
+.nli-cat{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);margin-bottom:5px;}
+.nli-headline{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:6px;}
+.nli-summary{font-size:12px;color:var(--w5);line-height:1.65;}
+.nli-read{font-size:11px;color:rgba(92,200,255,.6);font-weight:500;margin-top:6px;}
+.cat-page-hdr{margin-bottom:28px;padding-bottom:20px;border-bottom:.5px solid var(--border);}
+.cat-page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--w);margin-bottom:6px;}
+.cat-page-desc{font-size:13px;color:var(--w3);line-height:1.7;}
 
-.card-summary{font-size:13px;color:var(--w5);line-height:1.7;margin-bottom:12px;}
-
-.how-sec{padding:80px 0;background:rgba(255,255,255,.015);border-top:.5px solid var(--border);position:relative;z-index:5;}
-.si{max-width:1100px;margin:0 auto;padding:0 52px;}
-.sec-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:10px;}
-.sec-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;font-style:italic;color:var(--w);margin-bottom:10px;}
+/* ── HOW IT WORKS ── */
+.how-sec{padding:70px 0;background:rgba(255,255,255,.012);border-top:.5px solid var(--border);position:relative;z-index:5;}
+.si{max-width:1100px;margin:0 auto;padding:0 48px;}
+.sec-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:10px;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;font-style:italic;color:var(--w);margin-bottom:8px;}
 .sec-title strong{font-style:normal;font-weight:600;}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;margin-top:44px;}
-@media(max-width:800px){.how-grid{grid-template-columns:repeat(1,1fr);}}
-.how-step{background:var(--bg2);padding:32px 24px;position:relative;overflow:hidden;}
-.how-step::before{content:attr(data-n);position:absolute;top:-10px;right:14px;font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:rgba(41,121,255,.05);line-height:1;pointer-events:none;}
-.how-icon{width:42px;height:42px;border-radius:10px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:19px;}
-.how-title{font-size:14px;font-weight:500;color:var(--w);margin-bottom:8px;line-height:1.3;}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;margin-top:36px;}
+.how-step{background:var(--bg2);padding:28px 22px;position:relative;overflow:hidden;}
+.how-step::before{content:attr(data-n);position:absolute;top:-10px;right:12px;font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:rgba(41,121,255,.05);line-height:1;pointer-events:none;}
+.how-icon{width:40px;height:40px;border-radius:10px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;}
+.how-title{font-size:14px;font-weight:500;color:var(--w);margin-bottom:6px;}
 .how-body{font-size:12px;color:var(--w3);line-height:1.65;}
-.how-time{display:inline-block;font-size:10px;color:var(--blue-p);letter-spacing:.1em;margin-top:10px;border:.5px solid rgba(92,200,255,.2);padding:3px 10px;border-radius:100px;}
-.voice-demo-sec{padding:80px 0;position:relative;z-index:5;}
-.vtabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
-.vtab{padding:8px 18px;border-radius:100px;font-size:12px;border:.5px solid var(--border);color:var(--w5);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;background:transparent;outline:none;}
-.vtab.active,.vtab:hover{background:rgba(41,121,255,.1);border-color:rgba(92,200,255,.3);color:var(--w);}
-.vtab.active{font-weight:500;}
-.vdemo-box{background:var(--bg2);border:.5px solid var(--border);border-radius:16px;overflow:hidden;}
-.vdemo-hdr{padding:18px 24px;border-bottom:.5px solid var(--border);display:flex;align-items:center;gap:12px;}
-.vdemo-badge{font-size:11px;padding:4px 12px;border-radius:100px;font-weight:500;}
-.vdemo-hl{font-size:13px;color:var(--w5);}
-.vdemo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-@media(max-width:700px){.vdemo-grid{grid-template-columns:1fr;}}
-.vdemo-story{background:var(--bg2);padding:22px;}
-.vdemo-tag{font-size:9px;letter-spacing:.1em;color:rgba(92,200,255,.5);margin-bottom:7px;text-transform:uppercase;}
-.vdemo-title{font-size:13px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:8px;line-height:1.4;}
-.vdemo-body{font-size:12px;color:var(--w5);line-height:1.7;}
-.demo-voice-set{display:none;}
-.demo-voice-set.active{display:block;}
-.cta-sec{padding:100px 0;position:relative;z-index:5;}
-.cta-box{background:linear-gradient(135deg,rgba(41,121,255,.1) 0%,rgba(0,100,200,.05) 50%,rgba(41,121,255,.1) 100%);border:.5px solid rgba(92,200,255,.18);border-radius:24px;padding:80px;text-align:center;}
-.cta-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;font-style:italic;line-height:1.1;margin-bottom:14px;}
+.how-time{display:inline-block;font-size:10px;color:var(--blue-p);letter-spacing:.08em;margin-top:10px;border:.5px solid rgba(92,200,255,.2);padding:3px 10px;border-radius:100px;}
+
+/* ── CTA SECTION ── */
+.cta-sec{padding:80px 0;position:relative;z-index:5;}
+.cta-box{background:linear-gradient(135deg,rgba(41,121,255,.1) 0%,rgba(0,100,200,.04) 50%,rgba(41,121,255,.1) 100%);border:.5px solid rgba(92,200,255,.18);border-radius:20px;padding:64px 48px;text-align:center;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,52px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:12px;color:var(--w);}
 .cta-title em{font-style:normal;font-weight:600;background:linear-gradient(135deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.cta-sub{font-size:15px;color:var(--w3);line-height:1.75;margin-bottom:36px;}
-.cta-btn{padding:16px 40px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+.cta-sub{font-size:14px;color:var(--w3);line-height:1.75;margin-bottom:28px;}
+.cta-btn{padding:15px 38px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .cta-btn:hover{background:var(--blue-b);}
+
+/* ── FOOTER ── */
 footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative;z-index:5;}
-.ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.ft-copy{font-size:12px;color:var(--w3);}
-.ft-copy a{color:var(--blue-p);text-decoration:none;}
+.ft-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:28px;}
+.ft-brand .logo-dawn{font-size:20px;}
+.ft-tagline{font-size:12px;color:var(--w3);margin-top:6px;}
+.ft-links{display:flex;gap:20px;flex-wrap:wrap;align-items:center;}
+.ft-link{font-size:12px;color:var(--w3);text-decoration:none;transition:color .2s;}
+.ft-link:hover{color:var(--blue-p);}
+.ft-social{display:flex;gap:12px;}
+.ft-soc{width:32px;height:32px;border-radius:8px;background:var(--w1);border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--w5);}
+.ft-soc:hover{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.3);color:var(--blue-p);}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:20px;border-top:.5px solid var(--border);}
+.ft-copy{font-size:11px;color:var(--w3);}
+
+/* ── COOKIE BANNER ── */
+#cookie-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:900;background:var(--bg2);border:.5px solid var(--border2);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:16px;max-width:560px;width:calc(100% - 40px);box-shadow:0 8px 40px rgba(0,0,0,.4);}
+#cookie-banner.hide{display:none;}
+.cb-text{font-size:12px;color:var(--w5);line-height:1.6;flex:1;}
+.cb-text a{color:var(--blue-p);text-decoration:none;}
+.cb-btn{padding:8px 16px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;}
 
 /* ── ONBOARDING ── */
 #ob{position:fixed;inset:0;z-index:500;background:var(--bg);display:none;flex-direction:column;}
 #ob.show{display:flex;}
-.ob-nav{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;flex-shrink:0;}
+.ob-nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;flex-shrink:0;border-bottom:.5px solid var(--border);}
 .ob-back{font-size:13px;color:var(--w3);cursor:pointer;transition:color .2s;}
 .ob-back:hover{color:var(--w7);}
-.ob-prog-wrap{height:2.5px;background:rgba(255,255,255,.06);flex-shrink:0;}
+.ob-prog-wrap{height:2px;background:var(--border);flex-shrink:0;}
 .ob-prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-b));transition:width .4s ease;}
-.ob-body{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;overflow-y:auto;}
-.ob-step{display:none;flex-direction:column;align-items:center;gap:22px;width:100%;animation:fadeIn .35s ease forwards;}
+.ob-body{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px;overflow-y:auto;}
+.ob-step{display:none;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:480px;animation:fadeIn .3s ease forwards;}
 .ob-step.active{display:flex;}
-.ob-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(92,200,255,.65);}
-.ob-head{font-size:clamp(28px,5vw,42px);font-weight:200;letter-spacing:-.025em;line-height:1.1;text-align:center;}
+.ob-eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(92,200,255,.65);}
+.ob-head{font-size:clamp(26px,5vw,38px);font-weight:200;letter-spacing:-.02em;line-height:1.15;text-align:center;color:var(--w);}
 .ob-head em{font-style:normal;font-weight:400;color:transparent;background:linear-gradient(135deg,#5CC8FF 0%,#fff 55%,#5CC8FF 100%);-webkit-background-clip:text;background-clip:text;}
-.ob-sub{font-size:14px;color:var(--w3);text-align:center;line-height:1.7;max-width:400px;}
-.ob-input-wrap{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;}
-.ob-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;font-size:15px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
-.ob-input::placeholder{color:rgba(255,255,255,.22);}
+.ob-sub{font-size:13px;color:var(--w3);text-align:center;line-height:1.7;max-width:380px;}
+.ob-input-wrap{width:100%;display:flex;flex-direction:column;gap:10px;}
+.ob-input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:13px 16px;font-size:15px;color:var(--w);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.ob-input::placeholder{color:var(--w3);}
 .ob-input:focus{border-color:rgba(92,200,255,.4);}
-.ob-btn{width:100%;padding:14px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+.ob-btn{width:100%;padding:13px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .ob-btn:hover{background:var(--blue-b);}
 .ob-btn:disabled{opacity:.5;cursor:not-allowed;}
 .ob-err{font-size:12px;color:#FF6B6B;display:none;text-align:center;}
-.ob-trust{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--w3);}
+.ob-trust{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--w3);}
 .ob-trust-dot{width:3px;height:3px;border-radius:50%;background:rgba(92,200,255,.4);}
-.ob-id-cards{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:680px;}
-.ob-id-card{width:190px;padding:26px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;transition:all .2s;}
-.ob-id-card:hover{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);transform:translateY(-3px);}
-.ob-id-icon{width:50px;height:50px;border-radius:50%;background:rgba(41,121,255,.15);border:1px solid rgba(92,200,255,.25);display:flex;align-items:center;justify-content:center;font-size:22px;}
-.ob-id-title{font-size:16px;font-weight:500;color:var(--w);}
-.ob-id-desc{font-size:12px;color:var(--w3);line-height:1.5;}
+
+/* OTP */
 .otp-wrap{display:flex;gap:10px;justify-content:center;}
-.otp-box{width:52px;height:60px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:24px;font-weight:600;color:#fff;text-align:center;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.otp-box{width:48px;height:56px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:10px;font-size:22px;font-weight:600;color:var(--w);text-align:center;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
 .otp-box:focus{border-color:rgba(92,200,255,.4);}
 .ob-resend{font-size:12px;color:var(--w3);cursor:pointer;text-align:center;}
 .ob-resend span{color:var(--blue-p);cursor:pointer;}
 .ob-resend span:hover{text-decoration:underline;}
+.otp-expiry{font-size:11px;color:var(--w3);text-align:center;}
+
+/* Role Cards */
+.ob-role-cards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;width:100%;}
+.ob-role-card{flex:1;min-width:160px;max-width:200px;padding:24px 16px;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:all .2s;}
+.ob-role-card:hover,.ob-role-card.selected{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);transform:translateY(-2px);}
+.ob-role-icon{width:48px;height:48px;border-radius:50%;background:rgba(41,121,255,.15);border:1px solid rgba(92,200,255,.25);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.ob-role-title{font-size:15px;font-weight:500;color:var(--w);}
+.ob-role-desc{font-size:11px;color:var(--w3);line-height:1.5;}
+
+/* Region Cards */
+.ob-region-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}
+.ob-region-card{padding:16px;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:all .2s;}
+.ob-region-card:hover,.ob-region-card.selected{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);}
+.ob-region-icon{font-size:22px;}
+.ob-region-title{font-size:14px;font-weight:500;color:var(--w);}
+.ob-region-lang{font-size:10px;color:var(--blue-p);letter-spacing:.06em;}
 
 /* ── LOGIN MODAL ── */
-.login-ov{position:fixed;inset:0;z-index:800;background:rgba(7,7,15,.92);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px;}
-.login-ov.show{display:flex;}
-.login-box{background:var(--bg2);border:.5px solid var(--border2);border-radius:20px;width:100%;max-width:440px;padding:40px;position:relative;animation:modal-in .3s ease forwards;text-align:center;}
-.login-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--w5);transition:all .2s;}
-.login-close:hover{background:rgba(255,255,255,.12);color:#fff;}
-.login-icon{font-size:40px;margin-bottom:16px;display:block;}
-.login-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;font-style:italic;margin-bottom:8px;}
-.login-sub{font-size:13px;color:var(--w3);margin-bottom:28px;line-height:1.6;}
-.login-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;font-size:15px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:12px;}
+.modal-ov{position:fixed;inset:0;z-index:800;background:rgba(7,7,15,.92);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px;}
+.modal-ov.show{display:flex;}
+.login-box{background:var(--bg2);border:.5px solid var(--border2);border-radius:20px;width:100%;max-width:420px;padding:36px;position:relative;animation:modal-in .3s ease forwards;text-align:center;}
+.modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;background:var(--w1);border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--w5);transition:all .2s;}
+.modal-close:hover{background:rgba(255,255,255,.12);color:var(--w);}
+.login-icon{font-size:36px;margin-bottom:14px;display:block;}
+.login-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;margin-bottom:6px;color:var(--w);}
+.login-sub{font-size:12px;color:var(--w3);margin-bottom:22px;line-height:1.6;}
+.login-input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--w);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:10px;}
 .login-input:focus{border-color:rgba(92,200,255,.4);}
-.login-btn{width:100%;padding:14px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-bottom:12px;}
+.login-btn{width:100%;padding:13px;border-radius:10px;background:var(--blue);border:none;color:#fff;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-bottom:10px;}
 .login-btn:hover{background:var(--blue-b);}
 .login-btn:disabled{opacity:.5;cursor:not-allowed;}
 .login-err{font-size:12px;color:#FF6B6B;display:none;margin-bottom:8px;}
-.login-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--w3);font-size:12px;}
+.login-divider{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--w3);font-size:11px;}
 .login-divider::before,.login-divider::after{content:'';flex:1;height:.5px;background:var(--border);}
-.login-signup{font-size:13px;color:var(--w3);}
+.login-signup{font-size:12px;color:var(--w3);}
 .login-signup span{color:var(--blue-p);cursor:pointer;}
-.login-signup span:hover{text-decoration:underline;}
 
-/* ── PERSONALISED HOMEPAGE ── */
+/* ── PERSONALISED HP ── */
 #pers-hp{display:none;position:relative;z-index:5;min-height:100vh;background:var(--bg);}
 #pers-hp.show{display:block;}
-.pers-header{padding:120px 52px 60px;text-align:center;position:relative;z-index:5;min-height:300px;}
-.pers-greeting{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(92,200,255,.6);margin-bottom:16px;}
-.pers-name{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,64px);font-weight:300;font-style:italic;margin-bottom:12px;}
+.pers-header{padding:110px 48px 48px;text-align:center;position:relative;z-index:5;}
+.pers-greeting{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(92,200,255,.6);margin-bottom:12px;}
+.pers-name{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,60px);font-weight:300;font-style:italic;margin-bottom:10px;color:var(--w);}
 .pers-name em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.pers-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:7px 18px;border-radius:100px;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);color:var(--blue-p);margin-bottom:24px;}
-.pers-desc{font-size:14px;color:var(--w3);margin-bottom:0;}
-.pers-news-section{max-width:1100px;margin:0 auto;padding:0 52px 80px;}
-.pers-news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:900px){.pers-news-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.pers-news-grid{grid-template-columns:1fr;}.pers-header{padding:100px 24px 40px;}.pers-news-section{padding:0 20px 60px;}}
-.pers-logout{font-size:12px;color:var(--w3);cursor:pointer;margin-top:16px;display:inline-block;}
-.pers-logout:hover{color:var(--w7);}
+.pers-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+.pers-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:6px 14px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);color:var(--blue-p);}
+.pers-news-section{max-width:1100px;margin:0 auto;padding:0 48px 80px;}
+.pers-news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.pers-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;}
+.pers-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35);border-color:rgba(92,200,255,.25);}
+.pers-card-body{padding:18px;}
+.pers-card-cat{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);margin-bottom:8px;}
+.pers-card-headline{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:10px;}
+.voice-bubble{border-radius:10px;padding:12px 13px;font-size:12.5px;line-height:1.7;margin-top:8px;}
+.voice-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
+.voice-txt{color:var(--w7);}
+.thumb-row{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:.5px solid var(--border);}
+.thumb-btn{padding:4px 12px;border-radius:100px;font-size:11px;border:.5px solid var(--border);background:transparent;color:var(--w3);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.thumb-btn:hover{border-color:rgba(92,200,255,.3);color:var(--w7);}
+.thumb-btn.active-up{background:rgba(0,200,150,.1);border-color:var(--green);color:var(--green);}
+.thumb-btn.active-down{background:rgba(255,77,109,.1);border-color:var(--red);color:var(--red);}
 
 /* ── WELCOME ── */
-#welcome{position:fixed;inset:0;z-index:600;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;}
+#welcome{position:fixed;inset:0;z-index:600;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;}
 #welcome.show{display:flex;}
-.wlc-emoji{font-size:56px;animation:wlc-scale .6s ease forwards;}
-.wlc-head{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;font-style:italic;color:var(--w);line-height:1.15;}
+.wlc-emoji{font-size:52px;animation:wlc-scale .5s ease forwards;}
+.wlc-head{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,48px);font-weight:300;font-style:italic;color:var(--w);line-height:1.15;}
 .wlc-head em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.wlc-badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:8px 22px;border-radius:100px;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);color:var(--blue-p);letter-spacing:.04em;}
-.wlc-sub{font-size:14px;color:var(--w3);line-height:1.7;}
-.wlc-bar-wrap{width:260px;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
-.wlc-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-b));border-radius:2px;transition:width 2s linear;}
+.wlc-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 18px;border-radius:100px;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);color:var(--blue-p);}
+.wlc-sub{font-size:13px;color:var(--w3);line-height:1.7;}
+.wlc-bar-wrap{width:240px;height:2px;background:var(--border);border-radius:2px;overflow:hidden;}
+.wlc-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-b));border-radius:2px;transition:width 2.2s linear;}
 
-/* ── MODAL ── */
-.modal-ov{position:fixed;inset:0;z-index:1000;background:rgba(7,7,15,.9);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:24px;}
-.modal-ov.show{display:flex;}
-.modal-box{background:var(--bg2);border:.5px solid var(--border2);border-radius:20px;width:100%;max-width:620px;max-height:88vh;overflow-y:auto;position:relative;animation:modal-in .3s ease forwards;}
-.modal-top-bar{height:3px;width:100%;border-radius:20px 20px 0 0;}
-.modal-inner{padding:28px 28px 24px;}
-.modal-cat{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(92,200,255,.6);margin-bottom:10px;}
-.modal-headline{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:20px;}
-.modal-voice-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:18px;border-bottom:.5px solid var(--border);}
-.mvt{padding:6px 13px;border:.5px solid var(--border);border-radius:100px;font-size:11px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;background:transparent;color:var(--w3);transition:all .2s;}
-.mvt.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.3);color:var(--blue-p);}
-.modal-voice-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(92,200,255,.5);margin-bottom:12px;}
-.modal-voice-body{font-size:15px;color:var(--w7);line-height:1.85;}
-.modal-voice-panel{display:none;}
-.modal-voice-panel.active{display:block;}
-.modal-close-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--w5);transition:all .2s;}
-.modal-close-btn:hover{background:rgba(255,255,255,.12);color:#fff;}
+/* ── RESPONSIVE ── */
+@media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}.pers-news-grid{grid-template-columns:repeat(2,1fr);}.how-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){
+  nav{padding:0 16px;}
+  .nav-center{display:none;}
+  .news-grid,.pers-news-grid{grid-template-columns:1fr;}
+  .news-section,.pers-news-section{padding:20px 16px 60px;}
+  .cat-tabs{padding:12px 16px;}
+  .hero{padding:90px 20px 50px;}
+  .si{padding:0 20px;}
+  .cta-box{padding:40px 24px;}
+  .ob-nav{padding:0 20px;}
+  .ob-region-cards{grid-template-columns:1fr 1fr;}
+  .topics-dropdown,.search-bar{padding:20px 16px;}
+  .search-results{left:16px;right:16px;}
+  footer .ft-inner{flex-direction:column;gap:16px;}
+  .pers-header{padding:90px 20px 36px;}
+}
 </style>
 </head>
 <body>
 <div class="top-line"></div>
-<div class="glow-a"></div><div class="glow-b"></div>
-<canvas id="particles"></canvas>
+<div class="glow-wrap"><div class="glow-a"></div><div class="glow-b"></div><div class="glow-c"></div></div>
 
-<!-- ── MAIN HOMEPAGE ── -->
-<div id="hp">
+<!-- ── NAVBAR ── -->
 <nav>
-  <a class="logo" href="#">
-    <svg width="38" height="30" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g1)" stroke-width="1.5" fill="none" clip-path="url(#c1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
-    <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
+  <a class="logo" href="/" onclick="goHome(event)">
+    <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg1)" stroke-width="1.5" fill="none" clip-path="url(#cp1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div class="logo-text">
+      <span class="logo-the">The</span>
+      <span class="logo-dawn">Dawn</span>
+      <span class="logo-brief">Brief</span>
+      <span class="logo-tag">· News that feels like a friend</span>
+    </div>
   </a>
+  <div class="nav-center">
+    <button class="nav-topic-btn" onclick="toggleTopics()">Topics ▾</button>
+  </div>
   <div class="nav-right">
+    <button class="nav-icon-btn" onclick="toggleSearch()" title="Search (/)">🔍</button>
+    <button class="nav-icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+    <button class="nav-icon-btn" onclick="toggleLang()" id="lang-btn" title="Toggle language">🇮🇳</button>
     <button class="nav-login" id="nav-login-btn">Login</button>
     <button class="nav-cta sub-btn">Subscribe →</button>
   </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-bg"></div><div class="hero-bg-fade"></div>
-  <div class="hero-badge"><div class="hero-dot"></div>Today's edition is live</div>
-  <h1 class="hero-h1">Read it before<br>your friend <em>does.</em></h1>
-  <p class="hero-sub">The brief that speaks <b>your</b> language.<br>Written for those who move fast.</p>
-  <div class="hero-btns">
-    <button class="hero-cta sub-btn">Subscribe →</button>
-    <button class="hero-login" id="hero-login-btn">Login →</button>
-  </div>
-  <div class="hero-diff">
-    <div class="diff-card"><div class="diff-icon">✍️</div><div class="diff-title">From the field</div><div class="diff-body">Written by someone actually in the field, not a journalist behind a desk.</div></div>
-    <div class="diff-div"></div>
-    <div class="diff-card"><div class="diff-icon">🗣️</div><div class="diff-title">Your Voice</div><div class="diff-body">Student, Employee or Commission Agent. We write in your language every morning.</div></div>
-    <div class="diff-div"></div>
-    <div class="diff-card"><div class="diff-icon">🎯</div><div class="diff-title">Zero noise</div><div class="diff-body">Only what matters for your world. No filler, no fluff.</div></div>
-    <div class="diff-div"></div>
-    <div class="diff-card"><div class="diff-icon">⏰</div><div class="diff-title">Always on time</div><div class="diff-body">Before your day starts. Every single day.</div></div>
-  </div>
-</section>
-
-<div class="ticker-wrap">
-  <div class="ticker-inner">
-    <div class="ti">HUL <div class="ts"></div></div><div class="ti">Wheel price cut 8% <div class="ts"></div></div><div class="ti">Blinkit 1,000 dark stores <div class="ts"></div></div><div class="ti">Rural consumption 3-yr high <div class="ts"></div></div><div class="ti">Marico Saffola Edge <div class="ts"></div></div><div class="ti">GST rationalisation <div class="ts"></div></div><div class="ti">RBI rate cut <div class="ts"></div></div><div class="ti">Sensex 82,000 <div class="ts"></div></div>
-    <div class="ti">HUL <div class="ts"></div></div><div class="ti">Wheel price cut 8% <div class="ts"></div></div><div class="ti">Blinkit 1,000 dark stores <div class="ts"></div></div><div class="ti">Rural consumption 3-yr high <div class="ts"></div></div><div class="ti">Marico Saffola Edge <div class="ts"></div></div><div class="ti">GST rationalisation <div class="ts"></div></div><div class="ti">RBI rate cut <div class="ts"></div></div><div class="ti">Sensex 82,000 <div class="ts"></div></div>
-  </div>
-</div>
-
-<div class="cat-tabs-wrap">
-  <div class="cat-tabs">
-    <button class="cat-tab active" onclick="showCategory(this,'All')">🌐 All</button>
-    <button class="cat-tab" onclick="showCategory(this,'Business')">💼 Business</button>
-    <button class="cat-tab" onclick="showCategory(this,'Indian Economy')">🇮🇳 Indian Economy</button>
-    <button class="cat-tab" onclick="showCategory(this,'Finance')">📈 Finance</button>
-    <button class="cat-tab" onclick="showCategory(this,'Tech')">💻 Tech</button>
-    <button class="cat-tab" onclick="showCategory(this,'Sports')">⚽ Sports</button>
-    <button class="cat-tab" onclick="showCategory(this,'Government')">🏛️ Government</button>
-    <button class="cat-tab" onclick="showCategory(this,'International')">🌍 International</button>
-    <button class="cat-tab" onclick="showCategory(this,'Climate')">🌿 Climate</button>
-    <button class="cat-tab" onclick="showCategory(this,'Auto')">🚗 Auto</button>
-    <button class="cat-tab" onclick="showCategory(this,'Science')">🔬 Science</button>
-    <button class="cat-tab" onclick="showCategory(this,'Entertainment')">🎬 Entertainment</button>
-  </div>
-  <div class="cat-fade"></div>
-</div>
-
-<div class="news-section">
-  <div class="news-hdr" id="news-hdr">
-    <div><div class="news-eyebrow">Daily Intelligence</div><div class="news-title" id="news-title">Today's <strong>Stories</strong></div></div>
-    <div id="news-date" style="font-size:12px;color:var(--w3);"></div>
-  </div>
-  <!-- Grid view for All -->
-  <div class="news-grid" id="news-grid"><div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Loading today's stories...</div></div>
-  <!-- List view for specific category -->
-  <div id="news-list" style="display:none;"></div>
-</div>
-
-<section class="how-sec">
-  <div class="si">
-    <div class="sec-eyebrow">How it works</div>
-    <div class="sec-title">Three steps to your <strong>daily edge</strong></div>
-    <div class="how-grid">
-      <div class="how-step" data-n="01"><div class="how-icon">🤖</div><div class="how-title">AI writes in your voice</div><div class="how-body">3 voices. Student, Employee, Commission Agent. Same news, completely different experience tailored to your world.</div><div class="how-time">Every morning</div></div>
-      <div class="how-step" data-n="02"><div class="how-icon">🎯</div><div class="how-title">Only what matters</div><div class="how-body">No filler. No fluff. Only the stories that actually affect your day, your work, and your decisions.</div><div class="how-time">Every morning</div></div>
-      <div class="how-step" data-n="03"><div class="how-icon">📬</div><div class="how-title">In your inbox by 6 AM</div><div class="how-body">Read in 7 minutes. Know what matters. Move with confidence all day long.</div><div class="how-time">Every morning</div></div>
+<!-- Topics Dropdown -->
+<div class="topics-dropdown" id="topics-dd">
+  <div class="td-inner">
+    <div class="td-label">Most Popular</div>
+    <div class="td-grid">
+      <a class="td-item" href="category.html?cat=Business">💼 Business</a>
+      <a class="td-item" href="category.html?cat=Indian Economy">🇮🇳 Indian Economy</a>
+      <a class="td-item" href="category.html?cat=Finance">📈 Finance</a>
+      <a class="td-item" href="category.html?cat=Tech">💻 Tech</a>
+      <a class="td-item" href="category.html?cat=Sports">⚽ Sports</a>
+      <a class="td-item" href="category.html?cat=Government">🏛️ Government</a>
+      <a class="td-item" href="category.html?cat=International">🌍 International</a>
+      <a class="td-item" href="category.html?cat=Climate">🌿 Climate</a>
+      <a class="td-item" href="category.html?cat=Auto">🚗 Auto</a>
+      <a class="td-item" href="category.html?cat=Science">🔬 Science</a>
+      <a class="td-item" href="category.html?cat=Entertainment">🎬 Entertainment</a>
     </div>
   </div>
-</section>
-
-
-
-<section class="cta-sec">
-  <div class="si">
-    <div class="cta-box">
-      <div class="cta-title">Your daily edge<br>starts <em>tomorrow.</em></div>
-      <p class="cta-sub">Join those who start their morning smarter. Choose your voice. Know what matters.</p>
-      <button class="cta-btn sub-btn">Subscribe →</button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="si">
-    <div class="ft-bottom">
-      <div class="ft-copy">© 2026 The Dawn Brief · Made in Kaithal, Haryana</div>
-      <div class="ft-copy"><a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp; ayushbrief.online</div>
-    </div>
-  </div>
-</footer>
 </div>
 
-<!-- ── PERSONALISED HOMEPAGE (after login) ── -->
+<!-- Search Bar -->
+<div class="search-bar" id="search-bar">
+  <input class="search-input" id="search-input" type="text" placeholder="Search stories... (Press Esc to close)" oninput="doSearch(this.value)" />
+</div>
+<div class="search-results" id="search-results"></div>
+
+<!-- ── MAIN HOMEPAGE ── -->
+<div id="hp">
+  <section class="hero">
+    <div class="hero-badge"><div class="hero-dot"></div><span id="badge-txt">Today's edition is live</span></div>
+    <h1 class="hero-h1" id="hero-h1">Read it before<br>your friend <em>does.</em></h1>
+    <p class="hero-sub" id="hero-sub">The brief that speaks your language.<br>Written for those who move fast.</p>
+    <div class="sub-count"><div class="sc-dot"></div><span id="sub-count-txt">Loading...</span></div>
+    <div class="hero-btns">
+      <button class="hero-cta sub-btn" id="hero-sub-btn">Subscribe free →</button>
+      <button class="hero-login-btn" id="hero-login-btn">Login →</button>
+    </div>
+  </section>
+
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker-inner">
+      <div class="ti">HUL <div class="ts"></div></div><div class="ti">RBI Rate Cut <div class="ts"></div></div><div class="ti">Blinkit 1,000 Dark Stores <div class="ts"></div></div><div class="ti">Rural Consumption High <div class="ts"></div></div><div class="ti">Sensex 82,000 <div class="ts"></div></div><div class="ti">GST Rationalisation <div class="ts"></div></div><div class="ti">ISRO Mission <div class="ts"></div></div><div class="ti">India GDP Growth <div class="ts"></div></div>
+      <div class="ti">HUL <div class="ts"></div></div><div class="ti">RBI Rate Cut <div class="ts"></div></div><div class="ti">Blinkit 1,000 Dark Stores <div class="ts"></div></div><div class="ti">Rural Consumption High <div class="ts"></div></div><div class="ti">Sensex 82,000 <div class="ts"></div></div><div class="ti">GST Rationalisation <div class="ts"></div></div><div class="ti">ISRO Mission <div class="ts"></div></div><div class="ti">India GDP Growth <div class="ts"></div></div>
+    </div>
+  </div>
+
+  <div class="cat-tabs-wrap">
+    <div class="cat-tabs">
+      <button class="cat-tab active" onclick="showCategory(this,'All')">🌐 All</button>
+      <button class="cat-tab" onclick="showCategory(this,'Business')">💼 Business</button>
+      <button class="cat-tab" onclick="showCategory(this,'Indian Economy')">🇮🇳 Indian Economy</button>
+      <button class="cat-tab" onclick="showCategory(this,'Finance')">📈 Finance</button>
+      <button class="cat-tab" onclick="showCategory(this,'Tech')">💻 Tech</button>
+      <button class="cat-tab" onclick="showCategory(this,'Sports')">⚽ Sports</button>
+      <button class="cat-tab" onclick="showCategory(this,'Government')">🏛️ Government</button>
+      <button class="cat-tab" onclick="showCategory(this,'International')">🌍 International</button>
+      <button class="cat-tab" onclick="showCategory(this,'Climate')">🌿 Climate</button>
+      <button class="cat-tab" onclick="showCategory(this,'Auto')">🚗 Auto</button>
+      <button class="cat-tab" onclick="showCategory(this,'Science')">🔬 Science</button>
+      <button class="cat-tab" onclick="showCategory(this,'Entertainment')">🎬 Entertainment</button>
+    </div>
+    <div class="cat-fade-r"></div>
+  </div>
+
+  <div class="news-section">
+    <div class="news-hdr">
+      <div><div class="news-eyebrow">Daily Intelligence</div><div class="news-title-txt" id="news-title">Today's Stories</div></div>
+      <div id="news-date" style="font-size:12px;color:var(--w3);"></div>
+    </div>
+    <div class="news-grid" id="news-grid"></div>
+    <div id="news-list" style="display:none;"></div>
+  </div>
+
+  <section class="how-sec">
+    <div class="si">
+      <div class="sec-eyebrow">How it works</div>
+      <div class="sec-title">Your <strong>daily edge</strong> in three steps</div>
+      <div class="how-grid">
+        <div class="how-step" data-n="01"><div class="how-icon">🤖</div><div class="how-title">AI writes in your voice</div><div class="how-body">Student or Professional. Same news, completely different experience written for your world.</div><div class="how-time">Every morning</div></div>
+        <div class="how-step" data-n="02"><div class="how-icon">😂</div><div class="how-title">News like a friend</div><div class="how-body">Not a newspaper. Your smartest, funniest friend who reads everything and tells you what happened.</div><div class="how-time">Every morning</div></div>
+        <div class="how-step" data-n="03"><div class="how-icon">📬</div><div class="how-title">In your inbox by 6 AM</div><div class="how-body">Read in 5 minutes. Know what matters. Move with confidence all day long.</div><div class="how-time">Every morning</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-sec">
+    <div class="si">
+      <div class="cta-box">
+        <div class="cta-title">Your daily edge<br>starts <em>tomorrow.</em></div>
+        <p class="cta-sub">Join students and professionals who start their morning smarter. Free. Always.</p>
+        <button class="cta-btn sub-btn">Subscribe free →</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="si">
+      <div class="ft-inner">
+        <div class="ft-brand">
+          <div class="logo-dawn" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;background:linear-gradient(90deg,#C8960E,#F0C830,#FFE878,#F0C830,#C8960E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">The Dawn Brief</div>
+          <div class="ft-tagline">News that feels like a friend.</div>
+        </div>
+        <div class="ft-links">
+          <a class="ft-link" href="about.html">About</a>
+          <a class="ft-link" href="category.html?cat=Business">Categories</a>
+          <a class="ft-link" href="#" onclick="openOnboarding();return false;">Subscribe</a>
+          <a class="ft-link" href="privacy.html">Privacy</a>
+          <a class="ft-link" href="unsubscribe.html">Unsubscribe</a>
+          <a class="ft-link" href="terms.html">Terms</a>
+        </div>
+        <div class="ft-social">
+          <a class="ft-soc" href="https://x.com/thedawnbrief" target="_blank" title="X / Twitter">𝕏</a>
+          <a class="ft-soc" href="https://instagram.com/thedawnbrief" target="_blank" title="Instagram">📸</a>
+          <a class="ft-soc" href="https://linkedin.com/company/thedawnbrief" target="_blank" title="LinkedIn">in</a>
+        </div>
+      </div>
+      <div class="ft-bottom">
+        <div class="ft-copy">© 2026 The Dawn Brief · Made with ☀️ in Kaithal, Haryana</div>
+        <div class="ft-copy"><a href="privacy.html" style="color:var(--blue-p);text-decoration:none;">Privacy Policy</a> · ayushbrief.online</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ── PERSONALISED HOMEPAGE ── -->
 <div id="pers-hp">
-  <nav>
-    <a class="logo" href="#">
-      <svg width="38" height="30" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g1b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c1b"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g1b)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g1b)" stroke-width="1.5" fill="none" clip-path="url(#c1b)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+  <nav style="position:fixed;">
+    <a class="logo" href="/" onclick="goHome(event)">
+      <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp2"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg2)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg2)" stroke-width="1.5" fill="none" clip-path="url(#cp2)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
       <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
     </a>
     <div class="nav-right">
-      <div id="voice-pill"><div class="vp-dot"></div><span id="vp-label">Student</span></div>
+      <div id="vp-pill" style="display:none;align-items:center;gap:7px;padding:5px 12px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);font-size:11px;color:var(--blue-p);"><div style="width:5px;height:5px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;"></div><span id="vp-label">Student</span></div>
+      <button class="nav-icon-btn" onclick="toggleTheme()">🌙</button>
       <button class="nav-login" onclick="logout()">Logout</button>
     </div>
   </nav>
-
   <div class="pers-header">
-    <div class="pers-greeting">Good morning</div>
-    <h1 class="pers-name">Welcome back, <em id="pers-name-text">friend</em>.</h1>
-    <div class="pers-badge" id="pers-badge">🎓 Student Edition</div>
-    <p class="pers-desc" style="font-size:14px;color:var(--w3);">Here is today's brief, written in your voice.</p>
-  </div>
-
-  <div class="pers-news-section">
-    <div class="pers-news-grid" id="pers-news-grid">
-      <!-- Filled by JS from data.json -->
+    <div class="pers-greeting" id="pers-greeting">Good morning</div>
+    <h1 class="pers-name">Hey <em id="pers-name-txt">friend</em> 👋</h1>
+    <div class="pers-badges">
+      <div class="pers-badge" id="pers-role-badge">🎓 Student</div>
+      <div class="pers-badge" id="pers-region-badge">🌏 North India</div>
     </div>
+    <p style="font-size:13px;color:var(--w3);">Here is today's brief, written just for you.</p>
+  </div>
+  <div class="pers-news-section">
+    <div class="pers-news-grid" id="pers-news-grid"></div>
   </div>
 </div>
 
 <!-- ── ONBOARDING ── -->
 <div id="ob">
   <div class="ob-nav">
-    <a class="logo" href="#"><svg width="36" height="28" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="c3"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#g3)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#g3)" stroke-width="1.5" fill="none" clip-path="url(#c3)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
+    <a class="logo" href="#"><svg width="30" height="24" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp3"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg3)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg3)" stroke-width="1.5" fill="none" clip-path="url(#cp3)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
     <span class="ob-back" id="ob-back">← Back</span>
   </div>
-  <div class="ob-prog-wrap"><div class="ob-prog-fill" id="ob-prog" style="width:25%"></div></div>
+  <div class="ob-prog-wrap"><div class="ob-prog-fill" id="ob-prog" style="width:20%"></div></div>
   <div class="ob-body">
+
+    <!-- Step 1 -->
     <div class="ob-step active" id="step-1">
-      <div class="ob-eyebrow">Step 1 of 4</div>
-      <div class="ob-head">Your daily <em>edge</em><br>starts here.</div>
-      <div class="ob-sub">The brief written for people in the field. Every single morning.</div>
+      <div class="ob-eyebrow">Step 1 of 5</div>
+      <div class="ob-head">Hey, what do I<br><em>call you?</em></div>
+      <div class="ob-sub">Just your name. Nothing weird, I promise.</div>
       <div class="ob-input-wrap">
-        <input class="ob-input" type="text" id="ob-name" placeholder="Your name" />
-        <input class="ob-input" type="email" id="ob-email" placeholder="Your email address" />
+        <input class="ob-input" type="text" id="ob-name" placeholder="Your name" autocomplete="name" />
         <div class="ob-err" id="ob-err-1"></div>
-        <button class="ob-btn" id="ob-send-otp">Send OTP →</button>
+        <button class="ob-btn" id="ob-next-1">Continue →</button>
       </div>
       <div class="ob-trust"><span>No spam</span><div class="ob-trust-dot"></div><span>Free forever</span><div class="ob-trust-dot"></div><span>Unsubscribe anytime</span></div>
     </div>
+
+    <!-- Step 2 -->
     <div class="ob-step" id="step-2">
-      <div class="ob-eyebrow">Step 2 of 4</div>
+      <div class="ob-eyebrow">Step 2 of 5</div>
+      <div class="ob-head">Drop your <em>email.</em><br>I'll send a secret code.</div>
+      <div class="ob-sub" id="step2-sub">Where should I send your daily brief?</div>
+      <div class="ob-input-wrap">
+        <input class="ob-input" type="email" id="ob-email" placeholder="your@email.com" autocomplete="email" />
+        <div class="ob-err" id="ob-err-2"></div>
+        <button class="ob-btn" id="ob-send-otp">Send secret code →</button>
+      </div>
+    </div>
+
+    <!-- Step 3 - OTP -->
+    <div class="ob-step" id="step-3">
+      <div class="ob-eyebrow">Step 3 of 5</div>
       <div class="ob-head">Check your <em>inbox.</em></div>
-      <div class="ob-sub" id="otp-sub">We sent a 6-digit OTP to your email.</div>
+      <div class="ob-sub" id="otp-sub">6-digit code sent. Should be there in 30 seconds.</div>
       <div class="ob-input-wrap">
         <div class="otp-wrap">
-          <input class="otp-box" type="text" maxlength="1" id="otp-1" inputmode="numeric" />
-          <input class="otp-box" type="text" maxlength="1" id="otp-2" inputmode="numeric" />
-          <input class="otp-box" type="text" maxlength="1" id="otp-3" inputmode="numeric" />
-          <input class="otp-box" type="text" maxlength="1" id="otp-4" inputmode="numeric" />
-          <input class="otp-box" type="text" maxlength="1" id="otp-5" inputmode="numeric" />
-          <input class="otp-box" type="text" maxlength="1" id="otp-6" inputmode="numeric" />
+          <input class="otp-box" type="text" maxlength="1" id="otp-1" inputmode="numeric"/>
+          <input class="otp-box" type="text" maxlength="1" id="otp-2" inputmode="numeric"/>
+          <input class="otp-box" type="text" maxlength="1" id="otp-3" inputmode="numeric"/>
+          <input class="otp-box" type="text" maxlength="1" id="otp-4" inputmode="numeric"/>
+          <input class="otp-box" type="text" maxlength="1" id="otp-5" inputmode="numeric"/>
+          <input class="otp-box" type="text" maxlength="1" id="otp-6" inputmode="numeric"/>
         </div>
-        <div class="ob-err" id="ob-err-2"></div>
-        <button class="ob-btn" id="ob-verify-otp">Verify OTP →</button>
-        <div class="ob-resend">Did not receive it? <span id="ob-resend-btn">Resend OTP</span></div>
-      </div>
-    </div>
-    <div class="ob-step" id="step-3">
-      <div class="ob-eyebrow">Step 3 of 4</div>
-      <div class="ob-head">Your <em>phone</em><br>number.</div>
-      <div class="ob-sub">We will use this for future updates. Not shared with anyone.</div>
-      <div class="ob-input-wrap">
-        <input class="ob-input" type="tel" id="ob-phone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" />
+        <div class="otp-expiry" id="otp-timer">Code expires in <span id="otp-countdown">10:00</span></div>
         <div class="ob-err" id="ob-err-3"></div>
-        <button class="ob-btn" id="ob-phone-continue">Continue →</button>
+        <button class="ob-btn" id="ob-verify-otp">Verify code →</button>
+        <div class="ob-resend">Did not receive it? <span id="ob-resend-btn">Resend code</span></div>
       </div>
     </div>
+
+    <!-- Step 4 - Role -->
     <div class="ob-step" id="step-4">
-      <div class="ob-eyebrow">Step 4 of 4</div>
-      <div class="ob-head">You are a…</div>
-      <div class="ob-sub">We will write The Dawn Brief in exactly your language and context.</div>
-      <div class="ob-id-cards">
-        <div class="ob-id-card" id="id-student"><div class="ob-id-icon">🎓</div><div class="ob-id-title">Student</div><div class="ob-id-desc">MBA, PGDM, B.Com. Learning the business and sales world.</div></div>
-        <div class="ob-id-card" id="id-employee"><div class="ob-id-icon">💼</div><div class="ob-id-title">Employee</div><div class="ob-id-desc">Working in sales, distribution, FMCG, or any corporate role.</div></div>
-        <div class="ob-id-card" id="id-agent"><div class="ob-id-icon">🌾</div><div class="ob-id-title">Commission Agent</div><div class="ob-id-desc">Arhatiya, dalal, mandi agent. Written specifically for you.</div></div>
+      <div class="ob-eyebrow">Step 4 of 5</div>
+      <div class="ob-head">Last thing —<br>are you <em>surviving…</em></div>
+      <div class="ob-sub">We write The Dawn Brief in your exact language and context.</div>
+      <div class="ob-role-cards">
+        <div class="ob-role-card" id="role-student" onclick="selectRole('student')">
+          <div class="ob-role-icon">🎓</div>
+          <div class="ob-role-title">Campus life</div>
+          <div class="ob-role-desc">MBA, PGDM, B.Com. Placement season stress and all.</div>
+        </div>
+        <div class="ob-role-card" id="role-professional" onclick="selectRole('professional')">
+          <div class="ob-role-icon">💼</div>
+          <div class="ob-role-title">Office life</div>
+          <div class="ob-role-desc">Working professional. Targets, appraisals, that one annoying boss.</div>
+        </div>
       </div>
       <div class="ob-err" id="ob-err-4"></div>
     </div>
+
+    <!-- Step 5 - Region -->
+    <div class="ob-step" id="step-5">
+      <div class="ob-eyebrow">Step 5 of 5</div>
+      <div class="ob-head">One more thing —<br>where are you <em>from?</em></div>
+      <div class="ob-sub">We write differently for different regions. Because language matters.</div>
+      <div class="ob-region-cards">
+        <div class="ob-region-card" id="region-north" onclick="selectRegion('north')">
+          <div class="ob-region-icon">🏔️</div>
+          <div class="ob-region-title">North India</div>
+          <div class="ob-region-lang">HINGLISH</div>
+        </div>
+        <div class="ob-region-card" id="region-west" onclick="selectRegion('west')">
+          <div class="ob-region-icon">🌊</div>
+          <div class="ob-region-title">West India</div>
+          <div class="ob-region-lang">HINGLISH</div>
+        </div>
+        <div class="ob-region-card" id="region-south" onclick="selectRegion('south')">
+          <div class="ob-region-icon">🌴</div>
+          <div class="ob-region-title">South India</div>
+          <div class="ob-region-lang">COMEDY ENGLISH</div>
+        </div>
+        <div class="ob-region-card" id="region-east" onclick="selectRegion('east')">
+          <div class="ob-region-icon">🌿</div>
+          <div class="ob-region-title">East India</div>
+          <div class="ob-region-lang">COMEDY ENGLISH</div>
+        </div>
+      </div>
+      <div class="ob-err" id="ob-err-5"></div>
+    </div>
+
   </div>
 </div>
 
 <!-- ── LOGIN MODAL ── -->
-<div class="login-ov" id="login-modal">
+<div class="modal-ov" id="login-modal">
   <div class="login-box">
-    <div class="login-close" id="login-close">✕</div>
+    <div class="modal-close" id="login-close">✕</div>
     <span class="login-icon">☀️</span>
     <div class="login-title">Welcome back.</div>
     <div class="login-sub">Enter your email to access your personalised brief.</div>
-    <input class="login-input" type="email" id="login-email" placeholder="Your email address" />
+    <input class="login-input" type="email" id="login-email" placeholder="your@email.com" />
     <div class="login-err" id="login-err"></div>
-    <button class="login-btn" id="login-btn">Login →</button>
+    <button class="login-btn" id="login-btn">Get my brief →</button>
     <div class="login-divider">or</div>
     <div class="login-signup">New here? <span id="login-to-signup">Subscribe for free</span></div>
   </div>
 </div>
 
-<!-- ── WELCOME ── -->
+<!-- ── WELCOME SCREEN ── -->
 <div id="welcome">
   <div class="wlc-emoji">☀️</div>
-  <div class="wlc-head">Welcome, <em id="wlc-name">friend</em>.</div>
+  <div class="wlc-head">Welcome to the gang,<br><em id="wlc-name">friend</em>.</div>
   <div class="wlc-badge" id="wlc-badge">🎓 Student</div>
-  <div class="wlc-sub" id="wlc-sub">Your first brief arrives tomorrow at 6 AM.</div>
+  <div class="wlc-sub">Your first brief arrives tomorrow at 6 AM. ☀️</div>
   <div class="wlc-bar-wrap"><div class="wlc-bar" id="wlc-bar"></div></div>
 </div>
 
-<!-- ── MODAL ── -->
-<div class="modal-ov" id="story-modal">
-  <div class="modal-box">
-    <div class="modal-top-bar" id="modal-top-bar" style="background:#2979FF;"></div>
-    <div class="modal-inner">
-      <div class="modal-close-btn" id="modal-close">✕</div>
-      <div class="modal-cat" id="modal-cat">Category</div>
-      <div class="modal-headline" id="modal-headline">Headline</div>
-      <div class="modal-voice-body" id="modal-summary" style="font-size:15px;color:var(--w7);line-height:1.85;margin-bottom:20px;"></div>
-      <div style="padding-top:16px;border-top:.5px solid var(--border);text-align:center;">
-        <p style="font-size:13px;color:var(--w3);margin-bottom:12px;">Subscribe to read this in your voice — Student, Employee, or Commission Agent.</p>
-        <button class="nav-cta sub-btn" style="font-size:13px;padding:10px 24px;">Subscribe →</button>
-      </div>
-    </div>
-  </div>
+<!-- ── COOKIE BANNER ── -->
+<div id="cookie-banner">
+  <div class="cb-text">We use cookies to make your experience better. That is it. <a href="privacy.html">Privacy Policy</a></div>
+  <button class="cb-btn" onclick="acceptCookies()">Got it</button>
 </div>
 
 <script>
-var API_URL='https://ayush-brief-production.up.railway.app';
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+var API='https://ayush-brief-production.up.railway.app';
 var SUPA_URL='https://ygkviidhuqicfnvyuiiu.supabase.co';
-var SUPA_KEY='';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0';
 
-var userData={name:'',email:'',phone:'',role:''};
-var currentVoice='student';
+var allStories=[];
+var storyData=[];
+var userData={name:'',email:'',role:'',region:''};
 var obStep=1;
+var otpTimer=null;
+var selectedRole='';
+var selectedRegion='';
+var isHindi=false;
 var loggedInUser=null;
 
-var VOICE_LABELS={'student':'🎓 Student','employee':'💼 Employee','agent':'🌾 Commission Agent'};
-var VOICE_ID={'student':'🎓 Student Edition','employee':'💼 Employee Edition','agent':'🌾 Commission Agent Edition'};
+var ROLE_LABELS={'student':'🎓 Student Edition','professional':'💼 Professional Edition'};
+var REGION_LABELS={'north':'🏔️ North India','west':'🌊 West India','south':'🌴 South India','east':'🌿 East India'};
+var CARD_COLORS=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
+var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Auto':'🚗','Science':'🔬','Entertainment':'🎬'};
+var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is actually happening in Delhi.','International':'The world news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Auto':'New launches, EVs, and the roads ahead.','Science':'ISRO, health breakthroughs, and discoveries that matter.','Entertainment':'Films, OTT, and culture that is actually good.'};
 
-// ── DATE ──────────────────────────────────────────────────────────────────────
-var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-var now=new Date();
-var nd=document.getElementById('news-date');
-if(nd)nd.textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+// ── INIT ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  setDate();
+  loadSubCount();
+  loadNewsFromData();
+  checkAutoLogin();
+  initCookie();
+  setGreeting();
+});
 
-function showErr(id,msg){var el=document.getElementById(id);if(el){el.textContent=msg;el.style.display='block';}}
-function hideErr(id){var el=document.getElementById(id);if(el)el.style.display='none';}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){
+    var active=document.activeElement;
+    if(active.tagName!=='INPUT'&&active.tagName!=='TEXTAREA'){e.preventDefault();toggleSearch();}
+  }
+  if(e.key==='Escape'){closeSearch();closeTopics();closeLoginModal();}
+});
+
+function setDate(){
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=new Date();
+  var el=document.getElementById('news-date');
+  if(el)el.textContent=days[d.getDay()]+', '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+}
+
+function setGreeting(){
+  var h=new Date().getHours();
+  var g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  var el=document.getElementById('pers-greeting');
+  if(el)el.textContent=g;
+}
+
+function goHome(e){
+  e.preventDefault();
+  if(loggedInUser){return;}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── SUBSCRIBER COUNT ──────────────────────────────────────────────────────────
+async function loadSubCount(){
+  try{
+    var r=await fetch(SUPA_URL+'/rest/v1/subscribers?select=count&is_active=eq.true',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'count=exact'}});
+    var count=parseInt(r.headers.get('content-range')?.split('/')[1]||'0');
+    var el=document.getElementById('sub-count-txt');
+    if(el)el.innerHTML='<span class="sc-num">'+(count||'—')+'</span> readers already in the gang';
+  }catch(e){
+    var el=document.getElementById('sub-count-txt');
+    if(el)el.textContent='Join the gang today';
+  }
+}
+
+// ── NEWS LOADING ──────────────────────────────────────────────────────────────
+function showSkeletons(){
+  var g=document.getElementById('news-grid');
+  g.innerHTML=Array(9).fill(0).map(function(){
+    return '<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line short" style="margin-bottom:8px;"></div><div class="skel skel-line med" style="margin-bottom:8px;"></div><div class="skel skel-line full"></div></div></div>';
+  }).join('');
+}
+
+async function loadNewsFromData(){
+  showSkeletons();
+  try{
+    var r=await fetch(API+'/data');
+    if(!r.ok)throw new Error('API error');
+    var data=await r.json();
+    allStories=data.stories||[];
+    if(allStories.length===0){
+      document.getElementById('news-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Stories loading... Check back after 6 AM ☀️</div>';
+      return;
+    }
+    if(data.date){var el=document.getElementById('news-date');if(el)el.textContent=data.date;}
+    updateTicker(allStories);
+    renderGrid(allStories.slice(0,9));
+  }catch(e){
+    try{
+      var r2=await fetch('/data-backup.json');
+      var data2=await r2.json();
+      allStories=data2.stories||[];
+      if(allStories.length>0){renderGrid(allStories.slice(0,9));return;}
+    }catch(e2){}
+    document.getElementById('news-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Could not load stories. Please refresh in a moment.</div>';
+  }
+}
+
+function updateTicker(stories){
+  if(!stories||!stories.length)return;
+  var inner=document.getElementById('ticker-inner');
+  if(!inner)return;
+  var items=stories.slice(0,10).map(function(s){return '<div class="ti">'+s.category+' <div class="ts"></div></div>';}).join('');
+  inner.innerHTML=items+items;
+}
+
+function renderGrid(stories){
+  storyData=stories;
+  var g=document.getElementById('news-grid');
+  g.innerHTML=stories.map(function(s,i){
+    var col=CARD_COLORS[i%CARD_COLORS.length];
+    var icon=CAT_ICONS[s.category]||'📰';
+    var img=s.image?'<img class="card-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="card-img-placeholder" style="display:none;">'+icon+'</div>':'<div class="card-img-placeholder">'+icon+'</div>';
+    return '<a class="story-card" href="story.html?id='+i+'" onclick="saveStoryData()"><div class="card-top-bar" style="background:'+col+';"></div>'+img+'<div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM IST</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary">'+(s.summary||'')+'</div><div class="card-readmore">Read story</div></div></a>';
+  }).join('');
+}
+
+function renderList(cat){
+  var stories=allStories.filter(function(s){return s.category===cat;});
+  var others=allStories.filter(function(s){return s.category!==cat;});
+  var display=stories.concat(others).slice(0,12);
+  storyData=display;
+  var desc=CAT_DESCS[cat]||'Latest '+cat+' news from The Dawn Brief.';
+  var icon=CAT_ICONS[cat]||'📰';
+  var html='<div class="cat-page-hdr"><div class="cat-page-title">'+icon+' '+cat+'</div><div class="cat-page-desc">'+desc+'</div></div>';
+  html+=display.map(function(s,i){
+    var img=s.image?'<img class="nli-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.background=\'var(--bg3)\';" loading="lazy">':'<div class="nli-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;opacity:.3;">'+(CAT_ICONS[s.category]||'📰')+'</div>';
+    return '<a class="news-list-item" href="story.html?id='+i+'" onclick="saveStoryData()">'+img+'<div class="nli-body"><div class="nli-cat">'+s.category+'</div><div class="nli-headline">'+s.headline+'</div><div class="nli-summary">'+(s.summary||'')+'</div><div class="nli-read">Read story →</div></div></a>';
+  }).join('');
+  document.getElementById('news-list').innerHTML=html;
+}
+
+function saveStoryData(){localStorage.setItem('db_stories',JSON.stringify(storyData));}
+
+function showCategory(btn,cat){
+  document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  if(cat==='All'){
+    document.getElementById('news-grid').style.display='grid';
+    document.getElementById('news-list').style.display='none';
+    document.getElementById('news-title').textContent="Today's Stories";
+    if(allStories.length>0)renderGrid(allStories.slice(0,9));
+    else loadNewsFromData();
+  }else{
+    document.getElementById('news-grid').style.display='none';
+    document.getElementById('news-list').style.display='block';
+    document.getElementById('news-title').textContent=cat;
+    if(allStories.length>0)renderList(cat);
+    else loadNewsFromData().then(function(){renderList(cat);});
+  }
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function toggleSearch(){
+  var sb=document.getElementById('search-bar');
+  var si=document.getElementById('search-input');
+  if(sb.classList.contains('show')){closeSearch();}
+  else{sb.classList.add('show');setTimeout(function(){si.focus();},100);}
+}
+function closeSearch(){
+  document.getElementById('search-bar').classList.remove('show');
+  document.getElementById('search-results').classList.remove('show');
+  document.getElementById('search-input').value='';
+}
+function doSearch(q){
+  var sr=document.getElementById('search-results');
+  if(!q||q.length<2){sr.classList.remove('show');return;}
+  var results=allStories.filter(function(s){return s.headline.toLowerCase().includes(q.toLowerCase())||s.category.toLowerCase().includes(q.toLowerCase());}).slice(0,6);
+  if(results.length===0){sr.innerHTML='<div style="padding:16px 20px;color:var(--w3);font-size:13px;">No stories found for "'+q+'"</div>';sr.classList.add('show');return;}
+  sr.innerHTML=results.map(function(s,i){return '<div class="sr-item" onclick="window.location=\'story.html?id='+allStories.indexOf(s)+'\'"><div class="sr-cat">'+s.category+'</div><div class="sr-headline">'+s.headline+'</div></div>';}).join('');
+  sr.classList.add('show');
+}
+
+// ── TOPICS ────────────────────────────────────────────────────────────────────
+function toggleTopics(){
+  var dd=document.getElementById('topics-dd');
+  dd.classList.toggle('show');
+}
+function closeTopics(){document.getElementById('topics-dd').classList.remove('show');}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#topics-dd')&&!e.target.closest('.nav-topic-btn'))closeTopics();
+  if(!e.target.closest('#search-bar')&&!e.target.closest('.nav-icon-btn')&&!e.target.closest('#search-results'))closeSearch();
+});
+
+// ── THEME ─────────────────────────────────────────────────────────────────────
+function toggleTheme(){
+  var isDark=document.documentElement.getAttribute('data-theme')!=='light';
+  document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'☀️':'🌙';
+  localStorage.setItem('db_theme',isDark?'light':'dark');
+}
+(function(){
+  var t=localStorage.getItem('db_theme');
+  if(t==='light'){document.documentElement.setAttribute('data-theme','light');var btn=document.getElementById('theme-btn');if(btn)btn.textContent='☀️';}
+})();
+
+// ── LANGUAGE ──────────────────────────────────────────────────────────────────
+function toggleLang(){
+  isHindi=!isHindi;
+  document.getElementById('lang-btn').textContent=isHindi?'🇬🇧':'🇮🇳';
+  localStorage.setItem('db_lang',isHindi?'hi':'en');
+  if(isHindi){
+    document.getElementById('hero-h1').innerHTML='Apne dost se pehle<br><em>padh le.</em>';
+    document.getElementById('hero-sub').textContent='Woh brief jo teri boli mein likhi ho. Rozana.';
+    document.getElementById('news-title').textContent='Aaj ki khabrein';
+    document.getElementById('badge-txt').textContent='Aaj ka edition live hai';
+  }else{
+    document.getElementById('hero-h1').innerHTML='Read it before<br>your friend <em>does.</em>';
+    document.getElementById('hero-sub').innerHTML='The brief that speaks your language.<br>Written for those who move fast.';
+    document.getElementById('news-title').textContent="Today's Stories";
+    document.getElementById('badge-txt').textContent="Today's edition is live";
+  }
+}
+(function(){
+  var l=localStorage.getItem('db_lang');
+  if(l==='hi'){isHindi=false;toggleLang();}
+})();
+
+// ── COOKIE ────────────────────────────────────────────────────────────────────
+function initCookie(){if(localStorage.getItem('db_cookie'))document.getElementById('cookie-banner').classList.add('hide');}
+function acceptCookies(){localStorage.setItem('db_cookie','1');document.getElementById('cookie-banner').classList.add('hide');}
 
 // ── ONBOARDING ────────────────────────────────────────────────────────────────
-function setProgress(pct){document.getElementById('ob-prog').style.width=pct+'%';}
-function showStep(n){
-  document.querySelectorAll('.ob-step').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('step-'+n).classList.add('active');
-  obStep=n;setProgress(n*25);
-}
 function openOnboarding(){
   document.getElementById('hp').classList.add('hide');
-  document.getElementById('pers-hp').classList.remove('show');
   document.getElementById('ob').classList.add('show');
   showStep(1);
 }
@@ -554,97 +905,159 @@ function closeOnboarding(){
   document.getElementById('ob').classList.remove('show');
   document.getElementById('hp').classList.remove('hide');
 }
+function showStep(n){
+  document.querySelectorAll('.ob-step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('step-'+n).classList.add('active');
+  obStep=n;
+  document.getElementById('ob-prog').style.width=(n*20)+'%';
+}
 
-document.querySelectorAll('.sub-btn').forEach(function(btn){btn.addEventListener('click',openOnboarding);});
-// Also handle dynamically added sub-btn buttons (e.g. inside modal)
-document.addEventListener('click',function(e){
-  if(e.target&&e.target.classList.contains('sub-btn')){openOnboarding();}
-});
+document.querySelectorAll('.sub-btn').forEach(function(b){b.addEventListener('click',openOnboarding);});
 document.getElementById('ob-back').addEventListener('click',function(){
   if(obStep===1)closeOnboarding();else showStep(obStep-1);
 });
 
-document.getElementById('ob-send-otp').addEventListener('click',async function(){
+// Step 1 — Name
+document.getElementById('ob-next-1').addEventListener('click',function(){
   var name=document.getElementById('ob-name').value.trim();
-  var email=document.getElementById('ob-email').value.trim();
-  hideErr('ob-err-1');
-  if(!name){showErr('ob-err-1','Please enter your name.');return;}
-  if(!email||email.indexOf('@')<0){showErr('ob-err-1','Please enter a valid email.');return;}
-  userData.name=name;userData.email=email;
-  var btn=this;btn.disabled=true;btn.textContent='Sending OTP...';
-  try{
-    var res=await fetch(API_URL+'/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,name:name})});
-    var data=await res.json();
-    if(!res.ok){showErr('ob-err-1',data.error||'Failed to send OTP.');btn.disabled=false;btn.textContent='Send OTP →';return;}
-    document.getElementById('otp-sub').textContent='We sent a 6-digit OTP to '+email+'.';
-    showStep(2);document.getElementById('otp-1').focus();
-  }catch(e){showErr('ob-err-1','Network error. Please try again.');btn.disabled=false;btn.textContent='Send OTP →';}
+  var err=document.getElementById('ob-err-1');
+  err.style.display='none';
+  if(!name||name.length<2){err.textContent='Please enter your name.';err.style.display='block';return;}
+  userData.name=name;
+  showStep(2);
+  document.getElementById('ob-email').focus();
 });
+document.getElementById('ob-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-next-1').click();});
 
+// Step 2 — Email + Send OTP
+document.getElementById('ob-send-otp').addEventListener('click',async function(){
+  var email=document.getElementById('ob-email').value.trim();
+  var err=document.getElementById('ob-err-2');
+  err.style.display='none';
+  if(!email||!email.includes('@')){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
+  userData.email=email;
+  var btn=this;btn.disabled=true;btn.textContent='Sending...';
+  try{
+    var r=await fetch(API+'/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,name:userData.name})});
+    var d=await r.json();
+    if(!r.ok){
+      if(d.error&&d.error.includes('already')){err.textContent='Yaar you are already in the gang! Login instead.';err.style.display='block';}
+      else{err.textContent=d.error||'Could not send OTP. Please try again.';err.style.display='block';}
+      btn.disabled=false;btn.textContent='Send secret code →';return;
+    }
+    document.getElementById('otp-sub').textContent='Code sent to '+email+'. Check your inbox.';
+    showStep(3);
+    document.getElementById('otp-1').focus();
+    startOtpTimer();
+  }catch(e){err.textContent='Network error. Please check your connection.';err.style.display='block';btn.disabled=false;btn.textContent='Send secret code →';}
+});
+document.getElementById('ob-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-send-otp').click();});
+
+// OTP Timer
+function startOtpTimer(){
+  var seconds=600;
+  if(otpTimer)clearInterval(otpTimer);
+  otpTimer=setInterval(function(){
+    seconds--;
+    var m=Math.floor(seconds/60);
+    var s=seconds%60;
+    var el=document.getElementById('otp-countdown');
+    if(el)el.textContent=m+':'+(s<10?'0':'')+s;
+    if(seconds<=0){
+      clearInterval(otpTimer);
+      var te=document.getElementById('otp-timer');
+      if(te)te.textContent='Code expired. Please request a new one.';
+    }
+  },1000);
+}
+
+// OTP Input Handling
 for(var i=1;i<=6;i++){
   (function(idx){
     var box=document.getElementById('otp-'+idx);
-    box.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'');if(this.value&&idx<6)document.getElementById('otp-'+(idx+1)).focus();});
+    box.addEventListener('input',function(){
+      this.value=this.value.replace(/\D/g,'');
+      if(this.value&&idx<6)document.getElementById('otp-'+(idx+1)).focus();
+      if(this.value&&idx===6)document.getElementById('ob-verify-otp').click();
+    });
     box.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!this.value&&idx>1)document.getElementById('otp-'+(idx-1)).focus();});
   })(i);
 }
 
+// Step 3 — Verify OTP
 document.getElementById('ob-verify-otp').addEventListener('click',async function(){
-  hideErr('ob-err-2');
+  var err=document.getElementById('ob-err-3');
+  err.style.display='none';
   var otp='';for(var i=1;i<=6;i++)otp+=document.getElementById('otp-'+i).value;
-  if(otp.length!==6){showErr('ob-err-2','Please enter the complete 6-digit OTP.');return;}
+  if(otp.length!==6){err.textContent='Please enter the complete 6-digit code.';err.style.display='block';return;}
   var btn=this;btn.disabled=true;btn.textContent='Verifying...';
   try{
-    var res=await fetch(API_URL+'/verify-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,otp:otp})});
-    var data=await res.json();
-    if(!res.ok){showErr('ob-err-2',data.error||'Invalid OTP.');btn.disabled=false;btn.textContent='Verify OTP →';return;}
-    showStep(3);document.getElementById('ob-phone').focus();
-  }catch(e){showErr('ob-err-2','Network error. Please try again.');btn.disabled=false;btn.textContent='Verify OTP →';}
+    var r=await fetch(API+'/verify-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,otp:otp})});
+    var d=await r.json();
+    if(!r.ok){
+      if(d.error&&d.error.includes('expired')){err.textContent='Code expired. Please request a new one.';err.style.display='block';}
+      else{err.textContent=d.error||'Invalid code. Please try again.';err.style.display='block';}
+      btn.disabled=false;btn.textContent='Verify code →';return;
+    }
+    clearInterval(otpTimer);
+    showStep(4);
+  }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Verify code →';}
 });
 
 document.getElementById('ob-resend-btn').addEventListener('click',async function(){
-  hideErr('ob-err-2');
-  try{await fetch(API_URL+'/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,name:userData.name})});showErr('ob-err-2','OTP resent! Check your inbox.');document.getElementById('ob-err-2').style.color='var(--green)';}catch(e){}
-});
-
-document.getElementById('ob-phone-continue').addEventListener('click',function(){
-  hideErr('ob-err-3');
-  var phone=document.getElementById('ob-phone').value.trim().replace(/\D/g,'');
-  if(phone.length!==10){showErr('ob-err-3','Please enter a valid 10-digit number.');return;}
-  userData.phone=phone;showStep(4);
-});
-document.getElementById('ob-phone').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-phone-continue').click();});
-document.getElementById('ob-phone').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'');});
-
-document.getElementById('id-student').addEventListener('click',function(){completeOnboarding('student');});
-document.getElementById('id-employee').addEventListener('click',function(){completeOnboarding('employee');});
-document.getElementById('id-agent').addEventListener('click',function(){completeOnboarding('agent');});
-
-async function completeOnboarding(vk){
-  hideErr('ob-err-4');
-  userData.role=vk;
+  var err=document.getElementById('ob-err-3');
+  err.style.display='none';
   try{
-    var res=await fetch(API_URL+'/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,name:userData.name,phone:userData.phone,role:vk})});
-    var data=await res.json();
-    if(!res.ok){showErr('ob-err-4',data.error||'Subscription failed. Try again.');return;}
-  }catch(e){showErr('ob-err-4','Network error. Please try again.');return;}
-  localStorage.setItem('db_user',JSON.stringify({name:userData.name,email:userData.email,role:vk}));
-  var name=userData.name.split(' ')[0];name=name.charAt(0).toUpperCase()+name.slice(1);
+    await fetch(API+'/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,name:userData.name})});
+    err.textContent='New code sent! Check your inbox.';
+    err.style.color='var(--green)';
+    err.style.display='block';
+    for(var i=1;i<=6;i++)document.getElementById('otp-'+i).value='';
+    document.getElementById('otp-1').focus();
+    startOtpTimer();
+    setTimeout(function(){err.style.display='none';err.style.color='#FF6B6B';},3000);
+  }catch(e){}
+});
+
+// Step 4 — Role Selection
+function selectRole(role){
+  selectedRole=role;
+  document.querySelectorAll('.ob-role-card').forEach(function(c){c.classList.remove('selected');});
+  document.getElementById('role-'+role).classList.add('selected');
+  userData.role=role;
+  setTimeout(function(){showStep(5);},300);
+}
+
+// Step 5 — Region Selection + Complete
+function selectRegion(region){
+  selectedRegion=region;
+  document.querySelectorAll('.ob-region-card').forEach(function(c){c.classList.remove('selected');});
+  document.getElementById('region-'+region).classList.add('selected');
+  userData.region=region;
+  setTimeout(function(){completeOnboarding();},300);
+}
+
+async function completeOnboarding(){
+  try{
+    var r=await fetch(API+'/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,name:userData.name,role:userData.role,region:userData.region})});
+    var d=await r.json();
+    if(!r.ok){document.getElementById('ob-err-5').textContent=d.error||'Something went wrong. Please try again.';document.getElementById('ob-err-5').style.display='block';return;}
+  }catch(e){document.getElementById('ob-err-5').textContent='Network error. Please try again.';document.getElementById('ob-err-5').style.display='block';return;}
+  var user={name:userData.name,email:userData.email,role:userData.role,region:userData.region};
+  localStorage.setItem('db_user',JSON.stringify(user));
   document.getElementById('ob').classList.remove('show');
-  document.getElementById('wlc-name').textContent=name;
-  document.getElementById('wlc-badge').textContent=VOICE_LABELS[vk]||vk;
-  document.getElementById('wlc-sub').textContent='Your first brief arrives tomorrow at 6 AM. ☀';
-  var wlc=document.getElementById('welcome');wlc.classList.add('show');
+  var fname=userData.name.split(' ')[0];
+  fname=fname.charAt(0).toUpperCase()+fname.slice(1);
+  document.getElementById('wlc-name').textContent=fname;
+  document.getElementById('wlc-badge').textContent=ROLE_LABELS[userData.role]||userData.role;
+  var wlc=document.getElementById('welcome');
+  wlc.classList.add('show');
   setTimeout(function(){document.getElementById('wlc-bar').style.width='100%';},60);
-  setTimeout(function(){
-    wlc.classList.remove('show');
-    document.getElementById('wlc-bar').style.width='0';
-    showPersonalisedHP({name:userData.name,email:userData.email,role:vk});
-  },2500);
+  setTimeout(function(){wlc.classList.remove('show');showPersonalisedHP(user);},2600);
 }
 
 // ── LOGIN ─────────────────────────────────────────────────────────────────────
-function openLoginModal(){document.getElementById('login-modal').classList.add('show');document.getElementById('login-email').focus();}
+function openLoginModal(){document.getElementById('login-modal').classList.add('show');setTimeout(function(){document.getElementById('login-email').focus();},100);}
 function closeLoginModal(){document.getElementById('login-modal').classList.remove('show');}
 
 document.getElementById('nav-login-btn').addEventListener('click',openLoginModal);
@@ -652,299 +1065,119 @@ document.getElementById('hero-login-btn').addEventListener('click',openLoginModa
 document.getElementById('login-close').addEventListener('click',closeLoginModal);
 document.getElementById('login-to-signup').addEventListener('click',function(){closeLoginModal();openOnboarding();});
 document.getElementById('login-modal').addEventListener('click',function(e){if(e.target===this)closeLoginModal();});
-
 document.getElementById('login-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-btn').click();});
 
 document.getElementById('login-btn').addEventListener('click',async function(){
   var email=document.getElementById('login-email').value.trim();
   var err=document.getElementById('login-err');
   err.style.display='none';
-  if(!email||email.indexOf('@')<0){err.textContent='Please enter a valid email.';err.style.display='block';return;}
+  if(!email||!email.includes('@')){err.textContent='Please enter a valid email.';err.style.display='block';return;}
   var btn=this;btn.disabled=true;btn.textContent='Checking...';
   try{
-    var res=await fetch(SUPA_URL+'/rest/v1/subscribers?email=eq.'+encodeURIComponent(email)+'&select=email,name,role&is_active=eq.true',{
-      headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0'}
-    });
-    var data=await res.json();
-    if(!data||data.length===0){err.textContent='Email not found. Please subscribe first.';err.style.display='block';btn.disabled=false;btn.textContent='Login →';return;}
+    var r=await fetch(SUPA_URL+'/rest/v1/subscribers?email=eq.'+encodeURIComponent(email)+'&select=email,name,role,region&is_active=eq.true',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}});
+    var data=await r.json();
+    if(!data||data.length===0){err.textContent='Email not found. Please subscribe first.';err.style.display='block';btn.disabled=false;btn.textContent='Get my brief →';return;}
     var user=data[0];
     localStorage.setItem('db_user',JSON.stringify(user));
     closeLoginModal();
     showPersonalisedHP(user);
-  }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Login →';}
+  }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Get my brief →';}
 });
 
-// ── PERSONALISED HOMEPAGE ─────────────────────────────────────────────────────
+// ── PERSONALISED HP ───────────────────────────────────────────────────────────
 function showPersonalisedHP(user){
   loggedInUser=user;
-  currentVoice=user.role||'student';
-  var hp=document.getElementById('hp');
-  hp.style.display='none';
+  document.getElementById('hp').style.display='none';
   document.getElementById('ob').classList.remove('show');
   var ph=document.getElementById('pers-hp');
   ph.classList.add('show');
   ph.style.display='block';
   var fname=user.name?user.name.split(' ')[0]:'friend';
   fname=fname.charAt(0).toUpperCase()+fname.slice(1);
-  document.getElementById('pers-name-text').textContent=fname;
-  document.getElementById('pers-badge').textContent=VOICE_ID[currentVoice]||currentVoice;
-  document.getElementById('vp-label').textContent=VOICE_LABELS[currentVoice]||currentVoice;
-  document.getElementById('voice-pill').classList.add('show');
-  loadPersonalisedNews(currentVoice);
+  document.getElementById('pers-name-txt').textContent=fname;
+  document.getElementById('pers-role-badge').textContent=ROLE_LABELS[user.role]||user.role;
+  document.getElementById('pers-region-badge').textContent=REGION_LABELS[user.region]||user.region||'India';
+  document.getElementById('vp-label').textContent=user.role==='student'?'Student':'Professional';
+  document.getElementById('vp-pill').style.display='flex';
+  setGreeting();
+  loadPersonalisedNews(user);
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function loadPersonalisedNews(user){
+  var grid=document.getElementById('pers-news-grid');
+  grid.innerHTML=Array(9).fill(0).map(function(){return '<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line short" style="margin-bottom:8px;"></div><div class="skel skel-line med" style="margin-bottom:8px;"></div><div class="skel skel-line full"></div></div></div>';}).join('');
+  try{
+    var r=await fetch(API+'/data');
+    var data=await r.json();
+    var stories=(data.stories||[]).slice(0,9);
+    var isHinglish=user.region==='north'||user.region==='west';
+    var roleKey=user.role==='student'?'student':'professional';
+    var voiceStyle={
+      student:{bg:'rgba(255,77,109,.08)',border:'#FF4D6D',lbl:'🎓 Student',color:'#FF4D6D'},
+      professional:{bg:'rgba(255,165,50,.08)',border:'#FFAA55',lbl:'💼 Professional',color:'#FFAA55'}
+    };
+    var vs=voiceStyle[roleKey]||voiceStyle['student'];
+    grid.innerHTML=stories.map(function(s,i){
+      var voiceText=s.voices&&s.voices[roleKey]?s.voices[roleKey]:(s.summary||s.headline);
+      var col=CARD_COLORS[i%CARD_COLORS.length];
+      return '<div class="pers-card" onclick="goToStory('+i+',true)">'
+        +'<div class="card-top-bar" style="background:'+col+';height:3px;"></div>'
+        +'<div class="pers-card-body">'
+        +'<div class="pers-card-cat">'+s.category+'</div>'
+        +'<div class="pers-card-headline">'+s.headline+'</div>'
+        +'<div class="voice-bubble" style="background:'+vs.bg+';border-left:2.5px solid '+vs.border+';">'
+        +'<div class="voice-lbl" style="color:'+vs.color+';">'+vs.lbl+'</div>'
+        +'<div class="voice-txt">'+voiceText+'</div>'
+        +'</div>'
+        +'<div class="thumb-row">'
+        +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+i+',\'up\')">👍 Helpful</button>'
+        +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+i+',\'down\')">👎 Nah</button>'
+        +'</div>'
+        +'</div></div>';
+    }).join('');
+  }catch(e){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">Yaar, something broke on our end. Give us 2 minutes. 🙏</div>';
+  }
+}
+
+function goToStory(idx,isPersonalised){
+  localStorage.setItem('db_stories',JSON.stringify(isPersonalised?[]:storyData));
+  window.location='story.html?id='+idx+(isPersonalised?'&pers=1':'');
+}
+
+async function thumbFeedback(btn,idx,type){
+  btn.parentElement.querySelectorAll('.thumb-btn').forEach(function(b){b.classList.remove('active-up','active-down');});
+  btn.classList.add(type==='up'?'active-up':'active-down');
+  try{
+    await fetch(SUPA_URL+'/rest/v1/story_feedback',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({story_index:idx,feedback:type,user_email:loggedInUser?.email||'anonymous'})});
+  }catch(e){}
 }
 
 function logout(){
   localStorage.removeItem('db_user');
   loggedInUser=null;
   var ph=document.getElementById('pers-hp');
-  ph.classList.remove('show');
-  ph.style.display='none';
+  ph.classList.remove('show');ph.style.display='none';
   var hp=document.getElementById('hp');
-  hp.classList.remove('hide');
-  hp.style.display='block';
-  document.getElementById('voice-pill').classList.remove('show');
+  hp.classList.remove('hide');hp.style.display='block';
+  document.getElementById('vp-pill').style.display='none';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-async function loadPersonalisedNews(vk){
-  var grid=document.getElementById('pers-news-grid');
-  grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Loading your brief...</div>';
+function checkAutoLogin(){
+  var saved=localStorage.getItem('db_user');
+  if(saved){try{var u=JSON.parse(saved);if(u&&u.email&&u.role)showPersonalisedHP(u);}catch(e){localStorage.removeItem('db_user');}}
+}
+
+// ── ANALYTICS ─────────────────────────────────────────────────────────────────
+function trackEvent(name,data){
+  if(typeof gtag!=='undefined')gtag('event',name,data);
   try{
-    var res=await fetch('https://ayush-brief-production.up.railway.app/data');
-    var data=await res.json();
-    var stories=data.stories||[];
-    if(stories.length===0){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">No stories available yet. Check back after 6 AM.</div>';return;}
-    var colors=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12'];
-    grid.innerHTML=stories.slice(0,9).map(function(s,idx){
-      var voiceText=s.voices&&s.voices[vk]?s.voices[vk]:(s.voices&&s.voices['student']?s.voices['student']:s.headline);
-      var voiceStyle={student:{bg:'rgba(255,77,109,.08)',border:'#FF4D6D',lbl:'🎓 Student',color:'var(--red)'},employee:{bg:'rgba(255,165,50,.08)',border:'#FFAA55',lbl:'💼 Employee',color:'var(--orange)'},agent:{bg:'rgba(232,197,88,.07)',border:'#E8C558',lbl:'🌾 Agent',color:'var(--gold-m)'}};
-      var vs=voiceStyle[vk]||voiceStyle['student'];
-      var col=colors[idx%colors.length];
-      return '<div class="story-card"><div class="card-top-bar" style="background:'+col+';"></div><div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM</span></div><div class="card-headline">'+s.headline+'</div><div class="voice-bubble" style="background:'+vs.bg+';border-left:2.5px solid '+vs.border+';border-radius:10px;padding:13px 14px;font-size:13px;line-height:1.65;"><div class="voice-lbl" style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:'+vs.color+';margin-bottom:5px;">'+vs.lbl+'</div><div class="voice-txt">'+voiceText+'</div></div></div></div>';
-    }).join('');
-  }catch(e){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">Could not load today\'s brief. Please try again later.</div>';
-  }
+    fetch(SUPA_URL+'/rest/v1/page_visits',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({event:name,data:JSON.stringify(data),url:window.location.href})});
+  }catch(e){}
 }
-
-// ── CATEGORY FILTER ───────────────────────────────────────────────────────────
-var allStories=[];
-var currentCat='All';
-
-function filterCat(btn,cat){
-  document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  currentCat=cat;
-  renderNewsGrid(cat);
-}
-
-function renderNewsGrid(cat){
-  var grid=document.getElementById('news-grid');
-  var colors=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
-
-  // Get matching stories for selected category
-  var matching=cat==='All'?[]:allStories.filter(function(s){return s.category===cat;});
-  // Get remaining stories (other categories) to fill up to 9
-  var others=cat==='All'?allStories:allStories.filter(function(s){return s.category!==cat;});
-  // Combine: matching first, then others, total 9
-  var display=matching.concat(others).slice(0,9);
-
-  // Always show at least all stories if nothing matches
-  if(display.length===0){display=allStories.slice(0,9);}
-
-  storyData=display;
-
-  grid.innerHTML=display.map(function(s,idx){
-    var col=colors[idx%colors.length];
-    var summary=s.summary||s.headline||'';
-    return '<div class="story-card" data-category="'+s.category+'" onclick="openModal('+idx+')">'
-      +'<div class="card-top-bar" style="background:'+col+';"></div>'
-      +'<div class="card-body">'
-      +'<div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM</span></div>'
-      +'<div class="card-headline">'+s.headline+'</div>'
-      +'<div class="card-summary" style="font-size:13px;color:var(--w5);line-height:1.7;margin-bottom:12px;">'+summary+'</div>'
-      +'<div class="card-readmore">Read full story</div>'
-      +'</div></div>';
-  }).join('');
-}
-
-
-var CAT_DESCS={
-  'Business':'Latest business news — companies, markets, and corporate moves that affect your world.',
-  'Indian Economy':'Key developments in the Indian economy — policy, growth, and market signals.',
-  'Finance':'Stock markets, banking, investment, and personal finance updates.',
-  'Tech':'Technology news — AI, startups, digital India, and global tech shifts.',
-  'Sports':'Cricket, football, and all things sport — results, analysis, and what it means.',
-  'Government':'Policy, parliament, schemes, and government moves that matter.',
-  'International':'Global news that affects India — geopolitics, trade, and world markets.',
-  'Climate':'Environment, weather, energy, and sustainability news.',
-  'Auto':'Automobile industry — new launches, EV, and sector updates.',
-  'Science':'Science and research — ISRO, health breakthroughs, and discoveries.',
-  'Entertainment':'Films, OTT, celebrities, and culture.',
-};
-
-function showCategory(btn,cat){
-  document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  currentCat=cat;
-  if(cat==='All'){
-    document.getElementById('news-grid').style.display='grid';
-    document.getElementById('news-list').style.display='none';
-    document.getElementById('news-title').innerHTML="Today's <strong>Stories</strong>";
-    if(allStories&&allStories.length>0){
-      document.getElementById('news-grid').style.display='grid';
-      var colors=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
-      var display=allStories.slice(0,9);
-      storyData=display;
-      document.getElementById('news-grid').innerHTML=display.map(function(s,idx){
-        var col=colors[idx%colors.length];
-        var summary=s.summary||s.headline||'';
-        return '<div class="story-card" onclick="openModal('+idx+')"><div class="card-top-bar" style="background:'+col+';"></div><div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary" style="font-size:13px;color:var(--w5);line-height:1.7;margin-bottom:12px;">'+summary+'</div><div class="card-readmore">Read full story</div></div></div>';
-      }).join('');
-    } else {
-      loadNewsFromData();
-    }
-  } else {
-    document.getElementById('news-grid').style.display='none';
-    document.getElementById('news-list').style.display='block';
-    if(allStories&&allStories.length>0){
-      renderNewsList(cat);
-    } else {
-      // Load data first then render
-      loadNewsFromData().then(function(){renderNewsList(cat);});
-    }
-  }
-}
-
-function renderNewsList(cat){
-  var list=document.getElementById('news-list');
-  var desc=CAT_DESCS[cat]||('Latest '+cat+' news from The Dawn Brief.');
-  var header='<div class="cat-page-header"><div class="cat-page-title">'+cat+'</div><div class="cat-page-desc">'+desc+'</div></div>';
-
-  // If stories not loaded yet, show loading
-  if(!allStories||allStories.length===0){
-    list.innerHTML=header+'<div style="padding:40px 0;color:var(--w3);font-size:14px;">Loading stories...</div>';
-    return;
-  }
-
-  var catStories=allStories.filter(function(s){return s.category===cat;});
-  var others=allStories.filter(function(s){return s.category!==cat;});
-  var display=catStories.concat(others).slice(0,9);
-  storyData=display;
-
-  if(display.length===0){
-    list.innerHTML=header+'<div style="padding:40px 0;color:var(--w3);">No stories found.</div>';
-    return;
-  }
-
-  list.innerHTML=header+display.map(function(s,idx){
-    var summary=s.summary||s.headline||'';
-    return '<div class="news-list-item" onclick="openModal('+idx+')">'
-      +'<div class="nli-num">'+(idx+1<10?'0'+(idx+1):idx+1)+'</div>'
-      +'<div class="nli-body">'
-      +'<div class="nli-cat">'+s.category+'</div>'
-      +'<div class="nli-headline">'+s.headline+'</div>'
-      +'<div class="nli-summary">'+summary+'</div>'
-      +'<div class="nli-read">Read full story →</div>'
-      +'</div></div>';
-  }).join('');
-}
-
-async function loadNewsFromData(){
-  var grid=document.getElementById('news-grid');
-  try{
-    var res=await fetch('https://ayush-brief-production.up.railway.app/data');
-    var data=await res.json();
-    allStories=data.stories||[];
-    if(allStories.length===0){
-      grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">No stories available yet. Check back after 6 AM.</div>';
-      return;
-    }
-    // Update date
-    var nd=document.getElementById('news-date');
-    if(nd&&data.date)nd.textContent=data.date;
-    var colors=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
-    var display=allStories.slice(0,9);
-    storyData=display;
-    document.getElementById('news-grid').innerHTML=display.map(function(s,idx){
-      var col=colors[idx%colors.length];
-      var summary=s.summary||s.headline||'';
-      return '<div class="story-card" onclick="openModal('+idx+')"><div class="card-top-bar" style="background:'+col+';"></div><div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary" style="font-size:13px;color:var(--w5);line-height:1.7;margin-bottom:12px;">'+summary+'</div><div class="card-readmore">Read full story</div></div></div>';
-    }).join('');
-  }catch(e){
-    // data.json not available — keep placeholder cards hidden, show message
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">Stories loading... Check back after 6 AM.</div>';
-  }
-}
-
-// ── VOICE DEMO TABS ───────────────────────────────────────────────────────────
-var demoMap={st:{badge:'🎓 Student',bg:'rgba(255,77,109,.1)',color:'#FF4D6D',border:'rgba(255,77,109,.25)'},em:{badge:'💼 Employee',bg:'rgba(255,165,50,.1)',color:'#FFAA55',border:'rgba(255,165,50,.25)'},ag:{badge:'🌾 Commission Agent',bg:'rgba(232,197,88,.08)',color:'#E8C558',border:'rgba(232,197,88,.25)'}};
-document.querySelectorAll('.vtab').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('.vtab').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');
-    var v=btn.getAttribute('data-v'),d=demoMap[v];
-    var badge=document.getElementById('vd-badge');badge.textContent=d.badge;badge.style.background=d.bg;badge.style.color=d.color;badge.style.border='.5px solid '+d.border;
-    document.querySelectorAll('.demo-voice-set').forEach(function(el){el.classList.remove('active');});
-    document.querySelectorAll('.demo-voice-set[data-dv="'+v+'"]').forEach(function(el){el.classList.add('active');});
-  });
-});
-
-// ── MODAL ─────────────────────────────────────────────────────────────────────
-var storyData=[];
-
-function openModal(idx){
-  var s=storyData[idx];
-  if(!s)return;
-  document.getElementById('modal-cat').textContent=s.category||s.cat||'';
-  document.getElementById('modal-headline').textContent=s.headline||'';
-  document.getElementById('modal-top-bar').style.background='#2979FF';
-  // For non-subscribers — show plain English summary only, NEVER voice content
-  var summary=s.summary||'Subscribe to read this story in your voice — Student, Employee, or Commission Agent.';
-  document.getElementById('modal-summary').textContent=summary;
-  document.getElementById('story-modal').classList.add('show');
-}
-function closeModal(){document.getElementById('story-modal').classList.remove('show');}
-
-document.getElementById('modal-close').addEventListener('click',closeModal);
-document.getElementById('story-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
-
-// ── PARTICLES ─────────────────────────────────────────────────────────────────
-var cvs=document.getElementById('particles'),ctx=cvs.getContext('2d'),W,H;
-var COLS=[[0,180,255],[41,121,255],[92,200,255],[255,255,255],[0,229,255],[100,160,255]];
-var pts=[];
-function resize(){W=cvs.width=window.innerWidth;H=cvs.height=220;}
-function mkp(){var c=COLS[Math.floor(Math.random()*COLS.length)];return{x:Math.random()*W,y:Math.random()*80,sz:Math.random()*1.5+.2,vx:(Math.random()-.5)*.2,vy:Math.random()*.1-.02,life:0,max:120+Math.random()*120,c:c,ph:Math.random()*Math.PI*2,ts:.03+Math.random()*.03};}
-for(var i=0;i<100;i++){var p=mkp();p.life=Math.random()*p.max;pts.push(p);}
-function frame(){
-  if(!W||!H){requestAnimationFrame(frame);return;}
-  ctx.clearRect(0,0,W,H);
-  for(var i=pts.length-1;i>=0;i--){
-    var p=pts[i];p.life++;p.x+=p.vx;p.y+=p.vy;p.ph+=p.ts;
-    if(!isFinite(p.x)||p.sz<=0){pts.splice(i,1);pts.push(mkp());continue;}
-    var pr=p.life/p.max,tw=(Math.sin(p.ph)+1)/2;
-    var a=pr<.15?(pr/.15)*tw:pr>.72?((1-pr)/.28)*tw:.5+tw*.5;
-    var ct=1-Math.abs((p.x/W)-.5)*1.4,hf=1-Math.max(0,(p.y-20)/60);
-    a=Math.min(1,Math.max(0,a*(Math.max(0,ct)*.8*Math.max(0,hf)+.2)));
-    var rv=p.c[0],gv=p.c[1],bv=p.c[2],r=Math.max(.1,p.sz*4);
-    var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r);
-    g.addColorStop(0,'rgba('+rv+','+gv+','+bv+','+a*.5+')');g.addColorStop(1,'rgba('+rv+','+gv+','+bv+',0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba('+rv+','+gv+','+bv+','+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);ctx.fill();
-    if(p.life>=p.max||p.x<-20||p.x>W+20){pts.splice(i,1);pts.push(mkp());}
-  }
-  requestAnimationFrame(frame);
-}
-resize();window.addEventListener('resize',resize);frame();
-
-loadNewsFromData();
-
-// ── AUTO LOGIN FROM LOCALSTORAGE ──────────────────────────────────────────────
-var savedUser=localStorage.getItem('db_user');
-if(savedUser){
-  try{var u=JSON.parse(savedUser);if(u&&u.email&&u.role)showPersonalisedHP(u);}catch(e){localStorage.removeItem('db_user');}
-}
+trackEvent('page_view',{page:'homepage'});
 </script>
 </body>
 </html>
