@@ -104,33 +104,41 @@ app.post('/subscribe', async (req, res) => {
   const { email, name, role, region } = req.body;
   console.log(`📥 Subscribe attempt: ${email} [${role}] [${region}]`);
 
-  // Validate required fields
   if (!email || !name || !role) {
     return res.status(400).json({ error: 'Name, email and role are required.' });
   }
 
-  // Validate role — student or professional only
   if (!['student', 'professional'].includes(role)) {
     return res.status(400).json({ error: 'Invalid role. Must be student or professional.' });
   }
 
-  // Validate region — optional but must be valid if provided
   const validRegions = ['north', 'south', 'east', 'west'];
   if (region && !validRegions.includes(region)) {
     return res.status(400).json({ error: 'Invalid region.' });
   }
 
   try {
-    // Check duplicate email
+    // Check duplicate — now fetching region too
     console.log(`🔍 Checking duplicate email...`);
-    const emailCheck = await supabaseQuery(`subscribers?email=eq.${encodeURIComponent(email)}&select=email,is_active`);
+    const emailCheck = await supabaseQuery(`subscribers?email=eq.${encodeURIComponent(email)}&select=email,is_active,region`);
 
     if (emailCheck && emailCheck.length > 0) {
       const existing = emailCheck[0];
-      if (existing.is_active) {
-        // Already active subscriber
-        console.log(`Already subscribed: ${email}`);
+
+      if (existing.is_active && existing.region) {
+        // Fully complete subscriber — block
+        console.log(`Already fully subscribed: ${email}`);
         return res.status(400).json({ error: 'Yaar you are already in the gang! Login instead.' });
+      } else if (existing.is_active && !existing.region) {
+        // Subscriber exists but region was never saved — update region and continue
+        console.log(`Updating missing region for: ${email}`);
+        await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email)}`, {
+          method: 'PATCH',
+          headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ region: region || 'north', role, name })
+        });
+        console.log(`✅ Region updated for: ${email}`);
+        return res.json({ success: true, message: 'Profile updated successfully!' });
       } else {
         // Was unsubscribed — reactivate
         await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email)}`, {
