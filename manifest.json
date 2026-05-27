@@ -1,0 +1,16 @@
+{
+  "name": "The Dawn Brief",
+  "short_name": "Dawn Brief",
+  "description": "News that feels like a friend. Daily. Free.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07070F",
+  "theme_color": "#07070F",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>", "sizes": "192x192", "type": "image/svg+xml"},
+    {"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>", "sizes": "512x512", "type": "image/svg+xml"}
+  ],
+  "categories": ["news", "education"],
+  "lang": "en-IN"
+}
