@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dawn Brief — Categories</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07070F;--bg2:#0C0C1A;--bg3:#10101E;
+  --blue:#2979FF;--blue-b:#00B4FF;--blue-p:#5CC8FF;
+  --gold-d:#B8902A;--gold-m:#E8C558;--gold-l:#FFE878;
+  --w:#fff;--w9:rgba(255,255,255,.9);--w7:rgba(255,255,255,.7);
+  --w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--w1:rgba(255,255,255,.1);
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --card-bg:var(--bg2);--nav-bg:rgba(7,7,15,.85);
+}
+[data-theme="light"]{
+  --bg:#F5F5F0;--bg2:#FFFFFF;--bg3:#EFEFEA;
+  --w:#0A0A14;--w9:rgba(10,10,20,.9);--w7:rgba(10,10,20,.7);
+  --w5:rgba(10,10,20,.5);--w3:rgba(10,10,20,.3);--w1:rgba(10,10,20,.1);
+  --border:rgba(10,10,20,.08);--border2:rgba(10,10,20,.14);
+  --card-bg:#FFFFFF;--nav-bg:rgba(245,245,240,.92);
+}
+html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shimmer{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
+@keyframes pulse-glow{0%,100%{opacity:.5;}50%{opacity:.9;}}
+
+.glow-wrap{position:fixed;top:0;left:0;right:0;height:400px;z-index:0;pointer-events:none;}
+.glow-a{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.15) 0%,transparent 100%);animation:pulse-glow 4s ease-in-out infinite;}
+.top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(0,180,255,.2) 10%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,rgba(0,180,255,.2) 90%,transparent 100%);}
+
+nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(24px);background:var(--nav-bg);border-bottom:.5px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
+.logo-text{display:flex;align-items:baseline;gap:4px;}
+.logo-the,.logo-brief{font-family:'Cormorant SC',serif;font-size:10px;font-weight:400;letter-spacing:.22em;color:rgba(220,185,100,.7);}
+.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;font-style:italic;background:linear-gradient(90deg,#C8960E 0%,#F0C830 25%,#FFE878 50%,#F0C830 75%,#C8960E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-btn{padding:8px 16px;border-radius:100px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;}
+.nav-back{background:transparent;border:.5px solid var(--border);color:var(--w5);}
+.nav-back:hover{border-color:var(--border2);color:var(--w);}
+.nav-sub{background:var(--blue);border:none;color:#fff;}
+.nav-sub:hover{background:var(--blue-b);}
+.nav-icon-btn{width:36px;height:36px;border-radius:10px;background:transparent;border:.5px solid var(--border);color:var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s;}
+.nav-icon-btn:hover{background:var(--w1);color:var(--w);}
+
+.cat-wrap{max-width:900px;margin:0 auto;padding:100px 48px 80px;position:relative;z-index:5;animation:fadeIn .4s ease;}
+
+/* Category Header */
+.cat-header{margin-bottom:36px;padding-bottom:24px;border-bottom:.5px solid var(--border);}
+.cat-icon{font-size:40px;margin-bottom:12px;}
+.cat-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,56px);font-weight:300;color:var(--w);margin-bottom:8px;line-height:1.1;}
+.cat-desc{font-size:14px;color:var(--w3);line-height:1.7;max-width:600px;}
+.cat-count{font-size:12px;color:var(--blue-p);margin-top:8px;}
+
+/* Category Nav Pills */
+.cat-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;}
+.cat-pill{padding:7px 14px;border-radius:100px;font-size:12px;border:.5px solid var(--border);color:var(--w3);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;}
+.cat-pill:hover{border-color:rgba(92,200,255,.3);color:var(--w7);}
+.cat-pill.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.4);color:var(--blue-p);}
+
+/* Story List */
+.story-list-item{display:flex;gap:20px;padding:24px 0;border-bottom:.5px solid var(--border);cursor:pointer;transition:opacity .2s;text-decoration:none;}
+.story-list-item:hover{opacity:.8;}
+.story-list-item:last-child{border-bottom:none;}
+.sli-img{width:140px;height:90px;border-radius:10px;object-fit:cover;flex-shrink:0;background:var(--bg3);}
+.sli-img-ph{width:140px;height:90px;border-radius:10px;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.3;}
+.sli-body{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.sli-cat{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);margin-bottom:6px;}
+.sli-headline{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:8px;}
+.sli-summary{font-size:12.5px;color:var(--w5);line-height:1.65;margin-bottom:8px;}
+.sli-read{font-size:11px;color:rgba(92,200,255,.6);font-weight:500;}
+
+/* Empty State */
+.empty-state{text-align:center;padding:80px 0;}
+.empty-icon{font-size:48px;margin-bottom:16px;}
+.empty-text{font-size:16px;color:var(--w3);line-height:1.6;}
+
+/* Skeleton */
+.skel{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:1000px 100%;animation:shimmer 1.5s infinite;}
+.skel-line{height:12px;border-radius:6px;margin-bottom:10px;}
+.skel-img{width:140px;height:90px;border-radius:10px;flex-shrink:0;}
+
+footer{border-top:.5px solid var(--border);padding:28px 0;position:relative;z-index:5;}
+.ft-inner{max-width:900px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.ft-copy{font-size:11px;color:var(--w3);}
+.ft-links{display:flex;gap:16px;}
+.ft-link{font-size:11px;color:var(--w3);text-decoration:none;}
+.ft-link:hover{color:var(--blue-p);}
+
+@media(max-width:640px){
+  nav{padding:0 16px;}
+  .cat-wrap{padding:84px 16px 60px;}
+  .story-list-item{flex-direction:column;gap:12px;}
+  .sli-img,.sli-img-ph{width:100%;height:180px;}
+  .ft-inner{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+<div class="glow-wrap"><div class="glow-a"></div></div>
+
+<nav>
+  <a class="logo" href="index.html">
+    <svg width="30" height="24" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg1)" stroke-width="1.5" fill="none" clip-path="url(#cp1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
+  </a>
+  <div class="nav-right">
+    <button class="nav-icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    <button class="nav-btn nav-back" onclick="window.location='index.html'">← Home</button>
+    <button class="nav-btn nav-sub" onclick="window.location='index.html'">Subscribe →</button>
+  </div>
+</nav>
+
+<div class="cat-wrap">
+  <div id="cat-content">
+    <div style="padding:60px 0;text-align:center;color:var(--w3);">Loading...</div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-copy">© 2026 The Dawn Brief · ayushbrief.online</div>
+    <div class="ft-links">
+      <a class="ft-link" href="index.html">Home</a>
+      <a class="ft-link" href="about.html">About</a>
+      <a class="ft-link" href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var API='https://ayush-brief-production.up.railway.app';
+var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Auto':'🚗','Science':'🔬','Entertainment':'🎬'};
+var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is happening in Delhi.','International':'World news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Auto':'New launches, EVs, and the roads ahead.','Science':'ISRO, health breakthroughs, and discoveries.','Entertainment':'Films, OTT, and culture worth knowing.'};
+var ALL_CATS=['Business','Indian Economy','Finance','Tech','Sports','Government','International','Climate','Auto','Science','Entertainment'];
+
+var params=new URLSearchParams(window.location.search);
+var currentCat=params.get('cat')||'Business';
+var allStories=[];
+
+function toggleTheme(){
+  var isDark=document.documentElement.getAttribute('data-theme')!=='light';
+  document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'☀️':'🌙';
+  localStorage.setItem('db_theme',isDark?'light':'dark');
+}
+(function(){var t=localStorage.getItem('db_theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');var btn=document.getElementById('theme-btn');if(btn)btn.textContent='☀️';}})();
+
+async function loadCategory(){
+  var content=document.getElementById('cat-content');
+  document.title=currentCat+' — The Dawn Brief';
+  
+  // Show skeleton
+  content.innerHTML=renderHeader()
+    +'<div style="padding:20px 0;">'
+    +Array(6).fill(0).map(function(){
+      return '<div class="story-list-item" style="pointer-events:none;">'
+        +'<div class="skel skel-img"></div>'
+        +'<div style="flex:1;padding:4px 0;">'
+        +'<div class="skel skel-line" style="width:30%;margin-bottom:8px;"></div>'
+        +'<div class="skel skel-line" style="width:80%;margin-bottom:8px;"></div>'
+        +'<div class="skel skel-line" style="width:60%;"></div>'
+        +'</div></div>';
+    }).join('')
+    +'</div>';
+  
+  try{
+    var r=await fetch(API+'/data');
+    if(!r.ok)throw new Error('API error');
+    var data=await r.json();
+    allStories=data.stories||[];
+  }catch(e){
+    try{var r2=await fetch('/data-backup.json');var d2=await r2.json();allStories=d2.stories||[];}catch(e2){allStories=[];}
+  }
+  
+  renderCategory(currentCat);
+}
+
+function renderHeader(){
+  var icon=CAT_ICONS[currentCat]||'📰';
+  var desc=CAT_DESCS[currentCat]||'Latest '+currentCat+' news from The Dawn Brief.';
+  var catNav=ALL_CATS.map(function(c){
+    return '<a class="cat-pill'+(c===currentCat?' active':'')+'" href="category.html?cat='+encodeURIComponent(c)+'">'+(CAT_ICONS[c]||'')+' '+c+'</a>';
+  }).join('');
+  return '<div class="cat-header"><div class="cat-icon">'+icon+'</div><div class="cat-title">'+currentCat+'</div><div class="cat-desc">'+desc+'</div></div><div class="cat-nav">'+catNav+'</div>';
+}
+
+function renderCategory(cat){
+  var content=document.getElementById('cat-content');
+  var catStories=allStories.filter(function(s){return s.category===cat;});
+  var others=allStories.filter(function(s){return s.category!==cat;});
+  // Show category stories first, fill with others if needed, always show minimum 6
+  var display=catStories.length>0?catStories.concat(others).slice(0,12):allStories.slice(0,12);
+  
+  if(display.length===0){
+    content.innerHTML=renderHeader()+'<div class="empty-state"><div class="empty-icon">☀️</div><div class="empty-text">No stories yet. Check back after 6 AM.<br>Fresh news drops every morning.</div></div>';
+    return;
+  }
+  
+  localStorage.setItem('db_stories',JSON.stringify(display));
+  
+  var listHTML=display.map(function(s,i){
+    var globalIdx=allStories.indexOf(s);
+    var imgHTML=s.image
+      ?'<img class="sli-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="sli-img-ph" style="display:none;">'+(CAT_ICONS[s.category]||'📰')+'</div>'
+      :'<div class="sli-img-ph">'+(CAT_ICONS[s.category]||'📰')+'</div>';
+    return '<a class="story-list-item" href="story.html?id='+globalIdx+'">'
+      +imgHTML
+      +'<div class="sli-body">'
+      +'<div class="sli-cat">'+s.category+'</div>'
+      +'<div class="sli-headline">'+s.headline+'</div>'
+      +'<div class="sli-summary">'+(s.summary||'')+'</div>'
+      +'<div class="sli-read">Read full story →</div>'
+      +'</div></a>';
+  }).join('');
+  
+  content.innerHTML=renderHeader()+'<div>'+listHTML+'</div>';
+}
+
+if(typeof gtag!=='undefined')gtag('event','page_view',{page:'category',category:currentCat});
+loadCategory();
+</script>
+</body>
+</html>
