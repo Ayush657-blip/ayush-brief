@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — The Dawn Brief</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#07070F;--bg2:#0C0C1A;--blue:#2979FF;--blue-b:#00B4FF;--blue-p:#5CC8FF;--gold-m:#E8C558;--gold-l:#FFE878;--gold-d:#B8902A;--w:#fff;--w7:rgba(255,255,255,.7);--w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--border:rgba(255,255,255,.07);--nav-bg:rgba(7,7,15,.85);}
+html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+@keyframes pulse-glow{0%,100%{opacity:.5;}50%{opacity:.9;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.glow-wrap{position:fixed;top:0;left:0;right:0;height:400px;z-index:0;pointer-events:none;}
+.glow-a{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.15) 0%,transparent 100%);animation:pulse-glow 4s ease-in-out infinite;}
+.top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,transparent 100%);}
+nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(24px);background:var(--nav-bg);border-bottom:.5px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-the,.logo-brief{font-family:'Cormorant SC',serif;font-size:10px;letter-spacing:.22em;color:rgba(220,185,100,.7);}
+.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;background:linear-gradient(90deg,#C8960E,#F0C830,#FFE878,#F0C830,#C8960E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-btn{padding:8px 16px;border-radius:100px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;background:var(--blue);border:none;color:#fff;}
+.wrap{max-width:680px;margin:0 auto;padding:100px 24px 80px;position:relative;z-index:5;animation:fadeIn .4s ease;}
+.about-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-p);margin-bottom:16px;}
+.about-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,56px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:24px;}
+.about-title em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.about-body{font-size:16px;color:var(--w7);line-height:1.9;margin-bottom:20px;}
+.about-body strong{color:var(--w);font-weight:500;}
+.divider{height:.5px;background:var(--border);margin:36px 0;}
+.about-section-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;color:var(--w);margin-bottom:14px;}
+.about-quote{border-left:2px solid var(--blue-p);padding:16px 20px;margin:24px 0;background:rgba(41,121,255,.05);border-radius:0 10px 10px 0;}
+.about-quote p{font-size:16px;color:var(--w7);line-height:1.8;font-style:italic;}
+.founder-card{background:var(--bg2);border:.5px solid var(--border);border-radius:16px;padding:24px;margin-top:28px;display:flex;align-items:flex-start;gap:16px;}
+.founder-icon{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,rgba(41,121,255,.2),rgba(92,200,255,.1));border:.5px solid rgba(92,200,255,.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.founder-name{font-size:15px;font-weight:500;color:var(--w);margin-bottom:4px;}
+.founder-role{font-size:12px;color:var(--blue-p);margin-bottom:8px;}
+.founder-bio{font-size:13px;color:var(--w5);line-height:1.65;}
+footer{border-top:.5px solid var(--border);padding:28px 0;position:relative;z-index:5;}
+.ft-inner{max-width:680px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.ft-copy{font-size:11px;color:var(--w3);}
+.ft-link{font-size:11px;color:var(--w3);text-decoration:none;margin-left:16px;}
+.ft-link:hover{color:var(--blue-p);}
+@media(max-width:640px){nav{padding:0 16px;}.wrap{padding:84px 16px 60px;}}
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+<div class="glow-wrap"><div class="glow-a"></div></div>
+<nav>
+  <a class="logo" href="index.html">
+    <svg width="30" height="24" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg)" stroke-width="1.5" fill="none" clip-path="url(#cp)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div style="display:flex;align-items:baseline;gap:4px;"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
+  </a>
+  <button class="nav-btn" onclick="window.location='index.html'">Subscribe →</button>
+</nav>
+<div class="wrap">
+  <div class="about-eyebrow">Our story</div>
+  <h1 class="about-title">News that feels like<br>a <em>friend.</em></h1>
+  <p class="about-body">You know that one friend who reads everything? The one who shows up at chai time and tells you exactly what happened — funny, sharp, no jargon? <strong>The Dawn Brief is that friend.</strong></p>
+  <p class="about-body">Built for Indian students and professionals who do not have time for newspapers but cannot afford to be uninformed. We write news the way it should be told — like a message from someone who actually gets your life.</p>
+  <div class="about-quote"><p>"I built this because I was that student who felt left out in GD rounds. Not because I was not smart. But because nobody had told me what happened in the world in a way I could actually understand and remember."</p></div>
+  <div class="divider"></div>
+  <div class="about-section-title">How it works</div>
+  <p class="about-body">Every morning at <strong>6:00 AM IST</strong>, The Dawn Brief fetches the most important stories from across India and the world. Our AI reads them, understands them, and rewrites each one in your voice.</p>
+  <p class="about-body">If you are a <strong>student</strong> — it sounds like your funniest, sharpest batchmate explaining things between lectures. If you are a <strong>professional</strong> — it sounds like that one colleague at the coffee machine who always knows what is going on.</p>
+  <p class="about-body">Same news. Different experience. Every single morning.</p>
+  <div class="divider"></div>
+  <div class="about-section-title">The founder</div>
+  <div class="founder-card">
+    <div class="founder-icon">👋</div>
+    <div>
+      <div class="founder-name">Ayush Bansal</div>
+      <div class="founder-role">Founder, The Dawn Brief · PGDM, Jaipuria School of Business</div>
+      <div class="founder-bio">Marketing intern at HUL. FMCG sales professional. Builder of things that solve real problems. The Dawn Brief was built because good information should feel like a conversation, not a lecture. Made in Kaithal, Haryana.</div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <p class="about-body" style="font-size:14px;">Questions? Feedback? Want to say hi? Find us on <a href="https://x.com/thedawnbrief" style="color:var(--blue-p);text-decoration:none;">X @thedawnbrief</a> or <a href="https://instagram.com/thedawnbrief" style="color:var(--blue-p);text-decoration:none;">Instagram</a>.</p>
+</div>
+<footer>
+  <div class="ft-inner">
+    <div class="ft-copy">© 2026 The Dawn Brief · Made in Kaithal, Haryana</div>
+    <div><a class="ft-link" href="index.html">Home</a><a class="ft-link" href="privacy.html">Privacy</a><a class="ft-link" href="terms.html">Terms</a></div>
+  </div>
+</footer>
+</body>
+</html>
