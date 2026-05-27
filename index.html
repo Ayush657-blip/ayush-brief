@@ -231,9 +231,9 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .login-signup span:hover{text-decoration:underline;}
 
 /* ── PERSONALISED HOMEPAGE ── */
-#pers-hp{display:none;position:relative;z-index:5;}
+#pers-hp{display:none;position:relative;z-index:5;min-height:100vh;background:var(--bg);}
 #pers-hp.show{display:block;}
-.pers-header{padding:120px 52px 60px;text-align:center;position:relative;z-index:5;}
+.pers-header{padding:120px 52px 60px;text-align:center;position:relative;z-index:5;min-height:300px;}
 .pers-greeting{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(92,200,255,.6);margin-bottom:16px;}
 .pers-name{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,64px);font-weight:300;font-style:italic;margin-bottom:12px;}
 .pers-name em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
@@ -678,10 +678,12 @@ document.getElementById('login-btn').addEventListener('click',async function(){
 function showPersonalisedHP(user){
   loggedInUser=user;
   currentVoice=user.role||'student';
-  document.getElementById('hp').classList.add('hide');
+  var hp=document.getElementById('hp');
+  hp.style.display='none';
   document.getElementById('ob').classList.remove('show');
   var ph=document.getElementById('pers-hp');
   ph.classList.add('show');
+  ph.style.display='block';
   var fname=user.name?user.name.split(' ')[0]:'friend';
   fname=fname.charAt(0).toUpperCase()+fname.slice(1);
   document.getElementById('pers-name-text').textContent=fname;
@@ -695,8 +697,12 @@ function showPersonalisedHP(user){
 function logout(){
   localStorage.removeItem('db_user');
   loggedInUser=null;
-  document.getElementById('pers-hp').classList.remove('show');
-  document.getElementById('hp').classList.remove('hide');
+  var ph=document.getElementById('pers-hp');
+  ph.classList.remove('show');
+  ph.style.display='none';
+  var hp=document.getElementById('hp');
+  hp.classList.remove('hide');
+  hp.style.display='block';
   document.getElementById('voice-pill').classList.remove('show');
   window.scrollTo({top:0,behavior:'smooth'});
 }
