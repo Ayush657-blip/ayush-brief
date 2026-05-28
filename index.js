@@ -13,7 +13,7 @@ const SUPA_KEY = process.env.SUPABASE_KEY;
 
 // ── CONTENT MODERATION ────────────────────────────────────────────────────────
 const BLOCKED_KEYWORDS = [
-  'rape', 'murder', 'killed', 'massacre', 'genocide', 'terrorist attack', 'bomb blast',
+  'rape', 'murder', 'massacre', 'genocide', 'terrorist attack', 'bomb blast',
   'suicide bomber', 'beheading', 'execution', 'lynching', 'mob violence',
   'pornography', 'porn', 'sex scandal', 'nude', 'obscene',
   'riot', 'communal violence', 'caste violence', 'religious violence',
@@ -25,7 +25,7 @@ function isContentSafe(headline, summary) {
   const text = ((headline || '') + ' ' + (summary || '')).toLowerCase();
   for (const keyword of BLOCKED_KEYWORDS) {
     const regex = new RegExp(`\\b${keyword.toLowerCase()}\\b`);
-if (regex.test(text)) {
+    if (regex.test(text)) {
       console.log(`   🚫 Blocked: "${(headline||'').slice(0,50)}" — matched: "${keyword}"`);
       return false;
     }
@@ -89,7 +89,7 @@ const RSS_FEEDS = {
 async function fetchFeed(url) {
   try {
     const feed = await parser.parseURL(url);
-    return feed.items.slice(0, 5).map(item => ({
+    return feed.items.slice(0, 15).map(item => ({
       title: (item.title || '').trim(),
       summary: (item.contentSnippet || item.content || item.summary || '').trim(),
       link: item.link || '',
@@ -126,7 +126,6 @@ async function callClaudeAPI(prompt) {
 }
 
 // ── FETCH VOICE SOUL FROM LIBRARY ─────────────────────────────────────────────
-// This fetches examples that teach Claude HOW to feel — not what to copy
 async function fetchVoiceSoul(voice) {
   try {
     const res = await fetch(
@@ -136,7 +135,6 @@ async function fetchVoiceSoul(voice) {
     if (!res.ok) throw new Error('Supabase error');
     const data = await res.json();
     if (data && data.length > 0) {
-      // Pick 3 random examples to keep variety
       const shuffled = data.sort(() => Math.random() - 0.5).slice(0, 3);
       return shuffled.map(r => r.content).filter(Boolean);
     }
@@ -148,21 +146,15 @@ async function fetchVoiceSoul(voice) {
 }
 
 // ── GENERATE VOICE SUMMARY ────────────────────────────────────────────────────
-// Claude reads the soul of the voice library and writes fresh — like a friend
 async function generateVoiceSummary(headline, plainSummary, category, role, region) {
   const isHinglish = region === 'north' || region === 'west';
-
-  // Map role+region to voice library voice type
   const voiceType = role === 'student' ? 'student' : 'employee';
-
-  // Fetch soul examples from voice library
   const soulExamples = await fetchVoiceSoul(voiceType);
 
-  // Build the soul context — these are not templates, they are feelings
   let soulContext = '';
   if (soulExamples.length > 0) {
     soulContext = `
-Here is how this person naturally talks and feels about news. 
+Here is how this person naturally talks and feels about news.
 Study the energy, rhythm, humor, and emotion. Do NOT copy these. Just feel them:
 
 ${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}
@@ -170,7 +162,6 @@ ${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}
 `;
   }
 
-  // Build the persona — who is this human being
   let persona = '';
   if (role === 'student' && isHinglish) {
     persona = `You are the smart funny batchmate of an Indian PGDM/MBA student from North or West India.
@@ -179,7 +170,6 @@ Your friend is stressed about placements, assignments, campus life.
 Every big news you connect to his real life — college, future, money he doesn't have yet.
 You make him laugh at the situation because that's how you both survive it together.
 Language: Natural Hinglish. Short punchy sentences. One unexpected punchline at the end.`;
-
   } else if (role === 'student' && !isHinglish) {
     persona = `You are the sharp funny friend of an Indian college student from South or East India.
 You both speak in Comedy English — clean, punchy, like a smart WhatsApp message.
@@ -187,7 +177,6 @@ Your friend is dealing with placements, assignments, that one professor who neve
 Every news you connect to his real campus life and future worries.
 You make heavy news feel light because that's what friends do.
 Language: Comedy English. Short sharp sentences. Dry humor. One line that hits at the end.`;
-
   } else if (role === 'professional' && isHinglish) {
     persona = `You are the sharp funny colleague of a working professional from North or West India.
 You both speak Hinglish — like chai break conversation, not a formal briefing.
@@ -195,7 +184,6 @@ Your friend deals with boss pressure, salary tension, appraisals, office politic
 Every news you connect to his real work life — EMI, targets, that one annoying manager.
 You give him the full picture in 30 seconds with a joke that makes the pain bearable.
 Language: Natural Hinglish. Punchy. Real. One line punchline that makes him go "yaar bilkul sahi bola".`;
-
   } else {
     persona = `You are the smart colleague of a working professional from South or East India.
 You both speak in sharp Comedy English — like two colleagues at the coffee machine.
@@ -229,7 +217,18 @@ Do not use quotation marks to wrap the whole thing.`;
   }
 }
 
+// ── IS ENGLISH HEADLINE ───────────────────────────────────────────────────────
+function isEnglishHeadline(title) {
+  if (!title) return false;
+  const latinChars = (title.match(/[a-zA-Z]/g) || []).length;
+  const totalChars = title.replace(/\s/g, '').length;
+  return totalChars === 0 || (latinChars / totalChars) > 0.5;
+}
+
 // ── PROCESS ONE CATEGORY ──────────────────────────────────────────────────────
+// Fetches 10 stories per category
+// Generates full 4-voice summaries for top 3 stories
+// Stores plain summary for stories 4-10
 async function processCategory(category, urls) {
   console.log(`\n📰 Processing: ${category}`);
   const allItems = [];
@@ -239,65 +238,94 @@ async function processCategory(category, urls) {
   }
   if (allItems.length === 0) {
     console.log(`   ⚠️  No items found for ${category}`);
-    return null;
+    return [];
   }
 
-  // Filter through content moderation
-  const safeItems = allItems.filter(i => isContentSafe(i.title, i.summary));
-  if (safeItems.length === 0) {
-    console.log(`   🚫 All items blocked by content filter for ${category}`);
-    return null;
-  }
-
-  // Pick the best safe story — English headline only
-  const englishItems = safeItems.filter(i => {
-    if (!i.title) return false;
-    // Filter out headlines that are primarily non-Latin (Hindi/regional scripts)
-    const latinChars = (i.title.match(/[a-zA-Z]/g) || []).length;
-    const totalChars = i.title.replace(/\s/g, '').length;
-    return totalChars === 0 || (latinChars / totalChars) > 0.5;
+  // Filter content moderation + English only
+  const safeItems = allItems.filter(i => {
+    if (!isContentSafe(i.title, i.summary)) return false;
+    if (!isEnglishHeadline(i.title)) return false;
+    return true;
   });
 
-  const pool = englishItems.length > 0 ? englishItems : safeItems;
-  const best = pool.find(i => i.title && i.summary && i.summary.length > 30)
-    || pool.find(i => i.title)
-    || pool[0];
+  if (safeItems.length === 0) {
+    console.log(`   🚫 All items blocked for ${category}`);
+    return [];
+  }
 
-  if (!best || !best.title) return null;
+  // Deduplicate by headline
+  const seen = new Set();
+  const unique = safeItems.filter(i => {
+    const key = i.title.slice(0, 60).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 
-  console.log(`   ✓ "${best.title.slice(0, 70)}..."`);
+  // Pick top 10 stories with best content
+  const pool = unique
+    .filter(i => i.title && i.summary && i.summary.length > 30)
+    .slice(0, 10);
 
-  const plainSummary = best.summary ? best.summary.slice(0, 250) : best.title;
+  if (pool.length === 0) {
+    console.log(`   ⚠️  No quality items for ${category}`);
+    return [];
+  }
 
-  console.log(`   🤖 Generating friend-voice summaries...`);
-  const voices = {};
+  console.log(`   ✓ Found ${pool.length} stories`);
 
-  const combinations = [
-    { role: 'student', region: 'north' },
-    { role: 'student', region: 'south' },
-    { role: 'professional', region: 'north' },
-    { role: 'professional', region: 'south' }
-  ];
+  const results = [];
 
-  for (const combo of combinations) {
-    const key = `${combo.role}_${combo.region}`;
-    voices[key] = await generateVoiceSummary(best.title, plainSummary, category, combo.role, combo.region);
-    console.log(`   ✓ ${key}: ${voices[key].slice(0, 60)}...`);
+  for (let idx = 0; idx < pool.length; idx++) {
+    const item = pool[idx];
+    const plainSummary = item.summary.slice(0, 250);
+    const isVoiceStory = idx < 5; // First 3 get full voice generation
+
+    if (isVoiceStory) {
+      // Generate full 4-voice summaries
+      console.log(`   🤖 [${idx+1}/3] Generating voices for: "${item.title.slice(0,50)}..."`);
+      const voices = {};
+      const combinations = [
+        { role: 'student', region: 'north' },
+        { role: 'student', region: 'south' },
+        { role: 'professional', region: 'north' },
+        { role: 'professional', region: 'south' }
+      ];
+      for (const combo of combinations) {
+        const key = `${combo.role}_${combo.region}`;
+        voices[key] = await generateVoiceSummary(item.title, plainSummary, category, combo.role, combo.region);
+        await new Promise(r => setTimeout(r, 200));
+      }
+      voices['student'] = voices['student_north'];
+      voices['professional'] = voices['professional_south'];
+
+      results.push({
+        category,
+        headline: item.title,
+        link: item.link || '',
+        pubDate: item.pubDate || '',
+        summary: plainSummary,
+        hasVoice: true,
+        voices
+      });
+    } else {
+      // Plain summary only — no Claude call
+      results.push({
+        category,
+        headline: item.title,
+        link: item.link || '',
+        pubDate: item.pubDate || '',
+        summary: plainSummary,
+        hasVoice: false,
+        voices: null
+      });
+    }
+
     await new Promise(r => setTimeout(r, 300));
   }
 
-  // Fallback keys for backward compatibility
-  voices['student'] = voices['student_north'];
-  voices['professional'] = voices['professional_south'];
-
-  return {
-    category,
-    headline: best.title,
-    link: best.link || '',
-    pubDate: best.pubDate || '',
-    summary: plainSummary,
-    voices
-  };
+  console.log(`   ✅ ${category}: ${results.filter(s=>s.hasVoice).length} voice + ${results.filter(s=>!s.hasVoice).length} plain`);
+  return results;
 }
 
 // ── FETCH SUBSCRIBERS ─────────────────────────────────────────────────────────
@@ -322,11 +350,12 @@ async function fetchSubscribers() {
 
 // ── GET VOICE TEXT FOR SUBSCRIBER ─────────────────────────────────────────────
 function getVoiceText(story, role, region) {
+  if (!story.hasVoice || !story.voices) return story.summary || story.headline;
   const isHinglish = region === 'north' || region === 'west';
   const regionGroup = isHinglish ? 'north' : 'south';
   const key = `${role}_${regionGroup}`;
-  if (story.voices && story.voices[key]) return story.voices[key];
-  if (story.voices && story.voices[role]) return story.voices[role];
+  if (story.voices[key]) return story.voices[key];
+  if (story.voices[role]) return story.voices[role];
   return story.summary || story.headline;
 }
 
@@ -335,7 +364,9 @@ function buildEmailHTML(stories, date, subscriber) {
   const { name, role, region } = subscriber;
   const firstName = ((name || 'friend').split(' ')[0]);
   const isHinglish = region === 'north' || region === 'west';
-  const topStories = stories.slice(0, 6);
+
+  // Email gets top voice stories only — best 6
+  const voiceStories = stories.filter(s => s.hasVoice).slice(0, 6);
 
   const roleLabel = role === 'student' ? '🎓 Student' : '💼 Professional';
   const roleColor = role === 'student' ? '#FF4D6D' : '#FFAA55';
@@ -348,7 +379,7 @@ function buildEmailHTML(stories, date, subscriber) {
     ? `${firstName} bhai, chai le aur padh. ☕ Aaj ki brief ready hai.`
     : `Good morning ${firstName}. ☀️ Your daily brief is ready. 5 minutes.`;
 
-  const storyCards = topStories.map(s => {
+  const storyCards = voiceStories.map(s => {
     const voiceText = getVoiceText(s, role, region);
     return `
     <tr>
@@ -455,8 +486,8 @@ async function sendToSubscriber(subscriber, stories, date) {
 
 // ── VALIDATE DATA ─────────────────────────────────────────────────────────────
 function validateStories(stories) {
-  if (!stories || stories.length < 3) {
-    console.log(`⚠️  Only ${stories?.length || 0} stories — minimum 3 required`);
+  if (!stories || stories.length < 5) {
+    console.log(`⚠️  Only ${stories?.length || 0} stories — minimum 5 required`);
     return false;
   }
   return true;
@@ -498,20 +529,22 @@ async function main() {
   }
 
   console.log('\n📰 Fetching and processing news...');
-  const stories = [];
+  const allStories = [];
+
   for (const [category, urls] of Object.entries(RSS_FEEDS)) {
     try {
-      const story = await processCategory(category, urls);
-      if (story) stories.push(story);
-      await new Promise(r => setTimeout(r, 800));
+      const categoryStories = await processCategory(category, urls);
+      allStories.push(...categoryStories);
+      await new Promise(r => setTimeout(r, 500));
     } catch (err) {
       console.log(`❌ ${category}: ${err.message}`);
     }
   }
-  console.log(`\n✅ ${stories.length} stories passed content filter`);
 
-  let finalStories = stories;
-  if (!validateStories(stories)) {
+  console.log(`\n✅ Total: ${allStories.length} stories (${allStories.filter(s=>s.hasVoice).length} with voice, ${allStories.filter(s=>!s.hasVoice).length} plain)`);
+
+  let finalStories = allStories;
+  if (!validateStories(allStories)) {
     console.log('⚠️  Not enough stories — loading from backup');
     const backupStories = loadBackup();
     if (backupStories.length > 0) {
@@ -523,59 +556,25 @@ async function main() {
     }
   }
 
-  // ── ROLLING 7-DAY ARCHIVE ────────────────────────────────────────────────
-  let archivedStories = [];
-  try {
-    const archivePath = path.join(__dirname, 'data-archive.json');
-    if (fs.existsSync(archivePath)) {
-      const archiveData = JSON.parse(fs.readFileSync(archivePath, 'utf8'));
-      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      archivedStories = (archiveData.stories || []).filter(s => {
-        const d = new Date(s.savedAt || s.pubDate || Date.now());
-        return d >= sevenDaysAgo;
-      });
-      console.log('📦 Archive: ' + archivedStories.length + ' stories from last 7 days');
-    }
-  } catch (err) {
-    console.log('⚠️  Archive load failed: ' + err.message);
-  }
-
-  // Merge: today fills first, archive fills missing categories
-  const todayCategories = new Set(finalStories.map(s => s.category));
-  const archiveFill = archivedStories.filter(s => !todayCategories.has(s.category));
-  const mergedStories = [...finalStories, ...archiveFill];
-  console.log('✅ Merged: ' + finalStories.length + ' today + ' + archiveFill.length + ' archive = ' + mergedStories.length + ' total');
-
-  // Save updated archive
-  const taggedToday = finalStories.map(s => Object.assign({}, s, { savedAt: new Date().toISOString() }));
-  const allForArchive = [...taggedToday, ...archivedStories];
-  const seen = new Set();
-  const deduped = allForArchive.filter(s => {
-    if (seen.has(s.headline)) return false;
-    seen.add(s.headline);
-    return true;
-  });
-  fs.writeFileSync(
-    path.join(__dirname, 'data-archive.json'),
-    JSON.stringify({ updated: new Date().toISOString(), stories: deduped }, null, 2)
-  );
-  console.log('✅ data-archive.json saved (' + deduped.length + ' stories)');
-
+  // Save data.json
   const dataToSave = {
     generated: new Date().toISOString(),
     date,
-    totalStories: mergedStories.length,
-    stories: mergedStories
+    totalStories: finalStories.length,
+    stories: finalStories
   };
-  fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(dataToSave, null, 2));
-  console.log('✅ data.json saved');
 
-  if (stories.length >= 3) {
+  fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(dataToSave, null, 2));
+  console.log(`✅ data.json saved (${finalStories.length} stories)`);
+
+  if (finalStories.length >= 5) {
     fs.writeFileSync(path.join(__dirname, 'data-backup.json'), JSON.stringify(dataToSave, null, 2));
     console.log('✅ data-backup.json updated');
   }
 
-  if (finalStories.length > 0) {
+  // Send emails — only voice stories
+  const voiceStories = finalStories.filter(s => s.hasVoice);
+  if (voiceStories.length > 0) {
     console.log(`\n📧 Sending to ${subscribers.length} subscribers...`);
     console.log('─'.repeat(50));
     for (const subscriber of subscribers) {
