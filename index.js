@@ -11,28 +11,6 @@ const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_K
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 
-// ── CONTENT MODERATION ────────────────────────────────────────────────────────
-const BLOCKED_KEYWORDS = [
-  'rape', 'murder', 'massacre', 'genocide', 'terrorist attack', 'bomb blast',
-  'suicide bomber', 'beheading', 'execution', 'lynching', 'mob violence',
-  'pornography', 'porn', 'sex scandal', 'nude', 'obscene',
-  'riot', 'communal violence', 'caste violence', 'religious violence',
-  'suicide', 'self-harm', 'overdose death',
-  'dead body', 'corpse', 'brutal killing', 'graphic violence'
-];
-
-function isContentSafe(headline, summary) {
-  const text = ((headline || '') + ' ' + (summary || '')).toLowerCase();
-  for (const keyword of BLOCKED_KEYWORDS) {
-    const regex = new RegExp(`\\b${keyword.toLowerCase()}\\b`);
-    if (regex.test(text)) {
-      console.log(`   🚫 Blocked: "${(headline||'').slice(0,50)}" — matched: "${keyword}"`);
-      return false;
-    }
-  }
-  return true;
-}
-
 // ── RSS FEEDS ─────────────────────────────────────────────────────────────────
 const RSS_FEEDS = {
   'Business': [
@@ -72,19 +50,42 @@ const RSS_FEEDS = {
     'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
     'https://www.theguardian.com/environment/climate-crisis/rss'
   ],
-  'Auto': [
-  'NEWSAPI:car OR automobile OR EV OR electric vehicle OR Tata OR Maruti',
-  'https://feeds.bbci.co.uk/news/technology/rss.xml'
-],
-'Science': [
-  'NEWSAPI:science OR ISRO OR NASA OR space OR research',
-  'https://www.thehindu.com/sci-tech/science/feeder/default.rss'
-],
+  'Startups & Auto': [
+    'https://techcrunch.com/feed/',
+    'https://feeds.bbci.co.uk/news/technology/rss.xml',
+    'https://timesofindia.indiatimes.com/rssfeeds/66949542.cms',
+    'https://www.thehindu.com/business/Industry/feeder/default.rss',
+    'NEWSAPI:startup OR funding OR EV OR electric vehicle OR Tata OR Maruti'
+  ],
+  'Science & Health': [
+    'https://feeds.bbci.co.uk/news/health/rss.xml',
+    'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
+    'https://www.thehindu.com/sci-tech/health/feeder/default.rss',
+    'https://www.thehindu.com/sci-tech/science/feeder/default.rss',
+    'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',
+    'https://www.theguardian.com/science/rss'
+  ],
   'Entertainment': [
     'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
     'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms'
   ]
 };
+
+// ── SENSITIVE TOPICS DETECTION ────────────────────────────────────────────────
+const SENSITIVE_WORDS = [
+  'killed', 'dead', 'death', 'died', 'dies', 'fatal', 'tragedy', 'tragic',
+  'disaster', 'accident', 'crash', 'fire', 'flood', 'earthquake', 'cyclone',
+  'suicide', 'murder', 'rape', 'assault', 'attack', 'explosion', 'blast',
+  'massacre', 'genocide', 'war', 'conflict', 'refugees', 'missing', 'abducted'
+];
+
+function isSensitiveTopic(headline, summary) {
+  const text = ((headline || '') + ' ' + (summary || '')).toLowerCase();
+  return SENSITIVE_WORDS.some(word => {
+    const regex = new RegExp(`\\b${word}\\b`);
+    return regex.test(text);
+  });
+}
 
 // ── FETCH RSS FEED ────────────────────────────────────────────────────────────
 async function fetchFeed(url) {
@@ -172,6 +173,7 @@ async function generateVoiceSummary(headline, plainSummary, category, role, regi
   const isHinglish = region === 'north' || region === 'west';
   const voiceType = role === 'student' ? 'student' : 'employee';
   const soulExamples = await fetchVoiceSoul(voiceType);
+  const sensitive = isSensitiveTopic(headline, plainSummary);
 
   let soulContext = '';
   if (soulExamples.length > 0) {
@@ -184,6 +186,10 @@ ${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}
 `;
   }
 
+  const sensitivityNote = sensitive
+    ? `\nIMPORTANT: This news involves a sensitive or tragic topic — death, disaster, accident, or human suffering. Do NOT make jokes. Write with warmth, empathy, and human dignity. Be the friend who acknowledges the gravity with care. Keep it brief and respectful.\n`
+    : `\nIMPORTANT: If this news involves death, tragedy, or human suffering — write with warmth and respect, not jokes. For all other news — full energy, full fun.\n`;
+
   let persona = '';
   if (role === 'student' && isHinglish) {
     persona = `You are the smart funny batchmate of an Indian PGDM/MBA student from North or West India.
@@ -191,28 +197,32 @@ You both speak Hinglish naturally — not forced, not translated, just how you a
 Your friend is stressed about placements, assignments, campus life.
 Every big news you connect to his real life — college, future, money he doesn't have yet.
 You make him laugh at the situation because that's how you both survive it together.
-Language: Natural Hinglish. Short punchy sentences. One unexpected punchline at the end.`;
+Language: Natural Hinglish. Short punchy sentences. One unexpected punchline at the end.
+${sensitivityNote}`;
   } else if (role === 'student' && !isHinglish) {
     persona = `You are the sharp funny friend of an Indian college student from South or East India.
 You both speak in Comedy English — clean, punchy, like a smart WhatsApp message.
 Your friend is dealing with placements, assignments, that one professor who never passes anyone.
 Every news you connect to his real campus life and future worries.
 You make heavy news feel light because that's what friends do.
-Language: Comedy English. Short sharp sentences. Dry humor. One line that hits at the end.`;
+Language: Comedy English. Short sharp sentences. Dry humor. One line that hits at the end.
+${sensitivityNote}`;
   } else if (role === 'professional' && isHinglish) {
     persona = `You are the sharp funny colleague of a working professional from North or West India.
 You both speak Hinglish — like chai break conversation, not a formal briefing.
 Your friend deals with boss pressure, salary tension, appraisals, office politics daily.
 Every news you connect to his real work life — EMI, targets, that one annoying manager.
 You give him the full picture in 30 seconds with a joke that makes the pain bearable.
-Language: Natural Hinglish. Punchy. Real. One line punchline that makes him go "yaar bilkul sahi bola".`;
+Language: Natural Hinglish. Punchy. Real. One line punchline that makes him go "yaar bilkul sahi bola".
+${sensitivityNote}`;
   } else {
     persona = `You are the smart colleague of a working professional from South or East India.
 You both speak in sharp Comedy English — like two colleagues at the coffee machine.
 Your friend deals with deadlines, boss moods, appraisal season, office politics.
 Every news you connect to his real professional life — salary, career, work stress.
 You are warm, sharp, and always have that one line that makes him feel understood.
-Language: Comedy English. Sharp and warm. Short sentences. One punchline at end.`;
+Language: Comedy English. Sharp and warm. Short sentences. One punchline at end.
+${sensitivityNote}`;
   }
 
   const prompt = `${persona}
@@ -253,7 +263,6 @@ async function processCategory(category, urls) {
   const allItems = [];
 
   for (const url of urls) {
-    // NewsAPI or RSS — detected by prefix
     if (url.startsWith('NEWSAPI:')) {
       const query = url.replace('NEWSAPI:', '');
       console.log(`   🌐 NewsAPI: "${query.slice(0, 50)}"`);
@@ -271,15 +280,11 @@ async function processCategory(category, urls) {
     return [];
   }
 
-  // Filter content moderation + English only
-  const safeItems = allItems.filter(i => {
-    if (!isContentSafe(i.title, i.summary)) return false;
-    if (!isEnglishHeadline(i.title)) return false;
-    return true;
-  });
+  // English only filter
+  const safeItems = allItems.filter(i => isEnglishHeadline(i.title));
 
   if (safeItems.length === 0) {
-    console.log(`   🚫 All items blocked for ${category}`);
+    console.log(`   ⚠️  No English items for ${category}`);
     return [];
   }
 
@@ -310,9 +315,10 @@ async function processCategory(category, urls) {
     const item = pool[idx];
     const plainSummary = item.summary.slice(0, 250);
     const isVoiceStory = idx < 5;
+    const sensitive = isSensitiveTopic(item.title, plainSummary);
 
     if (isVoiceStory) {
-      console.log(`   🤖 [${idx+1}/5] Generating voices for: "${item.title.slice(0,50)}..."`);
+      console.log(`   🤖 [${idx+1}/5] ${sensitive ? '🕊️ ' : ''}Generating voices for: "${item.title.slice(0,50)}..."`);
       const voices = {};
       const combinations = [
         { role: 'student', region: 'north' },
@@ -335,6 +341,7 @@ async function processCategory(category, urls) {
         pubDate: item.pubDate || '',
         summary: plainSummary,
         hasVoice: true,
+        sensitive,
         voices
       });
     } else {
@@ -345,6 +352,7 @@ async function processCategory(category, urls) {
         pubDate: item.pubDate || '',
         summary: plainSummary,
         hasVoice: false,
+        sensitive,
         voices: null
       });
     }
