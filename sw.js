@@ -1,27 +1,80 @@
-const CACHE='dawn-brief-v1';
-const OFFLINE_URLS=['/','index.html','/data-backup.json'];
+const CACHE_NAME = 'dawn-brief-v2';
+const OFFLINE_URLS = [
+  '/',
+  '/index.html',
+  '/data-backup.json'
+];
 
-self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(OFFLINE_URLS)).then(()=>self.skipWaiting()));
+// ── INSTALL ───────────────────────────────────────────────────────────────────
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(OFFLINE_URLS))
+  );
+  self.skipWaiting();
 });
-self.addEventListener('activate',e=>{
-  e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+
+// ── ACTIVATE ──────────────────────────────────────────────────────────────────
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
 });
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET')return;
-  if(e.request.url.includes('supabase.co')||e.request.url.includes('railway.app')){
-    e.respondWith(fetch(e.request).catch(()=>new Response(JSON.stringify({stories:[],error:'offline'}),{headers:{'Content-Type':'application/json'}})));
-    return;
-  }
-  e.respondWith(caches.match(e.request).then(cached=>{
-    var fetched=fetch(e.request).then(res=>{
-      if(res&&res.status===200){var clone=res.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));}
-      return res;
-    }).catch(()=>null);
-    return cached||fetched||new Response('Offline — check back when connected ☀️',{status:503});
-  }));
+
+// ── FETCH ─────────────────────────────────────────────────────────────────────
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    fetch(event.request)
+      .then(res => {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return res;
+      })
+      .catch(() => caches.match(event.request).then(r => r || caches.match('/index.html')))
+  );
 });
-self.addEventListener('push',e=>{
-  var data=e.data?e.data.json():{title:'The Dawn Brief',body:'Tera brief ready hai. Dekh le. ☀️'};
-  e.waitUntil(self.registration.showNotification(data.title||'The Dawn Brief',{body:data.body||'Your morning brief is ready.',icon:'/favicon.ico',badge:'/favicon.ico',tag:'dawn-brief-daily'}));
+
+// ── PUSH NOTIFICATIONS ────────────────────────────────────────────────────────
+self.addEventListener('push', event => {
+  let data = { title: '☀️ The Dawn Brief', body: 'Tera brief ready hai. Dekh le.', url: '/' };
+  try {
+    if (event.data) data = { ...data, ...event.data.json() };
+  } catch (e) {}
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/icons/icon-192.png',
+      badge: '/icons/icon-72.png',
+      tag: 'dawn-brief-daily',
+      renotify: true,
+      data: { url: data.url || '/' },
+      actions: [
+        { action: 'read', title: 'Read now →' },
+        { action: 'dismiss', title: 'Later' }
+      ]
+    })
+  );
+});
+
+// ── NOTIFICATION CLICK ────────────────────────────────────────────────────────
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const url = event.notification.data?.url || '/';
+
+  if (event.action === 'dismiss') return;
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if (client.url.includes('ayushbrief.online') && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      return clients.openWindow(url);
+    })
+  );
 });
