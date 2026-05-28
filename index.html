@@ -664,6 +664,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────────
+// ── CONFIG ────────────────────────────────────────────────────────────────────
 var API='https://ayush-brief-production.up.railway.app';
 var SUPA_URL='https://ygkviidhuqicfnvyuiiu.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0';
@@ -922,6 +923,7 @@ document.getElementById('ob-next-1').addEventListener('click',function(){
   err.style.display='none';
   if(!name||name.length<2){err.textContent='Please enter your name.';err.style.display='block';return;}
   userData.name=name;
+  trackEvent('onboarding_start',{step:1});
   showStep(2);
   document.getElementById('ob-email').focus();
 });
@@ -944,6 +946,7 @@ document.getElementById('ob-send-otp').addEventListener('click',async function()
       btn.disabled=false;btn.textContent='Send secret code →';return;
     }
     document.getElementById('otp-sub').textContent='Code sent to '+email+'. Check your inbox.';
+    trackEvent('otp_sent',{step:2});
     showStep(3);
     document.getElementById('otp-1').focus();
     startOtpTimer();
@@ -998,6 +1001,7 @@ document.getElementById('ob-verify-otp').addEventListener('click',async function
       btn.disabled=false;btn.textContent='Verify code →';return;
     }
     clearInterval(otpTimer);
+    trackEvent('otp_verified',{step:3});
     showStep(4);
   }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Verify code →';}
 });
@@ -1023,6 +1027,7 @@ function selectRole(role){
   document.querySelectorAll('.ob-role-card').forEach(function(c){c.classList.remove('selected');});
   document.getElementById('role-'+role).classList.add('selected');
   userData.role=role;
+  trackEvent('role_selected',{role:role,step:4});
   setTimeout(function(){showStep(5);},300);
 }
 
@@ -1043,6 +1048,7 @@ async function completeOnboarding(){
   }catch(e){document.getElementById('ob-err-5').textContent='Network error. Please try again.';document.getElementById('ob-err-5').style.display='block';return;}
   var user={name:userData.name,email:userData.email,role:userData.role,region:userData.region};
   localStorage.setItem('db_user',JSON.stringify(user));
+  trackEvent('onboarding_complete',{role:userData.role,region:userData.region});
   document.getElementById('ob').classList.remove('show');
   var fname=userData.name.split(' ')[0];
   fname=fname.charAt(0).toUpperCase()+fname.slice(1);
@@ -1077,6 +1083,7 @@ document.getElementById('login-btn').addEventListener('click',async function(){
     if(!data||data.length===0){err.textContent='Email not found. Please subscribe first.';err.style.display='block';btn.disabled=false;btn.textContent='Get my brief →';return;}
     var user=data[0];
     localStorage.setItem('db_user',JSON.stringify(user));
+    trackEvent('login',{email:email});
     closeLoginModal();
     showPersonalisedHP(user);
   }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Get my brief →';}
@@ -1096,7 +1103,6 @@ function showPersonalisedHP(user){
   document.getElementById('pers-role-badge').textContent=ROLE_LABELS[user.role]||user.role;
   document.getElementById('pers-region-badge').textContent=REGION_LABELS[user.region]||user.region||'India';
   document.getElementById('vp-label').textContent=user.role==='student'?'Student':'Professional';
-  // Switch navbar to personalised state
   document.getElementById('nav-login-btn').style.display='none';
   document.getElementById('nav-sub-btn').style.display='none';
   document.getElementById('nav-logout-btn').style.display='flex';
@@ -1115,7 +1121,6 @@ async function loadPersonalisedNews(user){
     var r=await fetch(API+'/data');
     var data=await r.json();
     var stories=(data.stories||[]).slice(0,9);
-    var isHinglish=user.region==='north'||user.region==='west';
     var roleKey=user.role==='student'?'student':'professional';
     var voiceStyle={
       student:{bg:'rgba(255,77,109,.08)',border:'#FF4D6D',lbl:'🎓 Student',color:'#FF4D6D'},
@@ -1165,7 +1170,6 @@ function logout(){
   ph.classList.remove('show');ph.style.display='none';
   var hp=document.getElementById('hp');
   hp.classList.remove('hide');hp.style.display='block';
-  // Restore public navbar
   document.getElementById('nav-login-btn').style.display='flex';
   document.getElementById('nav-sub-btn').style.display='flex';
   document.getElementById('nav-logout-btn').style.display='none';
@@ -1188,6 +1192,3 @@ function trackEvent(name,data){
   }catch(e){}
 }
 trackEvent('page_view',{page:'homepage'});
-</script>
-</body>
-</html>
