@@ -35,32 +35,32 @@ function isContentSafe(headline, summary) {
 // ── RSS FEEDS ─────────────────────────────────────────────────────────────────
 const RSS_FEEDS = {
   'Business': [
-    'https://economictimes.indiatimes.com/markets/rss.cms',
+    'https://feeds.bbci.co.uk/news/business/rss.xml',
     'https://www.livemint.com/rss/companies',
-    'https://www.business-standard.com/rss/companies-101.rss'
+    'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'
   ],
   'Indian Economy': [
-    'https://economictimes.indiatimes.com/economy/rss.cms',
     'https://www.livemint.com/rss/economy',
-    'https://www.business-standard.com/rss/economy-102.rss'
+    'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms',
+    'https://feeds.bbci.co.uk/news/business/rss.xml'
   ],
   'Finance': [
-    'https://economictimes.indiatimes.com/markets/stocks/rss.cms',
     'https://www.livemint.com/rss/market',
-    'https://www.business-standard.com/rss/finance-321.rss'
+    'https://feeds.bbci.co.uk/news/business/rss.xml',
+    'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'
   ],
   'Tech': [
-    'https://economictimes.indiatimes.com/tech/rss.cms',
     'https://feeds.bbci.co.uk/news/technology/rss.xml',
-    'https://techcrunch.com/feed/'
+    'https://techcrunch.com/feed/',
+    'https://timesofindia.indiatimes.com/rssfeeds/66949542.cms'
   ],
   'Sports': [
     'https://feeds.bbci.co.uk/sport/rss.xml',
-    'https://economictimes.indiatimes.com/news/sports/rss.cms'
+    'https://timesofindia.indiatimes.com/rssfeeds/4719161.cms'
   ],
   'Government': [
-    'https://pib.gov.in/RssMain.aspx?ModId=6&Lang=1&Regid=3',
-    'https://economictimes.indiatimes.com/news/politics-and-nation/rss.cms'
+    'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
+    'https://feeds.bbci.co.uk/news/world/asia/india/rss.xml'
   ],
   'International': [
     'https://feeds.bbci.co.uk/news/world/rss.xml',
@@ -68,10 +68,10 @@ const RSS_FEEDS = {
   ],
   'Climate': [
     'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
-    'https://economictimes.indiatimes.com/industry/energy/rss.cms'
+    'https://www.theguardian.com/environment/climate-crisis/rss'
   ],
   'Auto': [
-    'https://economictimes.indiatimes.com/industry/auto/rss.cms',
+    'https://timesofindia.indiatimes.com/rssfeeds/2647163.cms',
     'https://feeds.bbci.co.uk/news/business/rss.xml'
   ],
   'Science': [
@@ -79,8 +79,8 @@ const RSS_FEEDS = {
     'https://www.thehindu.com/sci-tech/science/feeder/default.rss'
   ],
   'Entertainment': [
-    'https://economictimes.indiatimes.com/industry/media/entertainment/media/rss.cms',
-    'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml'
+    'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
+    'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms'
   ]
 };
 
