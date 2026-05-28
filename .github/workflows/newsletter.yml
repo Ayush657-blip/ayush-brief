@@ -1,10 +1,10 @@
 name: Ayush's Brief — Daily Newsletter
-
 on:
   schedule:
-    - cron: '30 0 * * *'
+    - cron: '30 0 * * *'   # 6:00 AM IST
+    - cron: '30 7 * * *'   # 1:00 PM IST
+    - cron: '30 12 * * *'  # 6:00 PM IST
   workflow_dispatch:
-
 jobs:
   send-newsletter:
     runs-on: ubuntu-latest
@@ -13,26 +13,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - name: Install dependencies
         run: npm install
-
       - name: Run newsletter
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
         run: node index.js
-
-      - name: Commit data.json
+      - name: Commit updated data files
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data.json
-          git commit -m "Update data.json" || echo "No changes"
+          git add data.json data-backup.json
+          git commit -m "Update data files [$(date +'%Y-%m-%d %H:%M IST')]" || echo "No changes"
           git push
