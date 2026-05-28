@@ -1,0 +1,22 @@
+name: Email Sequences — Onboarding & Re-engagement
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 7:30 AM IST daily
+  workflow_dispatch:
+jobs:
+  send-sequences:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Run email sequences
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: node email-sequences.js
