@@ -30,6 +30,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data.json data-backup.json
+          git add data.json data-backup.json data-archive.json
           git commit -m "Update data files [$(date +'%Y-%m-%d %H:%M IST')]" || echo "No changes"
           git push
