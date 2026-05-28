@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — The Dawn Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070F;
+    --surface: #0C0C18;
+    --surface2: #111120;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --gold-dark: #B8902A;
+    --gold-mid: #E8C558;
+    --gold-light: #FFE878;
+    --blue: #2979FF;
+    --blue-bright: #00B4FF;
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-muted: rgba(255,255,255,0.28);
+    --green: #22C55E;
+    --red: #EF4444;
+    --amber: #F59E0B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text-primary); min-height: 100vh; }
+
+  /* LOGIN SCREEN */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+  }
+  .login-box {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  .login-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold-mid);
+    margin-bottom: 6px;
+  }
+  .login-sub {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+  }
+  .login-input {
+    width: 100%;
+    background: var(--bg);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .login-input:focus { border-color: var(--gold-mid); }
+  .login-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold-mid));
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    color: #07070F;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .login-btn:hover { opacity: 0.9; }
+  .login-error {
+    color: var(--red);
+    font-size: 13px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  /* DASHBOARD */
+  #dashboard { display: none; }
+
+  .topbar {
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold-mid);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topbar-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg);
+    border: 0.5px solid var(--border2);
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .last-updated {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .refresh-btn {
+    background: var(--bg);
+    border: 0.5px solid var(--border2);
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .refresh-btn:hover { border-color: var(--gold-mid); color: var(--gold-mid); }
+  .logout-btn {
+    background: transparent;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+  .main-content { padding: 32px; max-width: 1400px; margin: 0 auto; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    margin-top: 36px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* METRIC CARDS */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .metric-card:hover { border-color: var(--border2); }
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .metric-card:hover::before { opacity: 1; }
+  .metric-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .metric-value {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .metric-value.gold { color: var(--gold-mid); }
+  .metric-delta {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .delta-up { color: var(--green); }
+  .delta-neutral { color: var(--text-muted); }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* PANEL */
+  .panel {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .panel-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* BAR CHART */
+  .bar-group { margin-bottom: 14px; }
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .bar-track {
+    background: var(--bg);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .bar-blue { background: linear-gradient(90deg, var(--blue), var(--blue-bright)); }
+  .bar-gold { background: linear-gradient(90deg, var(--gold-dark), var(--gold-mid)); }
+  .bar-green { background: var(--green); }
+  .bar-red { background: var(--red); }
+
+  /* FUNNEL */
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .funnel-step:last-child { border-bottom: none; }
+  .funnel-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 0.5px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .funnel-label { font-size: 13px; color: var(--text-secondary); flex: 1; }
+  .funnel-count { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+  .funnel-pct {
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 40px;
+    text-align: right;
+  }
+  .funnel-drop { font-size: 11px; color: var(--red); min-width: 44px; text-align: right; }
+
+  /* STORY TABLE */
+  .story-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .story-row:last-child { border-bottom: none; }
+  .story-rank {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 28px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .story-info { flex: 1; }
+  .story-headline { font-size: 13px; color: var(--text-primary); margin-bottom: 3px; line-height: 1.4; }
+  .story-cat {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(92,200,255,0.5);
+  }
+  .story-clicks { font-size: 15px; font-weight: 500; color: var(--blue-bright); }
+  .story-feedback {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .fb-up { color: var(--green); }
+  .fb-down { color: var(--red); }
+
+  /* SENT LOG */
+  .sent-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+  }
+  .sent-row:last-child { border-bottom: none; }
+  .sent-time { color: var(--text-muted); font-size: 12px; }
+  .sent-count { color: var(--text-primary); font-weight: 500; }
+  .sent-status {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .status-ok { background: rgba(34,197,94,0.1); color: var(--green); }
+  .status-fail { background: rgba(239,68,68,0.1); color: var(--red); }
+
+  /* LOADING */
+  .loading-shimmer {
+    background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 6px;
+    height: 36px;
+  }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  /* GLOW */
+  .glow-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 2s infinite;
+    display: inline-block;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .full-width-panel {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  /* MANUAL TRIGGER */
+  .trigger-btn {
+    background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trigger-btn:hover { opacity: 0.85; }
+  .trigger-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 14px;
+    color: var(--text-primary);
+    display: none;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">☀️ The Dawn Brief</div>
+    <div class="login-sub">Founder Dashboard</div>
+    <input type="password" class="login-input" id="password-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Access Dashboard</button>
+    <div class="login-error" id="login-error">Wrong password. Try again.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <div class="topbar">
+    <div class="topbar-logo">
+      ☀️ The Dawn Brief
+      <span class="topbar-badge">Admin</span>
+    </div>
+    <div class="topbar-right">
+      <span class="glow-dot"></span>
+      <span class="last-updated" id="last-updated-text">Loading...</span>
+      <button class="refresh-btn" onclick="loadAllData()">↻ Refresh</button>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <!-- TOP METRICS -->
+    <div class="section-title">Overview</div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Subscribers</div>
+        <div class="metric-value gold" id="total-subs">—</div>
+        <div class="metric-delta delta-up" id="total-subs-delta">Loading...</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">New Today</div>
+        <div class="metric-value" id="new-today">—</div>
+        <div class="metric-delta delta-neutral" id="new-today-sub">Since midnight IST</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Active Subscribers</div>
+        <div class="metric-value" id="active-subs">—</div>
+        <div class="metric-delta delta-neutral">is_active = true</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Stories Sent Today</div>
+        <div class="metric-value" id="stories-sent">3</div>
+        <div class="metric-delta delta-neutral">6AM · 1PM · 6PM IST</div>
+      </div>
+    </div>
+
+    <!-- VOICE + REGION -->
+    <div class="section-title">Audience Breakdown</div>
+    <div class="two-col">
+
+      <div class="panel">
+        <div class="panel-title">Voice Preference <span id="voice-total" style="font-size:12px;color:var(--text-muted)"></span></div>
+        <div class="bar-group">
+          <div class="bar-label-row"><span>🎓 Student</span><span id="student-pct">—</span></div>
+          <div class="bar-track"><div class="bar-fill bar-blue" id="student-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label-row"><span>💼 Professional</span><span id="prof-pct">—</span></div>
+          <div class="bar-track"><div class="bar-fill bar-gold" id="prof-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Region Breakdown <span id="region-total" style="font-size:12px;color:var(--text-muted)"></span></div>
+        <div class="bar-group">
+          <div class="bar-label-row"><span>🇮🇳 North India (Hinglish)</span><span id="north-pct">—</span></div>
+          <div class="bar-track"><div class="bar-fill bar-blue" id="north-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label-row"><span>🌴 West India (Hinglish)</span><span id="west-pct">—</span></div>
+          <div class="bar-track"><div class="bar-fill bar-blue" id="west-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label-row"><span>🌊 South India (Eng)</span><span id="south-pct">—</span></div>
+          <div class="bar-track"><div class="bar-fill bar-gold" id="south-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label-row"><span>🌸 East India (Eng)</span><span id="east-pct">—</span></div>
+          <div class="bar-track"><div class="bar-fill bar-gold" id="east-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ONBOARDING FUNNEL -->
+    <div class="section-title">Onboarding Funnel</div>
+    <div class="full-width-panel">
+      <div class="funnel-step">
+        <div class="funnel-num">1</div>
+        <div class="funnel-label">Entered name</div>
+        <div class="funnel-count" id="f1">—</div>
+        <div class="funnel-pct" id="f1p">—</div>
+        <div class="funnel-drop"></div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num">2</div>
+        <div class="funnel-label">Email entered + OTP sent</div>
+        <div class="funnel-count" id="f2">—</div>
+        <div class="funnel-pct" id="f2p">—</div>
+        <div class="funnel-drop" id="f2d"></div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num">3</div>
+        <div class="funnel-label">OTP verified</div>
+        <div class="funnel-count" id="f3">—</div>
+        <div class="funnel-pct" id="f3p">—</div>
+        <div class="funnel-drop" id="f3d"></div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num">4</div>
+        <div class="funnel-label">Role selected</div>
+        <div class="funnel-count" id="f4">—</div>
+        <div class="funnel-pct" id="f4p">—</div>
+        <div class="funnel-drop" id="f4d"></div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num">5</div>
+        <div class="funnel-label">Region selected — Subscribed ✓</div>
+        <div class="funnel-count" id="f5">—</div>
+        <div class="funnel-pct" id="f5p">—</div>
+        <div class="funnel-drop" id="f5d"></div>
+      </div>
+    </div>
+
+    <!-- TOP STORIES + FEEDBACK -->
+    <div class="section-title">Story Performance</div>
+    <div class="two-col">
+
+      <div class="panel">
+        <div class="panel-title">Most Clicked Stories</div>
+        <div id="top-stories-list">
+          <div style="color:var(--text-muted);font-size:13px;">Loading...</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Thumbs Up / Down</div>
+        <div id="feedback-list">
+          <div style="color:var(--text-muted);font-size:13px;">Loading...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NEWSLETTER SENT LOG -->
+    <div class="section-title">Newsletter Log</div>
+    <div class="full-width-panel">
+      <div id="sent-log">
+        <div style="color:var(--text-muted);font-size:13px;">Loading...</div>
+      </div>
+    </div>
+
+    <!-- MANUAL TRIGGER -->
+    <div class="section-title">Actions</div>
+    <div class="panel" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <button class="trigger-btn" id="trigger-btn" onclick="triggerNewsletter()">
+        ☀️ Send Newsletter Now
+      </button>
+      <span style="font-size:13px;color:var(--text-muted);">Manually trigger the newsletter to all active subscribers</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PASSWORD = 'dawnbrief2026';
+const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
+const RAILWAY_URL = 'https://ayush-brief-production.up.railway.app';
+let supaKey = '';
+
+function doLogin() {
+  const pw = document.getElementById('password-input').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    // Get supabase key from Railway backend
+    loadAllData();
+  } else {
+    const err = document.getElementById('login-error');
+    err.style.display = 'block';
+    err.textContent = 'Wrong password. Try again.';
+    document.getElementById('password-input').value = '';
+    document.getElementById('password-input').focus();
+  }
+}
+
+function doLogout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('password-input').value = '';
+}
+
+function showToast(msg, duration = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, duration);
+}
+
+async function supaFetch(path) {
+  const res = await fetch(`${RAILWAY_URL}/api/admin${path}`, {
+    headers: { 'x-admin-key': ADMIN_PASSWORD }
+  });
+  if (!res.ok) throw new Error(`${res.status}`);
+  return res.json();
+}
+
+async function loadAllData() {
+  document.getElementById('last-updated-text').textContent = 'Refreshing...';
+  await Promise.allSettled([
+    loadSubscriberStats(),
+    loadBreakdown(),
+    loadFunnel(),
+    loadStoryPerformance(),
+    loadSentLog()
+  ]);
+  const now = new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+  document.getElementById('last-updated-text').textContent = `Updated ${now} IST`;
+}
+
+async function loadSubscriberStats() {
+  try {
+    const data = await supaFetch('/stats');
+    document.getElementById('total-subs').textContent = data.total || '0';
+    document.getElementById('new-today').textContent = data.newToday || '0';
+    document.getElementById('active-subs').textContent = data.active || '0';
+    document.getElementById('total-subs-delta').textContent = `+${data.newToday || 0} today`;
+    document.getElementById('total-subs-delta').className = 'metric-delta ' + (data.newToday > 0 ? 'delta-up' : 'delta-neutral');
+  } catch(e) {
+    document.getElementById('total-subs').textContent = '—';
+    console.error('Stats error:', e);
+  }
+}
+
+async function loadBreakdown() {
+  try {
+    const data = await supaFetch('/breakdown');
+    const total = data.total || 1;
+
+    const studentPct = Math.round((data.student || 0) / total * 100);
+    const profPct = 100 - studentPct;
+    document.getElementById('student-pct').textContent = `${studentPct}% (${data.student || 0})`;
+    document.getElementById('prof-pct').textContent = `${profPct}% (${data.professional || 0})`;
+    document.getElementById('student-bar').style.width = studentPct + '%';
+    document.getElementById('prof-bar').style.width = profPct + '%';
+    document.getElementById('voice-total').textContent = `${total} total`;
+
+    const northPct = Math.round((data.north || 0) / total * 100);
+    const westPct = Math.round((data.west || 0) / total * 100);
+    const southPct = Math.round((data.south || 0) / total * 100);
+    const eastPct = Math.round((data.east || 0) / total * 100);
+    document.getElementById('north-pct').textContent = `${northPct}% (${data.north || 0})`;
+    document.getElementById('west-pct').textContent = `${westPct}% (${data.west || 0})`;
+    document.getElementById('south-pct').textContent = `${southPct}% (${data.south || 0})`;
+    document.getElementById('east-pct').textContent = `${eastPct}% (${data.east || 0})`;
+    document.getElementById('north-bar').style.width = northPct + '%';
+    document.getElementById('west-bar').style.width = westPct + '%';
+    document.getElementById('south-bar').style.width = southPct + '%';
+    document.getElementById('east-bar').style.width = eastPct + '%';
+    document.getElementById('region-total').textContent = `${total} total`;
+  } catch(e) { console.error('Breakdown error:', e); }
+}
+
+async function loadFunnel() {
+  try {
+    const data = await supaFetch('/funnel');
+    const steps = ['f1','f2','f3','f4','f5'];
+    const counts = [data.step1||0, data.step2||0, data.step3||0, data.step4||0, data.step5||0];
+    const top = counts[0] || 1;
+    steps.forEach((id, i) => {
+      document.getElementById(id).textContent = counts[i];
+      const pct = Math.round(counts[i] / top * 100);
+      document.getElementById(id + 'p').textContent = pct + '%';
+      if (i > 0) {
+        const drop = counts[i-1] > 0 ? Math.round((1 - counts[i]/counts[i-1]) * 100) : 0;
+        document.getElementById(id + 'd').textContent = drop > 0 ? `-${drop}%` : '';
+      }
+    });
+  } catch(e) { console.error('Funnel error:', e); }
+}
+
+async function loadStoryPerformance() {
+  try {
+    const data = await supaFetch('/stories');
+    const clicks = data.clicks || [];
+    const feedback = data.feedback || [];
+
+    const storiesEl = document.getElementById('top-stories-list');
+    if (clicks.length === 0) {
+      storiesEl.innerHTML = '<div style="color:var(--text-muted);font-size:13px;">No clicks tracked yet</div>';
+    } else {
+      storiesEl.innerHTML = clicks.slice(0,6).map((s, i) => `
+        <div class="story-row">
+          <div class="story-rank">${i+1}</div>
+          <div class="story-info">
+            <div class="story-headline">${s.headline || 'Unknown'}</div>
+            <div class="story-cat">${s.category || ''}</div>
+          </div>
+          <div class="story-clicks">${s.count}</div>
+        </div>`).join('');
+    }
+
+    const feedbackEl = document.getElementById('feedback-list');
+    if (feedback.length === 0) {
+      feedbackEl.innerHTML = '<div style="color:var(--text-muted);font-size:13px;">No feedback tracked yet</div>';
+    } else {
+      feedbackEl.innerHTML = feedback.slice(0,6).map(s => `
+        <div class="story-row">
+          <div class="story-info">
+            <div class="story-headline">${s.headline || `Story #${s.story_index}`}</div>
+          </div>
+          <div class="story-feedback">
+            <span class="fb-up">▲ ${s.up || 0}</span>
+            <span class="fb-down">▼ ${s.down || 0}</span>
+          </div>
+        </div>`).join('');
+    }
+  } catch(e) { console.error('Stories error:', e); }
+}
+
+async function loadSentLog() {
+  try {
+    const data = await supaFetch('/sent-log');
+    const log = data.log || [];
+    const el = document.getElementById('sent-log');
+    if (log.length === 0) {
+      el.innerHTML = '<div style="color:var(--text-muted);font-size:13px;">No send events logged yet</div>';
+    } else {
+      el.innerHTML = log.slice(0,10).map(entry => `
+        <div class="sent-row">
+          <span style="color:var(--text-secondary)">${entry.label || 'Newsletter'}</span>
+          <span class="sent-time">${entry.time || ''}</span>
+          <span class="sent-count">${entry.count || 0} sent</span>
+          <span class="sent-status ${entry.success ? 'status-ok' : 'status-fail'}">${entry.success ? '✓ Success' : '✗ Failed'}</span>
+        </div>`).join('');
+    }
+  } catch(e) {
+    document.getElementById('sent-log').innerHTML = '<div style="color:var(--text-muted);font-size:13px;">Log not available yet</div>';
+  }
+}
+
+async function triggerNewsletter() {
+  const btn = document.getElementById('trigger-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Sending...';
+  try {
+    const res = await fetch(`${RAILWAY_URL}/api/trigger-newsletter`, {
+      method: 'POST',
+      headers: { 'x-admin-key': ADMIN_PASSWORD, 'Content-Type': 'application/json' }
+    });
+    if (res.ok) {
+      showToast('✅ Newsletter triggered successfully');
+      setTimeout(loadAllData, 3000);
+    } else {
+      showToast('❌ Trigger failed — check Railway logs');
+    }
+  } catch(e) {
+    showToast('❌ Could not reach Railway backend');
+  }
+  btn.disabled = false;
+  btn.textContent = '☀️ Send Newsletter Now';
+}
+
+// Focus password field on load
+window.onload = () => { document.getElementById('password-input').focus(); };
+</script>
+</body>
+</html>
