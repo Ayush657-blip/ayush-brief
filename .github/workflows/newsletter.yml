@@ -1,8 +1,7 @@
 name: Ayush's Brief — Daily Newsletter
 on:
   schedule:
-    - cron: '30 0 * * *'   # 6:00 AM IST
-    - cron: '30 12 * * *'  # 6:00 PM IST
+    - cron: '30 0 * * *'   # 6:00 AM IST only
   workflow_dispatch:
 jobs:
   send-newsletter:
