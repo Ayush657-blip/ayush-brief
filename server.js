@@ -6,8 +6,8 @@ const webpush = require('web-push');
 // ── WEB PUSH CONFIG ───────────────────────────────────────────────────────────
 webpush.setVapidDetails(
   'mailto:ayush@ayushbrief.online',
-  process.env.VAPID_PUBLIC_KEY || 'BA3xL1dGZ0YdL343qWP7DHB1gjVA0iSTAVPXniKTMI5ODEMzIOVymOJcUQAICANdo7wZQWsUVgQt0_d5XJpYiXo',
-  process.env.VAPID_PRIVATE_KEY || 'qN-dj8gYjgjhF0kS7G8x4brG66meGNmHVahP6tfdwLA'
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
 );
 
 const app = express();
@@ -488,7 +488,7 @@ app.get('/api/admin/referrals', adminAuth, async (req, res) => {
 
 // GET /api/vapid-public-key — return public key to frontend
 app.get('/api/vapid-public-key', (req, res) => {
-  res.json({ publicKey: process.env.VAPID_PUBLIC_KEY || 'BA3xL1dGZ0YdL343qWP7DHB1gjVA0iSTAVPXniKTMI5ODEMzIOVymOJcUQAICANdo7wZQWsUVgQt0_d5XJpYiXo' });
+  res.json({ publicKey: process.env.VAPID_PUBLIC_KEY });
 });
 
 // POST /api/push/subscribe — save push subscription
