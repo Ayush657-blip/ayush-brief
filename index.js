@@ -455,11 +455,46 @@ async function main() {
     }
   }
 
+  // ── ROLLING 7-DAY ARCHIVE ────────────────────────────────────────────────
+  let archivedStories = [];
+  try {
+    const archivePath = path.join(__dirname, 'data-archive.json');
+    if (fs.existsSync(archivePath)) {
+      const archiveData = JSON.parse(fs.readFileSync(archivePath, 'utf8'));
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      archivedStories = (archiveData.stories || []).filter(s => {
+        const d = new Date(s.savedAt || s.pubDate || Date.now());
+        return d >= sevenDaysAgo;
+      });
+      console.log('📦 Archive: ' + archivedStories.length + ' stories from last 7 days');
+    }
+  } catch (err) {
+    console.log('⚠️  Archive load failed: ' + err.message);
+  }
+
+  // Merge: today fills first, archive fills missing categories
+  const todayCategories = new Set(finalStories.map(s => s.category));
+  const archiveFill = archivedStories.filter(s => !todayCategories.has(s.category));
+  const mergedStories = [...finalStories, ...archiveFill];
+  console.log('✅ Merged: ' + finalStories.length + ' today + ' + archiveFill.length + ' archive = ' + mergedStories.length + ' total');
+
+  // Save updated archive
+  const taggedToday = finalStories.map(s => Object.assign({}, s, { savedAt: new Date().toISOString() }));
+  const allForArchive = [...taggedToday, ...archivedStories];
+  const seen = new Set();
+  const deduped = allForArchive.filter(s => {
+    if (seen.has(s.headline)) return false;
+    seen.add(s.headline);
+    return true;
+  });
+  fs.writeFileSync(path.join(__dirname, 'data-archive.json'), JSON.stringify({ updated: new Date().toISOString(), stories: deduped }, null, 2));
+  console.log('✅ data-archive.json saved (' + deduped.length + ' stories)');
+
   const dataToSave = {
     generated: new Date().toISOString(),
     date,
-    totalStories: finalStories.length,
-    stories: finalStories
+    totalStories: mergedStories.length,
+    stories: mergedStories
   };
   fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(dataToSave, null, 2));
   console.log('✅ data.json saved');
