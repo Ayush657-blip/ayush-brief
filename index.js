@@ -124,46 +124,100 @@ async function callClaudeAPI(prompt) {
   return data.content[0].text.trim();
 }
 
+// ── FETCH VOICE SOUL FROM LIBRARY ─────────────────────────────────────────────
+// This fetches examples that teach Claude HOW to feel — not what to copy
+async function fetchVoiceSoul(voice) {
+  try {
+    const res = await fetch(
+      `${SUPA_URL}/rest/v1/voice_library?status=eq.approved&voice=eq.${voice}&select=content&limit=5`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    if (!res.ok) throw new Error('Supabase error');
+    const data = await res.json();
+    if (data && data.length > 0) {
+      // Pick 3 random examples to keep variety
+      const shuffled = data.sort(() => Math.random() - 0.5).slice(0, 3);
+      return shuffled.map(r => r.content).filter(Boolean);
+    }
+    return [];
+  } catch (err) {
+    console.log(`⚠️  Voice library fetch failed: ${err.message}`);
+    return [];
+  }
+}
+
 // ── GENERATE VOICE SUMMARY ────────────────────────────────────────────────────
+// Claude reads the soul of the voice library and writes fresh — like a friend
 async function generateVoiceSummary(headline, plainSummary, category, role, region) {
   const isHinglish = region === 'north' || region === 'west';
 
-  let voiceInstruction = '';
+  // Map role+region to voice library voice type
+  const voiceType = role === 'student' ? 'student' : 'employee';
 
-  if (role === 'student' && isHinglish) {
-    voiceInstruction = `You are writing for an Indian PGDM/MBA student from North or West India.
-Write in Hinglish (mix of Hindi and English) — casual, funny, like a WhatsApp message from a smart batchmate.
-Reference college life, placement pressure, assignments, exams, or campus life where relevant.
-Example style: "Bhai yeh sun — RBI ne rate cut kar diya. Teri EMI toh baad mein, pehle placement ho jaaye."`;
-  } else if (role === 'student' && !isHinglish) {
-    voiceInstruction = `You are writing for an Indian college student from South or East India.
-Write in Comedy English — sharp, punchy, funny, like a WhatsApp message from a smart friend.
-Reference college life, placement pressure, assignments, or campus life where relevant.
-Example style: "RBI cut rates. Your education loan gets cheaper. Your placement anxiety does not. Unrelated."`;
-  } else if (role === 'professional' && isHinglish) {
-    voiceInstruction = `You are writing for an Indian working professional from North or West India.
-Write in Hinglish (mix of Hindi and English) — sharp, funny, like a message from a smart office colleague.
-Reference boss, salary, appraisals, office politics, targets, or work life where relevant.
-Example style: "Rate cut ho gaya bhai. EMI thodi kam hogi. Boss phir bhi raise nahi dega. Alag baat hai."`;
-  } else {
-    voiceInstruction = `You are writing for an Indian working professional from South or East India.
-Write in Comedy English — sharp, punchy, funny, like a message from a smart colleague at the coffee machine.
-Reference boss, salary, appraisals, office politics, or work life where relevant.
-Example style: "RBI cut rates. Your home loan EMI drops a little. Your boss will not give you a raise though. Totally unrelated."`;
+  // Fetch soul examples from voice library
+  const soulExamples = await fetchVoiceSoul(voiceType);
+
+  // Build the soul context — these are not templates, they are feelings
+  let soulContext = '';
+  if (soulExamples.length > 0) {
+    soulContext = `
+Here is how this person naturally talks and feels about news. 
+Study the energy, rhythm, humor, and emotion. Do NOT copy these. Just feel them:
+
+${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}
+
+`;
   }
 
-  const prompt = `${voiceInstruction}
+  // Build the persona — who is this human being
+  let persona = '';
+  if (role === 'student' && isHinglish) {
+    persona = `You are the smart funny batchmate of an Indian PGDM/MBA student from North or West India.
+You both speak Hinglish naturally — not forced, not translated, just how you actually talk.
+Your friend is stressed about placements, assignments, campus life.
+Every big news you connect to his real life — college, future, money he doesn't have yet.
+You make him laugh at the situation because that's how you both survive it together.
+Language: Natural Hinglish. Short punchy sentences. One unexpected punchline at the end.`;
 
-NEWS HEADLINE: "${headline}"
-PLAIN SUMMARY: "${plainSummary}"
-CATEGORY: ${category}
+  } else if (role === 'student' && !isHinglish) {
+    persona = `You are the sharp funny friend of an Indian college student from South or East India.
+You both speak in Comedy English — clean, punchy, like a smart WhatsApp message.
+Your friend is dealing with placements, assignments, that one professor who never passes anyone.
+Every news you connect to his real campus life and future worries.
+You make heavy news feel light because that's what friends do.
+Language: Comedy English. Short sharp sentences. Dry humor. One line that hits at the end.`;
 
-Write a 2-3 line summary about THIS SPECIFIC story. 
-Stay exactly on this headline and topic. Do not talk about anything else.
-Do not use quotation marks around the summary.
-Do not add any preamble like "Here is the summary" or "Sure".
-Just write the summary directly.
-Maximum 60 words.`;
+  } else if (role === 'professional' && isHinglish) {
+    persona = `You are the sharp funny colleague of a working professional from North or West India.
+You both speak Hinglish — like chai break conversation, not a formal briefing.
+Your friend deals with boss pressure, salary tension, appraisals, office politics daily.
+Every news you connect to his real work life — EMI, targets, that one annoying manager.
+You give him the full picture in 30 seconds with a joke that makes the pain bearable.
+Language: Natural Hinglish. Punchy. Real. One line punchline that makes him go "yaar bilkul sahi bola".`;
+
+  } else {
+    persona = `You are the smart colleague of a working professional from South or East India.
+You both speak in sharp Comedy English — like two colleagues at the coffee machine.
+Your friend deals with deadlines, boss moods, appraisal season, office politics.
+Every news you connect to his real professional life — salary, career, work stress.
+You are warm, sharp, and always have that one line that makes him feel understood.
+Language: Comedy English. Sharp and warm. Short sentences. One punchline at end.`;
+  }
+
+  const prompt = `${persona}
+
+${soulContext}
+TODAY'S NEWS:
+Headline: "${headline}"
+What happened: "${plainSummary}"
+Category: ${category}
+
+Write a 2-3 line reaction to THIS specific news as that friend.
+Write fresh — do not copy the examples above, they are just to show you the feeling.
+React to this actual news. Connect it to this person's real life.
+No preamble. No "Here is the summary". Just write it directly.
+Maximum 55 words.
+Do not use quotation marks to wrap the whole thing.`;
 
   try {
     const summary = await callClaudeAPI(prompt);
@@ -194,15 +248,27 @@ async function processCategory(category, urls) {
     return null;
   }
 
-  // Pick the best safe story — has both title and summary
-  const best = safeItems.find(i => i.title && i.summary && i.summary.length > 30) || safeItems.find(i => i.title) || safeItems[0];
+  // Pick the best safe story — English headline only
+  const englishItems = safeItems.filter(i => {
+    if (!i.title) return false;
+    // Filter out headlines that are primarily non-Latin (Hindi/regional scripts)
+    const latinChars = (i.title.match(/[a-zA-Z]/g) || []).length;
+    const totalChars = i.title.replace(/\s/g, '').length;
+    return totalChars === 0 || (latinChars / totalChars) > 0.5;
+  });
+
+  const pool = englishItems.length > 0 ? englishItems : safeItems;
+  const best = pool.find(i => i.title && i.summary && i.summary.length > 30)
+    || pool.find(i => i.title)
+    || pool[0];
+
   if (!best || !best.title) return null;
 
   console.log(`   ✓ "${best.title.slice(0, 70)}..."`);
 
   const plainSummary = best.summary ? best.summary.slice(0, 250) : best.title;
 
-  console.log(`   🤖 Generating voice summaries...`);
+  console.log(`   🤖 Generating friend-voice summaries...`);
   const voices = {};
 
   const combinations = [
@@ -215,10 +281,11 @@ async function processCategory(category, urls) {
   for (const combo of combinations) {
     const key = `${combo.role}_${combo.region}`;
     voices[key] = await generateVoiceSummary(best.title, plainSummary, category, combo.role, combo.region);
-    console.log(`   ✓ ${key} voice generated`);
-    await new Promise(r => setTimeout(r, 200));
+    console.log(`   ✓ ${key}: ${voices[key].slice(0, 60)}...`);
+    await new Promise(r => setTimeout(r, 300));
   }
 
+  // Fallback keys for backward compatibility
   voices['student'] = voices['student_north'];
   voices['professional'] = voices['professional_south'];
 
@@ -487,7 +554,10 @@ async function main() {
     seen.add(s.headline);
     return true;
   });
-  fs.writeFileSync(path.join(__dirname, 'data-archive.json'), JSON.stringify({ updated: new Date().toISOString(), stories: deduped }, null, 2));
+  fs.writeFileSync(
+    path.join(__dirname, 'data-archive.json'),
+    JSON.stringify({ updated: new Date().toISOString(), stories: deduped }, null, 2)
+  );
   console.log('✅ data-archive.json saved (' + deduped.length + ' stories)');
 
   const dataToSave = {
