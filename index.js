@@ -223,7 +223,7 @@ Do not use quotation marks to wrap the whole thing.`;
     const summary = await callClaudeAPI(prompt);
     return summary.replace(/^["'""]|["'""]$/g, '').trim();
   } catch (err) {
-    console.log(`⚠️  Claude failed for "${headline.slice(0, 40)}..." — using plain summary`);
+    console.log(`⚠️  Claude failed for "${headline.slice(0, 40)}..." — ERROR: ${err.message}`);
     return plainSummary.slice(0, 200);
   }
 }
