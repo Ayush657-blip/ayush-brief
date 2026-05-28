@@ -60,9 +60,10 @@ const RSS_FEEDS = {
     'https://timesofindia.indiatimes.com/rssfeeds/4719161.cms'
   ],
   'Government': [
-    'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
-    'https://feeds.bbci.co.uk/news/world/asia/india/rss.xml'
-  ],
+  'https://feeds.bbci.co.uk/news/politics/rss.xml',
+  'https://feeds.bbci.co.uk/news/world/asia/india/rss.xml',
+  'https://timesofindia.indiatimes.com/rssfeeds/7098551.cms'
+],
   'International': [
     'https://feeds.bbci.co.uk/news/world/rss.xml',
     'https://rss.nytimes.com/services/xml/rss/nyt/World.xml'
@@ -72,13 +73,15 @@ const RSS_FEEDS = {
     'https://www.theguardian.com/environment/climate-crisis/rss'
   ],
   'Auto': [
-    'https://timesofindia.indiatimes.com/rssfeeds/2647163.cms',
-    'https://feeds.bbci.co.uk/news/business/rss.xml'
-  ],
+  'https://auto.ndtv.com/rss/feeds',
+  'https://timesofindia.indiatimes.com/business/automobiles/rssfeeds/3936326.cms',
+  'https://feeds.bbci.co.uk/news/technology/rss.xml'
+],
   'Science': [
-    'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
-    'https://www.thehindu.com/sci-tech/science/feeder/default.rss'
-  ],
+  'https://www.thehindu.com/sci-tech/science/feeder/default.rss',
+  'https://timesofindia.indiatimes.com/rssfeeds/3093287.cms',
+  'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml'
+],
   'Entertainment': [
     'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
     'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms'
