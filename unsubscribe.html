@@ -10,6 +10,7 @@
 :root{--bg:#07070F;--bg2:#0C0C1A;--blue:#2979FF;--blue-b:#00B4FF;--blue-p:#5CC8FF;--gold-d:#B8902A;--gold-m:#E8C558;--gold-l:#FFE878;--red:#FF4D6D;--green:#00C896;--w:#fff;--w9:rgba(255,255,255,.9);--w5:rgba(255,255,255,.5);--w3:rgba(255,255,255,.3);--border:rgba(255,255,255,.07);}
 html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInFast{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,transparent 100%);}
 .glow{position:fixed;top:-100px;left:0;right:0;height:320px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 200px at 50% 0%,rgba(0,90,255,.15) 0%,transparent 100%);}
 nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;backdrop-filter:blur(20px);background:rgba(7,7,15,.8);border-bottom:.5px solid rgba(255,255,255,.06);}
@@ -21,6 +22,9 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;ali
 .nav-back:hover{color:var(--w9);}
 .wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;position:relative;z-index:5;}
 .box{width:100%;max-width:480px;animation:fadeIn .6s ease forwards;}
+
+/* STEP 1 — Email input */
+#step-1{}
 .icon{font-size:48px;margin-bottom:24px;display:block;}
 .title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,44px);font-weight:300;font-style:italic;margin-bottom:10px;line-height:1.1;}
 .title em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
@@ -29,9 +33,9 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;ali
 .ob-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;font-size:15px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
 .ob-input::placeholder{color:rgba(255,255,255,.22);}
 .ob-input:focus{border-color:rgba(92,200,255,.4);}
-.btn{width:100%;padding:14px;border-radius:12px;background:var(--red);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;}
-.btn:hover{opacity:.85;}
-.btn:disabled{opacity:.5;cursor:not-allowed;}
+.btn-red{width:100%;padding:14px;border-radius:12px;background:var(--red);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;}
+.btn-red:hover{opacity:.85;}
+.btn-red:disabled{opacity:.5;cursor:not-allowed;}
 .msg{font-size:13px;text-align:center;display:none;margin-top:4px;}
 .msg.success{color:var(--green);display:block;}
 .msg.error{color:var(--red);display:block;}
@@ -39,9 +43,33 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;ali
 .comeback{font-size:13px;color:var(--w3);text-align:center;line-height:1.7;}
 .comeback a{color:var(--blue-p);text-decoration:none;}
 .comeback a:hover{text-decoration:underline;}
+
+/* STEP 2 — Confirmation */
+#step-2{display:none;animation:fadeInFast .4s ease forwards;}
+.confirm-box{background:#0C0C1A;border:0.5px solid rgba(255,77,109,.25);border-radius:20px;padding:36px 32px;text-align:center;}
+.confirm-icon{font-size:52px;margin-bottom:20px;display:block;}
+.confirm-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,36px);font-weight:300;font-style:italic;margin-bottom:10px;line-height:1.2;}
+.confirm-title em{font-style:normal;font-weight:600;color:var(--gold-m);}
+.confirm-sub{font-size:14px;color:var(--w3);line-height:1.7;margin-bottom:10px;}
+.confirm-email{font-size:14px;color:var(--blue-p);margin-bottom:32px;word-break:break-all;}
+.confirm-btns{display:flex;flex-direction:column;gap:12px;}
+.btn-stay{width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--gold-d),var(--gold-m));border:none;color:#07070F;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;}
+.btn-stay:hover{opacity:.9;}
+.btn-leave{width:100%;padding:14px;border-radius:12px;background:transparent;border:0.5px solid rgba(255,77,109,.35);color:rgba(255,77,109,.7);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;}
+.btn-leave:hover{border-color:var(--red);color:var(--red);}
+.btn-leave:disabled{opacity:.4;cursor:not-allowed;}
+
+/* STEP 3 — Done */
+#step-3{display:none;animation:fadeInFast .4s ease forwards;text-align:center;}
+.done-icon{font-size:56px;margin-bottom:24px;display:block;}
+.done-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:300;font-style:italic;margin-bottom:12px;color:var(--w9);}
+.done-sub{font-size:14px;color:var(--w3);line-height:1.8;margin-bottom:32px;}
+.btn-home{display:inline-block;padding:13px 32px;border-radius:12px;background:var(--blue);color:#fff;text-decoration:none;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
+.btn-home:hover{opacity:.85;}
+
 footer{border-top:.5px solid var(--border);padding:28px 52px;text-align:center;position:relative;z-index:5;font-size:12px;color:var(--w3);}
 footer a{color:var(--blue-p);text-decoration:none;}
-@media(max-width:600px){nav{padding:0 20px;}footer{padding:24px 20px;}}
+@media(max-width:600px){nav{padding:0 20px;}footer{padding:24px 20px;}.confirm-box{padding:28px 20px;}}
 </style>
 </head>
 <body>
@@ -58,21 +86,43 @@ footer a{color:var(--blue-p);text-decoration:none;}
 
 <div class="wrap">
   <div class="box">
-    <span class="icon">👋</span>
-    <h1 class="title">Sorry to see you <em>go.</em></h1>
-    <p class="sub">Enter your email below and we'll remove you immediately. No questions asked.</p>
 
-    <div class="input-wrap">
-      <input class="ob-input" type="email" id="email" placeholder="Your email address" />
-      <div class="msg" id="msg"></div>
-      <button class="btn" id="unsub-btn">Unsubscribe me</button>
+    <!-- STEP 1: Email -->
+    <div id="step-1">
+      <span class="icon">👋</span>
+      <h1 class="title">Sorry to see you <em>go.</em></h1>
+      <p class="sub">Enter your email below and we'll take care of the rest.</p>
+      <div class="input-wrap">
+        <input class="ob-input" type="email" id="email" placeholder="Your email address" />
+        <div class="msg" id="msg"></div>
+        <button class="btn-red" id="unsub-btn">Unsubscribe me</button>
+      </div>
+      <hr class="divider">
+      <div class="comeback">Changed your mind? &nbsp;<a href="/">Subscribe again →</a></div>
     </div>
 
-    <hr class="divider">
-
-    <div class="comeback">
-      Changed your mind? &nbsp;<a href="/">Subscribe again →</a>
+    <!-- STEP 2: Confirmation -->
+    <div id="step-2">
+      <div class="confirm-box">
+        <span class="confirm-icon">🥺</span>
+        <h2 class="confirm-title">Aye ruko. <em>Are you sure?</em></h2>
+        <p class="confirm-sub">Every morning at 6 AM, your brief will be gone.</p>
+        <p class="confirm-email" id="confirm-email-display"></p>
+        <div class="confirm-btns">
+          <button class="btn-stay" onclick="goBack()">Wait, I am staying ☀️</button>
+          <button class="btn-leave" id="confirm-leave-btn" onclick="doUnsubscribe()">Yes, remove me from the gang</button>
+        </div>
+      </div>
     </div>
+
+    <!-- STEP 3: Done -->
+    <div id="step-3">
+      <span class="done-icon">🌙</span>
+      <h2 class="done-title">You've left the gang.</h2>
+      <p class="done-sub">You've been unsubscribed. No more briefs from us.<br>If you ever miss us — we'll be right here.</p>
+      <a class="btn-home" href="/">Back to home →</a>
+    </div>
+
   </div>
 </div>
 
@@ -82,8 +132,32 @@ footer a{color:var(--blue-p);text-decoration:none;}
 
 <script>
 var API_URL = 'https://ayush-brief-production.up.railway.app';
+var pendingEmail = '';
 
-document.getElementById('unsub-btn').addEventListener('click', async function() {
+function show(stepId) {
+  ['step-1','step-2','step-3'].forEach(function(id) {
+    var el = document.getElementById(id);
+    el.style.display = 'none';
+  });
+  var target = document.getElementById(stepId);
+  target.style.display = 'block';
+  target.style.animation = 'none';
+  target.offsetHeight;
+  target.style.animation = 'fadeInFast .4s ease forwards';
+}
+
+function goBack() {
+  pendingEmail = '';
+  show('step-1');
+  document.getElementById('email').value = '';
+  var msg = document.getElementById('msg');
+  msg.className = 'msg';
+  msg.style.display = 'none';
+  document.getElementById('unsub-btn').disabled = false;
+  document.getElementById('unsub-btn').textContent = 'Unsubscribe me';
+}
+
+document.getElementById('unsub-btn').addEventListener('click', function() {
   var email = document.getElementById('email').value.trim();
   var msg = document.getElementById('msg');
   msg.className = 'msg';
@@ -95,7 +169,14 @@ document.getElementById('unsub-btn').addEventListener('click', async function() 
     return;
   }
 
-  var btn = this;
+  pendingEmail = email;
+  document.getElementById('confirm-email-display').textContent = email;
+  show('step-2');
+});
+
+async function doUnsubscribe() {
+  if (!pendingEmail) return;
+  var btn = document.getElementById('confirm-leave-btn');
   btn.disabled = true;
   btn.textContent = 'Removing you...';
 
@@ -103,27 +184,22 @@ document.getElementById('unsub-btn').addEventListener('click', async function() 
     var res = await fetch(API_URL + '/unsubscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
+      body: JSON.stringify({ email: pendingEmail })
     });
     var data = await res.json();
     if (!res.ok) {
-      msg.textContent = data.error || 'Something went wrong. Please try again.';
-      msg.className = 'msg error';
       btn.disabled = false;
-      btn.textContent = 'Unsubscribe me';
+      btn.textContent = 'Yes, remove me from the gang';
+      alert(data.error || 'Something went wrong. Please try again.');
     } else {
-      msg.textContent = 'Done. You have been unsubscribed. Take care. ☀';
-      msg.className = 'msg success';
-      btn.textContent = 'Unsubscribed ✓';
-      document.getElementById('email').disabled = true;
+      show('step-3');
     }
   } catch(e) {
-    msg.textContent = 'Network error. Please try again.';
-    msg.className = 'msg error';
     btn.disabled = false;
-    btn.textContent = 'Unsubscribe me';
+    btn.textContent = 'Yes, remove me from the gang';
+    alert('Network error. Please try again.');
   }
-});
+}
 
 document.getElementById('email').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') document.getElementById('unsub-btn').click();
