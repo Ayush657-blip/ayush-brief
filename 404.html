@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — The Dawn Brief</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#07070F;--gold:#E8C558;--gold-d:#B8902A;--gold-l:#FFE878;--blue:#2979FF;--blue-p:#5CC8FF;--w:rgba(255,255,255,.9);--w3:rgba(255,255,255,.3);--w1:rgba(255,255,255,.07);}
+html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:hidden;}
+
+/* Glow */
+.glow{position:fixed;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.18) 0%,transparent 100%);pointer-events:none;z-index:0;}
+.top-line{position:fixed;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,rgba(100,210,255,.95),#fff,rgba(100,210,255,.95),transparent);z-index:10;}
+
+.wrap{position:relative;z-index:5;max-width:480px;}
+
+/* Sunrise icon */
+.sunrise{margin-bottom:32px;}
+.sunrise svg{width:80px;height:64px;opacity:0.9;}
+
+/* 404 number */
+.four-o-four{font-family:'Cormorant Garamond',serif;font-size:clamp(80px,15vw,120px);font-weight:300;font-style:italic;line-height:1;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold),var(--gold-d));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,32px);font-weight:300;font-style:italic;color:var(--w);margin-bottom:12px;line-height:1.3;}
+
+.subtitle{font-size:14px;color:var(--w3);line-height:1.8;margin-bottom:36px;max-width:360px;margin-left:auto;margin-right:auto;}
+
+.btn-home{display:inline-block;padding:13px 36px;border-radius:12px;background:var(--blue);color:#fff;text-decoration:none;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;margin-bottom:16px;}
+.btn-home:hover{background:#00B4FF;}
+
+.btn-back{display:block;font-size:13px;color:var(--blue-p);text-decoration:none;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;}
+.btn-back:hover{text-decoration:underline;}
+
+.footer-txt{position:fixed;bottom:24px;font-size:11px;color:rgba(255,255,255,.15);letter-spacing:.05em;}
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+<div class="glow"></div>
+
+<div class="wrap">
+  <div class="sunrise">
+    <svg viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8A6218"/>
+          <stop offset="40%" stop-color="#E8C558"/>
+          <stop offset="60%" stop-color="#FFF0B0"/>
+          <stop offset="100%" stop-color="#8A6218"/>
+        </linearGradient>
+        <clipPath id="c1"><rect x="0" y="0" width="34" height="19"/></clipPath>
+      </defs>
+      <line x1="1" y1="19" x2="33" y2="19" stroke="url(#g1)" stroke-width="1" opacity=".9"/>
+      <circle cx="17" cy="19" r="9" stroke="url(#g1)" stroke-width="1.5" fill="none" clip-path="url(#c1)"/>
+      <line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/>
+      <line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/>
+      <circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/>
+    </svg>
+  </div>
+
+  <div class="four-o-four">404</div>
+
+  <h1 class="title">Yaar, yeh page toh<br>exist hi nahi karta.</h1>
+
+  <p class="subtitle">The page you are looking for has either moved, been deleted, or never existed. The brief, however, is very much alive.</p>
+
+  <a class="btn-home" href="/">Back to home →</a>
+  <button class="btn-back" onclick="history.back()">← Go back</button>
+</div>
+
+<div class="footer-txt">The Dawn Brief · ayushbrief.online</div>
+</body>
+</html>
