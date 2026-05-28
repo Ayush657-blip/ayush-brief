@@ -10,6 +10,33 @@ const SUPA_KEY = process.env.SUPABASE_KEY;
 const PORT = process.env.PORT || 3000;
 const ADMIN_KEY = 'dawnbrief2026';
 
+// ── HTTPS ENFORCEMENT ─────────────────────────────────────────────────────────
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] === 'http') {
+    return res.redirect(301, 'https://' + req.headers.host + req.url);
+  }
+  next();
+});
+
+// ── SECURITY HEADERS (CSP) ────────────────────────────────────────────────────
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "connect-src 'self' https://*.supabase.co https://api.anthropic.com https://api.resend.com; " +
+    "img-src 'self' data: https:; " +
+    "font-src 'self' https://fonts.gstatic.com; " +
+    "frame-ancestors 'none';"
+  );
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
 
@@ -233,7 +260,6 @@ app.post('/track-feedback', async (req, res) => {
 // ADMIN ROUTES — all protected by adminAuth middleware
 // ════════════════════════════════════════════════════════════════════
 
-// GET /api/admin/stats — total, active, new today
 app.get('/api/admin/stats', adminAuth, async (req, res) => {
   try {
     const all = await supabaseQuery('subscribers?select=id,is_active,created_at');
@@ -248,7 +274,6 @@ app.get('/api/admin/stats', adminAuth, async (req, res) => {
   }
 });
 
-// GET /api/admin/breakdown — role + region counts
 app.get('/api/admin/breakdown', adminAuth, async (req, res) => {
   try {
     const all = await supabaseQuery('subscribers?is_active=eq.true&select=role,region');
@@ -265,12 +290,10 @@ app.get('/api/admin/breakdown', adminAuth, async (req, res) => {
   }
 });
 
-// GET /api/admin/funnel — onboarding funnel from page_visits events
 app.get('/api/admin/funnel', adminAuth, async (req, res) => {
   try {
     const visits = await supabaseQuery('page_visits?select=event');
     const count = (evt) => visits.filter(v => v.event === evt).length;
-    // Fallback — use subscriber count as step5 if no funnel events yet
     const subs = await supabaseQuery('subscribers?select=id');
     const step5real = count('onboarding_complete') || subs.length;
     res.json({
@@ -285,10 +308,8 @@ app.get('/api/admin/funnel', adminAuth, async (req, res) => {
   }
 });
 
-// GET /api/admin/stories — top clicked + feedback
 app.get('/api/admin/stories', adminAuth, async (req, res) => {
   try {
-    // Top clicks — group by headline
     const clicks = await supabaseQuery('story_clicks?select=headline,category');
     const clickMap = {};
     clicks.forEach(c => {
@@ -297,8 +318,6 @@ app.get('/api/admin/stories', adminAuth, async (req, res) => {
       clickMap[key].count++;
     });
     const topClicks = Object.values(clickMap).sort((a, b) => b.count - a.count).slice(0, 6);
-
-    // Feedback — group by headline/story_index
     const feedback = await supabaseQuery('story_feedback?select=story_index,feedback,headline');
     const fbMap = {};
     feedback.forEach(f => {
@@ -308,14 +327,12 @@ app.get('/api/admin/stories', adminAuth, async (req, res) => {
       else fbMap[key].down++;
     });
     const topFeedback = Object.values(fbMap).sort((a, b) => (b.up + b.down) - (a.up + a.down)).slice(0, 6);
-
     res.json({ clicks: topClicks, feedback: topFeedback });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// GET /api/admin/sent-log — newsletter send history
 app.get('/api/admin/sent-log', adminAuth, async (req, res) => {
   try {
     const events = await supabaseQuery('page_visits?event=eq.newsletter_sent&select=data,created_at&order=created_at.desc&limit=10');
@@ -335,7 +352,6 @@ app.get('/api/admin/sent-log', adminAuth, async (req, res) => {
   }
 });
 
-// POST /api/trigger-newsletter — manually trigger newsletter
 app.post('/api/trigger-newsletter', adminAuth, async (req, res) => {
   try {
     const { execFile } = require('child_process');
