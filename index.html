@@ -1123,6 +1123,7 @@ function showPersonalisedHP(user){
   setGreeting();
   loadPersonalisedNews(user);
   loadReferralLink(user);
+  requestPushPermission(user);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1235,6 +1236,41 @@ function showToastMsg(msg){
   t.style.cssText='position:fixed;bottom:32px;right:32px;background:#0C0C1A;border:0.5px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 20px;font-size:14px;color:#fff;z-index:1000;';
   document.body.appendChild(t);
   setTimeout(function(){t.remove();},3000);
+}
+
+// ── PUSH NOTIFICATIONS ───────────────────────────────────────────────────────
+function urlBase64ToUint8Array(base64String){
+  var padding='='.repeat((4-base64String.length%4)%4);
+  var base64=(base64String+padding).replace(/-/g,'+').replace(/_/g,'/');
+  var rawData=window.atob(base64);
+  var outputArray=new Uint8Array(rawData.length);
+  for(var i=0;i<rawData.length;++i)outputArray[i]=rawData.charCodeAt(i);
+  return outputArray;
+}
+
+async function requestPushPermission(user){
+  if(!('serviceWorker' in navigator)||!('PushManager' in window))return;
+  if(localStorage.getItem('push_asked'))return;
+  localStorage.setItem('push_asked','1');
+  try{
+    var permission=await Notification.requestPermission();
+    if(permission!=='granted')return;
+    var reg=await navigator.serviceWorker.ready;
+    var keyRes=await fetch(API+'/api/vapid-public-key');
+    var keyData=await keyRes.json();
+    var subscription=await reg.pushManager.subscribe({
+      userVisibleOnly:true,
+      applicationServerKey:urlBase64ToUint8Array(keyData.publicKey)
+    });
+    await fetch(API+'/api/push/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({subscription:subscription,email:user.email})
+    });
+    console.log('✅ Push subscription registered');
+  }catch(e){
+    console.log('Push permission declined or failed');
+  }
 }
 
 // ── ANALYTICS ─────────────────────────────────────────────────────────────────
