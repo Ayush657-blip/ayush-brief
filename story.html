@@ -4,8 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Dawn Brief — Story</title>
-<meta name="description" content="Read this story on The Dawn Brief — news that feels like a friend.">
+<meta name="description" id="meta-desc" content="Read this story on The Dawn Brief — news that feels like a friend.">
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="The Dawn Brief">
+<meta property="og:title" id="og-title" content="The Dawn Brief — News that feels like a friend">
+<meta property="og:description" id="og-desc" content="Read this story on The Dawn Brief — news that feels like a friend.">
+<meta property="og:image" id="og-image" content="https://ayushbrief.online/og-image.png">
+<meta property="og:url" id="og-url" content="https://ayushbrief.online">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="tw-title" content="The Dawn Brief">
+<meta name="twitter:description" id="tw-desc" content="Read this story on The Dawn Brief — news that feels like a friend.">
+<meta name="twitter:image" content="https://ayushbrief.online/og-image.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -33,11 +42,9 @@ html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;o
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 @keyframes shimmer{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
 @keyframes pulse-glow{0%,100%{opacity:.5;}50%{opacity:.9;}}
-
 .glow-wrap{position:fixed;top:0;left:0;right:0;height:400px;z-index:0;pointer-events:none;}
 .glow-a{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.18) 0%,transparent 100%);animation:pulse-glow 4s ease-in-out infinite;}
 .top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(0,180,255,.2) 10%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,rgba(0,180,255,.2) 90%,transparent 100%);}
-
 nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(24px);background:var(--nav-bg);border-bottom:.5px solid var(--border);}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
 .logo-text{display:flex;align-items:baseline;gap:4px;}
@@ -51,7 +58,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .nav-sub:hover{background:var(--blue-b);}
 .nav-icon-btn{width:36px;height:36px;border-radius:10px;background:transparent;border:.5px solid var(--border);color:var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s;}
 .nav-icon-btn:hover{background:var(--w1);color:var(--w);}
-
 .story-wrap{max-width:680px;margin:0 auto;padding:100px 24px 80px;position:relative;z-index:5;animation:fadeIn .4s ease;}
 .story-cat{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-p);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .story-cat-dot{width:4px;height:4px;border-radius:50%;background:var(--blue-p);}
@@ -61,8 +67,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .story-img{width:100%;border-radius:14px;overflow:hidden;margin-bottom:28px;background:var(--bg3);}
 .story-img img{width:100%;display:block;max-height:400px;object-fit:cover;}
 .story-img-ph{height:240px;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:.2;}
-
-/* Friend Voice Box */
 .voice-box{border-radius:14px;padding:24px;margin-bottom:28px;position:relative;overflow:hidden;}
 .voice-box-student{background:rgba(255,77,109,.07);border:.5px solid rgba(255,77,109,.2);}
 .voice-box-professional{background:rgba(255,165,50,.07);border:.5px solid rgba(255,165,50,.2);}
@@ -72,8 +76,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .voice-label-professional{color:#FFAA55;}
 .voice-label-default{color:var(--blue-p);}
 .voice-text{font-size:15px;color:var(--w7);line-height:1.85;}
-
-/* Blur effect for non-subscribers */
 .voice-preview{position:relative;}
 .voice-blurred{filter:blur(5px);user-select:none;pointer-events:none;opacity:.6;}
 .voice-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(to bottom,transparent 0%,var(--bg2) 60%);}
@@ -81,8 +83,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .lock-text{font-size:13px;color:var(--w5);text-align:center;line-height:1.6;}
 .lock-btn{padding:10px 24px;border-radius:100px;background:var(--blue);border:none;color:#fff;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .lock-btn:hover{background:var(--blue-b);}
-
-/* Share */
 .share-row{display:flex;gap:10px;align-items:center;padding:20px 0;border-top:.5px solid var(--border);border-bottom:.5px solid var(--border);margin-bottom:32px;flex-wrap:wrap;}
 .share-label{font-size:12px;color:var(--w3);margin-right:4px;}
 .share-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;}
@@ -93,16 +93,12 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .share-copy{background:rgba(92,200,255,.08);color:var(--blue-p);border:.5px solid rgba(92,200,255,.2);}
 .share-copy:hover{background:rgba(92,200,255,.15);}
 .share-copied{color:var(--green)!important;border-color:var(--green)!important;}
-
-/* Referral CTA */
 .referral-box{background:linear-gradient(135deg,rgba(41,121,255,.08),rgba(0,100,200,.04));border:.5px solid rgba(92,200,255,.15);border-radius:16px;padding:28px;text-align:center;margin-bottom:32px;}
 .referral-icon{font-size:28px;margin-bottom:10px;}
 .referral-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;font-style:italic;color:var(--w);margin-bottom:6px;}
 .referral-sub{font-size:13px;color:var(--w3);line-height:1.6;margin-bottom:16px;}
 .referral-btn{padding:10px 24px;border-radius:100px;background:var(--blue);border:none;color:#fff;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .referral-btn:hover{background:var(--blue-b);}
-
-/* More Stories */
 .more-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;font-style:italic;color:var(--w);margin-bottom:16px;}
 .more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 .more-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;text-decoration:none;display:block;}
@@ -111,18 +107,14 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .more-card-body{padding:14px;}
 .more-card-cat{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);margin-bottom:6px;}
 .more-card-hl{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--w9);line-height:1.3;}
-
-/* Skeleton */
 .skel{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:1000px 100%;animation:shimmer 1.5s infinite;}
 .skel-line{height:12px;border-radius:6px;margin-bottom:10px;}
-
 footer{border-top:.5px solid var(--border);padding:28px 0;margin-top:60px;position:relative;z-index:5;}
 .ft-inner{max-width:680px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .ft-copy{font-size:11px;color:var(--w3);}
 .ft-links{display:flex;gap:16px;}
 .ft-link{font-size:11px;color:var(--w3);text-decoration:none;}
 .ft-link:hover{color:var(--blue-p);}
-
 @media(max-width:640px){
   nav{padding:0 16px;}
   .story-wrap{padding:84px 16px 60px;}
@@ -147,7 +139,6 @@ footer{border-top:.5px solid var(--border);padding:28px 0;margin-top:60px;positi
 </nav>
 
 <div class="story-wrap" id="story-wrap">
-  <!-- Filled by JS -->
   <div style="padding:60px 0;text-align:center;color:var(--w3);">Loading story...</div>
 </div>
 
@@ -175,7 +166,6 @@ var isPersonalised=params.get('pers')==='1';
 var loggedInUser=null;
 var allStories=[];
 
-// Theme
 function toggleTheme(){
   var isDark=document.documentElement.getAttribute('data-theme')!=='light';
   document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
@@ -184,19 +174,13 @@ function toggleTheme(){
 }
 (function(){var t=localStorage.getItem('db_theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');var btn=document.getElementById('theme-btn');if(btn)btn.textContent='☀️';}})();
 
-// Load user
 (function(){var s=localStorage.getItem('db_user');if(s){try{loggedInUser=JSON.parse(s);}catch(e){}}})();
 
-// Load story
 async function loadStory(){
   var wrap=document.getElementById('story-wrap');
-  
-  // Try localStorage first (fast)
   var cached=localStorage.getItem('db_stories');
   var stories=[];
   if(cached){try{stories=JSON.parse(cached);}catch(e){}}
-  
-  // Fallback to API
   if(!stories||stories.length===0){
     try{
       var r=await fetch(API+'/data');
@@ -206,43 +190,47 @@ async function loadStory(){
       try{var r2=await fetch('/data-backup.json');var d2=await r2.json();stories=d2.stories||[];}catch(e2){}
     }
   }
-  
   allStories=stories;
   var story=stories[storyId];
-  
   if(!story){
     wrap.innerHTML='<div style="text-align:center;padding:60px 0;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;color:var(--w3);">Story not found.</div><a href="index.html" style="color:var(--blue-p);text-decoration:none;font-size:14px;">← Go back home</a></div>';
     return;
   }
-  
-  // Update meta
+
+  // Update meta + OG tags dynamically
   document.title=story.headline+' — The Dawn Brief';
-  
-  // Track click
+  var desc=(story.summary||story.headline).slice(0,160);
+  var storyUrl=window.location.href;
+  var storyImg=story.image||'https://ayushbrief.online/og-image.png';
+  var setMeta=function(id,val){var el=document.getElementById(id);if(el)el.setAttribute('content',val);};
+  setMeta('meta-desc',desc);
+  setMeta('og-title',story.headline+' — The Dawn Brief');
+  setMeta('og-desc',desc);
+  setMeta('og-image',storyImg);
+  setMeta('og-url',storyUrl);
+  setMeta('tw-title',story.headline+' — The Dawn Brief');
+  setMeta('tw-desc',desc);
+
   trackStoryClick(story);
-  
-  // Determine voice
+
   var isSubscriber=!!loggedInUser;
-  var roleKey=loggedInUser?.(loggedInUser.role==='student'?'student':'professional'):'default';
+  var roleKey=loggedInUser?(loggedInUser.role==='student'?'student':'professional'):'default';
   var voiceText=story.voices&&story.voices[roleKey]?story.voices[roleKey]:(story.summary||'');
-  var isHinglish=loggedInUser&&(loggedInUser.region==='north'||loggedInUser.region==='west');
-  
+
   var voiceClass=roleKey==='student'?'voice-box-student':roleKey==='professional'?'voice-box-professional':'voice-box-default';
   var voiceLabelClass=roleKey==='student'?'voice-label-student':roleKey==='professional'?'voice-label-professional':'voice-label-default';
   var voiceLabelText=roleKey==='student'?'🎓 Student Edition':roleKey==='professional'?'💼 Professional Edition':'☀️ The Dawn Brief';
-  
+
   var col=CARD_COLORS[storyId%CARD_COLORS.length];
   var icon=CAT_ICONS[story.category]||'📰';
   var now=new Date();
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var dateStr=months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
-  
-  // Voice section HTML
+
   var voiceHTML='';
   if(isSubscriber&&voiceText){
     voiceHTML='<div class="voice-box '+voiceClass+'"><div class="voice-label '+voiceLabelClass+'">'+voiceLabelText+'</div><div class="voice-text">'+voiceText+'</div></div>';
   } else if(voiceText){
-    // Show teaser with blur
     var preview=voiceText.substring(0,120)+'...';
     var blurred=voiceText.substring(120)||voiceText;
     voiceHTML='<div class="voice-box voice-box-default">'
@@ -257,19 +245,17 @@ async function loadStory(){
       +'</div>'
       +'</div></div>';
   }
-  
-  // Referral box — only for non-subscribers (warm referral moment)
+
   var referralHTML='';
   if(!isSubscriber){
     referralHTML='<div class="referral-box"><div class="referral-icon">👋</div><div class="referral-title">Your friend thought you would like this.</div><div class="referral-sub">They were right. Get your daily dose of news that does not bore you. Free. Every morning.</div><button class="referral-btn" onclick="window.location=\'index.html\'">Join the gang →</button></div>';
   }
-  
-  // More stories
+
   var moreStories=stories.filter(function(_,i){return i!==storyId;}).slice(0,4);
   var moreHTML=moreStories.length?'<div style="margin-top:40px;"><div class="more-title">More stories</div><div class="more-grid">'+moreStories.map(function(s,i){var c=CARD_COLORS[(storyId+i+1)%CARD_COLORS.length];return '<a class="more-card" href="story.html?id='+stories.indexOf(s)+'"><div class="more-card-bar" style="background:'+c+';"></div><div class="more-card-body"><div class="more-card-cat">'+s.category+'</div><div class="more-card-hl">'+s.headline+'</div></div></a>';}).join('')+'</div></div>':'';
-  
-  var imgHTML=story.image?'<div class="story-img"><img src="'+story.image+'" alt="'+story.headline+'" onerror="this.parentElement.innerHTML=\'<div class=\\\"story-img-ph\\\">'+icon+'</div>\';" loading="eager"></div>':'<div class="story-img"><div class="story-img-ph">'+icon+'</div></div>';
-  
+
+  var imgHTML=story.image?'<div class="story-img"><img src="'+story.image+'" alt="'+story.headline+'" onerror="this.style.display=\'none\'" loading="eager"></div>':'<div class="story-img"><div class="story-img-ph">'+icon+'</div></div>';
+
   wrap.innerHTML=
     '<div class="story-cat"><div class="story-cat-dot"></div>'+story.category+'</div>'
     +'<h1 class="story-headline">'+story.headline+'</h1>'
@@ -308,7 +294,7 @@ function copyLink(){
 
 async function trackStoryClick(story){
   try{
-    await fetch(SUPA_URL+'/rest/v1/story_clicks',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({headline:story.headline,category:story.category,story_index:storyId,user_email:loggedInUser?.email||'anonymous'})});
+    await fetch(SUPA_URL+'/rest/v1/story_clicks',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({headline:story.headline,category:story.category,story_index:storyId,user_email:(loggedInUser&&loggedInUser.email)||'anonymous'})});
   }catch(e){}
   if(typeof gtag!=='undefined')gtag('event','story_click',{story_id:storyId,category:story.category});
 }
