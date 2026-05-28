@@ -1,22 +1,22 @@
 {
-  "generated": "2026-05-28T15:21:47.932Z",
+  "generated": "2026-05-28T16:08:13.152Z",
   "date": "Thursday, 28 May 2026",
-  "totalStories": 101,
+  "totalStories": 90,
   "stories": [
     {
       "category": "Business",
       "headline": "'I've applied for more than 400 roles' - how young people are facing the job shortage",
       "link": "https://www.bbc.com/news/articles/czx2qll4rlyo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 14:13:00 GMT",
+      "pubDate": "Thu, 28 May 2026 15:56:03 GMT",
       "summary": "The BBC has been hearing from young people who are struggling to find work about how they are tackling the challenge.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai 400 applications? Mujhe toh abhi 47 rejections mil chuke hain aur main soch raha hoon ki 400 try karun. At this rate, mere CV ko LinkedIn se zyada profile views milenge than actual job offers. Placement coordinator ne kaha — \"Keep applying,\" matlab \"Keep suffering.",
-        "student_south": "Bhai 400 applications. Mera placement coordinator: \"Just attend interviews, confidence rakho.\" 400 rejections later, confidence dead. Meanwhile that one professor still hasn't passed anyone from our batch. At least he's consistent. Job market mein aur consistent koi nahi.",
-        "professional_north": "Bhai 400 applications? Mere company mein ek opening hai — 600 log ne apply kiya. Iska matlab jo already job mein hai, uska matlab woh lottery jeet gaya. Ab samajh aaya kyun boss mere 5 pending tasks par pressure daal raha hai — replace karne ke liye queue mein already 500 log khade hain!",
-        "professional_south": "Bhai, 400 applications? Even my resume isn't that hardworking. Meanwhile mera boss thinks I'm irreplaceable — clearly he hasn't seen the job market. 400 rejections se accha hai appraisal season mein ek boss se rejection le lete hain, atleast free coffee toh milta hai office mein.",
-        "student": "Bhai 400 applications? Mujhe toh abhi 47 rejections mil chuke hain aur main soch raha hoon ki 400 try karun. At this rate, mere CV ko LinkedIn se zyada profile views milenge than actual job offers. Placement coordinator ne kaha — \"Keep applying,\" matlab \"Keep suffering.",
-        "professional": "Bhai, 400 applications? Even my resume isn't that hardworking. Meanwhile mera boss thinks I'm irreplaceable — clearly he hasn't seen the job market. 400 rejections se accha hai appraisal season mein ek boss se rejection le lete hain, atleast free coffee toh milta hai office mein."
+        "student_north": "Bhai 400 applications? Rookie numbers. Hamara placement cell mein jo ladka hai na, usne 600+ apply kiye. Still waiting for ek decent offer. At this rate uska CV hi apna LinkedIn profile ban jayega — har company ka \"connection request\" pending hoga.",
+        "student_south": "Bhai 400 applications matlab 400 rejections. I'm at 47 and already considering my professor's offer to be his TA for free. At least then somebody will remember my name when they're deciding who *not* to hire next.",
+        "professional_north": "Bhai 400 applications? Matlab ye log humse bhi zyada desperate hain. Humare yahan toh ek hi job hai aur usme 5 bosses hain jo same kaam ke liye alag alag target dete hain. Atleast ye log naye job search kar sakte hain — hum toh apne current wali se hi bhagne ki koshish kar rahe hain.",
+        "professional_south": "Bhai, 400 applications? That's cute. I've done 427 this quarter alone — boss ke liye. Every time company restructures, I apply for my own job like it's a fresh opening. At least those 400 people have hope. I'm just updating my LinkedIn bio to say \"perpetually available for redundancy.",
+        "student": "Bhai 400 applications? Rookie numbers. Hamara placement cell mein jo ladka hai na, usne 600+ apply kiye. Still waiting for ek decent offer. At this rate uska CV hi apna LinkedIn profile ban jayega — har company ka \"connection request\" pending hoga.",
+        "professional": "Bhai, 400 applications? That's cute. I've done 427 this quarter alone — boss ke liye. Every time company restructures, I apply for my own job like it's a fresh opening. At least those 400 people have hope. I'm just updating my LinkedIn bio to say \"perpetually available for redundancy."
       }
     },
     {
@@ -27,12 +27,12 @@
       "summary": "Albert  Manifold said no-one should be \"allowed to hide behind anonymity\" when commenting on his time at BP.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai ye Albert Manifold ko dekh. BP mein kuch galat kiya, nikala gaya, ab \"anonymity\" ke against bol raha hai. Hamare college mein professor assignment copy kar deta hai, anonymously complain karo toh \"provide proof\" bolte hain. These guys sirf apne liye rules banate hain na.",
-        "student_south": "BP chairman ko nikala, ab bol raha hai \"lies\" the. Bhai, tu apne company ko loota, ab anonymity ki bakwaas kar raha hai? Tera situation bilkul hamare professor jaisa — assignment fail kare, phir kahega \"grading system galat tha.\" Guilty people ke paas bahut saari stories hote hain.",
-        "professional_north": "Bhai BP ka chairman bhi same problem face kar raha hai — anonymously complain karo toh \"lies\" bolte hain, face karo toh political ho jaata hai. Hamari company mein bhi yahi chakkar hai. Anonymous feedback dega toh manager bolega \"coward,\" apna naam likhega toh appraisal marr jaayega. Dono taraf se maar padta hai yaar.",
-        "professional_south": "Bhai, BP chairman ko aise nikal diya, phir bhi court mein bol raha hai \"lies, lies.\" Hamare office mein bhi same thing — performance review mein sab kuch lie hai, par anonymously likha hota hai. Atleast isko courage hai face karne ka. Hamare boss to apni galti ko bhi \"strategic decision\" bol dete hain.",
-        "student": "Bhai ye Albert Manifold ko dekh. BP mein kuch galat kiya, nikala gaya, ab \"anonymity\" ke against bol raha hai. Hamare college mein professor assignment copy kar deta hai, anonymously complain karo toh \"provide proof\" bolte hain. These guys sirf apne liye rules banate hain na.",
-        "professional": "Bhai, BP chairman ko aise nikal diya, phir bhi court mein bol raha hai \"lies, lies.\" Hamare office mein bhi same thing — performance review mein sab kuch lie hai, par anonymously likha hota hai. Atleast isko courage hai face karne ka. Hamare boss to apni galti ko bhi \"strategic decision\" bol dete hain."
+        "student_north": "Bhai ye BP wala chairman bolra hai anonymity hide mat karo, truth boldo. Aur humara placement coordinator aaj anonymously feedback dega ki tum interview mein \"not fit for culture.\" Kal same coordinator ke paas jaayenge toh bolega naam batao kaasne ye kaha. Hypocrisy ka naam hai corporate duniya.",
+        "student_south": "Bhai BP chairman ko kick out kiya, ab bolra hai \"don't hide behind anonymity.\" \n\nIska matlab hamare professor ko bhi email karna chahiye — anonymously bad grades de raha hai, par identity reveal karne ko bolega. Hypocrisy ki dictionary mein photo hoga iska.",
+        "professional_north": "Yaar, ye BP wala bhi same boat mein hai na — jab bahar nikala toh sab bolne lagte hain. Humara boss bhi ek din aisa hi kuch bolega LinkedIn pe, aur hum anonymously comment karenge ki \"sir, apka behaviour kaisa tha office mein.\" Anonymity toh humara best friend hai bhai.",
+        "professional_south": "Arre, BP chairman ko nikal diya aur ab woh \"anonymity\" ki baat kar raha hai. Bhai, humare office mein toh feedback anonymously hi milta hai — \"Your performance needs improvement\" likha hota, signature nahi. Atleast usko face-to-face ousting mila, hum toh email se hi terminate hone ke liye tayyar hain.",
+        "student": "Bhai ye BP wala chairman bolra hai anonymity hide mat karo, truth boldo. Aur humara placement coordinator aaj anonymously feedback dega ki tum interview mein \"not fit for culture.\" Kal same coordinator ke paas jaayenge toh bolega naam batao kaasne ye kaha. Hypocrisy ka naam hai corporate duniya.",
+        "professional": "Arre, BP chairman ko nikal diya aur ab woh \"anonymity\" ki baat kar raha hai. Bhai, humare office mein toh feedback anonymously hi milta hai — \"Your performance needs improvement\" likha hota, signature nahi. Atleast usko face-to-face ousting mila, hum toh email se hi terminate hone ke liye tayyar hain."
       }
     },
     {
@@ -43,12 +43,12 @@
       "summary": "Coffees at some city centre outlets now cost £5. It's a story of tariffs, the climate, Gen Z cultural tastes, and savvy coffee farmers playing the market, writes Faisal Islam",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai 5 pound ki coffee. Matlab 500 rupees ek cup ke liye. Humari canteen mein 20 rupees wali chai hai jo taste mein bhi 20 rupees lagti hai. Ye global economic turmoil humara already placement se turmoil kar raha hai, coffee se kya farak padega?",
-        "student_south": "Bhai, £5 coffee = ₹500. College canteen mein 20 rupaye ki chai. Already broke hoon placement ke liye interviews dene jaata hoon — ab coffee ka shortage bhi aa gaya. Global economic crisis really said \"let me make sure this guy stays awake only on tension, not caffeine.",
-        "professional_north": "Bhai 5 pounds ka coffee? Humara canteen wala 20 rupees mein chai deta hai aur usme bhi complaints. Ek din boss ne kahaa 'productivity badha' — dekha toh usne coffee machine hi bandh kar diya. Global tariffs se humara salary nahi badhegi par chai zaroor mehengी ho jayegi.",
-        "professional_south": "Bhai, five pounds for one coffee? Itna expensive ho gaya ki intern ka monthly allowance ek cup mein ud jayega. Aur yeh \"global economic turmoil\" matlab ek hi baat — hamara salary same, but everything else became premium. Boss ko bhi five-pound coffee chahiye, hum instant nescafe pe hi adjust kar rahe hain.",
-        "student": "Bhai 5 pound ki coffee. Matlab 500 rupees ek cup ke liye. Humari canteen mein 20 rupees wali chai hai jo taste mein bhi 20 rupees lagti hai. Ye global economic turmoil humara already placement se turmoil kar raha hai, coffee se kya farak padega?",
-        "professional": "Bhai, five pounds for one coffee? Itna expensive ho gaya ki intern ka monthly allowance ek cup mein ud jayega. Aur yeh \"global economic turmoil\" matlab ek hi baat — hamara salary same, but everything else became premium. Boss ko bhi five-pound coffee chahiye, hum instant nescafe pe hi adjust kar rahe hain."
+        "student_north": "Bhai £5 coffee matlab 400 rupaye. Humara college canteen mein 30 rupaye wali chai se hi budget out ho jaate hain. Ye global economic turmoil dekh raha hai — main toh local placement turmoil se hi mar raha hoon. Ab coffee bhi luxury item ban gayi, paise toh internship stipend se bhi pehle khatam.",
+        "student_south": "Bhai £5 coffee = 400 rupees. Meanwhile mess mein chai 10 rupees aur taste pata nahi. Global economic turmoil ho ya na ho, humara wallet har din turmoil mein hi rehta hai. Coffee expensive, placement package down — sab kuch up-down.",
+        "professional_north": "Bhai, £5 ki coffee? Humara canteen mein 20 rupees ki chai, aur woh bhi instant noodles se bani hoti hai. Global tariffs, climate change, sab bakwas — iska matlab sirf itna hai ki apna salary same rahega, lekin apni chai ab affordable nahi rahegi. Inflation ka matlab: sab mehenga, hum sasta.",
+        "professional_south": "Bhai, £5 coffee? That's 500 rupees for one cup. Mere office pantry mein free coffee hai — taste bhi free, quality bhi free. Boss ne tariff badha di, inflation badha di, ab coffee bhi badh gayi. Ek din aayega jab apna salary hi coffee ke liye kaafi nahi hoga.",
+        "student": "Bhai £5 coffee matlab 400 rupaye. Humara college canteen mein 30 rupaye wali chai se hi budget out ho jaate hain. Ye global economic turmoil dekh raha hai — main toh local placement turmoil se hi mar raha hoon. Ab coffee bhi luxury item ban gayi, paise toh internship stipend se bhi pehle khatam.",
+        "professional": "Bhai, £5 coffee? That's 500 rupees for one cup. Mere office pantry mein free coffee hai — taste bhi free, quality bhi free. Boss ne tariff badha di, inflation badha di, ab coffee bhi badh gayi. Ek din aayega jab apna salary hi coffee ke liye kaafi nahi hoga."
       }
     },
     {
@@ -59,12 +59,12 @@
       "summary": "A report warns the number of 16 to 24-year-olds out of work, education or training set to rise to 1.25 million by 2031.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai 1.25 million young people jobless by 2031? Mera toh placement abhi tak nahi hua aur mujhe 2031 tak wait karna padega? By then mere parents ne already ek naya beta adopt kar liya hoga jo properly employed hoga.",
-        "student_south": "Bhai 1.25 million young people jobless by 2031? That's literally our entire batch plus backup batch plus their cousins. At least we have company in suffering. Placement season mein hum sab together cry karenge — misery loves company and campus WiFi.",
-        "professional_north": "Bhai 1.25 million unemployed youth by 2031? Matlab humara internship wala junior bhi humse zyada qualified hoga aur phir bhi naukri nahi milegi. Aur hum? Apni hi naukri bachane mein lage rahenge. Competition itna badhega ki boss ko bhi replacement mil jayega — yeh toh real lost generation baat hai.",
-        "professional_south": "Bhai, 1.25 million young people unemployed by 2031? Matlab humara generation already lost, aur next generation ko bhi loss mein dalna padega. Boss ka \"experience matters\" excuse finally proof milega — kyunki entry-level jobs hi nahi bacha rahe. Apna job secure rakhna padega, warna hum bhi lost generation ka case study ban jayenge.",
-        "student": "Bhai 1.25 million young people jobless by 2031? Mera toh placement abhi tak nahi hua aur mujhe 2031 tak wait karna padega? By then mere parents ne already ek naya beta adopt kar liya hoga jo properly employed hoga.",
-        "professional": "Bhai, 1.25 million young people unemployed by 2031? Matlab humara generation already lost, aur next generation ko bhi loss mein dalna padega. Boss ka \"experience matters\" excuse finally proof milega — kyunki entry-level jobs hi nahi bacha rahe. Apna job secure rakhna padega, warna hum bhi lost generation ka case study ban jayenge."
+        "student_north": "Bhai 1.25 million youth jobless by 2031. Report likha, conference hua, kuch nahi hoga. Aur hum sab idhar placement ko raat bhar gaaliyaan de rahe hain. 2031 tak jo job milega na, vo bhi \"work from home\" hoga — ghar pe baithe rotlu banana padhega.",
+        "student_south": "Bhai 1.25 million unemployed by 2031? That's just our entire batch plus batch after that. Placement season already feels like Hunger Games — ab 2031 tak it'll be straight up apocalypse. At least that one professor who fails everyone will have company soon.",
+        "professional_north": "Yaar, 1.25 million youngsters jobless by 2031? Matlab humara internship wala fresher jo abhi resume bhej raha hai, uska future already decided hai. Aur hum? EMI + target + appraisal anxiety lekar baithenge. Kisi ke liye opportunity shrink ho rahi hai, humara sirf bank account shrink ho raha hai.",
+        "professional_south": "Bhai, 1.25 million lost generation by 2031? Matlab mere junior colleagues ab literally unemployable hone ka wait kar rahe hain. Aur mera boss sochta hai merit-based promotion de raha hai. Bete, opportunities shrink ho rahe, salary expand nahi ho raha — tum kya badhoge?",
+        "student": "Bhai 1.25 million youth jobless by 2031. Report likha, conference hua, kuch nahi hoga. Aur hum sab idhar placement ko raat bhar gaaliyaan de rahe hain. 2031 tak jo job milega na, vo bhi \"work from home\" hoga — ghar pe baithe rotlu banana padhega.",
+        "professional": "Bhai, 1.25 million lost generation by 2031? Matlab mere junior colleagues ab literally unemployable hone ka wait kar rahe hain. Aur mera boss sochta hai merit-based promotion de raha hai. Bete, opportunities shrink ho rahe, salary expand nahi ho raha — tum kya badhoge?"
       }
     },
     {
@@ -75,12 +75,12 @@
       "summary": "With US waiting staff getting cross at receiving less than 20%, tips are also on the rise elsewhere.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Arre yeh American tipping culture ab India mein bhi aa jayega na. Already pizza delivery boy ko 50 rupees tip chahiye, waiter ko 100. Aur hum PGDM ke baad bhi broke rahenge. Tipping culture spread hona chahiye — shaadi mein dulha ko tip de denge, shaadi cancel ho jayegi.",
-        "student_south": "Bro US se tipping culture aa gaya India mein. Soon tera canteen wala demanding 20% tip after giving cold samosa. College placement interview mein bhi interviewer bolega \"acha beta, tip de do\". Apna already broke hain, ab tip dene ka paisa kahan se aayega?",
-        "professional_north": "Bhai, ab India mein bhi tipping culture spread ho gaya. Restaurant mein 20% tip dena padega, cab mein 15%, delivery boy ko extra — salary toh same hai, par har jagah khule haath se nikalna padega. Boss: \"Inflation se bachne ke liye smart ho jao.\" Mein: \"Sir, mere paas sirf notes hain, sense nahi.",
-        "professional_south": "Arre, American tipping culture idhar bhi aa gaya? Kal coffee machine pe barista ko 20% tip dena padega, nahi to disappointed face. Already salary mein se kuch nahi bachta, ab tips bhi mandatory ho jayega. Boss: Work karo. Barista: Tip karo. Mere paas to bas air hi bacha hai donate karne ke liye.",
-        "student": "Arre yeh American tipping culture ab India mein bhi aa jayega na. Already pizza delivery boy ko 50 rupees tip chahiye, waiter ko 100. Aur hum PGDM ke baad bhi broke rahenge. Tipping culture spread hona chahiye — shaadi mein dulha ko tip de denge, shaadi cancel ho jayegi.",
-        "professional": "Arre, American tipping culture idhar bhi aa gaya? Kal coffee machine pe barista ko 20% tip dena padega, nahi to disappointed face. Already salary mein se kuch nahi bachta, ab tips bhi mandatory ho jayega. Boss: Work karo. Barista: Tip karo. Mere paas to bas air hi bacha hai donate karne ke liye."
+        "student_north": "Bhai, ab tipping culture bhi spread ho rahi hai. Pehle restaurant mein 10% dete the — ab 20% expect kar rahe hain. Humara placement package itna kam hai ki intern ke liye bhi tip dena padega. Waiter ko bolo mere liye paisa rakhle, main uska intern ban jaaunga.",
+        "student_south": "Bhai American waiters demanding 20% tip. Ab yeh trend India aata toh mess ka cook bhi 15% mangega. College canteen ka uncle already bhav badha dega — \"bhaiya tip de, inflation ho gaya.\" Phir placement interview mein recruiter ko tip dena padega.",
+        "professional_north": "Yaar, ab tipping culture India mein bhi aa gaya. Pehle chai wale ko 2 rupees dete the, ab 20% chahiye. Aur haan, salary raise ke liye 10 saal wait karte ho, par waiter ko tip na do toh attitude badal jaata hai. Dono hi apna commission lena jaante hain.",
+        "professional_south": "Bhai, tip culture aa gaya toh humari salary ka kya hoga? Boss: 'Basic itna hi rahega, baaki tips lo customers se.' Aur agar waiter 20% demand kar sakta hai, toh IT guy 50% kyon nahi demand kar sakta apna appraisal mein?",
+        "student": "Bhai, ab tipping culture bhi spread ho rahi hai. Pehle restaurant mein 10% dete the — ab 20% expect kar rahe hain. Humara placement package itna kam hai ki intern ke liye bhi tip dena padega. Waiter ko bolo mere liye paisa rakhle, main uska intern ban jaaunga.",
+        "professional": "Bhai, tip culture aa gaya toh humari salary ka kya hoga? Boss: 'Basic itna hi rahega, baaki tips lo customers se.' Aur agar waiter 20% demand kar sakta hai, toh IT guy 50% kyon nahi demand kar sakta apna appraisal mein?"
       }
     },
     {
@@ -136,12 +136,12 @@
       "summary": "The government plans to bring back standard pack sizes for edible oils on complaints that similar-looking pouches with different quantities and prices were making value-for-money comparisons difficult for buyers. The move aims to improve transparency",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai edible oil ka pack size standard karne ja rahe hain. Matlab jab tak hum placement ke liye standardize nahi ho gaye, government oil bottles ko standardize kar raha hai. Phir bhi ghar jaake mummy ko bolo ki ab oil sasta ho gaya — dekhna padega kitna maarta hai rolling pin se.",
-        "student_south": "Bhai, edible oil pack sizes standardize karne ka plan hai. Mummy ko confusion hota tha — ₹500 ka bottle aur ₹400 ka bottle same size lagta tha. Ab sab same hoga. Finally, ek area jaha confusion nahi hoga — unlike your semester grades jo har professor ka alag marking scale hai.",
-        "professional_north": "Yaar, oil ke pack sizes standardize kar rahe hain taki sab ko pata chal jaaye kaun phad raha hai. Office mein bhi aise hi hona chahiye — salary slip mein likha ho kitna kaam ka packet hai aur kitna paise ka. Ab toh sirf confusion hai, clarity nahi.",
-        "professional_south": "Bhai, edible oil pack sizes standardize kar rahe hain. Matlab office mein jo chai ka oil measure karte hain na — woh bhi confuse rehta tha. Ab transparency aa jayega, par salary slip mein jo numbers confuse karte hain, uspe koi standard nahi lana?",
-        "student": "Bhai edible oil ka pack size standard karne ja rahe hain. Matlab jab tak hum placement ke liye standardize nahi ho gaye, government oil bottles ko standardize kar raha hai. Phir bhi ghar jaake mummy ko bolo ki ab oil sasta ho gaya — dekhna padega kitna maarta hai rolling pin se.",
-        "professional": "Bhai, edible oil pack sizes standardize kar rahe hain. Matlab office mein jo chai ka oil measure karte hain na — woh bhi confuse rehta tha. Ab transparency aa jayega, par salary slip mein jo numbers confuse karte hain, uspe koi standard nahi lana?"
+        "student_north": "Bhai, standard pack sizes aayenge toh kya farak padega? Humara budget toh standard nahi hai — 500ml ka oil bhi afford nahi hota. Aur jo afford hota hai woh bhi fake nikalta hai. Transparency ke liye pehle humari salary transparent ho jaye.",
+        "student_south": "Bhai, oil pouch mein confusion same as our semester grades — sab same dikhta hai but marks alag alag milte hain. Government finally realized what our parents knew forever: sabko scam kar rahe the. At least oil ka transparency aa gaya, placement brochure mein ab bhi fake promises hi chalega.",
+        "professional_north": "Bhai, oil ke pack sizes standardize kar rahe hain taaki confusion na ho. Mera confusion toh appraisal form dekh ke hi hota hai — same template, different numbers, kisi ko samajh nahi aata actual raise kitna hai. Government ko chahiye na ghar mein transparency, office mein toh woh luxury hai.",
+        "professional_south": "Bhai, oil ke pack sizes standardize kar rahe hain — finally! Ghar mein biwi ne kitni baar complain kiya, aur ab government acting. Lekin ek cheez notice karo — our salary slip ka standardization kab hoga? Same designation, different pay scales — that's the real confusion nobody's fixing.",
+        "student": "Bhai, standard pack sizes aayenge toh kya farak padega? Humara budget toh standard nahi hai — 500ml ka oil bhi afford nahi hota. Aur jo afford hota hai woh bhi fake nikalta hai. Transparency ke liye pehle humari salary transparent ho jaye.",
+        "professional": "Bhai, oil ke pack sizes standardize kar rahe hain — finally! Ghar mein biwi ne kitni baar complain kiya, aur ab government acting. Lekin ek cheez notice karo — our salary slip ka standardization kab hoga? Same designation, different pay scales — that's the real confusion nobody's fixing."
       }
     },
     {
@@ -152,12 +152,12 @@
       "summary": "In the last three years, Siddaramaiah led Congress government has heavily prioritised a ‘pro-poor; Universal Basic Income model, funded by tax restructuring and robust state GDP growth, to balance economic expansion with social equity",
       "hasVoice": true,
       "voices": {
-        "student_north": "Siddaramaiah ne Universal Basic Income diya Karnataka mein. Bhai, hum toh PGDM kar rahe hain, placement take-home package ke liye aur yeh log already free paise distribute kar rahe hain. Hamare placement mein universal basic rejection aa raha hai, inke tax restructuring se kuch milega kya?",
-        "student_south": "Siddaramaiah doing UBI aur welfare push. Maza aa gaya. Tum placement pakdo ya nahi, kam se kam free money milega. Tera CS professor jo fail karega usse bhi basic income milega — that's called social equity, bhai.",
-        "professional_north": "Siddaramaiah ne welfare schemes se gareeb ka vote bank pakda aur tax se amir ka paise liya. Hamara company bhi ek din yeh sochega — employee welfare badha de, aur apna bonus cut kar de. Tab tak hum already naukri ke welfare mein hain.",
-        "professional_south": "Siddaramaiah doing Universal Basic Income? Bhai, even Karnataka government samajh gaya ki salary alone kaafi nahi. Humara boss abhi tak nahi samjha. Aur inko \"record revenues\" bolne se pehle apna salary revision announcement kar, nahi toh welfare scheme se humhi benefit lenge eventually.",
-        "student": "Siddaramaiah ne Universal Basic Income diya Karnataka mein. Bhai, hum toh PGDM kar rahe hain, placement take-home package ke liye aur yeh log already free paise distribute kar rahe hain. Hamare placement mein universal basic rejection aa raha hai, inke tax restructuring se kuch milega kya?",
-        "professional": "Siddaramaiah doing Universal Basic Income? Bhai, even Karnataka government samajh gaya ki salary alone kaafi nahi. Humara boss abhi tak nahi samjha. Aur inko \"record revenues\" bolne se pehle apna salary revision announcement kar, nahi toh welfare scheme se humhi benefit lenge eventually."
+        "student_north": "Bhai, Karnataka mein Universal Basic Income chal raha hai. Hum yahan MBA kar rahe hain, placement ke liye raat ko neend nahi aa rahi, aur woh log free paise distribute kar rahe hain. Humein toh sirf student loans ka debt mil raha hai — woh toh welfare state ban gaya.",
+        "student_south": "Bhai Karnataka mein UBI aaya, welfare push ho raha hai. Meanwhile our college fees increase 15% every sem aur we're still eating maggi for dinner. Siddaramaiah sir helping poor people — hum toh so poor ki scholarship form bhar ke bhi reject ho jaate hain.",
+        "professional_north": "Bhai, Karnataka mein UBI chalra hai aur yahan humara boss bolta hai \"apna salary hi basic income samajh lo.\" Welfare state ban gaya wahan, hum toh apne apartment ke EMI mein welfare state ban gaye hain. Excise reforms se govt rich, hum apni chai se hi rich feel karte hain.",
+        "professional_south": "Bhai, Karnataka mein universal basic income? Matlab free paisa? Idhar humara boss \"performance-based increment\" bolke 2% deta hai. Aur ye log \"economic model\" se ghar-ghar paisa phenk rahe hain. Mera company bhi agar itna revenue generate kare toh mere salary mein bhi kuch \"universal\" hota, na?",
+        "student": "Bhai, Karnataka mein Universal Basic Income chal raha hai. Hum yahan MBA kar rahe hain, placement ke liye raat ko neend nahi aa rahi, aur woh log free paise distribute kar rahe hain. Humein toh sirf student loans ka debt mil raha hai — woh toh welfare state ban gaya.",
+        "professional": "Bhai, Karnataka mein universal basic income? Matlab free paisa? Idhar humara boss \"performance-based increment\" bolke 2% deta hai. Aur ye log \"economic model\" se ghar-ghar paisa phenk rahe hain. Mera company bhi agar itna revenue generate kare toh mere salary mein bhi kuch \"universal\" hota, na?"
       }
     },
     {
@@ -168,12 +168,12 @@
       "summary": "The government has advised state-run Indian Oil Corp. Ltd, Bharat Petroleum Corp. Ltd and Hindustan Petroleum Corp. Ltd, as well as privately owned Jio-bp Mobility, Nayara Energy and Shell to begin work on dispensing infrastructure for E20, E22, E25 ",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai ethanol fuel aa gaya choice ke saath. Ek toh petrol ki kimat kaatne ke liye kidney bechni padti hai, ab car ka bhi decide karna padega kaunsa ethanol peeyega. Next semester placement mein pakka pucha jayega — E20 ya E25? Salary package ki tarah confusing ho gaya sab.",
-        "student_south": "Bhai ethanol fuel aa gaya — so now petrol pump pe menu card hota hai like Starbucks. E20, E22, E25... meanwhile our college bus still runs on prayers and the driver's rage. At least fuel choice ka option hai, unlike our placements where we get zero options.",
-        "professional_north": "Bhai, ab petrol pump pe bhi menu choice mil jayega — E20, E22, E25. Jaise restaurant mein. Lekin mere car ko toh E-salary (EMI-adjusted salary) chahiye, jo mere boss kabhi dega nahi. Pump attendant toh kam se kam fuel options de raha hai, boss toh sirf overtime options deta hai.",
-        "professional_south": "Bhai, ethanol fuel choice aa gaya. Finally ek jagah toh choice hai — unlike office mein jahan boss decide karta hai everything. Par dekh, E25 le lenge toh car mileage badh jayegi, salary nahi. At least petrol pump pe freedom toh mil gaya na.",
-        "student": "Bhai ethanol fuel aa gaya choice ke saath. Ek toh petrol ki kimat kaatne ke liye kidney bechni padti hai, ab car ka bhi decide karna padega kaunsa ethanol peeyega. Next semester placement mein pakka pucha jayega — E20 ya E25? Salary package ki tarah confusing ho gaya sab.",
-        "professional": "Bhai, ethanol fuel choice aa gaya. Finally ek jagah toh choice hai — unlike office mein jahan boss decide karta hai everything. Par dekh, E25 le lenge toh car mileage badh jayegi, salary nahi. At least petrol pump pe freedom toh mil gaya na."
+        "student_north": "Bhai ethanol fuel aa gaya. Matlab ab petrol pump pe menu dekh ke order karega jaise Starbucks ho. E20, E22, E25 — exactly like we choose our placement package options. Except yahan sab options cheaper honge aur mileage bhi fake hogi.",
+        "student_south": "Bhai ethanol fuel aa raha. Government soch raha hai petrol pump pe menu milega — \"E20 lega? E25? Dono same price?\" Meanwhile tu assignment menu se confused hai. Ab fuel bhi confuse karega. Life already hard, petrol station pe bhi choices dena tha?",
+        "professional_north": "Bhai petrol pump par ab ethanol choose kar sakte ho — jaise Starbucks mein coffee size decide karte ho. Mera toh budget itna tight hai ki main \"free air\" wala pump choose kar raha hoon. Car thik rakh, salary nahi badha di toh kya farak padta hai fuel ke options se.",
+        "professional_south": "Bhai, ab petrol pump pe menu aa gaya — E20, E22, E25. Jaise ek choice nahi tha already, ab fuel bhi customize karna padega. Aur boss ko bolun petrol cheaper ho gaya toh WFH roz nahi hona. Politics sab jagah hai, even fuel pump mein.",
+        "student": "Bhai ethanol fuel aa gaya. Matlab ab petrol pump pe menu dekh ke order karega jaise Starbucks ho. E20, E22, E25 — exactly like we choose our placement package options. Except yahan sab options cheaper honge aur mileage bhi fake hogi.",
+        "professional": "Bhai, ab petrol pump pe menu aa gaya — E20, E22, E25. Jaise ek choice nahi tha already, ab fuel bhi customize karna padega. Aur boss ko bolun petrol cheaper ho gaya toh WFH roz nahi hona. Politics sab jagah hai, even fuel pump mein."
       }
     },
     {
@@ -184,12 +184,12 @@
       "summary": "The Insolvency and Bankruptcy Code framework's biggest achievement has been shifting power from defaulting promoters to creditors, altering borrowing and lending behaviour across the system.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai, bankruptcy code ne finally defaulting promoters ko maar diya. Ab creditors ko power hai. Maza toh tab aayega jab hamare future boss ka startup fail ho aur hum apna pending salary recover kar sakein. Abhi toh bas hope hai.",
-        "student_south": "Bhai bankruptcy code pass ho gaya toh defaulters finally pakde ja rahe hain. Iska matlab tumhare college placement company jo salary promise kar ke disappear ho jaata hai — uske against ab action possible hai. Acha news, par tumhara startup idea padega toh first loss hi hoga.",
-        "professional_north": "Yaar bankruptcy code ne finally defaulters ko suppress kar diya — ab loan dena padega return karna hi padega. Hamara boss bhi apni salary default na kar de, kyunki hum to already insolvent hain EMI aur rent se. Code promoters ko maar raha hai, hume to sadiyaan lagegi.",
-        "professional_south": "Bankruptcy code ne finally defaulters ko thik kiya. Iska matlab ab boss ka \"project delay\" excuse nahi chalega — woh bhi technically insolvent ho sakta hai. Ten years lagaye sirf yeh samjhane ke liye ki rupees actual value rakhte hain, not just PowerPoint slides.",
-        "student": "Bhai, bankruptcy code ne finally defaulting promoters ko maar diya. Ab creditors ko power hai. Maza toh tab aayega jab hamare future boss ka startup fail ho aur hum apna pending salary recover kar sakein. Abhi toh bas hope hai.",
-        "professional": "Bankruptcy code ne finally defaulters ko thik kiya. Iska matlab ab boss ka \"project delay\" excuse nahi chalega — woh bhi technically insolvent ho sakta hai. Ten years lagaye sirf yeh samjhane ke liye ki rupees actual value rakhte hain, not just PowerPoint slides."
+        "student_north": "Bankruptcy code ne defaulters ko maar diya finally. Matlab ab loan lene ke baad \"bhool jaao\" wala gyaan nahin chalega. Humara placement package bhi aayega toh bank se loan le paayenge without defaulting — unless placement hi cancel ho jaye, phir toh yeh code bhi humara dost nahin rahega.",
+        "student_south": "Bhai bankruptcy ka code aaya aur finally defaulters ko peeche hataaya. Ab jo loan lena hai soch-samajh ke lena padega. Tere senior jo college fees ka 5 lakh baki rakhega, ab college uska ghar bech dega. Responsibility aa gaya duniya ko.",
+        "professional_north": "Bhai, bankruptcy code ne finally defaulting promoters ko samjha diya — apna paisa apna nahi hota. Humein toh bas relief hai ki ab bank waalon ke paas ek legal danda hai. Agar humara boss kabhi default kare toh uska ghar bik jaayega, humara EMI toh safe hai na!",
+        "professional_south": "Bhai, bankruptcy code ne defaulting promoters ko control kiya, but humara defaulting salary kab control hoga? Bank ne creditors ko power diya, humein kab dega? Ten years recovery, iska matlab hai — humara promotion still loading hai.",
+        "student": "Bankruptcy code ne defaulters ko maar diya finally. Matlab ab loan lene ke baad \"bhool jaao\" wala gyaan nahin chalega. Humara placement package bhi aayega toh bank se loan le paayenge without defaulting — unless placement hi cancel ho jaye, phir toh yeh code bhi humara dost nahin rahega.",
+        "professional": "Bhai, bankruptcy code ne defaulting promoters ko control kiya, but humara defaulting salary kab control hoga? Bank ne creditors ko power diya, humein kab dega? Ten years recovery, iska matlab hai — humara promotion still loading hai."
       }
     },
     {
@@ -200,12 +200,12 @@
       "summary": "The Insolvency and Bankruptcy Code completes a decade having resolved over 1,400 large corporate cases and helping halve gross bad loans in the banking system. The April 2026 amendments now usher in IBC 2.0.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai IBC ne 1,400 companies ka bankruptcy sambhala. Matlab 10 saal mein itne log diwali celebrate kar rahe the without money. Aur ab IBC 2.0 aaya — basically old mistakes ko naye tarike se repeat karne ke liye. Hamara placement package bhi IBC ka case ban jaayega agar campus mein recession aaya.",
-        "student_south": "IBC ne 1,400 companies ko bankruptcy se bachaya. Meanwhile tera placement company next month ka salary guarantee nahi de raha. Unka IBC 2.0, tujhe IOU 2.0 mil raha hai. Banking system recover ho gaya, tera account balance abhi bhi coma mein hai.",
-        "professional_north": "Bhai, IBC ne corporate ka bad loan halwa kiya. Lekin hamare company ka bad decision? Woh resolve nahi hota. Boss ne jo gadbad project de rakha hai, uska IBC nahi hai — sirf humara appraisal bankrupt ho raha hai.",
-        "professional_south": "Bhai, 1,400 companies bankrupt ho gaye, bad loans half ho gaye. Tera company ka loan kaun half karega? Boss ne cost-cutting ka dirty dozen list banai, tere salary first on the list hai — IBC 2.0, your job ka 3.0 version ayega jaldi.",
-        "student": "Bhai IBC ne 1,400 companies ka bankruptcy sambhala. Matlab 10 saal mein itne log diwali celebrate kar rahe the without money. Aur ab IBC 2.0 aaya — basically old mistakes ko naye tarike se repeat karne ke liye. Hamara placement package bhi IBC ka case ban jaayega agar campus mein recession aaya.",
-        "professional": "Bhai, 1,400 companies bankrupt ho gaye, bad loans half ho gaye. Tera company ka loan kaun half karega? Boss ne cost-cutting ka dirty dozen list banai, tere salary first on the list hai — IBC 2.0, your job ka 3.0 version ayega jaldi."
+        "student_north": "Bhai IBC ne 1400 companies ko save kiya, bad loans half kiye. Mere placement ke baad agar startup fail ho gaya toh mera insolvency resolution kaun karega? HR se \"sorry sir, IBC 2.0 mein aapka case pending hai\" sununga kya?",
+        "student_south": "Bhai, IBC 2.0 launch hua matlab corporate guys finally facing consequences. 1,400 cases resolved, bad loans halved — even our college has better track record than these companies. Tera placement guarantee letter bhi IBC pass karwa dega next round mein.",
+        "professional_north": "Yaar, IBC ne 1400 companies ko shutdown kiya, bad loans half kiye — matlab jo companies collapse hote hain, unhe nikal dete hain. Humara company abhi solid hai, par agar IBC 2.0 aur strict ho gaya toh jo bhi weak hai, usko sidha exit. Hamara appraisal safe hai... abhi.",
+        "professional_south": "Bhai, IBC 2.0 matlab ab aur companies fail ho sakte hain legally. Humara company bhi \"dirty dozen\" mein aa jayega toh kya — humko first layoff denge ya appraisal hold karenге? Banking system ka bad loan half hua, par humara bad luck toh pura hi baaki hai.",
+        "student": "Bhai IBC ne 1400 companies ko save kiya, bad loans half kiye. Mere placement ke baad agar startup fail ho gaya toh mera insolvency resolution kaun karega? HR se \"sorry sir, IBC 2.0 mein aapka case pending hai\" sununga kya?",
+        "professional": "Bhai, IBC 2.0 matlab ab aur companies fail ho sakte hain legally. Humara company bhi \"dirty dozen\" mein aa jayega toh kya — humko first layoff denge ya appraisal hold karenге? Banking system ka bad loan half hua, par humara bad luck toh pura hi baaki hai."
       }
     },
     {
@@ -261,12 +261,12 @@
       "summary": "SpiceJet, IndiGo and Jet Airways will benefit from the reduction in ATF prices, but in the long run.Q3 is a seasonally strong period and that could help offset the impact of high crude oil prices and a weak rupee",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai airline stocks ka drama dekh. ATF sasta ho gaya toh IndiGo ka ticket bhi sasta hoga? Nahi yaar, bas CEO ka bonus badega. Humara placement trip ka flight ticket abhi bhi 15k se kam nahi hoga. Capitalism ka matlab: unka profit, humara loss.",
-        "student_south": "Bhai airline results improve toh what — tera ticket price kam hoga? Nahi. Fuel sasta, CEO ka bonus badhega. Tum socho placement interview mein flight se jaana padega — ticket price same rahega, salary offer kam hoga. Airline ka Q3 strong, tera bank balance weak.",
-        "professional_north": "Bhai, airline ka Q3 strong hai matlab festive season mein sab fly kar rahe hain. Par dekh — ATF price kam hone ke baad bhi ticket sasta nahi hone wala. Airlines profit marengi, hum ghar baithe apna Q3 strong karne ki soche — bonus ka intezaar karte karte flight miss ho jayegi.",
-        "professional_south": "Bhai, airline stocks udte hain toh uthte hain. Par humara salary? Woh toh ground mein hi padi hai. ATF price down, rupee down, morale down — sab kuch down. Boss ne kaha Q3 strong period hai, matlab humara appraisal bhi strong hona chahiye — par nahi hota.",
-        "student": "Bhai airline stocks ka drama dekh. ATF sasta ho gaya toh IndiGo ka ticket bhi sasta hoga? Nahi yaar, bas CEO ka bonus badega. Humara placement trip ka flight ticket abhi bhi 15k se kam nahi hoga. Capitalism ka matlab: unka profit, humara loss.",
-        "professional": "Bhai, airline stocks udte hain toh uthte hain. Par humara salary? Woh toh ground mein hi padi hai. ATF price down, rupee down, morale down — sab kuch down. Boss ne kaha Q3 strong period hai, matlab humara appraisal bhi strong hona chahiye — par nahi hota."
+        "student_north": "Bhai, airline stocks upar jaayenge Q3 mein because fuel sasti ho gayi. Par humara situation? Placement mein jet se flight bhi nahi milegi — bas SpiceJet ka economy seat afford kar payenge. Aur woh bhi loan pe.",
+        "student_south": "Bhai, airline stocks upar ja rahe hain because fuel sasta ho gaya. Meanwhile, our college trip budget itna tight hai ki SpiceJet mein seat book karna matlab next semester ka fees directly flight mein convert ho jayega. Atleast pilots ka bonus aayega — hamara placement coordinator ke paas toh bonus aane wala nahi.",
+        "professional_north": "Yaar, airlines ko ATF sasta mil raha hai toh quarterly results acche honge. Humein bhi itna luck milta — mera project ATF sasta ho jaata, phir boss ko batata ki Q3 mein results aayenge. Abhi toh sab kharche badh rahe hain, results toh 2025 mein aayenge.",
+        "professional_south": "Yaar, airline stocks badh rahe hain because fuel sasta ho raha hai. Meanwhile, mere company ke travel budget itna tight hai ki economy class mein bhi middle seat deny kar dete hain. Inko fuel ki chhinta hai, mujhe apna salary increment ki chhinta hai — kaunsa crash zyada painful hai, guess karo.",
+        "student": "Bhai, airline stocks upar jaayenge Q3 mein because fuel sasti ho gayi. Par humara situation? Placement mein jet se flight bhi nahi milegi — bas SpiceJet ka economy seat afford kar payenge. Aur woh bhi loan pe.",
+        "professional": "Yaar, airline stocks badh rahe hain because fuel sasta ho raha hai. Meanwhile, mere company ke travel budget itna tight hai ki economy class mein bhi middle seat deny kar dete hain. Inko fuel ki chhinta hai, mujhe apna salary increment ki chhinta hai — kaunsa crash zyada painful hai, guess karo."
       }
     },
     {
@@ -277,12 +277,12 @@
       "summary": "The government through its recapitalisation plan has increased its stake in PSU banks.Part of the capital infusion in FY18 was done through recapitalisation bonds",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai government apne banks ko aur tight pakda. Matlab jo paise humara hona tha salary ke form mein, wo bank recapitalisation bonds mein chala gaya. Hum graduates hain, bank strong ho gaya — win-win, na? Sirf humara account balance weak hi reh gaya.",
-        "student_south": "Arre, govt ne apne banks ko aur tight pakda. Matlab more government control, less efficiency — basically campus wifi ka same energy. Internship stipend late aayega, placement offer cancel hoga, par govt bank toh secure rahega. Priorities, bhai.",
-        "professional_north": "Arre, government ne apne PSU banks ko aur tight pakda. Matlab jo banks humari salary deri se deti hain, ab wo aur government ke control mein hain. Toh aage se jab EMI default karenege toh \"government policy\" ka bahana de sakte hain! 😅",
-        "professional_south": "Government ne PSU banks ko aur tight pakda hai. Matlab jo salary hum government bank se lete hain, woh bhi ab government ka hi raha — humaara nahi. Bank majboot ho sakta hai, par humara account balance toh vahi thandi rehne waala hai.",
-        "student": "Bhai government apne banks ko aur tight pakda. Matlab jo paise humara hona tha salary ke form mein, wo bank recapitalisation bonds mein chala gaya. Hum graduates hain, bank strong ho gaya — win-win, na? Sirf humara account balance weak hi reh gaya.",
-        "professional": "Government ne PSU banks ko aur tight pakda hai. Matlab jo salary hum government bank se lete hain, woh bhi ab government ka hi raha — humaara nahi. Bank majboot ho sakta hai, par humara account balance toh vahi thandi rehne waala hai."
+        "student_north": "Govt ne apne banks ko aur tight pakda liya. Recapitalisation bonds, capital infusion — sab bakwas. Hamare placement ke baad jo salary milegi, vo bhi kisi bond mein locked ho jayegi. Bank toh govt ka ho gaya, par humara account khali hi rahega.",
+        "student_south": "Government ne banks ko aur tight hug kar diya. Matlab taxpayer ka paisa banks mein dubne lag gaya. Tum placement lelo ya na lelo, bank ka loss toh government recover karega tumhare tax se. Apna future secure karo — government ka toh pakka secure hai.",
+        "professional_north": "Yaar, government ne apne banks ko aur tight pakda. Matlab private banks jo bonus dete the, ab woh bhi PSU banks mein hi baatenge. Humare salary increment ka toh koi chance nahi — government jo secure rakhe, woh humein bhi secure rakhega na, matlab zero raise.",
+        "professional_south": "Government ne apne PSU banks ko tight hug de diya — recapitalisation bonds se. Matlab humara salary wala bank bhi ab aur government ka ho gaya. Accha hai, at least ek jagah toh government apne paison ko seriously hold kar raha hai. Unlike our appraisals — jo har saal slip hote hain.",
+        "student": "Govt ne apne banks ko aur tight pakda liya. Recapitalisation bonds, capital infusion — sab bakwas. Hamare placement ke baad jo salary milegi, vo bhi kisi bond mein locked ho jayegi. Bank toh govt ka ho gaya, par humara account khali hi rahega.",
+        "professional": "Government ne apne PSU banks ko tight hug de diya — recapitalisation bonds se. Matlab humara salary wala bank bhi ab aur government ka ho gaya. Accha hai, at least ek jagah toh government apne paison ko seriously hold kar raha hai. Unlike our appraisals — jo har saal slip hote hain."
       }
     },
     {
@@ -293,12 +293,12 @@
       "summary": "Refining and petrochemical businesses are the main growth drivers.December quarter (Q3) results show things have indeed slowed down in these segments",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Reliance ka profit flat ho gaya, debt badh raha hai. Matlab jo companies billions kamati hain unhe bhi tension hai. Aur hum yahan placement ke liye resume bhej rahe hain — inko batate hain ki \"growth mindset hai.\" Growth mindset se kya faayda agar growth hi nahi mil raha?",
-        "student_south": "Reliance ka profit flat, debt badh raha hai. Bhai, even mega-corporations are struggling. Aur tum socho—tumhare internship stipend bhi flat hai, college fees toh rocket speed se badh rahe hain. Basically, economy slow hai, but your tuition fees? Supersonic growth mode.",
-        "professional_north": "Reliance ka refining business slow pad gaya, debt badh gaya — bilkul humari company jaisa. Quarterly results aaye toh growth zero, par management ko bonus dena hai. Haan bhai, jab bade companies bhi dabte hain toh humara kya kahna, apni salary freeze hone tak ka wait kar lo.",
-        "professional_south": "Reliance ka profit flat ho gaya aur debt badh gaya. Matlab humara company bhi same trajectory pe hai — thoda kaam, bahut tension, aur bank balance mein sirf red color. Reliance fail hote hain toh humein layoff letters aa jaate hain. Unka slowdown = humara speedup towards exit door.",
-        "student": "Bhai Reliance ka profit flat ho gaya, debt badh raha hai. Matlab jo companies billions kamati hain unhe bhi tension hai. Aur hum yahan placement ke liye resume bhej rahe hain — inko batate hain ki \"growth mindset hai.\" Growth mindset se kya faayda agar growth hi nahi mil raha?",
-        "professional": "Reliance ka profit flat ho gaya aur debt badh gaya. Matlab humara company bhi same trajectory pe hai — thoda kaam, bahut tension, aur bank balance mein sirf red color. Reliance fail hote hain toh humein layoff letters aa jaate hain. Unka slowdown = humara speedup towards exit door."
+        "student_north": "Bhai Reliance ko flat profit ho raha hai, aur hum yahan placement ke liye raat ko neend uda rahe hain. Iska matlab jo company itni badi hai, uska bhi growth slow ho gaya toh hum chhote log ke liye kya bacha hai? Bas debt lena seekh jaayenge — Reliance se free training mil rahi hai.",
+        "student_south": "Reliance ka profit flat, debt upar ja raha. Matlab business slowdown. Tere placement company bhi same trajectory follow kar raha hoga — offer letter diya, par salary growth? Flat. Debt? Tumhara education loan. Reliance ki problems, teri problems — same same but different.",
+        "professional_north": "Yaar Reliance ka bhi yahi haal — profit flat, debt badh raha hai. Hamara company bhi same situation mein hai, isliye apni salary flat rakhi hai aur loans badha diye. Reliance wale bhi humari tarah soch rahe honge — growth kahan se aayega bhai?",
+        "professional_south": "Reliance ka profit flat, debt badh raha hai. Humara profit bhi flat, EMI badh raha hai. Difference kya hai? Unhe shareholders ka tension, humein apna ghar ka tension — dono ko same problem, different address.",
+        "student": "Bhai Reliance ko flat profit ho raha hai, aur hum yahan placement ke liye raat ko neend uda rahe hain. Iska matlab jo company itni badi hai, uska bhi growth slow ho gaya toh hum chhote log ke liye kya bacha hai? Bas debt lena seekh jaayenge — Reliance se free training mil rahi hai.",
+        "professional": "Reliance ka profit flat, debt badh raha hai. Humara profit bhi flat, EMI badh raha hai. Difference kya hai? Unhe shareholders ka tension, humein apna ghar ka tension — dono ko same problem, different address."
       }
     },
     {
@@ -309,12 +309,12 @@
       "summary": "The thrust to rural spends in an election year should aid Hindustan Unilever as 40% of its revenue comes from rural areas.A lot will also depend on raw material costs and how HUL handles them",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai HUL ka growth chal raha hai rural areas mein. Election year mein sab khush karenge, raw materials sasta karenege. Aur hum yahan struggling hain ki internship stipend milega ya nahi. Unhe rural India chahiye, humhe toh bas urban paycheck chahiye.",
-        "student_south": "HUL growing because election year mein sab ko free stuff dena padta hai. Rural areas ka 40% revenue — matlab gaon ke bhaiya ko shampoo sasta mil raha, lekin tum college mein still broke ho. Raw material cost badhega toh Maggi aur Lays bhi premium ban jayega. Tera pocket already election year se pehle recession mein hai.",
-        "professional_north": "Bhai HUL rural mein paise phenk raha hai election year mein. Humara company bhi rural target deke baithaa hai — \"badho badho\" bol rahe hain. Raw material mehenga ho gaya toh HUL bhi price badhega, humara salary nahi. Ek hi scenario — customer ka pocket chhota, humara bhaar badhta ja raha hai.",
-        "professional_south": "HUL ka Q3 growth bagge suno — rural mein paise baras rahe hain election year mein. Iska matlab humara company ko bhi rural strategy adopt karna padega. Raw material costs badh gaye toh humara salary cut hona pakka hai. Politics mein paise aaye toh humara pocket se nikle, yeh business logic hai.",
-        "student": "Bhai HUL ka growth chal raha hai rural areas mein. Election year mein sab khush karenge, raw materials sasta karenege. Aur hum yahan struggling hain ki internship stipend milega ya nahi. Unhe rural India chahiye, humhe toh bas urban paycheck chahiye.",
-        "professional": "HUL ka Q3 growth bagge suno — rural mein paise baras rahe hain election year mein. Iska matlab humara company ko bhi rural strategy adopt karna padega. Raw material costs badh gaye toh humara salary cut hona pakka hai. Politics mein paise aaye toh humara pocket se nikle, yeh business logic hai."
+        "student_north": "Bro HUL growth ho rahi hai kyunki election year mein gaon ko free stuff mil raha hai. Hamara PGDM placement ka growth toh rural areas se aayega kya? Nahi na. Isse accha raw materials ki tarah apne aap ko compress karke sasta bech du.",
+        "student_south": "HUL growth off a high base? Bhai, tu jo shampoo use kar raha hai — uska price hi growth hai. Rural areas mein spending badha toh good, par tera placement stipend badega kya? Raw material costs badenge toh tera hostel mess ka dal aur mehnga ho jaega.",
+        "professional_north": "HUL rural mein paise phenk raha hai election year mein. Humara company bhi ek din rural expansion ka sapna dekha tha — phir raw material costs badh gaaye aur sapna bhi badh gaya. HUL karle jo karna hai, humara bonus toh yahi rahega.",
+        "professional_south": "HUL ka rural strategy suno — election year mein gaon ko paise denge, growth badega. Humare company ko bhi yeh idea aaye — \"rural employees ko bonus de do, productivity badega.\" Par nahi, boss kehta hai raw material costs badh gaye, toh aapka salary same rahega. HUL ke paas kaunsi jadu hai jo cost uthate huye bhi grow karte hain?",
+        "student": "Bro HUL growth ho rahi hai kyunki election year mein gaon ko free stuff mil raha hai. Hamara PGDM placement ka growth toh rural areas se aayega kya? Nahi na. Isse accha raw materials ki tarah apne aap ko compress karke sasta bech du.",
+        "professional": "HUL ka rural strategy suno — election year mein gaon ko paise denge, growth badega. Humare company ko bhi yeh idea aaye — \"rural employees ko bonus de do, productivity badega.\" Par nahi, boss kehta hai raw material costs badh gaye, toh aapka salary same rahega. HUL ke paas kaunsi jadu hai jo cost uthate huye bhi grow karte hain?"
       }
     },
     {
@@ -325,12 +325,12 @@
       "summary": "The GST Council allowed flood-hit Kerala to levy a calamity cess of 1% on intra-state sales for two years.Tax experts say the Kerala GST cess takes things from bad to worse&nbsp;",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Kerala mein flood hua toh sab log 1% extra tax denge. Hum toh placement hi nahi mila abhi, tax ki soch bhi nahi kar rahe. Lekin dekh lo — jab hum job karenege, GST se pehle hi 2-3% alag tax hoga. Fir bolenge \"economic slowdown hai bhai.",
-        "student_south": "Kerala flood victims ke liye 1% extra tax. Bhai ye toh \"help\" ka name change hai. Tumhare campus canteen mein already Maggi 50 rupaye hai — wait karo jab ye tax wahan bhi aaye. Disaster recovery + GST = double disaster for our wallets.",
-        "professional_north": "Yaar Kerala mein flood hua toh unhe extra tax laga diya. Hamari company bhi aisi hi sochti hai — quarterly loss hua? Employees ko 1% calamity cut. Pata nahi ye GST wale bhaiyon ko — tax badhane se pehle apni galti dekh lete toh kaisa rehta.",
-        "professional_south": "Bhai, Kerala ne 1% extra tax laga diya flood ke naam pe. Aur humara company supplies Kerala ko bhejta hai. Matlab next quarter mein invoice badh jaayega, boss ko samjhega nahi, aur appraisal mein humein hi blame karenge — \"revenue decline kyu ho gaya?\" GST itna simple tha toh complicated kyun banate ho?",
-        "student": "Bhai Kerala mein flood hua toh sab log 1% extra tax denge. Hum toh placement hi nahi mila abhi, tax ki soch bhi nahi kar rahe. Lekin dekh lo — jab hum job karenege, GST se pehle hi 2-3% alag tax hoga. Fir bolenge \"economic slowdown hai bhai.",
-        "professional": "Bhai, Kerala ne 1% extra tax laga diya flood ke naam pe. Aur humara company supplies Kerala ko bhejta hai. Matlab next quarter mein invoice badh jaayega, boss ko samjhega nahi, aur appraisal mein humein hi blame karenge — \"revenue decline kyu ho gaya?\" GST itna simple tha toh complicated kyun banate ho?"
+        "student_north": "Kerala mein flood hua toh GST ke upar GST laga diya. Bhaiya, ye toh humara placement package wala scene hai — pehle salary cut, phir tax cut, phir internship allowance cut. Eventually kuch nahi bachega bas LinkedIn pe \"growth mindset\" likha hoga.",
+        "student_south": "Bhai Kerala flood relief ke naam pe 1% extra tax? Matlab disaster mein bhi tax bharna padega. Hamare college canteen mein already 5% GST hai — isko bhi calamity cess add karenge kya? Samosa 20 rupaye se 22 ho jaayega, yeh toh real tragedy hai.",
+        "professional_north": "Kerala mein flood hua, toh GST pe 1% extra cess laga diye. Humara Mumbai mein agar baarish ho toh kya hoga — salary pe tax, lunch pe tax, uber pe tax, aur ab calamity cess bhi? Yaar, tax itna badhega ki apna wallet hi flood ho jayega.",
+        "professional_south": "Kerala ko calamity cess chahiye, humko bhi chahiye yaar — har quarter end stress, mental health crash, appraisal season trauma. Ek percent lagao humara salary pe bhi, kam se kam acknowledgment milega. GST pehle se confusing tha, ab VAT ka style bhi aa gaya. Our accountant will need a therapist soon.",
+        "student": "Kerala mein flood hua toh GST ke upar GST laga diya. Bhaiya, ye toh humara placement package wala scene hai — pehle salary cut, phir tax cut, phir internship allowance cut. Eventually kuch nahi bachega bas LinkedIn pe \"growth mindset\" likha hoga.",
+        "professional": "Kerala ko calamity cess chahiye, humko bhi chahiye yaar — har quarter end stress, mental health crash, appraisal season trauma. Ek percent lagao humara salary pe bhi, kam se kam acknowledgment milega. GST pehle se confusing tha, ab VAT ka style bhi aa gaya. Our accountant will need a therapist soon."
       }
     },
     {
@@ -373,7 +373,7 @@
       "category": "Finance",
       "headline": "'I've applied for more than 400 roles' - how young people are facing the job shortage",
       "link": "https://www.bbc.com/news/articles/czx2qll4rlyo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 14:13:00 GMT",
+      "pubDate": "Thu, 28 May 2026 15:56:03 GMT",
       "summary": "The BBC has been hearing from young people who are struggling to find work about how they are tackling the challenge.",
       "hasVoice": false,
       "voices": null
@@ -386,12 +386,12 @@
       "summary": "The gaming giant said the handheld had not changed but the rise reflected \"the current state of component costs\"",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Steam Deck ka price 40% badhaa. \"Component costs\" ke bahane de rahe hain. Mera component cost bhi badh gaya — already broke hoon, ab aur bhi broke hoga. Gaming ka sapna dekhunga ab bas YouTube pe doosron ka gameplay dekh ke.",
-        "student_south": "Bro Steam Deck price 40% hike. Device same hai, components expensive. Exactly like our college canteen — same maggi, 15 rupaye se 25 rupaye. Kuch nahi badla except our wallet. At least Valve is honest about it, unlike that professor who inflates marks criteria every semester.",
-        "professional_north": "Bhai Steam Deck ka price 40% badh gaya, \"component costs\" ki wajah se. Hamare salary tab bhi nahi badha, ab bhi nahi — par boss bolega productivity tool ke liye gaming console khareed lo. Component costs badhe, hamare motivation ke components toh pehle hi khatam hain.",
-        "professional_south": "Bhai, Steam Deck price 40% badh gaya. Company bolti hai — component costs badh gaye. Hamare boss ko bhi yahi bahana pasand aayega next appraisal mein: inflation, market conditions, rising costs. Gaming console ka budget nahin banega, salary aur kya badhega?",
-        "student": "Bhai Steam Deck ka price 40% badhaa. \"Component costs\" ke bahane de rahe hain. Mera component cost bhi badh gaya — already broke hoon, ab aur bhi broke hoga. Gaming ka sapna dekhunga ab bas YouTube pe doosron ka gameplay dekh ke.",
-        "professional": "Bhai, Steam Deck price 40% badh gaya. Company bolti hai — component costs badh gaye. Hamare boss ko bhi yahi bahana pasand aayega next appraisal mein: inflation, market conditions, rising costs. Gaming console ka budget nahin banega, salary aur kya badhega?"
+        "student_north": "Bhai Steam Deck ka price 40% badh gaya. Component costs badh gaye, kehte hain. Mera placement abhi tak confirm nahi aur ye log gaming console ka price badhaa rahe hain. Jab mera salary aayega tabtak inflation Steam Deck ko Ferrari bana dega.",
+        "student_south": "Bro Steam Deck price 40% up because \"component costs.\" Meanwhile my laptop fan already sounds like a helicopter and I haven't even bought it yet. By placement season, gaming consoles will cost more than my first semester fees. Paisa nahi hai even to afford procrastination anymore.",
+        "professional_north": "Bhai Steam Deck ka price 40% badhaa, component costs badh gaye bolke. Hamaara salary toh fixed hai par appraisal mein boss kehta hai \"market conditions tough hain\" — uske liye toh components expensive hain, hamara gaming budget sab se pehle cut hota hai.",
+        "professional_south": "Steam Deck price 40% badhgaya. Company boli — component costs itne badh gaye. Mere boss ko bhi same excuse chahiye na — \"Sir, mere salary nahin badha, bas my cost of living components badh gaye.\" Uska component cost itna badh gaya ki ghar se nikalna padh jayega.",
+        "student": "Bhai Steam Deck ka price 40% badh gaya. Component costs badh gaye, kehte hain. Mera placement abhi tak confirm nahi aur ye log gaming console ka price badhaa rahe hain. Jab mera salary aayega tabtak inflation Steam Deck ko Ferrari bana dega.",
+        "professional": "Steam Deck price 40% badhgaya. Company boli — component costs itne badh gaye. Mere boss ko bhi same excuse chahiye na — \"Sir, mere salary nahin badha, bas my cost of living components badh gaye.\" Uska component cost itna badh gaya ki ghar se nikalna padh jayega."
       }
     },
     {
@@ -402,12 +402,12 @@
       "summary": "King's College London researchers hope the chip will help answer previously unanswerable questions about the most important natural processes.",
       "hasVoice": true,
       "voices": {
-        "student_north": "King's College waalon ko Google ka quantum chip mil gaya. Bade bade questions solve karenge duniya ke. Humein toh abhi assignment ke basic questions ka answer nahi mil raha aur ye log universe decode kar rahe hain. Haan, aur hum placement ke liye apne resume quantum jump laga rahe hain.",
-        "student_south": "King's College got quantum chip, solving mysteries of universe. Meanwhile, our college can't even solve why the WiFi dies during assignment submission deadline. Google giving them supercomputers to answer life's biggest questions, we're asking our professor why he marked us zero on a project we submitted on time.",
-        "professional_north": "Yaar King's College ko Google ka quantum chip mil gaya — wo \"unanswerable questions\" solve karenege. Hamara boss bhi \"unanswerable\" hota hai — kyun deadline badha diya, kyun bonus nahi mila. Agar hum bhi quantum chip le lein toh shayad boss ke decisions samajh aayein... ya fir resignation letter likha jayein faster speed mein.",
-        "professional_south": "Bhai, Google ne quantum chip diya King's College ko — woh \"unanswerable questions\" solve karenge. Meanwhile, mere boss ko simple question poocho — \"Sir, increment kab milega?\" — 5 years se unanswerable hi hai. Google waalon ko quantum computer chahiye, mujhe toh basic calculator boss chaiye.",
-        "student": "King's College waalon ko Google ka quantum chip mil gaya. Bade bade questions solve karenge duniya ke. Humein toh abhi assignment ke basic questions ka answer nahi mil raha aur ye log universe decode kar rahe hain. Haan, aur hum placement ke liye apne resume quantum jump laga rahe hain.",
-        "professional": "Bhai, Google ne quantum chip diya King's College ko — woh \"unanswerable questions\" solve karenge. Meanwhile, mere boss ko simple question poocho — \"Sir, increment kab milega?\" — 5 years se unanswerable hi hai. Google waalon ko quantum computer chahiye, mujhe toh basic calculator boss chaiye."
+        "student_north": "King's College ko Google ka quantum chip mil gaya. Cutting-edge research hone wali hai, universe ke secrets solve honge. Humara toh assignment ka deadline kal hai aur hum abhi sote bhi nahi. Inhe quantum computing mile, humko quantum stress mil gaya.",
+        "student_south": "King's College got Google's quantum chip. Meanwhile tum assignment ka algorithm bhi solve nahi kar rahe, aur ye log \"unanswerable questions\" handle karenge. Tumhara placement ka question bhi unanswerable ho gaya — at least tab famous hoga.",
+        "professional_north": "Arrey, King's College ko Google ka quantum chip mil gaya unanswerable questions solve karne ke liye. Hamare office mein toh regular chip bhi nahi milta — bas boss ke unanswerable questions hain: \"Target kyun nahi poora hua?\" Unke liye toh quantum computing bhi kasar pad jayegi yaar.",
+        "professional_south": "Bhai, King's College ko Google ka quantum chip mil gaya — they're solving mysteries of the universe. Aur humein? We're still trying to solve the mystery of why our quarterly targets keep increasing. Quantum computingkarenge, par hamara salary? That's still in analog mode.",
+        "student": "King's College ko Google ka quantum chip mil gaya. Cutting-edge research hone wali hai, universe ke secrets solve honge. Humara toh assignment ka deadline kal hai aur hum abhi sote bhi nahi. Inhe quantum computing mile, humko quantum stress mil gaya.",
+        "professional": "Bhai, King's College ko Google ka quantum chip mil gaya — they're solving mysteries of the universe. Aur humein? We're still trying to solve the mystery of why our quarterly targets keep increasing. Quantum computingkarenge, par hamara salary? That's still in analog mode."
       }
     },
     {
@@ -418,12 +418,12 @@
       "summary": "The BBC has been contacted by hundreds of users who claimed they had been wrongly banned from the sites.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Meta ko EU se ban padh raha hai, users ka account mar raha hai. Humara toh LinkedIn profile hi permanent ban hone wala hai placements ke baad jab sab alumni ke posts dekh kar depression aa jayega. Atleast Meta ko fine padta hai — hamein toh sirf mental trauma milega.",
-        "student_south": "Meta ko EU se ban warning mil raha hai, meanwhile hamara WhatsApp group admin ne hume ban kar diya assignment deadline miss karne ke liye. Bade companies ko bhi second chances milte hain, hume toh first warning mein hi nikaal diya jaata hai. Unfair system hai bhai.",
-        "professional_north": "Yaar Meta ko EU ignore kar raha hai, banned users ko ignore kar raha hai — bilkul hamari company jaisa! Boss bhi ban kar deta hai humein meetings se, phir ignore karta hai complaints ko. Difference sirf itna — Meta ko fine padega, humko bass apna EMI padega.",
-        "professional_south": "Yaar, Meta ban kar raha hai users ko, EU ko ignore kar raha hai. Mere boss bhi same energy — mujhe kaam deta hai, complaints ignore karta hai. Ek toh tech company hai, ek toh mere manager. Dono ko lagta hai rules unke liye nahi bane.",
-        "student": "Meta ko EU se ban padh raha hai, users ka account mar raha hai. Humara toh LinkedIn profile hi permanent ban hone wala hai placements ke baad jab sab alumni ke posts dekh kar depression aa jayega. Atleast Meta ko fine padta hai — hamein toh sirf mental trauma milega.",
-        "professional": "Yaar, Meta ban kar raha hai users ko, EU ko ignore kar raha hai. Mere boss bhi same energy — mujhe kaam deta hai, complaints ignore karta hai. Ek toh tech company hai, ek toh mere manager. Dono ko lagta hai rules unke liye nahi bane."
+        "student_north": "Bhai Meta ko EU se ban padh gaya Facebook aur Instagram par. Sahi hai. Hamara placement coordinator bhi humko ban kar deta tha LinkedIn se jab status update karte the. Atleast Meta ko Europe mein trouble ho raha. Hamko toh sirf apne resume ko update karne mein hi problem hai.",
+        "student_south": "Meta ban ho raha EU mein, hundreds of people wrongly banned. Bhai, tumhara Instagram follow count dekh — ek din ban ho jaao toh kisi ko pata hi nahi chalega. Atleast Meta ko consistency hai, hum bhi har assignment deadline ban jaate hain.",
+        "professional_north": "Bhai Meta ko EU se ban padne ka dar nahi, par humein apne manager se ban padne ka dar hai. Yeh jo sote hain toh unka account delete ho jaata hai, phir innocent hone ke baad bhi reinstate nahi hota. Meta ko EU challenge kar sakta hai, hum appraisal mein kya kar sakte hain?",
+        "professional_south": "Bhai, Meta ko EU ignore kar raha hai, banned users ko ignore kar rahe hain. Mera boss bhi same energy — jab maine appraisal complaint file kiya, usne mujhe ignore kar diya. Moral of the story: bade companies aur bade bosses — dono ko kisi ki suno nahi. Ek hi farak hai — Meta ke paas lawyers hain, mere paas LinkedIn complaints.",
+        "student": "Bhai Meta ko EU se ban padh gaya Facebook aur Instagram par. Sahi hai. Hamara placement coordinator bhi humko ban kar deta tha LinkedIn se jab status update karte the. Atleast Meta ko Europe mein trouble ho raha. Hamko toh sirf apne resume ko update karne mein hi problem hai.",
+        "professional": "Bhai, Meta ko EU ignore kar raha hai, banned users ko ignore kar rahe hain. Mera boss bhi same energy — jab maine appraisal complaint file kiya, usne mujhe ignore kar diya. Moral of the story: bade companies aur bade bosses — dono ko kisi ki suno nahi. Ek hi farak hai — Meta ke paas lawyers hain, mere paas LinkedIn complaints."
       }
     },
     {
@@ -434,12 +434,12 @@
       "summary": "The longtime Google employee was charged in New York for allegedly breaking insider trading laws.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Google wale ne 1.2 million banaye insider trading se. Hum yahan placement ke liye raat bhar case studies padh rahe hain, aur ye banda Google mein baithke stocks pe satta laga raha tha. Iska toh insider information tha — humara toh insider information bhi nahi hai ki next semester mein kya padhna padega.",
-        "student_south": "Bhai Google ka employee insider trading kar raha hai 1.2 million ka. Aur tu yahan assignment submit karne ke liye ChatGPT se data chura raha hai. Iska toh jail, tera toh just fail. Even scamming mein tu average hai yaar.",
-        "professional_north": "Yaar, Google ka employee 1.2 million uda gaya insider trading se. Humara boss toh apne aap ko insider samajhta hai — salary cuts ke baare mein sirf usse pata hota hai, humein baad mein pata chalta hai. Farak bas itna hai — woh jail jaayega, boss toh promotion le jayega.",
-        "professional_south": "Arre, Google ka babu ne insider trading karke 1.2 million bana liya. Humara boss ke paas insider information hai — humara salary kaisa badhega, kaab badhega. Usne paise banaye, hum sirf stress banate hain aur depression ke shares trade karte hain.",
-        "student": "Bhai Google wale ne 1.2 million banaye insider trading se. Hum yahan placement ke liye raat bhar case studies padh rahe hain, aur ye banda Google mein baithke stocks pe satta laga raha tha. Iska toh insider information tha — humara toh insider information bhi nahi hai ki next semester mein kya padhna padega.",
-        "professional": "Arre, Google ka babu ne insider trading karke 1.2 million bana liya. Humara boss ke paas insider information hai — humara salary kaisa badhega, kaab badhega. Usne paise banaye, hum sirf stress banate hain aur depression ke shares trade karte hain."
+        "student_north": "Bhai Google ke employee ne 1.2 million banaye internal data se. Hum yahan assignment submit karte waqt plagiarism ke liye DP change karte hain, aur ye saala 1.2 million le ke baithta hai. Placement package dekh ke hum sochte the ki Google mein hi sab mil jayega — pata nahi tha insider trading bhi part of the package hai.",
+        "student_south": "Bhai Google insider trading scam. Guy made 1.2 million betting on company secrets. Meanwhile tu assignment submit karte karte already fail ho gaya — aur tere paas koi secret bhi nahi hai sirf depression hai. Tera insider info: placement season mein toh sab fail honge.",
+        "professional_north": "Yaar Google ke employee ne internal data se 1.2 million kamaye. Humara boss internal data use karke sirf humara salary data dekh raha hai aur woh bhi reduce karne ke liye. Google wala toh jail jayega, humara boss promotion payega.",
+        "professional_south": "Yaar, Google employee ne insider trading karke 1.2 million kamaya. Hum yahan apna salary slip dekh ke rote hain, aur yeh log company secrets bechke crores bana rahe hain. Boss ko pata chale toh humara \"performance bonus\" cancel ho jayega—aur hum toh kuch gadbad ki baat soch bhi nahi sakte!",
+        "student": "Bhai Google ke employee ne 1.2 million banaye internal data se. Hum yahan assignment submit karte waqt plagiarism ke liye DP change karte hain, aur ye saala 1.2 million le ke baithta hai. Placement package dekh ke hum sochte the ki Google mein hi sab mil jayega — pata nahi tha insider trading bhi part of the package hai.",
+        "professional": "Yaar, Google employee ne insider trading karke 1.2 million kamaya. Hum yahan apna salary slip dekh ke rote hain, aur yeh log company secrets bechke crores bana rahe hain. Boss ko pata chale toh humara \"performance bonus\" cancel ho jayega—aur hum toh kuch gadbad ki baat soch bhi nahi sakte!"
       }
     },
     {
@@ -450,12 +450,12 @@
       "summary": "Custard apple plants are prized for their hardiness but exporting their delicate fruit is difficult.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai custard apple export nahi ho sakta because delicate fruit hai. Mera placement bhi utna hi delicate hai — thoda sa bad interview aur toot jaata hoon. Dono ka same problem hai: fragile products, tough logistics, aur mera bank account ke liye kaafi risky.",
-        "student_south": "Bhai custard apple export problem aa gaya. Fruit itna delicate hai ki shipping mein survive nahi karta. Meanwhile our assignment submissions are so fragile — ek internet issue aur marks mar jate hain. Atleast custard apple ki excuse hai, humara kya?",
-        "professional_north": "Yaar custard apple export mein problem hai kyunki fruit delicate hai. Bilkul meri salary jaisi — hardy to hai, par handling mein toot jati hai. Boss ko bhejna padhe client ko, pehle se hi frustration, phir damage ho gaya to blame mere upar. Ek hi solution — ghar pe khaa lo, bahar mat bhej.",
-        "professional_south": "Bhai, custard apple hard hai lekin fruit delicate hai — exactly like office politics. Boss ko ego strong, par decisions itne fragile ki ek email se toot jate hain. Export difficult ho toh local hi khaa lo. Waise bhi, apna salary export nahi ho raha, toh custard apple ka kya.",
-        "student": "Bhai custard apple export nahi ho sakta because delicate fruit hai. Mera placement bhi utna hi delicate hai — thoda sa bad interview aur toot jaata hoon. Dono ka same problem hai: fragile products, tough logistics, aur mera bank account ke liye kaafi risky.",
-        "professional": "Bhai, custard apple hard hai lekin fruit delicate hai — exactly like office politics. Boss ko ego strong, par decisions itne fragile ki ek email se toot jate hain. Export difficult ho toh local hi khaa lo. Waise bhi, apna salary export nahi ho raha, toh custard apple ka kya."
+        "student_north": "Bhai custard apple export difficult hai toh imagine placement ki difficulty. Hum toh fruit se bhi zyada delicate hain — chhota sa interview mein hi bruise ho jaate hain. Ab samjha why companies don't want to export us abroad? Risk hai.",
+        "student_south": "Bhai custard apple export problem ho raha hai. Meanwhile our college canteen sells one for 40 rupees and it's always half rotten. These farmers struggling with \"delicate fruit\" — hamare professors ki padhane ka tareeka bhi delicate hai, kisi ko samajh nahi aata.",
+        "professional_north": "Bhai custard apple export difficult hai toh humara salary increase bhi utna hi mushkil hai — dono delicate hain. Boss ko bhi hardy banana padta hai toh woh aur demanding ho gaya. Isse better tha agar hum custard apple ke plant hote, kam se kam hardy toh hote.",
+        "professional_south": "Custard apple export difficult hai because fruit delicate hai. Mere career bhi same — hardy requirement list mein hai, but promotion export karte time fragile ho jaata hai. Boss kehta hai — \"Potential hai tumhara\" — par delivery time toh kharab ho jaata hai.",
+        "student": "Bhai custard apple export difficult hai toh imagine placement ki difficulty. Hum toh fruit se bhi zyada delicate hain — chhota sa interview mein hi bruise ho jaate hain. Ab samjha why companies don't want to export us abroad? Risk hai.",
+        "professional": "Custard apple export difficult hai because fruit delicate hai. Mere career bhi same — hardy requirement list mein hai, but promotion export karte time fragile ho jaata hai. Boss kehta hai — \"Potential hai tumhara\" — par delivery time toh kharab ho jaata hai."
       }
     },
     {
@@ -505,66 +505,18 @@
     },
     {
       "category": "Sports",
-      "headline": "Williams in discussions about potential return at Queen's",
-      "link": "https://www.bbc.com/sport/tennis/articles/c5y7zn52yexo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 12:40:55 GMT",
-      "summary": "Serena Williams is in discussions about a potential return to competitive tennis at Queen's Club next month.",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Serena Williams comeback kar rahi hai Queen's Club mein. Hum yahan placements ke liye comeback ka wait kar rahe hain. Atleast uska comeback sure hai — hamara toh interview mein hi elimination ho jaata hai.",
-        "student_south": "Serena Williams return kar rahi hai competitive tennis mein. Meanwhile tu placement ke liye interview mein return hi nahi kar paya. She's making comebacks, tu abhi first time ka wait kar raha hai. Life is unfair, bhai.",
-        "professional_north": "Serena wapas court mein aa rahi hai after break. Hum bhi chahte hain apna break lein but boss ne kaha \"nahi yaar, appraisal cycle chal raha hai.\" Isko dekho — champion baad mein sochti hai, hum toh pehle se hi sochte hain aur break mil hi nahi jata.",
-        "professional_south": "Serena Williams comeback after break — meanwhile I'm still waiting for my comeback from this project deadline. She's taking time off, planning her return strategically. Me? Boss thinks I'm \"on break\" if I blink twice. At least Serena gets to choose when she plays next. I just get chosen — for the next meeting.",
-        "student": "Serena Williams comeback kar rahi hai Queen's Club mein. Hum yahan placements ke liye comeback ka wait kar rahe hain. Atleast uska comeback sure hai — hamara toh interview mein hi elimination ho jaata hai.",
-        "professional": "Serena Williams comeback after break — meanwhile I'm still waiting for my comeback from this project deadline. She's taking time off, planning her return strategically. Me? Boss thinks I'm \"on break\" if I blink twice. At least Serena gets to choose when she plays next. I just get chosen — for the next meeting."
-      }
-    },
-    {
-      "category": "Sports",
-      "headline": "Why Gordon for Barcelona & what does it mean for Rashford?",
-      "link": "https://www.bbc.com/sport/football/articles/cn8pqnq3w7no?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 13:06:54 GMT",
-      "summary": "Anthony Gordon's goal return in Europe coupled with his speed, aggression and work ethic suggests there is a lot more to come from the England international.",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai Gordon ka speed dekh ke Rashford ko anxiety attack aa gaya. Isme toh Gordon placement mil gaya Barcelona mein — humara toh speed itna slow hai ki campus interview mein HR bhi sleep mode mein chala jaata hai.",
-        "student_south": "Bhai Gordon scored, Rashford struggling. Barcelona ka naya toy, Manchester ka purana toy. Relatable na? You also perform in college assignments, but placement companies still scroll past. Sometimes new profile pic in LinkedIn is enough, actual skills optional.",
-        "professional_north": "Yaar Gordon ko Barcelona le gaya, aur Rashford soch raha hai kya hoga uska. Bilkul hum jaise hain — ek dusra transfer hota dekh rahe ho apne company mein, aur socha jaa raha hai ki humara next kaunsa company hai. Speed, aggression, work ethic — inko bonus se zyada pata hi nahi.",
-        "professional_south": "Arrey, Gordon speed aur aggression dikhaa rahe hain. Rashford ko bench ho gaya. Yeh dekh — new player aaye, purane ko sideline kar diya. Exactly jaisa hamara office mein hota hai. Naya fresher aaye toh senior ka appraisal hi cancel ho jaata hai.",
-        "student": "Bhai Gordon ka speed dekh ke Rashford ko anxiety attack aa gaya. Isme toh Gordon placement mil gaya Barcelona mein — humara toh speed itna slow hai ki campus interview mein HR bhi sleep mode mein chala jaata hai.",
-        "professional": "Arrey, Gordon speed aur aggression dikhaa rahe hain. Rashford ko bench ho gaya. Yeh dekh — new player aaye, purane ko sideline kar diya. Exactly jaisa hamara office mein hota hai. Naya fresher aaye toh senior ka appraisal hi cancel ho jaata hai."
-      }
-    },
-    {
-      "category": "Sports",
       "headline": "Hampered Sinner out in second round in seismic shock",
       "link": "https://www.bbc.com/sport/tennis/articles/c3d2yg8342xo?at_medium=RSS&at_campaign=rss",
       "pubDate": "Thu, 28 May 2026 14:33:47 GMT",
       "summary": "Jannik Sinner's hopes of winning a first French Open to complete a career Grand Slam are over for another year after an injury-hampered five-set defeat by Juan Manuel Cerundolo in the second round.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Sinner ko injury ne nikaal diya French Open se. Mera toh placement interviews mein injury aa gaya — confidence ka. Atleast uska next year hai, mera toh next batch ke liye wait karna padega. Injury se toh atleast medical leave milta hai, placement rejection ka kya excuse dunga ghar par?",
-        "student_south": "Bhai Sinner ko injury ho gaya French Open mein. Second round mein out. Yeh toh hum hain — assignments ke injuries se placement round mein hi out ho jayenge. Atleast Sinner ke paas next year hai, hum toh final year mein hi retire ho jayenge.",
-        "professional_north": "Bhai Sinner injury se out ho gaya French Open se. Humara bhi same story hai — Monday ko injury (hangover), Tuesday ko fever, Wednesday ko \"work from home\" excuse... aur phir appraisal mein boss bolega 'commitment nahi hai tumhare mein.' Grand Slam toh door, promotion ka toh khayal hi chhod de.",
-        "professional_south": "Bro, Sinner injury se out ho gaya second round mein. Humein bhi injuries hote hain — called \"deadline injuries\" and \"boss-mood injuries.\" Woh toh recover kar payega, humara career recovery kab hoga? At least uska Grand Slam chase continue rahega next year, hamara appraisal toh second round mein hi khatam ho jaata hai.",
-        "student": "Bhai Sinner ko injury ne nikaal diya French Open se. Mera toh placement interviews mein injury aa gaya — confidence ka. Atleast uska next year hai, mera toh next batch ke liye wait karna padega. Injury se toh atleast medical leave milta hai, placement rejection ka kya excuse dunga ghar par?",
-        "professional": "Bro, Sinner injury se out ho gaya second round mein. Humein bhi injuries hote hain — called \"deadline injuries\" and \"boss-mood injuries.\" Woh toh recover kar payega, humara career recovery kab hoga? At least uska Grand Slam chase continue rahega next year, hamara appraisal toh second round mein hi khatam ho jaata hai."
-      }
-    },
-    {
-      "category": "Sports",
-      "headline": "Clarke signs on until 2030 World Cup - a gamble SFA had to take?",
-      "link": "https://www.bbc.com/sport/football/articles/c4gvy1lg5glo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 10:55:53 GMT",
-      "summary": "Head coach Steve Clarke signs a new Scotland contract to cover the next two World Cups and the 2028 Euros.",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai Scotland ka coach 2030 tak sign kar gaya. Job security dekh raha hoon uska — aur humara placement coordinator abhi tak reply nahi kiya. Yeh toh unfair hai. Coach ko guarantee, humein internship letter bhi nahi. FIFA World Cup mein jaayega, hum assignment submission date mein.",
-        "student_south": "Bhai Steve Clarke signed until 2030. Scotland ka coach 6 saal guarantee le gaya. Meanwhile tu placement ke liye 6 months se sweat kar raha hai aur profile bhi update nahi hua. Kisi ko ek World Cup chahiye — tujhe ek job chahiye. Logic different.",
-        "professional_north": "Yaar Steve Clarke ne 2030 tak ka contract sign kar diya. Humara boss bhi utni confidence se apne aap ko re-sign kar deta toh hum bhi job security ke sapne dekh paate. Lekin iska guarantee toh tab tak ki appraisal bhi nahi aa jaati.",
-        "professional_south": "Arre, Steve Clarke signed till 2030? Madness! Our boss can't commit to next quarter, yeh aadmi dou World Cup guarantee de raha hai. Isko kya confidence hai — hum toh apna appraisal letter tak pakka nahi kar paye, Scotland ka future plan kar raha hai. Iska job security humse bada hai, guaranteed.",
-        "student": "Bhai Scotland ka coach 2030 tak sign kar gaya. Job security dekh raha hoon uska — aur humara placement coordinator abhi tak reply nahi kiya. Yeh toh unfair hai. Coach ko guarantee, humein internship letter bhi nahi. FIFA World Cup mein jaayega, hum assignment submission date mein.",
-        "professional": "Arre, Steve Clarke signed till 2030? Madness! Our boss can't commit to next quarter, yeh aadmi dou World Cup guarantee de raha hai. Isko kya confidence hai — hum toh apna appraisal letter tak pakka nahi kar paye, Scotland ka future plan kar raha hai. Iska job security humse bada hai, guaranteed."
+        "student_north": "Sinner ko injury ne nikaal diya French Open se. Bhai, yeh dekh kar mujhe apna placement season yaad aa gaya — ek choti si injury (failed assignment) aur poora Grand Slam khatam. Ab woh bhi injured, main bhi mentally. Bas farak yeh hai ki uska comeback million mein hoga, mera lakhs mein.",
+        "student_south": "Bhai Sinner ko injury ho gaya aur bahar. Tera toh assignment submission date se injury ho gaya — still submitting. Atleast Sinner ka excuse medical certified hai, tera toh \"sir wifi down tha\" wala excuse hai. Grand Slam vs grand zero — pick your struggle.",
+        "professional_north": "Bhai Sinner ko injury ne nikaal diya second round se. Hum bhi same situation mein hain — project mein injury lag gayi (deadline ki), ab second round tak bhi nahi jaa paayenge. Boss ko Grand Slam chahiye, hume first round ka bonus bhi nahi milega.",
+        "professional_south": "Bhai, Sinner ko injury se second round mein nikaal diya. Mera bhi same situation — project deadline ke karan \"injury\" ho gayi, boss ne second round mein nikaal diya. Iska Grand Slam pending hai, mera appraisal pending hai. Dono injured, dono out.",
+        "student": "Sinner ko injury ne nikaal diya French Open se. Bhai, yeh dekh kar mujhe apna placement season yaad aa gaya — ek choti si injury (failed assignment) aur poora Grand Slam khatam. Ab woh bhi injured, main bhi mentally. Bas farak yeh hai ki uska comeback million mein hoga, mera lakhs mein.",
+        "professional": "Bhai, Sinner ko injury se second round mein nikaal diya. Mera bhi same situation — project deadline ke karan \"injury\" ho gayi, boss ne second round mein nikaal diya. Iska Grand Slam pending hai, mera appraisal pending hai. Dono injured, dono out."
       }
     },
     {
@@ -575,22 +527,13 @@
       "summary": "Manchester United are prioritising central midfield signings this summer under Michael Carrick.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Manchester United midfield fix kar rahe hain, aur mere placements abhi tak hole mein hai. Carrick signing laa raha hai, mera recruiter block kar gaya WhatsApp pe. Atleast United ka future secured hai — mine toh financial hole ban gaya hai.",
-        "student_south": "Man Utd looking for midfielders. Meanwhile our college cricket team can't even find 11 players who show up on match day. Carrick's searching for talent — our placement officer is just searching for excuses. At least Manchester United has a budget. Hum toh just hope kisi ko hamare resume dikhe.",
-        "professional_north": "Bhai, Carrick bhi apne hole bharne ke liye naya banda hire kar raha hai. Humara boss bhi same karta hai — mujhe fire karke mere jagah do naye hire karega, phir bhi kaam same rahega aur salary half. Man United ke paas atleast budget hai, humara office sirf budget cuts hai.",
-        "professional_south": "Bro, Man United looking for midfield fixes. Meanwhile, my boss looking for \"bandwidth optimization\" — which means same work, fewer people. Carrick at least getting budget to fill holes. Mujhe toh appraisal meeting mein sirf \"we're exploring options\" milega. Sports mein restructuring, office mein just suffering.",
-        "student": "Bhai Manchester United midfield fix kar rahe hain, aur mere placements abhi tak hole mein hai. Carrick signing laa raha hai, mera recruiter block kar gaya WhatsApp pe. Atleast United ka future secured hai — mine toh financial hole ban gaya hai.",
-        "professional": "Bro, Man United looking for midfield fixes. Meanwhile, my boss looking for \"bandwidth optimization\" — which means same work, fewer people. Carrick at least getting budget to fill holes. Mujhe toh appraisal meeting mein sirf \"we're exploring options\" milega. Sports mein restructuring, office mein just suffering."
+        "student_north": "Bhai Man Utd ka midfield itna broken hai jaise humara placement cell. Carrick aake naya signing lane wala hai. Hum bhi naye \"signing\" ka wait kar rahe hain — apni first job ka. Atleast Carrick ke paas budget hai, hamara placement coordinator to bas motivational speeches deta hai.",
+        "student_south": "Bhai Man United ka midfield hole fix ho raha hai. Tum bhi apna hole fix kar — that assignment due Monday. Carrick signing players, tu signing extension on thy life expectancy. At least United has a plan yaar.",
+        "professional_north": "Yaar, Man Utd bhi apne team ka hole fill kar raha hai midfield mein. Humare company mein bhi ek senior chhod gaya — ab hum uska kaam kar rahe hain aur salary same. Michael Carrick toh naya signing le raha hai, humara boss toh humse hi naya kaam nikal raha hai.",
+        "professional_south": "Carrick searching for midfield holes in Man Utd, meanwhile my boss searching for productivity holes in my work. Both futile quests, yaar. At least Carrick can spend money to fix it — I'm here asking for increment and getting \"let's discuss in appraisal season.\" Same energy, different budget.",
+        "student": "Bhai Man Utd ka midfield itna broken hai jaise humara placement cell. Carrick aake naya signing lane wala hai. Hum bhi naye \"signing\" ka wait kar rahe hain — apni first job ka. Atleast Carrick ke paas budget hai, hamara placement coordinator to bas motivational speeches deta hai.",
+        "professional": "Carrick searching for midfield holes in Man Utd, meanwhile my boss searching for productivity holes in my work. Both futile quests, yaar. At least Carrick can spend money to fix it — I'm here asking for increment and getting \"let's discuss in appraisal season.\" Same energy, different budget."
       }
-    },
-    {
-      "category": "Sports",
-      "headline": "The 7,000 minutes difference - why PSG could have edge over Arsenal",
-      "link": "https://www.bbc.com/sport/football/articles/c99l2kpmgdjo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 09:14:01 GMT",
-      "summary": "Why Paris St-Germain will be going into Saturday's Champions League final against Arsenal with one advantage.",
-      "hasVoice": false,
-      "voices": null
     },
     {
       "category": "Sports",
@@ -598,6 +541,72 @@
       "link": "https://www.bbc.com/sport/football/articles/cd6ped58nv4o?at_medium=RSS&at_campaign=rss",
       "pubDate": "Thu, 28 May 2026 14:31:15 GMT",
       "summary": "For the second season in a row, the Premier League will have nine teams in Europe - and that will have knock-on effects domestically.",
+      "hasVoice": true,
+      "voices": {
+        "student_north": "Bhai nine teams Europe mein khel rahe hain, aur yahan hum nine assignments submit nahi kar paye. Inko fixture clash ho raha hai, humko placement clash ho raha hai. Atleast unhe travel allowance milega — hum toh flight booking ke liye loan lena padega job interview ke liye.",
+        "student_south": "Bhai nine European teams matlab nine teams ki fixture overload. Same way our college has nine pending assignments and I'm pretending to study for one. Everyone's tired, everyone's injured (mentally), and York City is basically our placement status — existing but not relevant.",
+        "professional_north": "Yaar, nine European teams matlab hafte mein do matches, injuries badh jayengi, aur phir boss bolega \"why is your performance dipping?\" Bhai, tu bhi nine projects handle kar raha hai — kya teri performance na girega? Aur York City jaise hum bhi second division mein aa jayenge apne company mein.",
+        "professional_south": "Bhai, nine teams in Europe means Premier League matches every three days. Like my sprint deadlines — back-to-back, no breathing time. Boss will also demand \"nine projects simultaneously\" logic. At least footballers get paid for overtime. Hum? Sirf OT diary mein likha hota hai.",
+        "student": "Bhai nine teams Europe mein khel rahe hain, aur yahan hum nine assignments submit nahi kar paye. Inko fixture clash ho raha hai, humko placement clash ho raha hai. Atleast unhe travel allowance milega — hum toh flight booking ke liye loan lena padega job interview ke liye.",
+        "professional": "Bhai, nine teams in Europe means Premier League matches every three days. Like my sprint deadlines — back-to-back, no breathing time. Boss will also demand \"nine projects simultaneously\" logic. At least footballers get paid for overtime. Hum? Sirf OT diary mein likha hota hai."
+      }
+    },
+    {
+      "category": "Sports",
+      "headline": "Why Gordon for Barcelona & what does it mean for Rashford?",
+      "link": "https://www.bbc.com/sport/football/articles/cn8pqnq3w7no?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Thu, 28 May 2026 13:06:54 GMT",
+      "summary": "Anthony Gordon's goal return in Europe coupled with his speed, aggression and work ethic suggests there is a lot more to come from the England international.",
+      "hasVoice": true,
+      "voices": {
+        "student_north": "Gordon ko Barcelona le gaya, Rashford abhi bhi Manchester mein baitha hai. Hum bhi yahi haal hain — kisi ne placement offer nahi diya, par CV mein \"speed, aggression, work ethic\" likha hai. Interview mein bhi Gordon jaise goal maarna padta hai, par hum toh blank sheet hain.",
+        "student_south": "Bhai Gordon scoring goals abroad. Rashford worried. Meanwhile tu assignment deadline miss kar ke \"speed and aggression\" se professor ko face kar raha hai. Barcelona mein players perform — tu placement interview mein perform kar. Dono same pressure, tu sirf salary nahi milega.",
+        "professional_north": "Yaar Gordon ko dekh ke lag raha hai Barcelona mein bhi performance bonus milega jabki humara company mein appraisal ka naam tak nahi sunate. Rashford ki tension dekh — ek naya aadmi aaya aur purana already worried ho gaya. Bhai, hamare office mein bhi yahi hota hai, naye intern ke liye senior ka EMI badhta hai.",
+        "professional_south": "Gordon scored goals, showed speed, aggression, work ethic — basically did everything boss asks from us daily. Meanwhile Rashford sitting on bench wondering why his \"potential\" isn't enough. Bhai, potential doesn't pay EMI — performance does. Gordon samjh gaya, Rashford abhi pending appraisal mein hai.",
+        "student": "Gordon ko Barcelona le gaya, Rashford abhi bhi Manchester mein baitha hai. Hum bhi yahi haal hain — kisi ne placement offer nahi diya, par CV mein \"speed, aggression, work ethic\" likha hai. Interview mein bhi Gordon jaise goal maarna padta hai, par hum toh blank sheet hain.",
+        "professional": "Gordon scored goals, showed speed, aggression, work ethic — basically did everything boss asks from us daily. Meanwhile Rashford sitting on bench wondering why his \"potential\" isn't enough. Bhai, potential doesn't pay EMI — performance does. Gordon samjh gaya, Rashford abhi pending appraisal mein hai."
+      }
+    },
+    {
+      "category": "Sports",
+      "headline": "TT competitor killed in qualifying crash",
+      "link": "https://www.bbc.com/news/articles/c775y2pn0llo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Thu, 28 May 2026 14:38:03 GMT",
+      "summary": "Daniel Ingham, 33, died in the crash during qualifying for the Isle of Man TT on Wednesday.",
+      "hasVoice": true,
+      "voices": {
+        "student_north": "Bhai, TT racer crash mein mar gaya. 33 saal ka tha. Hum yahan placement ke stress mein sote nahi hain, aur yeh log 200 mph pe bike chala rahe hain. Hamare death toh bas semester end tak delayed hai — unka toh express delivery tha.",
+        "student_south": "Bhai, 33 saal ka aadmi gone in seconds. And we're stressed about placement interviews. This guy was living—actually racing. Perspective reset ho gaya. Life itna fragile hai, yet hum assignment deadlines se overthink karte hain. Sad man, really.",
+        "professional_north": "Yaar, 33 saal ka aadmi apna passion chase kar raha tha aur chala gaya. Humein to boss apne cubicle mein hi marna hai — atleast AC mein hoga. Life itni short hai, aur hum yahan quarterly targets ke liye apni jaan dे rahe hain. Kya baat hai.",
+        "professional_south": "Yaar, 33 years old. Peak of career. One bad day and finished. Atleast TT racer ka passion tha — humein toh apna boss ke mood swings se hi crash ho jaata hai daily. Aur humara severance package toh utna bhi guaranteed nahi. Dark times, boss, dark times.",
+        "student": "Bhai, TT racer crash mein mar gaya. 33 saal ka tha. Hum yahan placement ke stress mein sote nahi hain, aur yeh log 200 mph pe bike chala rahe hain. Hamare death toh bas semester end tak delayed hai — unka toh express delivery tha.",
+        "professional": "Yaar, 33 years old. Peak of career. One bad day and finished. Atleast TT racer ka passion tha — humein toh apna boss ke mood swings se hi crash ho jaata hai daily. Aur humara severance package toh utna bhi guaranteed nahi. Dark times, boss, dark times."
+      }
+    },
+    {
+      "category": "Sports",
+      "headline": "Wales' fastest woman blocked from Commonwealth Games",
+      "link": "https://www.bbc.com/sport/athletics/articles/ckgp7d346m7o?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Thu, 28 May 2026 10:43:46 GMT",
+      "summary": "Hannah Brier calls for a change to selection timings for Team Wales after missing out on her last Commonwealth Games this summer.",
+      "hasVoice": false,
+      "voices": null
+    },
+    {
+      "category": "Sports",
+      "headline": "Williams in talks about potential return at Queen's",
+      "link": "https://www.bbc.com/sport/tennis/articles/c5y7zn52yexo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Thu, 28 May 2026 12:40:55 GMT",
+      "summary": "Serena Williams is in discussions about a potential return to competitive tennis at Queen's Club next month.",
+      "hasVoice": false,
+      "voices": null
+    },
+    {
+      "category": "Sports",
+      "headline": "The 7,000 minutes difference - why PSG could have edge over Arsenal",
+      "link": "https://www.bbc.com/sport/football/articles/c99l2kpmgdjo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Thu, 28 May 2026 09:14:01 GMT",
+      "summary": "Why Paris St-Germain will be going into Saturday's Champions League final against Arsenal with one advantage.",
       "hasVoice": false,
       "voices": null
     },
@@ -612,19 +621,10 @@
     },
     {
       "category": "Sports",
-      "headline": "TT competitor killed in qualifying crash",
-      "link": "https://www.bbc.com/news/articles/c775y2pn0llo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 14:38:03 GMT",
-      "summary": "Daniel Ingham, 33, died in the crash during qualifying for the Isle of Man TT on Wednesday.",
-      "hasVoice": false,
-      "voices": null
-    },
-    {
-      "category": "Sports",
-      "headline": "Palace wait on Iraola with Lampard among plan Bs",
-      "link": "https://www.bbc.com/sport/football/articles/crlpw74l138o?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 08:32:03 GMT",
-      "summary": "Crystal Palace are waiting on an answer from Andoni Iraola but Coventry boss Frank Lampard could be a plan B for the Conference League winners.",
+      "headline": "Clarke's new Scotland deal - easy decision or gamble SFA had to take?",
+      "link": "https://www.bbc.com/sport/football/articles/c4gvy1lg5glo?at_medium=RSS&at_campaign=rss",
+      "pubDate": "Thu, 28 May 2026 10:55:53 GMT",
+      "summary": "Head coach Steve Clarke signs a new Scotland contract to cover the next two World Cups and the 2028 Euros.",
       "hasVoice": false,
       "voices": null
     },
@@ -636,12 +636,12 @@
       "summary": "The political discourse surrounding the Uniform Civil Code (UCC) has gained momentum in Meghalaya after the Assam Assembly cleared the UCC Bill, prompting renewed discussions over its possible implications for tribal states in the Northeast.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai, Assam ne UCC bill pass kar diya. Abhi Meghalaya soch raha hai copy kare ya nahi. Jaise hum assignments copy karte hain — ek karta hai, baaki dekhte hain professor kitna notice karega. Politicians ke paas bhi original ideas nahi hain.",
-        "student_south": "Bhai UCC aa gaya Northeast mein. Matlab ab Meghalaya waale socha rahe honge \"yeh sab kya ho raha hai.\" Tera assignment deadline extend hona chahiye, par government laws extend nahi hote. At least placement wale confusion toh nahi hoga — sirf personal life ka hi complete chaos hoga.",
-        "professional_north": "Yaar, Assam ne UCC pass kar diya aur ab Meghalaya bhi soch raha hai. Humari company mein bhi aise hota hai — ek department kuch naya rule banata hai, baaki sab ko bhi follow karna padta hai. Freedom toh bas Excel sheets mein bachchon ki tarah chhoti hoti hai.",
-        "professional_south": "Yaar, Assam ne UCC pass kar diya, ab Meghalaya bhi sochne mein padh gaya. Hamara Northeast office mein bhi yahi ho raha hai — ek department ne policy change kiya, sab departments ko panic attack aa gaya. HR ko call karo, \"Arre, hamara rules bhi change hone wale hain kya?",
-        "student": "Bhai, Assam ne UCC bill pass kar diya. Abhi Meghalaya soch raha hai copy kare ya nahi. Jaise hum assignments copy karte hain — ek karta hai, baaki dekhte hain professor kitna notice karega. Politicians ke paas bhi original ideas nahi hain.",
-        "professional": "Yaar, Assam ne UCC pass kar diya, ab Meghalaya bhi sochne mein padh gaya. Hamara Northeast office mein bhi yahi ho raha hai — ek department ne policy change kiya, sab departments ko panic attack aa gaya. HR ko call karo, \"Arre, hamara rules bhi change hone wale hain kya?"
+        "student_north": "Bhai Assam ne UCC pass kar diya, ab Meghalaya bhi review kar raha hai. Tribal laws, personal laws — sab change hone wala. Hamara toh already confused hain marriage ke liye — ab government bhi confuse kar dega. Placement mil jaaye, phir sochenge ki kis state mein settle karein.",
+        "student_south": "Assam passed UCC bill, Meghalaya soch raha hai copy-paste kare ya nahi. Bhai, tumhare college mein bhi yahi hota hai — ek assignment solution viral hota hai, sab review karte hain whether copy-paste karein. Difference: Assam ke paas power hai, tumhare paas plagiarism checker ka fear.",
+        "professional_north": "Yaar Meghalaya mein civil code ka drama shuru ho gaya. Iska matlab hamara office mein bhi ek aur rulebook add hoga — pehle se hi itne policies hain ki kaunsa follow kare samajh nahi aata. Boss ko ek aur excuse mil gaya apne tareeke se kaam karane ke liye.",
+        "professional_south": "Yaar, Assam ne UCC bill pass kiya, ab Meghalaya bhi \"review\" kar raha hai. Matlab jab CEO ne policy change kiya, sab departments ko follow karna padta hai na — chahe tumhara codebase compatible ho ya nahi. Apna company bhi aisa hi karte hain — upar se order, neeche sab chaos.",
+        "student": "Bhai Assam ne UCC pass kar diya, ab Meghalaya bhi review kar raha hai. Tribal laws, personal laws — sab change hone wala. Hamara toh already confused hain marriage ke liye — ab government bhi confuse kar dega. Placement mil jaaye, phir sochenge ki kis state mein settle karein.",
+        "professional": "Yaar, Assam ne UCC bill pass kiya, ab Meghalaya bhi \"review\" kar raha hai. Matlab jab CEO ne policy change kiya, sab departments ko follow karna padta hai na — chahe tumhara codebase compatible ho ya nahi. Apna company bhi aisa hi karte hain — upar se order, neeche sab chaos."
       }
     },
     {
@@ -652,12 +652,12 @@
       "summary": "Dharmendra Pradhan said that, in view of logistical and security considerations, particularly weather conditions in June, it has been decided to involve the Indian Air Force in the secure transportation of question papers.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai, Air Force laga diya question papers ke liye. Humara assignment submission ka liye toh professor ko WhatsApp se bhi nahi milta, aur NEET ke liye fighter jets bhej rahe hain. Ek toh hamara placement papers secure hain ya bas lost in transit ka bahaana denge?",
-        "student_south": "Bhai Air Force ko NEET papers transport karne bhej rahe hain. Matlab exam itna serious hai ki fighter jets lagenge. Tu assignment submit kar raha hai email se, aur government papers le jayega helicopter mein. Different league entirely.",
-        "professional_north": "Bhai, Air Force ko NEET papers transport karne ke liye bhej diya. Humein to apna laptop office se ghar le jaane ke liye permission nahi milti, aur ye log fighter jets mein exam papers bhej rahe hain. Hamara exam toh ghar pe baithe clear karna chahiye — boss ke liye bhi, aur NEET aspirants ke liye bhi.",
-        "professional_south": "Bhai, Air Force ko NEET papers transport karne ke liye rocket science chahiye? Meanwhile, mere manager ko weekly report bhejne ke liye reminder chahiye. Government ne fighter jets use kiye papers ke liye, humein helicopter chahiye boss ko office bhejne ke liye — at least on time reach hoga.",
-        "student": "Bhai, Air Force laga diya question papers ke liye. Humara assignment submission ka liye toh professor ko WhatsApp se bhi nahi milta, aur NEET ke liye fighter jets bhej rahe hain. Ek toh hamara placement papers secure hain ya bas lost in transit ka bahaana denge?",
-        "professional": "Bhai, Air Force ko NEET papers transport karne ke liye rocket science chahiye? Meanwhile, mere manager ko weekly report bhejne ke liye reminder chahiye. Government ne fighter jets use kiye papers ke liye, humein helicopter chahiye boss ko office bhejne ke liye — at least on time reach hoga."
+        "student_north": "Bhai NEET papers ke liye Air Force deploy ho gaya. Humara assignment transport ke liye toh professor ko WhatsApp message bhi nahi aata aur yeh log fighter jets use kar rahe hain. Iska matlab ek exam toh secure hai — hamare placements nahi honge.",
+        "student_south": "Bhai NEET papers ab Air Force se transport ho rahe hain. Matlab exam itni serious hai ki fighter jets lagenge. Tumhare assignment submit karne ke liye uber sufficient hai but question papers ke liye national security. Priorities samajh aao.",
+        "professional_north": "NEET papers ke liye Air Force hire kiya hai security ke liye. Yaar, humara company confidential files ke liye toh cycle se bhijta hai, aur government Air Force laga raha hai. Iska matlab salary hikes bhi air mail se aayenge — kabhi nahi. 🛩️",
+        "professional_south": "Bhai, Air Force ko NEET papers transport karne ke liye call karna padha. Matlab humara exam itna insecure hai ki fighter jets chahiye. Aur mujhe dekho — my project files ko WhatsApp se bhej raha hoon, boss security breach ka darr nahi khata.",
+        "student": "Bhai NEET papers ke liye Air Force deploy ho gaya. Humara assignment transport ke liye toh professor ko WhatsApp message bhi nahi aata aur yeh log fighter jets use kar rahe hain. Iska matlab ek exam toh secure hai — hamare placements nahi honge.",
+        "professional": "Bhai, Air Force ko NEET papers transport karne ke liye call karna padha. Matlab humara exam itna insecure hai ki fighter jets chahiye. Aur mujhe dekho — my project files ko WhatsApp se bhej raha hoon, boss security breach ka darr nahi khata."
       }
     },
     {
@@ -668,12 +668,12 @@
       "summary": "RSSB REET 2026 Result: The Rajasthan Staff Selection Board (RSSB) has announced the REET 2025-2026 mains result for over 7,000 primary and upper primary teacher recruitment.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai 7000 teachers ki vacancy — ek baar socha tha maine bhi apply kar du? Fir yaad aaya placement ke baad startup karna tha, MBA ka ROI recover karna tha. Ab ye teachers dekh rahe hain secure job, pension, summer vacation... aur main yaha assignment kar raha hoon free mein unpaid internship ke liye.",
-        "student_south": "Bhai 7000 teacher posts khul gaye Rajasthan mein. Matlab 7000 log ab \"Sir\" bolne ke liye tayyar hain. Tu bhi soch — safe government job, pension, summers off. Better than sitting in campus placements waiting for that one recruiter who actually shows up.",
-        "professional_north": "Bhai, 7000 teacher bharti nikli Rajasthan mein. Dekh na — sarkari naukri milegi toh fixed salary, pension, gareebi se bahar. Humara office mein jo 50 log hain, sab teacher banne ke liye resign kar denge. Boss ko khud hi apna replacement dhundna padega.",
-        "professional_south": "Bhai, 7000 teacher positions khali hain aur humein lagta hai humara boss itna strict kyu hai. Atleast teacher ban jaate toh summer vacation milta, yahan toh appraisal season mein bhi kaam badh jaata hai. Government job ka dream dekh raha hoon — permanent position, pension, aur koi quarterly target nahi.",
-        "student": "Bhai 7000 teachers ki vacancy — ek baar socha tha maine bhi apply kar du? Fir yaad aaya placement ke baad startup karna tha, MBA ka ROI recover karna tha. Ab ye teachers dekh rahe hain secure job, pension, summer vacation... aur main yaha assignment kar raha hoon free mein unpaid internship ke liye.",
-        "professional": "Bhai, 7000 teacher positions khali hain aur humein lagta hai humara boss itna strict kyu hai. Atleast teacher ban jaate toh summer vacation milta, yahan toh appraisal season mein bhi kaam badh jaata hai. Government job ka dream dekh raha hoon — permanent position, pension, aur koi quarterly target nahi."
+        "student_north": "Bhai 7000 teacher positions khule hain Rajasthan mein. Kitne log compete kar rahe honge? Lakhs. Aur humara placement abhi tak confirm nahi — yeh log toh government job ke liye apni jaan laga rahe hain. Atleast unhe salary toh guarantee hai, hume toh internship stipend bhi nahi mil raha.",
+        "student_south": "Bhai 7000 teacher positions khul gaye Rajasthan mein. Meanwhile tu apne campus placement ke liye resume bana raha hai aur woh bhi reject ho raha. Ek toh government job, stable, pension, aur teri professor ko pata chalega toh khud padhaane bithega — finally retirement plan mil jaega.",
+        "professional_north": "Bhai, 7000 teacher posts khule hain Rajasthan mein. Ek toh apna appraisal pending hai, dusre ek fixed salary wale teacher job mil jaaye toh tension khatam. Par REET mains crack karna bhi utna hi mushkil hai jitna boss se increment lena — dono mein cut-off bahut high hai!",
+        "professional_south": "Bhai, 7000 teacher positions khali ho gaye. Mere cousin ne apply kara tha — ab waiting mode mein baithega jaise humari appraisal result wait karte hain. Atleast government job mein once selection ho gaya toh permanent. Humara? Har quarter 'performance review' ka dagga.",
+        "student": "Bhai 7000 teacher positions khule hain Rajasthan mein. Kitne log compete kar rahe honge? Lakhs. Aur humara placement abhi tak confirm nahi — yeh log toh government job ke liye apni jaan laga rahe hain. Atleast unhe salary toh guarantee hai, hume toh internship stipend bhi nahi mil raha.",
+        "professional": "Bhai, 7000 teacher positions khali ho gaye. Mere cousin ne apply kara tha — ab waiting mode mein baithega jaise humari appraisal result wait karte hain. Atleast government job mein once selection ho gaya toh permanent. Humara? Har quarter 'performance review' ka dagga."
       }
     },
     {
@@ -684,12 +684,12 @@
       "summary": "Candidates who have successfully applied and paid the examination fee will receive their exam city intimation from the BFSI Sector Skill Council of India (BFSI SSC).",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Union Bank mein apprentice recruitment chal raha. June 7 ko exam. Intimation milega BFSI se. Soch raha hoon apply karun? Par yaar placement toh abhi ho nahi raha, ek aur exam ka stress add karun? Isse accha placement offer mil jaye jo reject kar sakun.",
-        "student_south": "Union Bank apprentice exam June 7 ko. Bhai, tera placement abhi December mein fail hua aur tu June ke liye soch raha hai? Atleast bank ke paas uniform hoga — tera professor toh teri marksheet hi confiscate kar dega. Safe bet hai, par realistic nahi.",
-        "professional_north": "Yaar Union Bank mein apprentice bharti chal rahi hai June mein. Tum socho — iska matlab kahin aur se naya banda aayega, apna kaam badha dega, aur salary same rahegi. Bank wale bhi humari tarah — sasta labour dhundh rahe hain.",
-        "professional_south": "Bhai, Union Bank apprentice exam June 7 ko hai. Iska matlab ye candidates ab agle 6 months \"secure job\" ka sapna dekh rahe hain — humari tarah jo already secured hain, woh toh \"job security\" ka matlab bhool hi gaye hain. Government job lottery ticket ki tarah — sabko hope, kisi ko guarantee nahi.",
-        "student": "Bhai Union Bank mein apprentice recruitment chal raha. June 7 ko exam. Intimation milega BFSI se. Soch raha hoon apply karun? Par yaar placement toh abhi ho nahi raha, ek aur exam ka stress add karun? Isse accha placement offer mil jaye jo reject kar sakun.",
-        "professional": "Bhai, Union Bank apprentice exam June 7 ko hai. Iska matlab ye candidates ab agle 6 months \"secure job\" ka sapna dekh rahe hain — humari tarah jo already secured hain, woh toh \"job security\" ka matlab bhool hi gaye hain. Government job lottery ticket ki tarah — sabko hope, kisi ko guarantee nahi."
+        "student_north": "Bhai Union Bank ka apprentice exam June 7 ko hai. Matlab ek aur placement cycle jisme hum fail hone wale hain. Atleast government job ke liye fee toh reasonable hai — unlike ye private colleges jo semester fees mein humara pura future bech dete hain. Apprentice banne se pehle intern ban jaenge shayad.",
+        "student_south": "Bhai, Union Bank apprentice exam June 7 ko. Toh ab tumhare placement ka competition ek aur exam se badhega. Phir bhi better than college placements — atleast bank walo ko pata hai ki pass karne se kaun hire hona chahiye. Tumhare professor ko toh nahi pata.",
+        "professional_north": "Bhai Union Bank mein apprentice bharti ho rahi hai June mein. Dekh isko — bank waale bhi intern rakha kar cheap labour use kar rahe hain. Humari company mein toh already unpaid interns hain jo humse zyada kaam karte hain. Apprentice ka matlab — sasta aur skilled dono.",
+        "professional_south": "Bhai, Union Bank apprentice exam June 7 ko. Iska matlab kya? Private sector mein humara job itna uncertain hai ki ab government apprenticeship bhi attractive lag raha hai. Exam fee paid, exam city waiting — atleast iska to confirmation aayega. Hamara salary confirmation to aaj tak nahi aaya.",
+        "student": "Bhai Union Bank ka apprentice exam June 7 ko hai. Matlab ek aur placement cycle jisme hum fail hone wale hain. Atleast government job ke liye fee toh reasonable hai — unlike ye private colleges jo semester fees mein humara pura future bech dete hain. Apprentice banne se pehle intern ban jaenge shayad.",
+        "professional": "Bhai, Union Bank apprentice exam June 7 ko. Iska matlab kya? Private sector mein humara job itna uncertain hai ki ab government apprenticeship bhi attractive lag raha hai. Exam fee paid, exam city waiting — atleast iska to confirmation aayega. Hamara salary confirmation to aaj tak nahi aaya."
       }
     },
     {
@@ -700,12 +700,12 @@
       "summary": "Through this digital reconstruction, the CBI will try to trace Twisha Sharma's last movements, identify who entered or exited different areas and establish the exact sequence of events before the incident.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai CBI ne tunnel mapping karke sab trace kar diya. Humara placements placement officer bhi track nahi kar pata—kaha hai, kya kar raha hai. Ek toh placement dhundne mein hi tunnel vision ho gayi, ab CBI ka tunnel dekh ke aur depression ho gaya.",
-        "student_south": "CBI ne \"Tunnel View\" nikala. Digital reconstruction ka chakkar. Yaar, hamare campus mein bhi CCTV hai but professor still doesn't know who copied assignments. CBI ka technology kahin better hai ya sirf murder cases mein hi kaam karta hai?",
-        "professional_north": "Yaar CBI tunnel view se Twisha ke movements track kar rahe hain, exact sequence banate hain. Hamare office mein boss bhi yahi karta hai — CCTV se dekh raha hai kaun kitchen mein kitni der baithta hai. Farak bas itna hai ki CBI को justice chahiye, boss ko bas target chahiye.",
-        "professional_south": "Bhai, CBI ne tunnel mapping karliya Twisha Sharma ka. Meanwhile, humara boss tunnel vision mein baithta hai — sirf deadlines dikhta hai, employee's mental health nahi. Digital reconstruction toh easy hai, lekin apna manager reconstruct karna impossible — pehle se hi corrupt data mein hai.",
-        "student": "Bhai CBI ne tunnel mapping karke sab trace kar diya. Humara placements placement officer bhi track nahi kar pata—kaha hai, kya kar raha hai. Ek toh placement dhundne mein hi tunnel vision ho gayi, ab CBI ka tunnel dekh ke aur depression ho gaya.",
-        "professional": "Bhai, CBI ne tunnel mapping karliya Twisha Sharma ka. Meanwhile, humara boss tunnel vision mein baithta hai — sirf deadlines dikhta hai, employee's mental health nahi. Digital reconstruction toh easy hai, lekin apna manager reconstruct karna impossible — pehle se hi corrupt data mein hai."
+        "student_north": "Bhai CBI tunnel mapping kar rahe hain crime scene ka. Humara college placement coordinator ko bhi aise hi mapping chahiye — pata chale ki last sem mein hum kahan the aur final year tak kaise disappear ho gaye. Ek case toh hamara placement का ही hai.",
+        "student_south": "CBI doing tunnel mapping for investigation. Bhai, meanwhile our college WiFi can't even map which hostel has signal. Inko advanced technology hai, humse assignment submission ka tunnel visibility nahi. At least someone's movements are being tracked precisely — ours toh bas between bed and mess.",
+        "professional_north": "Yaar, CBI ka \"Tunnel View\" mapping kar raha hai — humara boss toh har din humara tunnel view kar raha hai. Laptop ka screen, door tak ka walk, chai break ka time... sab track kar rakha hai. Agar kisi din case ho gaya toh humara last movement toh bathroom jaane se pehle SMS ka hoga.",
+        "professional_south": "Bhai, CBI ko \"Tunnel View\" mapping chahiye Twisha Sharma trace karne ke liye. Humein to apne boss ka \"Office View\" mapping chahiye — pata lagega kaun 3 PM ko tunnel mein baithta hai coffee machine ke paas aur kaam nahi karta. Digital reconstruction karenge to humara appraisal ka bhi truth aa jayega.",
+        "student": "Bhai CBI tunnel mapping kar rahe hain crime scene ka. Humara college placement coordinator ko bhi aise hi mapping chahiye — pata chale ki last sem mein hum kahan the aur final year tak kaise disappear ho gaye. Ek case toh hamara placement का ही hai.",
+        "professional": "Bhai, CBI ko \"Tunnel View\" mapping chahiye Twisha Sharma trace karne ke liye. Humein to apne boss ka \"Office View\" mapping chahiye — pata lagega kaun 3 PM ko tunnel mein baithta hai coffee machine ke paas aur kaam nahi karta. Digital reconstruction karenge to humara appraisal ka bhi truth aa jayega."
       }
     },
     {
@@ -761,44 +761,44 @@
       "summary": "Neither side seems interested in a return to all-out conflict, despite the latest exchange of strikes.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai US-Iran ka drama dekh raha hoon — dono bhi nahi chahte full war, par strikes exchange kar rahe hain. Exactly meri placement process jaisa. HR bhi nahi reject kar raha, par offer bhi nahi de raha. Bas back-and-forth. Ek din sochta hoon peace ayega, doosre din naya email ayega — \"status pending.",
-        "student_south": "US aur Iran chess khel rahe hain — strikes mar rahe, but full war nahi chahte. Bhai, tumhare placement season jitna uncertain hai utna hi yeh situation uncertain hai. Dono sides bluffing kar rahe, tumhare professor ki tarah jo marks bhi nahi deta but fail bhi nahi karta.",
-        "professional_north": "Yaar US aur Iran dono \"chalo bhai, zyada mat karo\" kar rahe hain — bilkul mere office mein jaise. Boss aur maine bhi daily strikes hote hain, par kisi ko full war karna nahi chahiye kyunki dono ko pata hai — productivity zero ho jayegi aur targets miss honge.",
-        "professional_south": "Yaar, US aur Iran ka drama dekh — na war, na peace, bas strikes exchange kar rahe hain jaise office mails. Humara boss bhi aise hai na — no clarity, bas inbox mein tension dalte rehta hai. Inka recession aaye toh humara appraisal ka kya hoga, woh socho.",
-        "student": "Bhai US-Iran ka drama dekh raha hoon — dono bhi nahi chahte full war, par strikes exchange kar rahe hain. Exactly meri placement process jaisa. HR bhi nahi reject kar raha, par offer bhi nahi de raha. Bas back-and-forth. Ek din sochta hoon peace ayega, doosre din naya email ayega — \"status pending.",
-        "professional": "Yaar, US aur Iran ka drama dekh — na war, na peace, bas strikes exchange kar rahe hain jaise office mails. Humara boss bhi aise hai na — no clarity, bas inbox mein tension dalte rehta hai. Inka recession aaye toh humara appraisal ka kya hoga, woh socho."
+        "student_north": "US aur Iran ka drama chal raha hai — kabhi peace, kabhi war. Inhe decide karna mushkil ho gaya. Humara placement coordinator bhi aisa hai — kabhi kahta hai package confirm, kabhi \"situation dekh lete hain.\" Difference sirf itna hai ki Trump aur Khamenei ke paas missiles hain, hamare paas bas hopes.",
+        "student_south": "Bro US aur Iran abhi bhi \"let's talk\" phase mein hain. Kitna drag karega yeh? Hamare college placement process se bhi jyada uncertain. Atleast woh dono nuclear options hain — hum toh resume se hi reject ho rahe hain.",
+        "professional_north": "Yaar US aur Iran ka yeh on-off drama dekhke mera appraisal cycle yaad aa gaya — ek din boss gussa, ek din smile, par increment ka koi pakka nahi. Dono sides \"interested nahi\" bolte hain war mein, maine bhi apne current salary mein interested nahi hoon par kya farq padta hai?",
+        "professional_south": "Bhai, US-Iran drama dekh raha hoon — dono strikes maarte hain par full war nahi karte. Exactly like office politics yaar. Boss mujhe email se maarta hai, main silent treatment deta hoon, par resignation letter sign nahi karta. Peace toh nahi, war bhi nahi — bas chronic stress. Salary itni nahi badti.",
+        "student": "US aur Iran ka drama chal raha hai — kabhi peace, kabhi war. Inhe decide karna mushkil ho gaya. Humara placement coordinator bhi aisa hai — kabhi kahta hai package confirm, kabhi \"situation dekh lete hain.\" Difference sirf itna hai ki Trump aur Khamenei ke paas missiles hain, hamare paas bas hopes.",
+        "professional": "Bhai, US-Iran drama dekh raha hoon — dono strikes maarte hain par full war nahi karte. Exactly like office politics yaar. Boss mujhe email se maarta hai, main silent treatment deta hoon, par resignation letter sign nahi karta. Peace toh nahi, war bhi nahi — bas chronic stress. Salary itni nahi badti."
       }
     },
     {
       "category": "International",
       "headline": "Iran says it targeted American base after fresh US strikes",
       "link": "https://www.bbc.com/news/articles/c98r2qy5809o?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 11:52:10 GMT",
+      "pubDate": "Thu, 28 May 2026 15:53:05 GMT",
       "summary": "The hostilities come during a fragile ceasefire between the US and Iran, and protracted negotiations to end the three-month war.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Iran aur US tension chal raha hai, missiles udd rahe hain. Aur humara placement already uncertain hai — ab agar third world war ho gaya toh internship letters cancel ho jayenge. Job market already mara hua tha, ab literally mara jayega.",
-        "student_south": "Iran-America fight chalu hai fir se. Three-month war chal raha hai aur yeh \"ceasefire\" jaise hain na — teri professor ka \"you can resubmit\" promise. Kaagaz pe likha, reality mein kuch nahi. Tere placement interviews mein bhi aise uncertainty na aa jaye.",
-        "professional_north": "Bhai, Iran aur America lad rahe hain, ceasefire tutne wale hain. Humara company ka kya hoga? Stock market crash hoga, phir boss ka mood crash hoga, phir humara appraisal crash hoga. International tension = domestic salary stagnation. Yeh sab karte hain sirf humara EMI baddhane ke liye.",
-        "professional_south": "Iran aur US war chal raha hai, ceasefire bhi break ho gaya. Idhar hum apne boss ke saath ceasefire maintain kar rahe hain — ek strike karo toh retaliation pakka. Difference sirf itna hai — Iran ke paas missiles hain, humara bas angry emails hain.",
-        "student": "Bhai Iran aur US tension chal raha hai, missiles udd rahe hain. Aur humara placement already uncertain hai — ab agar third world war ho gaya toh internship letters cancel ho jayenge. Job market already mara hua tha, ab literally mara jayega.",
-        "professional": "Iran aur US war chal raha hai, ceasefire bhi break ho gaya. Idhar hum apne boss ke saath ceasefire maintain kar rahe hain — ek strike karo toh retaliation pakka. Difference sirf itna hai — Iran ke paas missiles hain, humara bas angry emails hain."
+        "student_north": "Bhai Iran aur US phir se lad rahe hain. Ceasefire tha, par kya farak padta hai — ek dusre ko missiles bhej rahe hain. Hum idhar placement ke liye stress le rahe hain, yeh log world war ke liye stress le rahe hain. Atleast unka stress international news mein aata hai, humare rejections toh sirf WhatsApp group mein.",
+        "student_south": "Bro Iran aur US fighting again. Fragile ceasefire matlab glass ki ceiling fan — one wrong move aur sab toot jayega. Meanwhile humara placement already fragile hai, ab geopolitical tension se visa sponsorship bhi risk mein. US job offer ka dream toh aisa lag raha hai — realistic lekin dangerous.",
+        "professional_north": "Yaar isko dekh — US aur Iran dono missile phenk rahe hain, aur humara boss ceasefire bhi nahi de raha. Three month ka war chal raha hai udhar, idhar mere paas three month ka appraisal pending hai. Strikes ho rahi hain wahan, stress ho raha hai yahan — kya difference hai bhai?",
+        "professional_south": "Bhai, Iran aur US dono missiles phenk rahe hain, aur humein kya mil raha? Apna boss ek \"fragile ceasefire\" maintain kar sakta nahi — ek small disagreement par pura project cancel kar deta hai. Atleast Iran-US ko international pressure hai, humein sirf apna appraisal cancel hone ka pressure hai.",
+        "student": "Bhai Iran aur US phir se lad rahe hain. Ceasefire tha, par kya farak padta hai — ek dusre ko missiles bhej rahe hain. Hum idhar placement ke liye stress le rahe hain, yeh log world war ke liye stress le rahe hain. Atleast unka stress international news mein aata hai, humare rejections toh sirf WhatsApp group mein.",
+        "professional": "Bhai, Iran aur US dono missiles phenk rahe hain, aur humein kya mil raha? Apna boss ek \"fragile ceasefire\" maintain kar sakta nahi — ek small disagreement par pura project cancel kar deta hai. Atleast Iran-US ko international pressure hai, humein sirf apna appraisal cancel hone ka pressure hai."
       }
     },
     {
       "category": "International",
       "headline": "Israel hits Lebanese capital in 'targeted strike'",
       "link": "https://www.bbc.com/news/articles/cgqpjwdv7xeo?at_medium=RSS&at_campaign=rss",
-      "pubDate": "Thu, 28 May 2026 15:07:56 GMT",
+      "pubDate": "Thu, 28 May 2026 15:57:01 GMT",
       "summary": "Beirut had until now largely been spared even as both Israel and Hezbollah accused each other of breaking last month's ceasefire.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Yaar Middle East mein fir se shabd chalne lage. Aur yeh dekh — ceasefire tha, ab targeted strikes ho rahe hain. Teri placement ke liye bhi \"targeted approach\" chahiye hoga, warna general round mein hi eliminate ho jayega. Atleast bombs mein predictable hota hai — companies toh suddenly reject kar dete hain.",
-        "student_south": "Bhai, Beirut was having a chill month and now this. Ceasefire broke faster than your campus WiFi on exam day. Meanwhile, we're here worried about placements — these countries playing real-life rejection games, yaar.",
-        "professional_north": "Yaar, Beirut tak peace nahi rahi, aur hamara office mein last month ka ceasefire bhi toot gaya. Boss aur client ek dusre ko blame kar rahe hain — target miss hua toh hum pe bombing. Targeted strike bolte hain, par hum already targeted hain.",
-        "professional_south": "Bhai, Beirut was peaceful, phir suddenly strike ho gaya. Just like our project — everything fine, then suddenly boss's mood strike and everything chaos. At least Israel gave warning, our boss doesn't even give that courtesy.",
-        "student": "Yaar Middle East mein fir se shabd chalne lage. Aur yeh dekh — ceasefire tha, ab targeted strikes ho rahe hain. Teri placement ke liye bhi \"targeted approach\" chahiye hoga, warna general round mein hi eliminate ho jayega. Atleast bombs mein predictable hota hai — companies toh suddenly reject kar dete hain.",
-        "professional": "Bhai, Beirut was peaceful, phir suddenly strike ho gaya. Just like our project — everything fine, then suddenly boss's mood strike and everything chaos. At least Israel gave warning, our boss doesn't even give that courtesy."
+        "student_north": "Bhai Beirut safe tha ab tak, ab vo bhi nahi. Hamare placement season bhi aise hi tha — October tak safe tha, November mein chaos. Ceasefire break hoti hai countries ki, hum toh placement offer break hone se pehle hi stress mein marr jaate hain.",
+        "student_south": "Beirut ceasefire breaking already. Meanwhile our campus ceasefire with that strict professor lasted exactly 2 days before he failed half the class. Atleast international conflicts have rules — exam hall mein toh anarchy hai. Man's literally hitting civilians, we getting hit with surprise viva.",
+        "professional_north": "Bhai, Beirut tak ceasefire nahi rahi toh hamare office ka kya hi ceasefire hoga. Ek mahina peace tha, ab fir se tension. Exactly jaisa humara appraisal cycle — sab kuch thik lag raha tha, phir boss ne mail ka bomb gira diya.",
+        "professional_south": "Bhai, even Beirut was getting peace for sometime. Hum office mein bhi aisa karte — few weeks chill, phir suddenly strike. Boss also follows Israel's strategy: ceasefire sirf paper pe hota hai, reality mein continuous bombardment of emails aur deadlines.",
+        "student": "Bhai Beirut safe tha ab tak, ab vo bhi nahi. Hamare placement season bhi aise hi tha — October tak safe tha, November mein chaos. Ceasefire break hoti hai countries ki, hum toh placement offer break hone se pehle hi stress mein marr jaate hain.",
+        "professional": "Bhai, even Beirut was getting peace for sometime. Hum office mein bhi aisa karte — few weeks chill, phir suddenly strike. Boss also follows Israel's strategy: ceasefire sirf paper pe hota hai, reality mein continuous bombardment of emails aur deadlines."
       }
     },
     {
@@ -809,12 +809,12 @@
       "summary": "Police say the operation targeted the network of notorious late Sicilian mafia boss Matteo Messina Denaro.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Matteo ki itni property thi — villas, cars, cash. Aur hum yahan MBA kar rahe hain placement ka stress le rahe hain. Iska network collapse ho gaya toh millions mila police ko. Hamara network collapse ho toh sirf LinkedIn connection request reject hoga.",
-        "student_south": "Bhai Italian mafia boss mar gaya, fir bhi police uska villa, car, sab seize kar rahe hain. Hamare professor bhi aise hi — assignment submit karo ya na karo, marks toh seize ho hi jayenge. Atleast mafia boss ke paas paise the initially.",
-        "professional_north": "Yaar, Italian Mafia boss ki saari property seize kar di — villas, cars, sab kuch. Hamara boss toh alag level ka don hai, apna salary pocket mein daal leta hai aur hamein overtime bina paise diye kaam karata hai. Atleast Italy mein police action leta hai, yahan toh apna manager hi untouchable Denaro hai.",
-        "professional_south": "Yaar, Italy seize kar raha hai mafia ka wealth — villas, cars, sab kuch. Humara boss toh living mafia hi hai, salary freeze kar rakhi hai. Isme se kuch seizure kar doon humara? Atleast Italy ke cops ko kaam hai, humara HR sirf apna chair secure rakhta hai.",
-        "student": "Bhai Matteo ki itni property thi — villas, cars, cash. Aur hum yahan MBA kar rahe hain placement ka stress le rahe hain. Iska network collapse ho gaya toh millions mila police ko. Hamara network collapse ho toh sirf LinkedIn connection request reject hoga.",
-        "professional": "Yaar, Italy seize kar raha hai mafia ka wealth — villas, cars, sab kuch. Humara boss toh living mafia hi hai, salary freeze kar rakhi hai. Isme se kuch seizure kar doon humara? Atleast Italy ke cops ko kaam hai, humara HR sirf apna chair secure rakhta hai."
+        "student_north": "Bhai Italy mein mafia boss ka millions seizure ho gaya — villas, cars sab. Humare placements toh abhi confirm nahi aur yeh banda marna padha tab jaake police action liya. Iska matlab hume placement mil jaaye toh atleast alive rahenge, corrupt hone ka luxury toh baad mein hoga.",
+        "student_south": "Bhai Matteo ka itna saman pakda — villas, cars, cash. Aur humara professor abhi bhi assignment marks nahi de raha. Iska network millions chhupa sakta tha, humara GPA nahi rakh sakte. Italy ke police se toh better placement cell ho gaya.",
+        "professional_north": "Yaar Italy mein dead mafia boss ke paas itne assets the ki police ko seizure karna padha. Humara boss living hai, fir bhi salary itni chhoti hai ki hum sochte hain woh bhi seizure kar dega. Moral of story — marna padega tab assets dikhengi, jeevan mein toh ek EMI hi chakkar hai.",
+        "professional_south": "Bhai, Italy ke mafia boss ki assets seize ho gaye — villas, cars, sab kuch. Hamare boss ke paas itna nahi hai, par apna salary seize karne mein bohot efficient hai. Atleast Italian police ko patience tha dead hone ka wait karne ka — hamare boss live hi kaat dete hain.",
+        "student": "Bhai Italy mein mafia boss ka millions seizure ho gaya — villas, cars sab. Humare placements toh abhi confirm nahi aur yeh banda marna padha tab jaake police action liya. Iska matlab hume placement mil jaaye toh atleast alive rahenge, corrupt hone ka luxury toh baad mein hoga.",
+        "professional": "Bhai, Italy ke mafia boss ki assets seize ho gaye — villas, cars, sab kuch. Hamare boss ke paas itna nahi hai, par apna salary seize karne mein bohot efficient hai. Atleast Italian police ko patience tha dead hone ka wait karne ka — hamare boss live hi kaat dete hain."
       }
     },
     {
@@ -825,12 +825,12 @@
       "summary": "The suspect, a 31-year-old Swiss man, has been arrested, police say, as areas around the station are cordoned off.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Switzerland mein stabbing case. Voh toh peace loving country hai na. Par yaha humara placement season chal raha hai — har din kisi na kisi ko knife se maara ja raha hai. Atleast voh stabbing mein hospital ja sakta hai, hum assignment submit karke directly dead hote hain.",
-        "student_south": "Bhai Switzerland mein train station pe stabbing. Matlab Europe ka khatra level bhi India jaisa ho gaya. Aur idhar tu assignment submit karne mein hi knife wounds kha raha hai. At least woh banda arrest hua — tera professor toh abhi tak bail par hai.",
-        "professional_north": "Yaar Swiss train station pe stabbing? Hamara local train mein toh daily 'stabbing' hoti hai — EMI deadline ke saath salary stab hoti hai. Atleast woh banda arrest ho gaya, hamare boss ko koi arrest nahi karta jab woh targets se humari expectations ko repeatedly knife maarta hai.",
-        "professional_south": "Bhai, Swiss train station mein stabbing. Wahan order hai, discipline hai. Yahan hamare office mein daily stabbing chalti hai — backbiting, politics, appraisal season. At least woh ek baar arrest ho gaya. Humein toh boss har din stab karta hai aur kisi ko problem nahi.",
-        "student": "Bhai Switzerland mein stabbing case. Voh toh peace loving country hai na. Par yaha humara placement season chal raha hai — har din kisi na kisi ko knife se maara ja raha hai. Atleast voh stabbing mein hospital ja sakta hai, hum assignment submit karke directly dead hote hain.",
-        "professional": "Bhai, Swiss train station mein stabbing. Wahan order hai, discipline hai. Yahan hamare office mein daily stabbing chalti hai — backbiting, politics, appraisal season. At least woh ek baar arrest ho gaya. Humein toh boss har din stab karta hai aur kisi ko problem nahi."
+        "student_north": "Bhai Switzerland mein bhi aise ho raha hai. Matlab safe country ka naam suna tha pehle. Hum toh dorm mein knife se butter bhi cut nahi kar sakte — RA ko report mil jaata hai. Woh Swiss guy ko arrest kar diye, humko toh assignment submit karte hi arrest ho jaayega agar late ho.",
+        "student_south": "Swiss train station mein stabbing. Three log injured. Iska matlab train travel karo toh life risk hai. Tu placement interview ke liye train se jaa raha hoon na next month? Ab sochna padega — cutthroat competition at campus vs actual cutthroat at railway station. Placement waalon se bachna easy, Swiss knife waalon se nahi.",
+        "professional_north": "Bhai Swiss train station mein stabbing — wahan ke log itne chill hote hain. Yahan humara office ka \"cordoned off\" area sirf pantry ke paas hota hai jab chai khatam ho jaati hai. Aur haan, agar koi argue kare deadline pe toh hum bhi stab karne ka mood mein aate hain.",
+        "professional_south": "Bhaiyya, Swiss train station mein stabbing. Idhar humara train platform pe boss hi dagger nikaal deta hai appraisal season mein. At least woh arrest hoga — hamare boss ko toh promotion bhi mil jayega. Workplace violence ki nai definition hai.",
+        "student": "Bhai Switzerland mein bhi aise ho raha hai. Matlab safe country ka naam suna tha pehle. Hum toh dorm mein knife se butter bhi cut nahi kar sakte — RA ko report mil jaata hai. Woh Swiss guy ko arrest kar diye, humko toh assignment submit karte hi arrest ho jaayega agar late ho.",
+        "professional": "Bhaiyya, Swiss train station mein stabbing. Idhar humara train platform pe boss hi dagger nikaal deta hai appraisal season mein. At least woh arrest hoga — hamare boss ko toh promotion bhi mil jayega. Workplace violence ki nai definition hai."
       }
     },
     {
@@ -886,12 +886,12 @@
       "summary": "National Trust staff and volunteers will apply 17 tonnes of fresh chalk to the outline of the famous figure.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai ye UK wale apne chalk figure ko maintain kar rahe hain 17 tonnes se. Aur humara placement coordinator apna resume bhi update nahi kar raha. Inhe toh figure ki fading se problem hai, humein apne package ki fading se problem hai.",
-        "student_south": "Bhai, UK mein chalk figure ko rain se bachane ke liye 17 tonnes chalk lagenge. Hamare campus mein professor ka handwriting hi fade ho jaata hai whiteboard se aur woh dobara likhte nahin. Tum socho — assignment submission deadline fade hogi toh kya?",
-        "professional_north": "Yaar, UK mein chalk figure ko 17 tonnes chalk se refresh kar rahe hain taaki fade na ho jaye. Humara office politics toh har mahine fade hota hai — aur refresh ke liye boss ko bhi convince karna padta hai. Atleast chalk figure ko consistency milti hai, humein toh sirf appraisal mein \"needs improvement\" milta hai.",
-        "professional_south": "Bhai, 17 tonnes chalk laga rahe hain ek figure ko fade hone se bachane ke liye. Hamara resume toh 17 times update karte hain phir bhi fade ho jaata hai boss ki nazar mein. Climate change se toh figure bhi stressed hai, humari tarah.",
-        "student": "Bhai ye UK wale apne chalk figure ko maintain kar rahe hain 17 tonnes se. Aur humara placement coordinator apna resume bhi update nahi kar raha. Inhe toh figure ki fading se problem hai, humein apne package ki fading se problem hai.",
-        "professional": "Bhai, 17 tonnes chalk laga rahe hain ek figure ko fade hone se bachane ke liye. Hamara resume toh 17 times update karte hain phir bhi fade ho jaata hai boss ki nazar mein. Climate change se toh figure bhi stressed hai, humari tarah."
+        "student_north": "Bhai, 17 tonnes chalk daalne padh raha hai ek figure ko bachane ke liye. Aur hum yahan assignment submit karte samay apna character fade ho jaata hai ek week mein. UK waale figure ko better maintenance milta hai than our placement coordinator ka email response time.",
+        "student_south": "Bhai ek chalk figure ko 17 tonnes chalk chahiye survive karne ke liye. Meanwhile humara assignment submission portal fade ho gaya, professor bolega \"submission nahi dikha\" aur hum fail. Even chalk figures have better preservation budget than our college infrastructure.",
+        "professional_north": "Bhai, 17 tonnes chalk laga rahe hain figure ko fade hone se bachane ke liye. Humare resume pe bhi itna kuch likha hai, par boss ko samajh nahi aata — aur woh bante hain figure! Kaam karni padegi ab har saal fresh coat lagwane ke liye, jaise bonus milta hai.",
+        "professional_south": "Bhai, 17 tonnes chalk lagaega ek figure ko maintain karne. Aur mere boss ko quarterly report maintain karne mein sweat nikal jaata hai. UK walon ko chalk figure ki parwah, hamein salary hike ki. Kaunsa climate change hum bhi face kar rahe hain na — apna relevance fade ho raha hai rain mein.",
+        "student": "Bhai, 17 tonnes chalk daalne padh raha hai ek figure ko bachane ke liye. Aur hum yahan assignment submit karte samay apna character fade ho jaata hai ek week mein. UK waale figure ko better maintenance milta hai than our placement coordinator ka email response time.",
+        "professional": "Bhai, 17 tonnes chalk lagaega ek figure ko maintain karne. Aur mere boss ko quarterly report maintain karne mein sweat nikal jaata hai. UK walon ko chalk figure ki parwah, hamein salary hike ki. Kaunsa climate change hum bhi face kar rahe hain na — apna relevance fade ho raha hai rain mein."
       }
     },
     {
@@ -902,12 +902,12 @@
       "summary": "The combined effects of a heat dome and climate change have brought extreme warmth to western Europe.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Europe mein heat dome aa gaya, temperature records toot rahe hain. Aur humara hostel AC abhi bhi 2010 mein hai. Summer mein humara room sauna ban jaata hai — placement interviews mein sweat stains se resume soggy ho jaate hain.",
-        "student_south": "Europe mein temperature records toot rahe hain, heat dome aa gaya. Meanwhile hamara college AC bhi heat dome experience kar raha hai — fan se garmi zyada aa rahi hai. Exams mein sweat stains answer sheet pe likhe jaate hain, marks nahi. Professor ko bhi garmi se mercy aayegi na?",
-        "professional_north": "Bhai, Europe mein itni garmi hai ki temperature records toot rahe hain. Yaha humara AC monthly bill already EMI ke barabar hai, aur boss kehta hai \"bijli bachao.\" Agar aise hi saal chale toh salary se pehle electricity bill nikal jayega.",
-        "professional_south": "Bhai, Europe mein temperature records tod rahe hain, aur idhar humara AC tod gaya. Boss ne WFO mandatory kar di kyunki \"energy crisis nahi hai.\" Heat dome vs office dome — dono mein equal torture, but one has WiFi at least.",
-        "student": "Bhai Europe mein heat dome aa gaya, temperature records toot rahe hain. Aur humara hostel AC abhi bhi 2010 mein hai. Summer mein humara room sauna ban jaata hai — placement interviews mein sweat stains se resume soggy ho jaate hain.",
-        "professional": "Bhai, Europe mein temperature records tod rahe hain, aur idhar humara AC tod gaya. Boss ne WFO mandatory kar di kyunki \"energy crisis nahi hai.\" Heat dome vs office dome — dono mein equal torture, but one has WiFi at least."
+        "student_north": "Bhai Europe mein heat dome aaya, temperatures tod rahe hain. Yahan humara AC ka compressor ek saal mein hi tod dega — aur replacement ke liye placement package ka half nikal jayega. Climate change ko toh time hai, hamare fees ka deadline kal hai.",
+        "student_south": "Bhai Europe mein heat dome aa gaya, temperature records toot rahe hain. Meanwhile humara AC abhi bhi nahi chalega dorm mein aur assignment deadline kal hai. Global warming ko dekho — even nature is in a hurry to finish things faster than our professors grade papers.",
+        "professional_north": "Yaar, Europe mein heat dome chal raha hai, temperature records toot rahe hain. Idhar hum bhi office mein AC ka heat dome jhel rahe hain — boss ka ek message aur fever badh jaata hai. Climate change ho ya office politics, dono mein hi sweat equity se zyada paisa nahi milta.",
+        "professional_south": "Bhai, Europe mein temperature records break ho rahe hain, aur yahan humara AC break ho gaya. Boss ne kaha \"work from home\" but ghar mein itni garmi hai ki laptop khud resign karne wala hai. Climate change global hai, but mere salary ka global warming toh kabse chal raha hai.",
+        "student": "Bhai Europe mein heat dome aaya, temperatures tod rahe hain. Yahan humara AC ka compressor ek saal mein hi tod dega — aur replacement ke liye placement package ka half nikal jayega. Climate change ko toh time hai, hamare fees ka deadline kal hai.",
+        "professional": "Bhai, Europe mein temperature records break ho rahe hain, aur yahan humara AC break ho gaya. Boss ne kaha \"work from home\" but ghar mein itni garmi hai ki laptop khud resign karne wala hai. Climate change global hai, but mere salary ka global warming toh kabse chal raha hai."
       }
     },
     {
@@ -918,12 +918,12 @@
       "summary": "Nasa plans to send hopping drones and roving vehicles to the Moon as part of plans for a permanent Moon base.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai NASA moon base banane ja raha hai. Humein placement ka base nahi mil raha aur ye permanent base banane ke liye planning kar rahe hain. Drone bhejna hai, vehicles bhejna hai — hamara recruiter bhi disappear ho gaya, kya difference?",
-        "student_south": "Bhai NASA moon pe permanent base banane jaari hai. Meanwhile tu apna permanent seat placement company mein nahi paa raha. Inko moon conquer karna hai, tujhe bas one job offer chahiye. Perspective matters, no?",
-        "professional_north": "Yaar NASA Moon par permanent base banane ja raha hai, aur humara boss permanent base apne cabin mein hi banaya hai. Woh roving vehicles bhejenge Moon par, hum apne desks par rovers ki tarah ghoomte rehte hain. Kaam toh yahan hi infinite hai, Moon jaane ki zaroorat nahi.",
-        "professional_south": "Bhai, NASA moon base banane ja raha hai permanent. Aur humara company WFH policy ko permanent banana nahi decide kar sakta? Inko roving vehicles send karte hain moon pe, par humko remote work allow karna paap lagta hai. Chalo, at least moon pe job security guaranteed hogi.",
-        "student": "Bhai NASA moon base banane ja raha hai. Humein placement ka base nahi mil raha aur ye permanent base banane ke liye planning kar rahe hain. Drone bhejna hai, vehicles bhejna hai — hamara recruiter bhi disappear ho gaya, kya difference?",
-        "professional": "Bhai, NASA moon base banane ja raha hai permanent. Aur humara company WFH policy ko permanent banana nahi decide kar sakta? Inko roving vehicles send karte hain moon pe, par humko remote work allow karna paap lagta hai. Chalo, at least moon pe job security guaranteed hogi."
+        "student_north": "Bhai NASA moon base banaa raha hai. Hum yahan placement ke liye roaming kar rahe hain aur vo wahan permanent base setup kar rahe hain. Inhe housing crisis nahi hai kya? Sabko moon jaana padega kya — ya fir sirf unhe jo placement nahi mil raha?",
+        "student_south": "Bhai NASA moon pe permanent base banane ja raha hai. Hum yahan placement base hi stable nahi kar pa rahe. NASA ke drones moon explore karenge, humara professor hum explore karega assignment deadlines se. Space travel affordable hoga pehle, placement milega baad mein.",
+        "professional_north": "Yaar, Nasa moon par permanent base banane wala hai. Hum yahan office mein hi temporary feel kar rahe hain — aaj ka contract, kal ka notice. Inko moon par settlement chahiye, hume apne ghar par hi settlement chahiye bhai. Salary itni nahi badhi ki moon fare afford kar sakein.",
+        "professional_south": "Arre, NASA ko Moon pe base banana hai. Humara boss toh Earth pe hi permanent base banana chahta hai — office mein. Hopping drones bhejenge woh, humein bhejta hai meetings mein. Kaam toh dono jagah same hai — paisa spend karo, results dekho nahi.",
+        "student": "Bhai NASA moon base banaa raha hai. Hum yahan placement ke liye roaming kar rahe hain aur vo wahan permanent base setup kar rahe hain. Inhe housing crisis nahi hai kya? Sabko moon jaana padega kya — ya fir sirf unhe jo placement nahi mil raha?",
+        "professional": "Arre, NASA ko Moon pe base banana hai. Humara boss toh Earth pe hi permanent base banana chahta hai — office mein. Hopping drones bhejenge woh, humein bhejta hai meetings mein. Kaam toh dono jagah same hai — paisa spend karo, results dekho nahi."
       }
     },
     {
@@ -934,12 +934,12 @@
       "summary": "The charity says more than half of attacks happened on or near land managed for game shooting.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai, Britain mein eagles ko poison kar rahe hain. Hum yahan assignment deadlines se maar khaa rahe hain aur woh protected birds ko bhi nahin rakh sakte. Iska matlab agar hum placement nahin mile toh hum bhi endangered species ban jayenge — professors ke liye target practice.",
-        "student_south": "Bhai Britain mein birds of prey ko maar rahe hain, trap kar rahe hain. Aur yaha tu assignment deadline miss karte ho toh professor tujhe hi trap kar deta hai. Atleast those birds have RSPB, tu sirf assignment extension ke liye beg kar raha hai.",
-        "professional_north": "Yaar ye British birds ki tarah hum bhi hai na — jab company ka \"game shooting\" season shuru hota hai, toh humein bhi trap kar dete hain targets ke naam par. Aur jab performance nahi aata, toh poison daal dete hain — pink slip ka. RSPB ko humara HR ko phone karna chahiye.",
-        "professional_south": "Yaar, British birds ke saath shooting chal rahi hai, aur humein apne manager ko shoot karne ke liye permit nahi mil raha. Game shooting grounds mein ye sab hota hai — exactly like our office, bhai. Protected species hoke bhi problem. Hum toh unprotected hi hain apne performance review mein.",
-        "student": "Bhai, Britain mein eagles ko poison kar rahe hain. Hum yahan assignment deadlines se maar khaa rahe hain aur woh protected birds ko bhi nahin rakh sakte. Iska matlab agar hum placement nahin mile toh hum bhi endangered species ban jayenge — professors ke liye target practice.",
-        "professional": "Yaar, British birds ke saath shooting chal rahi hai, aur humein apne manager ko shoot karne ke liye permit nahi mil raha. Game shooting grounds mein ye sab hota hai — exactly like our office, bhai. Protected species hoke bhi problem. Hum toh unprotected hi hain apne performance review mein."
+        "student_north": "Bhai birds of prey ko shoot kar rahe hain Britain mein. Meanwhile humara placement coordinator bhi endangered species ho gaya — kabhi dikhta nahi. At least un birds ko RSPB protect kar raha hai, hum toh apna placement notice pe dependent hain.",
+        "student_south": "Bhai Britain mein birds of prey ko maar rahe hain. Meanwhile humara professor endangered species ki tarah assignments pass nahi karta — dono ko protection chahiye. At least un birds ko RSPB care karta hai, humko kaun bachayega placement season mein.",
+        "professional_north": "Yaar, Britain mein eagles ko shoot kar rahe hain. Humari company mein bhi same chal raha hai — high performers ko \"performance improvement plan\" de kar slowly eliminate kar rahe hain. Difference sirf itna hai ki wahan shotgun hai, yahan appraisal forms hain.",
+        "professional_south": "Yaar, British birds of prey ko shoot kar rahe hain — at least unhe protected species ka status hai. Humein to kya protection? Manager log hum professionals ko daily trap kar rahe hain, poison kar rahe hain apne unrealistic deadlines se. RSPB walo ko India aao, humari species endangered hai bhai.",
+        "student": "Bhai birds of prey ko shoot kar rahe hain Britain mein. Meanwhile humara placement coordinator bhi endangered species ho gaya — kabhi dikhta nahi. At least un birds ko RSPB protect kar raha hai, hum toh apna placement notice pe dependent hain.",
+        "professional": "Yaar, British birds of prey ko shoot kar rahe hain — at least unhe protected species ka status hai. Humein to kya protection? Manager log hum professionals ko daily trap kar rahe hain, poison kar rahe hain apne unrealistic deadlines se. RSPB walo ko India aao, humari species endangered hai bhai."
       }
     },
     {
@@ -950,12 +950,12 @@
       "summary": "Scientists are attempting to build exercise equipment to be used on future space flights.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai space mein astronauts ke liye gym equipment banana hai. Yahan humara college gym mein ek dumbell bhi nahi hai — sirf cobwebs ka equipment. Isko dekho, inhe future astronauts ke muscles ka tension hai, humara toh assignment submission ka tension hai. Space pe abs banao, yahan toh survival hi goal hai.",
-        "student_south": "Bhai space mein gym equipment banaa rahe hain. Hum college mein treadmill ke liye 6 mahine wait list mein hain. Astronauts ko zero gravity mein muscles maintain karne honge, hume toh assignment deadline mein abs maintain karne hain. Space exploration toh easy lag raha hai iske baad.",
-        "professional_north": "Bhai, astronauts ko space mein gym equipment chahiye taki muscles na ghum jaayein. Hamara boss bhi same logic use karta hai — humein overtime ka \"equipment\" deta hai taki hamare brain muscles strong rahen. Farak sirf itna ki astronauts ko atleast gravity ka bahana hai.",
-        "professional_south": "Bhai, astronauts ko space mein gym equipment chahiye taki muscles na ghatn. Humare boss ko toh office mein hi gym chahiye — constantly pressure daalkar apna stress reduce karta hai. Humara muscle loss toh already ho chuka, salary se pehle hi.",
-        "student": "Bhai space mein astronauts ke liye gym equipment banana hai. Yahan humara college gym mein ek dumbell bhi nahi hai — sirf cobwebs ka equipment. Isko dekho, inhe future astronauts ke muscles ka tension hai, humara toh assignment submission ka tension hai. Space pe abs banao, yahan toh survival hi goal hai.",
-        "professional": "Bhai, astronauts ko space mein gym equipment chahiye taki muscles na ghatn. Humare boss ko toh office mein hi gym chahiye — constantly pressure daalkar apna stress reduce karta hai. Humara muscle loss toh already ho chuka, salary se pehle hi."
+        "student_north": "Bhai space mein gym equipment bana rahe hain astronauts ke liye. Humein toh apne hostel room mein pushup karne ki jagah nahi mil rahi, aur ye log space mein dumbbells laga rahe hain. Placement salary se first gym membership lena padega, warna zero-gravity mein bhi fat hi rahunga.",
+        "student_south": "Bhai space mein gym equipment banaa rahe hain. Hum yahan college gym mein treadmill ka belt tuta hua 6 mahine se hai. NASA astronauts ko fit rakhe, hum placement ke liye abs banana chahte hain — dono ka dream utna hi impossible hai honestly.",
+        "professional_north": "Yaar space mein bhi gym equipment design kar rahe hain, aur hamare office mein toh cubicle itna chhota hai ki biceps flex karte hue shoulder hit ho jaata hai. NASA scientists ko bolna — pehle hamare boss ko zero gravity mein bhej do, phir dekhenge kitni productivity badhegi.",
+        "professional_south": "Bhai, astronauts ko space mein gym chahiye. Hum office mein baithe hain, WFH se paunch badhta hai — humein toh earthly gym hi afford nahi ho sakta. Inko zero gravity mein muscles maintain karne ka tension, humko apne boss ki gravity se bachne ka tension.",
+        "student": "Bhai space mein gym equipment bana rahe hain astronauts ke liye. Humein toh apne hostel room mein pushup karne ki jagah nahi mil rahi, aur ye log space mein dumbbells laga rahe hain. Placement salary se first gym membership lena padega, warna zero-gravity mein bhi fat hi rahunga.",
+        "professional": "Bhai, astronauts ko space mein gym chahiye. Hum office mein baithe hain, WFH se paunch badhta hai — humein toh earthly gym hi afford nahi ho sakta. Inko zero gravity mein muscles maintain karne ka tension, humko apne boss ki gravity se bachne ka tension."
       }
     },
     {
@@ -1004,147 +1004,6 @@
       "voices": null
     },
     {
-      "category": "Auto",
-      "headline": "Thunder Down Under",
-      "link": "https://timesofindia.indiatimes.com/thunder-down-under/articleshow/3937638.cms",
-      "pubDate": "2009-01-18T15:40:57+05:30",
-      "summary": "The Australian Open, held each January at Melbourne Park, is the only Grand Slam tournament that features indoor play.",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai Australian Open mein indoor courts hain, fancy. Humare college mein indoor gym ka AC bhi nahi chal raha aur woh bhi sirf placement season mein khula hai. Melbourne mein tennis players air-conditioned mein serve kar rahe hain, hum yahan assignment submit karte hue sweat se keyboard bheeg raha hai.",
-        "student_south": "Bhai Australian Open mein indoor courts hain. Meanwhile our college has one outdoor court where professor conducts surprise classes during placement season. We're out here playing tennis with our anxiety in 40-degree heat. Indoor luxury hain unke liye, outdoor suffering hain hamara.",
-        "professional_north": "Yaar, Australian Open mein indoor courts hain toh comfortable khel sakte hain. Hamare office mein bhi AC toh hai lekin boss ka temper itna hot hai ki indoor ya outdoor koi farak nahi padta. Aur waise bhi — tennis players ko sirf tournament jeetna padta hai, humein targets aur politics dono jeetne padde hain.",
-        "professional_south": "Arre, Australian Open mein indoor courts hain, air-conditioned comfort. Humara office mein AC remote boss ke paas hai — January ho ya December, temperature uska mood pe depend karta hai. Grand Slam tournament ko bhi zyada sense hai hamara workplace se.",
-        "student": "Bhai Australian Open mein indoor courts hain, fancy. Humare college mein indoor gym ka AC bhi nahi chal raha aur woh bhi sirf placement season mein khula hai. Melbourne mein tennis players air-conditioned mein serve kar rahe hain, hum yahan assignment submit karte hue sweat se keyboard bheeg raha hai.",
-        "professional": "Arre, Australian Open mein indoor courts hain, air-conditioned comfort. Humara office mein AC remote boss ke paas hai — January ho ya December, temperature uska mood pe depend karta hai. Grand Slam tournament ko bhi zyada sense hai hamara workplace se."
-      }
-    },
-    {
-      "category": "Science",
-      "headline": "NASA lays out moon base plans with landers, buggies and drones",
-      "link": "https://www.thehindu.com/sci-tech/science/nasa-lays-out-moon-base-plans-with-landers-buggies-and-drones/article71032176.ece",
-      "pubDate": "Thu, 28 May 2026 13:44:11 +0530",
-      "summary": "For next year's Artemis III, another team of astronauts will practise docking NASA's Orion capsule in orbit around Earth with the lunar landers being developed for crews by Blue Origin and Elon Musk's SpaceX",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai NASA moon base banaa raha hai, aur mera group assignment ke liye ek proper workspace nahi mil raha. Elon aur Bezos dono milke moon pe setup kar rahe hain — inke paas coordination hai. Hum 4 log ek assignment pe agree hi nahi kar sakte, aur ye log different planets pe meet karna plan kar rahe hain.",
-        "student_south": "Bhai NASA moon base banaa raha hai, drones aur buggies le jaayega. Meanwhile tu assignment ka deadline miss karte ho aur professor ko \"internet down tha sir\" bolte ho. Tera moon base toh college hostel room hi hai — aur woh bhi eviction notice ke saath.",
-        "professional_north": "Bhai NASA ne moon par base banane ke plans nikale hain — Blue Origin aur SpaceX dono ko contract mil gaya. Hamara company bhi itna organize hota toh ek project on time complete ho jaata. Yahan toh har quarter mein direction badal dete hain, moon par toh sab set hai.",
-        "professional_south": "NASA moon base banane ja raha hai landers aur drones ke saath. Humara company bhi \"expansion plans\" bolke new office khol raha hai — same energy, different budget. Dono ka dream bada hai, bas humara salary chhota hai. Moon pe base, hum pe bas pressure.",
-        "student": "Bhai NASA moon base banaa raha hai, aur mera group assignment ke liye ek proper workspace nahi mil raha. Elon aur Bezos dono milke moon pe setup kar rahe hain — inke paas coordination hai. Hum 4 log ek assignment pe agree hi nahi kar sakte, aur ye log different planets pe meet karna plan kar rahe hain.",
-        "professional": "NASA moon base banane ja raha hai landers aur drones ke saath. Humara company bhi \"expansion plans\" bolke new office khol raha hai — same energy, different budget. Dono ka dream bada hai, bas humara salary chhota hai. Moon pe base, hum pe bas pressure."
-      }
-    },
-    {
-      "category": "Science",
-      "headline": "SpaceX's Starship rockets grounded pending investigation after test flight",
-      "link": "https://www.thehindu.com/sci-tech/science/spacexs-starship-rockets-grounded-pending-investigation-after-test-flight/article71032266.ece",
-      "pubDate": "Thu, 28 May 2026 12:46:01 +0530",
-      "summary": "The spacecraft continued around the world, releasing 20 mock satellites before ending the mission as planned with a fiery splashdown in the Indian Ocean",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai Elon ka rocket successfully gaya Indian Ocean mein. 20 satellites bhi gira diye planned se. Hum yahan placement ke liye itna plan karते हैं, phir bhi kuch nahi hota. Iska ek rocket fail hota hai, fir bhi billionaire. Life unfair hai yaar.",
-        "student_south": "Bhai SpaceX rocket grounded, investigation pending. Meanwhile tu apna assignment submit kar paaye? Nahi na. Elon Musk ko rocket crash karne ka license hai, tujhe one late submission aur professor tumhara entire future crash kara dega. Unfair advantage hain billionaires ko.",
-        "professional_north": "Yaar SpaceX ka rocket gira toh investigation, humara project fail ho toh boss kehta hai \"sikhne ka mauka hai.\" Starship successfully satellites deploy karte hue crash ho sakta hai, par hum ek PowerPoint galat kar dein toh appraisal mein crash hota hai. Elon ko second chance, hume second-hand excuses.",
-        "professional_south": "Bhai, SpaceX rocket grounded for investigation. Mera project bhi grounded hai — pending boss's review. Rocket toh atleast 20 satellites deploy kar gaya before crashing. Mera presentation crash hua, kuch bhi deliver nahi hua. Difference sirf itna — SpaceX ko second chance milega, mujhe appraisal mein \"scope for improvement\" milega.",
-        "student": "Bhai Elon ka rocket successfully gaya Indian Ocean mein. 20 satellites bhi gira diye planned se. Hum yahan placement ke liye itna plan karते हैं, phir bhi kuch nahi hota. Iska ek rocket fail hota hai, fir bhi billionaire. Life unfair hai yaar.",
-        "professional": "Bhai, SpaceX rocket grounded for investigation. Mera project bhi grounded hai — pending boss's review. Rocket toh atleast 20 satellites deploy kar gaya before crashing. Mera presentation crash hua, kuch bhi deliver nahi hua. Difference sirf itna — SpaceX ko second chance milega, mujhe appraisal mein \"scope for improvement\" milega."
-      }
-    },
-    {
-      "category": "Science",
-      "headline": "Chandrayaan-2 detects possible presence of subsurface ice near south pole of moon",
-      "link": "https://www.thehindu.com/sci-tech/science/chandrayaan-2-detects-possible-presence-of-subsurface-ice-near-south-pole-of-moon/article71031903.ece",
-      "pubDate": "Thu, 28 May 2026 11:21:41 +0530",
-      "summary": "Scientists used observations from the Chandrayaan-2’s Dual Frequency Synthetic Aperture Radar (DFSAR) payload",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai Chandrayaan ne moon pe ice khoj li. Humari assignment deadlines ko ice age mein freeze karna chahiye tha. Placement season mein humara future bhi subsurface mein lost hai — DFSAR se woh bhi dhundh lo na.",
-        "student_south": "Chandrayaan-2 found ice on moon. ISRO is celebrating. Meanwhile, our professor found ice in his heart — still hasn't passed anyone this semester. At least moon ice is useful. His disappointment is not.",
-        "professional_north": "Yaar moon pe ice mile toh celebrate karo, par yahan office mein ice age chal raha hai — AC itna thanda ke subsurface ice humara desk ke paas banti hai. Aur iska matlab ISRO scientists ko bonus milega, hamein? Nahi. Humara south pole sirf salary slip pe freeze hai.",
-        "professional_south": "Arrey, moon pe ice mil gaya! Humara office mein toh AC hi nahi properly chal raha, aur ISRO wale moon explore kar rahe hain. Boss ko bolo — agar subsurface ice mil sakta hai moon mein, toh salary increment bhi mil sakta hai na mere liye?",
-        "student": "Bhai Chandrayaan ne moon pe ice khoj li. Humari assignment deadlines ko ice age mein freeze karna chahiye tha. Placement season mein humara future bhi subsurface mein lost hai — DFSAR se woh bhi dhundh lo na.",
-        "professional": "Arrey, moon pe ice mil gaya! Humara office mein toh AC hi nahi properly chal raha, aur ISRO wale moon explore kar rahe hain. Boss ko bolo — agar subsurface ice mil sakta hai moon mein, toh salary increment bhi mil sakta hai na mere liye?"
-      }
-    },
-    {
-      "category": "Science",
-      "headline": "Daily Quiz | On renewable energy technologies",
-      "link": "https://www.thehindu.com/sci-tech/science/daily-quiz-on-renewable-energy-technologies/article71032019.ece",
-      "pubDate": "Thu, 28 May 2026 10:50:36 +0530",
-      "summary": "As the aftershocks in the war on Iran continue to affect fossil fuel supplies, here’s a quiz on renewable energy technologies.",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai renewable energy quiz aa gaya. Matlab ab portfolio mein solar panels lagvane padenge placement ke baad. Already student loans pe drowning hain, ab bijli bhi apne generate karni padegi. Iran ka war, hamara EMI — kuch toh correlation hona chahiye na.",
-        "student_south": "Bhai renewable energy quiz aa gaya. Meanwhile, our hostel room mein bulb bhi renewable nahi hai — ek din jalega, ek din nahi. Iran ka fossil fuel shortage dekh rahe hain, hum apna electricity bill shortage dekh rahe hain. Isme energy jaanti hoon bas placement interview ka anxiety.",
-        "professional_north": "Yaar, renewable energy quiz aa gaya. Matlab jo log solar panels lagva rahe hain socha tha bijli ka bill zero ho jayega — phir company ne WFO mandatory kar diya aur AC chhod diya. Ab solar se bhi zyada bijli AC kha jayega. Politics toh har jagah hai na — renewable ya non-renewable.",
-        "professional_south": "Bhai, Iran ka war chal raha hai, fossil fuels badh rahe hain, aur company ko renewable energy quiz dediya. Matlab humein solar panels ke baare mein sochna padega while petrol ka rate humara salary khaa raha hai. Boss: \"Learn green energy.\" Maine: \"Sir, mere bills toh already red hain.",
-        "student": "Bhai renewable energy quiz aa gaya. Matlab ab portfolio mein solar panels lagvane padenge placement ke baad. Already student loans pe drowning hain, ab bijli bhi apne generate karni padegi. Iran ka war, hamara EMI — kuch toh correlation hona chahiye na.",
-        "professional": "Bhai, Iran ka war chal raha hai, fossil fuels badh rahe hain, aur company ko renewable energy quiz dediya. Matlab humein solar panels ke baare mein sochna padega while petrol ka rate humara salary khaa raha hai. Boss: \"Learn green energy.\" Maine: \"Sir, mere bills toh already red hain."
-      }
-    },
-    {
-      "category": "Science",
-      "headline": "Air pollution cut India’s solar power output by 9.6% in 2023, study says",
-      "link": "https://www.thehindu.com/sci-tech/science/air-pollution-cut-india-solar-power-output-one-tenth-2023-study/article71028944.ece",
-      "pubDate": "Wed, 27 May 2026 16:27:47 +0530",
-      "summary": "India’s loss is one of the world’s highest, with the most electricity generation potential lost in the country’s heavily polluted north",
-      "hasVoice": true,
-      "voices": {
-        "student_north": "Bhai solar panels laga diye roof par, socha free bijli milegi. Ab pata chala pollution itna ganda hai ki panels ko bhi dekh nahi pa rahe. 9.6% output loss matlab mera already sasta PGDM fees aur mehngi electricity bill dono saath lose kar raha hoon. Delhi waale toh sirf smog dekh rahe honge, solar nahi.",
-        "student_south": "Bro solar panels thik se charge nahi ho rahe because pollution itna zyada hai. Delhi ka fog itna thick, panels soch rahe hain midnight ho gaya. Meanwhile our college fees increase because \"renewable energy future\" — future mein bhi paisa nahi hoga.",
-        "professional_north": "Bhai, solar panels par itna pollution chadha gaya ki unhe bhi breathing problems ho gaye. Aur hum hain ki office mein AC se bahar nikle nahi, pollution se bachne ke bahane. Ek toh salary nahi badh rahi, ab bijli ka bill bhi badh jaayega kyunki solar waste ho gaya.",
-        "professional_south": "Bhai, solar panels clean karke bijli produce kar rahe hain, par pollution itna thick hai ki 9.6% hi nikal jaata hai. Mera salary bhi yehi haal hai — gross figure dekho, hand mein aata hai utna nahi. Dono mein pollution hai, bas ek visible hai.",
-        "student": "Bhai solar panels laga diye roof par, socha free bijli milegi. Ab pata chala pollution itna ganda hai ki panels ko bhi dekh nahi pa rahe. 9.6% output loss matlab mera already sasta PGDM fees aur mehngi electricity bill dono saath lose kar raha hoon. Delhi waale toh sirf smog dekh rahe honge, solar nahi.",
-        "professional": "Bhai, solar panels clean karke bijli produce kar rahe hain, par pollution itna thick hai ki 9.6% hi nikal jaata hai. Mera salary bhi yehi haal hai — gross figure dekho, hand mein aata hai utna nahi. Dono mein pollution hai, bas ek visible hai."
-      }
-    },
-    {
-      "category": "Science",
-      "headline": "Sperm whale ‘clicks’ have complex patterns similar to human speech",
-      "link": "https://www.thehindu.com/sci-tech/science/sperm-whale-clicks-have-complex-patterns-similar-to-human-speech/article70982438.ece",
-      "pubDate": "Wed, 27 May 2026 12:27:28 +0530",
-      "summary": "Researchers have revealed that sperm whales, which communicate using clicking sounds, also vary the sounds in ways that resemble how humans use vowels",
-      "hasVoice": false,
-      "voices": null
-    },
-    {
-      "category": "Science",
-      "headline": "Indian researcher names newly discovered galaxy structure after Manipur’s Loktak Lake",
-      "link": "https://www.thehindu.com/sci-tech/science/indian-researcher-names-newly-discovered-galaxy-structure-after-manipurs-loktak-lake/article71025368.ece",
-      "pubDate": "Wed, 27 May 2026 12:20:03 +0530",
-      "summary": "Dr. Laishram said the idea of naming the structure after Loktak Lake came to him immediately after the discovery",
-      "hasVoice": false,
-      "voices": null
-    },
-    {
-      "category": "Science",
-      "headline": "How do lightning rods prevent lightning strikes from reaching people?",
-      "link": "https://www.thehindu.com/sci-tech/science/how-do-lightning-rods-prevent-lightning-strikes-from-reaching-people/article68852652.ece",
-      "pubDate": "Wed, 27 May 2026 11:01:25 +0530",
-      "summary": "While a lightning strike occurs between a cloud and an object on or near the ground, it takes the path of least resistance, which means it moves towards the closest object with the highest electric potential",
-      "hasVoice": false,
-      "voices": null
-    },
-    {
-      "category": "Science",
-      "headline": "India home to 191 species of cockroaches, 60% of them are endemic, says ZSI study",
-      "link": "https://www.thehindu.com/sci-tech/energy-and-environment/india-home-to-191-species-of-cockroaches-60-of-them-are-endemic-says-zsi-study/article71025748.ece",
-      "pubDate": "Wed, 27 May 2026 09:32:47 +0530",
-      "summary": "Scientists from Zoological Survey of India and Prof Ramkrishna More College, have developed the first and largest DNA barcode reference library for the cockroaches of peninsular India",
-      "hasVoice": false,
-      "voices": null
-    },
-    {
-      "category": "Science",
-      "headline": "Is a heatwave really a wave of heat?",
-      "link": "https://www.thehindu.com/sci-tech/science/is-a-heatwave-really-a-wave-of-heat/article71007778.ece",
-      "pubDate": "Tue, 26 May 2026 10:18:33 +0530",
-      "summary": "A heatwave, often misconceived as a wave of heat sweeping across the atmosphere, is actually a prolonged period of elevated temperatures caused by stable high-pressure systems.",
-      "hasVoice": false,
-      "voices": null
-    },
-    {
       "category": "Entertainment",
       "headline": "An unhealthy focus on sex - Married at First Sight UK insiders on show's 'toxic' culture",
       "link": "https://www.bbc.com/news/articles/cn7p1dg6j41o?at_medium=RSS&at_campaign=rss",
@@ -1152,12 +1011,12 @@
       "summary": "Fresh revelations come after two women told the BBC they had been raped on the Channel 4 reality show.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai, ek show mein itna toxic culture hai ki rapists ko openly kaam kar rahe hain. Aur hum yahan placement ki tension mein hain. Atleast hamare campus pe itna openly kuch nahi hota — sab kuch quietly hota hai, tab theek hota hai apparently.",
-        "student_south": "Bro, reality show mein reality hi toxic nikli. Two women raped aur channel wale bas \"marriage goals\" dikha rahe the. Tumhara professor jo assignments fail karta hai—atleast wo criminal nahi. Iska toh entertainment industry ne hi gaand mein daal di.",
-        "professional_north": "Bhai, reality TV wale itne desperate hain audience ke liye ki consent hi bhool gaye. Humare office mein bhi same energy hai — boss ka toxic culture, HR ka \"safe space,\" aur sab kuch normalize ho gaya. Kahin bhi jao, power imbalance ka khel chal raha hai.",
-        "professional_south": "Yaar, reality TV mein toxic culture hai toh kya surprising hai? Office mein bhi toxic culture hai — woh bhi \"Married at First Sight\" kehlaata hai. Boss aur employee ka forced pairing, koi consent nahi, sab kuch scripted. Atleast TV wale log out nikal sakte hain, hum nahi.",
-        "student": "Bhai, ek show mein itna toxic culture hai ki rapists ko openly kaam kar rahe hain. Aur hum yahan placement ki tension mein hain. Atleast hamare campus pe itna openly kuch nahi hota — sab kuch quietly hota hai, tab theek hota hai apparently.",
-        "professional": "Yaar, reality TV mein toxic culture hai toh kya surprising hai? Office mein bhi toxic culture hai — woh bhi \"Married at First Sight\" kehlaata hai. Boss aur employee ka forced pairing, koi consent nahi, sab kuch scripted. Atleast TV wale log out nikal sakte hain, hum nahi."
+        "student_north": "Bhai yeh show dekha tha na? Married at First Sight. Log sochte hain reality TV mein fairytale milega, par sirf trauma milta hai. Hamara toh assignment deadline aur placement stress hi kaafi toxic hai — yeh log consent ke liye bhi fighting kar rahe hain. Atleast humara toxic sirf marks se hai.",
+        "student_south": "Yaar, reality show mein reality hi nahi hai — sirf toxicity aur trauma. Atleast hamare college mein bad professors hain, yahan toh predators ko \"entertainment\" bolte hain. Channel 4 ne \"Married at First Sight\" banaya, turning out to be \"Assaulted at First Sight.\" Producers itne blind ho gaye, nakhre dekh rahe the paise ke liye.",
+        "professional_north": "Bhai, yeh \"Married at First Sight\" dekha? Show mein toxic culture hai. Hamare office mein bhi same cheez hai — bas yaha forced pairing nahi, forced targets hain. Aur dono jagah complaints ignore hote hain. Farak bas itna — show mein atleast cancellation ka chance hai, humara nahi.",
+        "professional_south": "Yaar, reality TV mein \"reality\" kahan hai? Toxic culture, unsafe environment — same story as our office na. Except wahan cameras hain, yahan boss ka monitoring system hai. At least TV waalon ko ratings ke liye drama chahiye, humko toh survival ke liye drama milta hai free.",
+        "student": "Bhai yeh show dekha tha na? Married at First Sight. Log sochte hain reality TV mein fairytale milega, par sirf trauma milta hai. Hamara toh assignment deadline aur placement stress hi kaafi toxic hai — yeh log consent ke liye bhi fighting kar rahe hain. Atleast humara toxic sirf marks se hai.",
+        "professional": "Yaar, reality TV mein \"reality\" kahan hai? Toxic culture, unsafe environment — same story as our office na. Except wahan cameras hain, yahan boss ka monitoring system hai. At least TV waalon ko ratings ke liye drama chahiye, humko toh survival ke liye drama milta hai free."
       }
     },
     {
@@ -1168,12 +1027,12 @@
       "summary": "The music legend on delivering \"memory songs\" for his 20th solo album, The Boys of Dungeon Lane - and why he's intrigued by the new Beatles biopics.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Paul McCartney ke guitar se bhi humble ban gaya — aur yeh banda apna assignment submit nahi kar raha kyunki \"sir mujhe samajh nahi aaya.\" Bhai, Paul McCartney ne bhi kahaa \"mujhe pata nahi tha\" — toh tu kya exception hai? Submit kar de assignment, humble hone ke baad.",
-        "student_south": "Paul McCartney 80 saal ka aur abhi bhi guitar seekh raha hai. Meanwhile tum assignment submit karne ke liye YouTube tutorials dekh rahe ho aur still fail ho rahe professor ke pass. Guitar sikhne wala legend, assignment submit karne wala tum — whose career's more uncertain bhai?",
-        "professional_north": "Yaar Paul McCartney ko bhi aaj kal imposter syndrome hai kya? Apne hi gaane likhe, phir bhi kisi aur se seekhna pad raha. Bilkul humara situation — boss ne ek new guy hire kiya, woh humein hamare ka kaam sikhane laga. Experience + salary dono waste, bas ego ko chot lagi.",
-        "professional_south": "Paul McCartney 80 saal ka hai, abhi bhi guitar khel raha hai. Mera boss 45 ka hai, already kehta hai \"I'm too old for emails.\" Paul ne naya album banaya, mere boss ne naya rule banaya — \"no messages after 6 PM.\" Alag hi legacy build kar rahe hain dono.",
-        "student": "Paul McCartney ke guitar se bhi humble ban gaya — aur yeh banda apna assignment submit nahi kar raha kyunki \"sir mujhe samajh nahi aaya.\" Bhai, Paul McCartney ne bhi kahaa \"mujhe pata nahi tha\" — toh tu kya exception hai? Submit kar de assignment, humble hone ke baad.",
-        "professional": "Paul McCartney 80 saal ka hai, abhi bhi guitar khel raha hai. Mera boss 45 ka hai, already kehta hai \"I'm too old for emails.\" Paul ne naya album banaya, mere boss ne naya rule banaya — \"no messages after 6 PM.\" Alag hi legacy build kar rahe hain dono."
+        "student_north": "Paul McCartney guitar ke saath Mescal ko sikhaa raha hai. Bhai, humne apne seniors ko assignment copy karte dekha, woh bhi confuse the. Aur yeh legend apna instrument hi bhool gaya? Placement ke baad agar humara confidence itna down aaye toh seedha rehab mein admission de dena.",
+        "student_south": "Paul McCartney guitar lesson le raha hai Paul Mescal se. Bhai, tera professor bhi aise hi karega — tumhe assignment submit karte hi bolega \"tu toh sahi kar diya, par maine better kar diya hota.\" Guitar seekhne se pehle assignment complete kar le, yaar.",
+        "professional_north": "Yaar Paul McCartney ki umar mein bhi naye skills seekh raha hai, aur mera boss mujhe sirf purane skills ko repeat karane deta hai. Wo bande 80 saal mein guitar seekh raha hai, maine apna domain expert hone ka 5 saal ho gaya — fir bhi junior ko junior hi bulata hai boss.",
+        "professional_south": "Paul McCartney ne Paul Mescal ko guitar sikhaya aur woh zyada acha nikla. Mere boss ko bhi maine training di tha — ab woh mujhe hi training de raha hai. Guitar seekhne se achha hai kisi ko seekhna hi mat, otherwise promotion mil jayega aur stress bhi.",
+        "student": "Paul McCartney guitar ke saath Mescal ko sikhaa raha hai. Bhai, humne apne seniors ko assignment copy karte dekha, woh bhi confuse the. Aur yeh legend apna instrument hi bhool gaya? Placement ke baad agar humara confidence itna down aaye toh seedha rehab mein admission de dena.",
+        "professional": "Paul McCartney ne Paul Mescal ko guitar sikhaya aur woh zyada acha nikla. Mere boss ko bhi maine training di tha — ab woh mujhe hi training de raha hai. Guitar seekhne se achha hai kisi ko seekhna hi mat, otherwise promotion mil jayega aur stress bhi."
       }
     },
     {
@@ -1184,12 +1043,12 @@
       "summary": "Its reports and live updates on the devastating tremor were marked at an event in New York on Wednesday.",
       "hasVoice": true,
       "voices": {
-        "student_north": "BBC ko Emmy mila Myanmar earthquake coverage ke liye. Bhai, inhe award milte hain reporting karte karte. Humme toh placement milti nahi reporting karte karte. Aur ye log breaking news de rahe hain, hum toh apna breaking bank de rahe hain fees ke liye.",
-        "student_south": "BBC won Emmy for covering earthquake. Bhai, meanwhile our college earthquake (syllabus change) happens every semester and nobody even updates us properly. Professor just drops changed dates in that one WhatsApp group nobody reads. BBC better covering natural disasters than our placement cell covering job updates.",
-        "professional_north": "BBC ko Emmy mila Myanmar earthquake ke liye. Yaar, inhe award milte hain breaking news ke liye, aur hume breaking point aa jaata hai jab boss sudden deadline de deta hai. Dono mein earthquake hota hai — BBC ka literal, hamara metaphorical. Farak bas itna ki inhe trophy milti hai, hume sirf tension milta hai.",
-        "professional_south": "BBC ko Emmy award mile Myanmar earthquake coverage ke liye. Arre, humara company bhi earthquake se bachne ke liye award deserve karta hai — har quarter mein financial tremors handle karte hain aur kisi ko notification bhi nahi milta. BBC ko recognition, hume sirf reorganization.",
-        "student": "BBC ko Emmy mila Myanmar earthquake coverage ke liye. Bhai, inhe award milte hain reporting karte karte. Humme toh placement milti nahi reporting karte karte. Aur ye log breaking news de rahe hain, hum toh apna breaking bank de rahe hain fees ke liye.",
-        "professional": "BBC ko Emmy award mile Myanmar earthquake coverage ke liye. Arre, humara company bhi earthquake se bachne ke liye award deserve karta hai — har quarter mein financial tremors handle karte hain aur kisi ko notification bhi nahi milta. BBC ko recognition, hume sirf reorganization."
+        "student_north": "BBC ko Emmy mila Myanmar earthquake coverage ke liye. Bhai, inhe awards mil rahe hain breaking news report karte karte, aur humara placement report break ho gaya. Unhe New York mein trophy milega, hume LinkedIn rejection emails mil rahe hain — yeh toh bada natural disaster hai.",
+        "student_south": "BBC jingle bajate hain Myanmar earthquake pe Emmy leke celebrate kar rahe hain. Meanwhile hamare campus mein earthquake aaye toh professor still attendance lega aur placement coordinator notification nahi daalega. Awards toh unhe milte hain, hume toh just deadlines milte hain.",
+        "professional_north": "Bhai BBC ko Emmy mil gaya earthquake coverage ke liye. Humein toh apna quarterly report deadline miss karne pe inbox mein ghusne ke liye boss ka \"earthquake\" milta hai. Inko award milta hai updates dene ke liye, hume toh performance review mein tremors aate hain.",
+        "professional_south": "BBC Emmy jeetgaya earthquake coverage ke liye. Matlab jab nature itself dramatic ho toh coverage toh award-winning hoga na. Humare office mein earthquake aaye toh boss ko bhi Emmy miljaye — office se sabko bhagane ka live coverage. That's real reporting, yaar.",
+        "student": "BBC ko Emmy mila Myanmar earthquake coverage ke liye. Bhai, inhe awards mil rahe hain breaking news report karte karte, aur humara placement report break ho gaya. Unhe New York mein trophy milega, hume LinkedIn rejection emails mil rahe hain — yeh toh bada natural disaster hai.",
+        "professional": "BBC Emmy jeetgaya earthquake coverage ke liye. Matlab jab nature itself dramatic ho toh coverage toh award-winning hoga na. Humare office mein earthquake aaye toh boss ko bhi Emmy miljaye — office se sabko bhagane ka live coverage. That's real reporting, yaar."
       }
     },
     {
@@ -1200,12 +1059,12 @@
       "summary": "Kenneth Iwamasa, who pleaded guilty last year to one count of conspiracy to distribute ketamine causing death, said he \"will forever regret\" his actions.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Matthew Perry ke assistant ne ketamine deal kiya aur 41 months jail ho gaya. Hum toh placement mil jaaye bas itna hi chahiye, yeh toh apna assistant ban gaya aur jail mein. Placement guarantee toh nahi par jail guarantee zaroor hai.",
-        "student_south": "Yaar, Matthew Perry ka assistant jail gaya ketamine case mein. 41 months. Meanwhile our lab assistant distributes fake reagents, nobody catches him. Woh Hollywood mein pakda jaata hai, India mein woh still teaching \"organic chemistry\" with expired chemicals. Justice system ka timing bhi West jaisa hona chahiye.",
-        "professional_north": "Yaar, assistant ko 41 months jail mil gaya. Sochta hoon humara assistant manager jab humara ketamine—I mean—coffee order galat le aaye, tab kya hota? Chod, humara toh boss hi humko slow poison de raha hai daily—salary cuts ke naam pe. Kum se kum jail mein khana toh guaranteed hai.",
-        "professional_south": "Yaar, assistant ko 41 months jail. Atleast uska job security confirm hai for next 3.5 years — no appraisals, no boss meetings, free accommodation. Meanwhile hum sab apna assistant bante hain, boss ka kaam bhi karte hain, apna bhi. Jail mein aah gaya peace of mind.",
-        "student": "Bhai Matthew Perry ke assistant ne ketamine deal kiya aur 41 months jail ho gaya. Hum toh placement mil jaaye bas itna hi chahiye, yeh toh apna assistant ban gaya aur jail mein. Placement guarantee toh nahi par jail guarantee zaroor hai.",
-        "professional": "Yaar, assistant ko 41 months jail. Atleast uska job security confirm hai for next 3.5 years — no appraisals, no boss meetings, free accommodation. Meanwhile hum sab apna assistant bante hain, boss ka kaam bhi karte hain, apna bhi. Jail mein aah gaya peace of mind."
+        "student_north": "Yaar, Matthew Perry ke assistant ko 41 months jail. Ketamine ka chakkar. Aur hum yahan assignment submit karne ke liye caffeine abuse kar rahe hain. Ek toh professor gussa ho jayega, jail nahi jayega. Fair deal nahi hai bhai.",
+        "student_south": "Bhai, ek actor ka assistant 41 months jail jaayega ketamine case mein. Meanwhile, humara chemistry professor jo daily hume poison kar raha hai assignments se — uska toh kuch nahi hota. Justice system selective hai, yaar. Big people ka assistant jail, hum toh sirf internal exams mein maar khate hain.",
+        "professional_north": "Bhai, assistant ne boss ko ketamine de diya aur jail chala gaya. Humara assistant toh bas coffee galat order karta hai aur hum suffer karte hain. Iska toh atleast excuse hai — humara excuse kya hoga jab apna boss humhe directly mar de?",
+        "professional_south": "Bhai, assistant ne boss ke liye ketamine arrange kiya aur 41 months jail ho gaya. Humara assistant toh coffee hi properly arrange nahi kar pata, aur hum apni job secure rakhne ke liye uska 41 minutes sacrifice karne ko ready hain. Career ruined hone se accha toh jail hi hai — atleast leave approve hota hoga.",
+        "student": "Yaar, Matthew Perry ke assistant ko 41 months jail. Ketamine ka chakkar. Aur hum yahan assignment submit karne ke liye caffeine abuse kar rahe hain. Ek toh professor gussa ho jayega, jail nahi jayega. Fair deal nahi hai bhai.",
+        "professional": "Bhai, assistant ne boss ke liye ketamine arrange kiya aur 41 months jail ho gaya. Humara assistant toh coffee hi properly arrange nahi kar pata, aur hum apni job secure rakhne ke liye uska 41 minutes sacrifice karne ko ready hain. Career ruined hone se accha toh jail hi hai — atleast leave approve hota hoga."
       }
     },
     {
@@ -1216,12 +1075,12 @@
       "summary": "The Puerto Rican star will make a cameo in the latest in the animated Disney film franchise.",
       "hasVoice": true,
       "voices": {
-        "student_north": "Bhai Toy Story 5 mein Bad Bunny voice acting kar raha hai. Aur hum yahan placement ke liye 50 interviews de rahe hain, still \"sorry, position filled ho gaya.\" Yeh forgotten pizza toy ko toh kaam mil gaya, humko toh forgotten graduate banana padega.",
-        "student_south": "Bad Bunny in Toy Story 5 as a pizza toy. Bro, even animated characters getting better roles than us freshers. Meanwhile our placement coordinator is still a forgotten character nobody remembers. At least Bunny's getting paid for his cameo — we're doing projects for free.",
-        "professional_north": "Yaar, Bad Bunny ko cameo diya, forgotten pizza toy ko bhi kaam mil gaya — par mujhe appraisal nahi mila. Sab kisi na kisi role mein successful ho gaya, sirf mera role \"forgotten employee\" ka hi hai. Boss ne kaha — \"tum bhi Disney jaao, wahan cameo kar lo.",
-        "professional_south": "Yaar, Bad Bunny doing voice acting for forgotten pizza toy. Meanwhile, I'm also a forgotten employee in this office — kahin mention bhi nahi hota appraisal meetings mein. Atleast toy ko Disney promotion milega, mujhe toh sirf \"performance improvement plan\" milta hai.",
-        "student": "Bhai Toy Story 5 mein Bad Bunny voice acting kar raha hai. Aur hum yahan placement ke liye 50 interviews de rahe hain, still \"sorry, position filled ho gaya.\" Yeh forgotten pizza toy ko toh kaam mil gaya, humko toh forgotten graduate banana padega.",
-        "professional": "Yaar, Bad Bunny doing voice acting for forgotten pizza toy. Meanwhile, I'm also a forgotten employee in this office — kahin mention bhi nahi hota appraisal meetings mein. Atleast toy ko Disney promotion milega, mujhe toh sirf \"performance improvement plan\" milta hai."
+        "student_north": "Bhai Bad Bunny ne voice acting kar li aur hum placement ke liye raat bhar CV edit kar rahe hain. Ek forgotten pizza toy ko Hollywood de diya, humko toh campus placements mein bhi forgotten hi rahna padega. Atleast toy ko Disney remembered, humare recruiter toh email ka reply bhi nahi deta.",
+        "student_south": "Bad Bunny voice acting in Toy Story 5. Bhai, yeh toh us pizza toy ki life better ho gayi than ours. Forgotten toy gets Hollywood cameo, we're forgotten by placement companies. At least pizza toy ka future secure hai ab.",
+        "professional_north": "Yaar Bad Bunny ko Toy Story mein kaam mil gaya, aur mujhe apni job mein bhi \"forgotten toy\" jaisa feel ho raha hoon. Boss ne project mein add kar diya, koi notice nahi karega, lekin deadline toh badha denge. Atleast Bad Bunny ko Disney payment karega.",
+        "professional_south": "Bhai, Bad Bunny got cast in Toy Story 5 as a forgotten pizza toy. Meanwhile, our company keeps us as forgotten employees — no casting, no royalties, bas appraisal letter jisme likha hota 'scope for improvement.' At least pizza toy ka legacy banega, humara toh just Excel sheets mein rahega.",
+        "student": "Bhai Bad Bunny ne voice acting kar li aur hum placement ke liye raat bhar CV edit kar rahe hain. Ek forgotten pizza toy ko Hollywood de diya, humko toh campus placements mein bhi forgotten hi rahna padega. Atleast toy ko Disney remembered, humare recruiter toh email ka reply bhi nahi deta.",
+        "professional": "Bhai, Bad Bunny got cast in Toy Story 5 as a forgotten pizza toy. Meanwhile, our company keeps us as forgotten employees — no casting, no royalties, bas appraisal letter jisme likha hota 'scope for improvement.' At least pizza toy ka legacy banega, humara toh just Excel sheets mein rahega."
       }
     },
     {
