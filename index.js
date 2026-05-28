@@ -11,6 +11,27 @@ const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_K
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 
+// ── CONTENT MODERATION ────────────────────────────────────────────────────────
+const BLOCKED_KEYWORDS = [
+  'rape', 'murder', 'killed', 'massacre', 'genocide', 'terrorist attack', 'bomb blast',
+  'suicide bomber', 'beheading', 'execution', 'lynching', 'mob violence',
+  'pornography', 'porn', 'sex scandal', 'nude', 'obscene',
+  'riot', 'communal violence', 'caste violence', 'religious violence',
+  'suicide', 'self-harm', 'overdose death',
+  'dead body', 'corpse', 'brutal killing', 'graphic violence'
+];
+
+function isContentSafe(headline, summary) {
+  const text = ((headline || '') + ' ' + (summary || '')).toLowerCase();
+  for (const keyword of BLOCKED_KEYWORDS) {
+    if (text.includes(keyword.toLowerCase())) {
+      console.log(`   🚫 Blocked: "${(headline||'').slice(0,50)}" — matched: "${keyword}"`);
+      return false;
+    }
+  }
+  return true;
+}
+
 // ── RSS FEEDS ─────────────────────────────────────────────────────────────────
 const RSS_FEEDS = {
   'Business': [
@@ -146,7 +167,6 @@ Maximum 60 words.`;
 
   try {
     const summary = await callClaudeAPI(prompt);
-    // Clean up any accidental quotes
     return summary.replace(/^["'""]|["'""]$/g, '').trim();
   } catch (err) {
     console.log(`⚠️  Claude failed for "${headline.slice(0, 40)}..." — using plain summary`);
@@ -167,17 +187,21 @@ async function processCategory(category, urls) {
     return null;
   }
 
-  // Pick the best story — has both title and summary
-  const best = allItems.find(i => i.title && i.summary && i.summary.length > 30) || allItems.find(i => i.title) || allItems[0];
+  // Filter through content moderation
+  const safeItems = allItems.filter(i => isContentSafe(i.title, i.summary));
+  if (safeItems.length === 0) {
+    console.log(`   🚫 All items blocked by content filter for ${category}`);
+    return null;
+  }
+
+  // Pick the best safe story — has both title and summary
+  const best = safeItems.find(i => i.title && i.summary && i.summary.length > 30) || safeItems.find(i => i.title) || safeItems[0];
   if (!best || !best.title) return null;
 
   console.log(`   ✓ "${best.title.slice(0, 70)}..."`);
 
-  // Plain summary — always available as fallback
   const plainSummary = best.summary ? best.summary.slice(0, 250) : best.title;
 
-  // Generate voice summaries using Claude API
-  // 4 combinations: student+north/west, student+south/east, professional+north/west, professional+south/east
   console.log(`   🤖 Generating voice summaries...`);
   const voices = {};
 
@@ -192,11 +216,9 @@ async function processCategory(category, urls) {
     const key = `${combo.role}_${combo.region}`;
     voices[key] = await generateVoiceSummary(best.title, plainSummary, category, combo.role, combo.region);
     console.log(`   ✓ ${key} voice generated`);
-    // Small delay to avoid rate limiting
     await new Promise(r => setTimeout(r, 200));
   }
 
-  // Also keep simple student/professional keys for backward compatibility
   voices['student'] = voices['student_north'];
   voices['professional'] = voices['professional_south'];
 
@@ -235,14 +257,8 @@ function getVoiceText(story, role, region) {
   const isHinglish = region === 'north' || region === 'west';
   const regionGroup = isHinglish ? 'north' : 'south';
   const key = `${role}_${regionGroup}`;
-
-  // Try exact match first
   if (story.voices && story.voices[key]) return story.voices[key];
-
-  // Fallback to role only
   if (story.voices && story.voices[role]) return story.voices[role];
-
-  // Final fallback — plain summary
   return story.summary || story.headline;
 }
 
@@ -302,9 +318,7 @@ function buildEmailHTML(stories, date, subscriber) {
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#07070F;padding:20px 0;">
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
-
         <tr><td style="height:1.5px;background:linear-gradient(90deg,transparent,#5CC8FF,#fff,#5CC8FF,transparent);"></td></tr>
-
         <tr>
           <td style="background:#07070F;padding:24px 28px 16px;text-align:center;border:0.5px solid rgba(255,255,255,.05);border-bottom:none;border-radius:16px 16px 0 0;">
             <p style="margin:0 0 4px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(92,200,255,.4);">Daily Intelligence · India</p>
@@ -312,19 +326,16 @@ function buildEmailHTML(stories, date, subscriber) {
             <p style="margin:0;font-size:12px;color:rgba(255,255,255,.3);">${date}</p>
           </td>
         </tr>
-
         <tr>
           <td style="background:#0C0C18;padding:14px 28px;border-left:0.5px solid rgba(255,255,255,.05);border-right:0.5px solid rgba(255,255,255,.05);">
             <p style="margin:0;font-size:14px;color:rgba(255,255,255,.65);line-height:1.65;">${greeting}</p>
           </td>
         </tr>
-
         <tr>
           <td style="background:#07070F;padding:16px 28px;border:0.5px solid rgba(255,255,255,.05);border-top:none;border-bottom:none;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">${storyCards}</table>
           </td>
         </tr>
-
         <tr>
           <td style="background:#07070F;padding:16px 28px 20px;text-align:center;border:0.5px solid rgba(255,255,255,.05);border-top:none;border-radius:0 0 16px 16px;">
             <p style="margin:0 0 6px;font-family:Georgia,serif;font-size:14px;color:#E8C558;">☀️ The Dawn Brief</p>
@@ -336,7 +347,6 @@ function buildEmailHTML(stories, date, subscriber) {
             </p>
           </td>
         </tr>
-
       </table>
     </td></tr>
   </table>
@@ -412,7 +422,6 @@ async function main() {
     timeZone: 'Asia/Kolkata'
   });
 
-  // Step 1 — Fetch subscribers
   console.log('\n👥 Fetching subscribers...');
   const subscribers = await fetchSubscribers();
   if (subscribers.length === 0) {
@@ -420,22 +429,19 @@ async function main() {
     return;
   }
 
-  // Step 2 — Fetch and process news
   console.log('\n📰 Fetching and processing news...');
   const stories = [];
   for (const [category, urls] of Object.entries(RSS_FEEDS)) {
     try {
       const story = await processCategory(category, urls);
       if (story) stories.push(story);
-      // Delay between categories to be respectful to RSS servers
       await new Promise(r => setTimeout(r, 800));
     } catch (err) {
       console.log(`❌ ${category}: ${err.message}`);
     }
   }
-  console.log(`\n✅ ${stories.length} stories processed`);
+  console.log(`\n✅ ${stories.length} stories passed content filter`);
 
-  // Step 3 — Validate before saving
   let finalStories = stories;
   if (!validateStories(stories)) {
     console.log('⚠️  Not enough stories — loading from backup');
@@ -449,29 +455,20 @@ async function main() {
     }
   }
 
-  // Step 4 — Save data.json
   const dataToSave = {
     generated: new Date().toISOString(),
     date,
     totalStories: finalStories.length,
     stories: finalStories
   };
-  fs.writeFileSync(
-    path.join(__dirname, 'data.json'),
-    JSON.stringify(dataToSave, null, 2)
-  );
+  fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(dataToSave, null, 2));
   console.log('✅ data.json saved');
 
-  // Step 5 — Save backup (only if fresh stories)
   if (stories.length >= 3) {
-    fs.writeFileSync(
-      path.join(__dirname, 'data-backup.json'),
-      JSON.stringify(dataToSave, null, 2)
-    );
+    fs.writeFileSync(path.join(__dirname, 'data-backup.json'), JSON.stringify(dataToSave, null, 2));
     console.log('✅ data-backup.json updated');
   }
 
-  // Step 6 — Send emails
   if (finalStories.length > 0) {
     console.log(`\n📧 Sending to ${subscribers.length} subscribers...`);
     console.log('─'.repeat(50));
