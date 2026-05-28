@@ -27,9 +27,9 @@ jobs:
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
         run: node index.js
       - name: Commit updated data files
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add data.json data-backup.json data-archive.json
-          git commit -m "Update data files [$(date +'%Y-%m-%d %H:%M IST')]" || echo "No changes"
-          git push
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add data.json data-backup.json || true
+        git diff --staged --quiet || git commit -m "Update data files [skip ci]"
+        git push || true
