@@ -136,7 +136,7 @@ app.post('/verify-otp', async (req, res) => {
 });
 
 app.post('/subscribe', async (req, res) => {
-  const { email, name, role, region } = req.body;
+  const { email, name, role, region, ref } = req.body;
   console.log(`📥 Subscribe attempt: ${email} [${role}] [${region}]`);
   if (!email || !name || !role) return res.status(400).json({ error: 'Name, email and role are required.' });
   if (!['student', 'professional'].includes(role)) return res.status(400).json({ error: 'Invalid role.' });
@@ -164,9 +164,40 @@ app.post('/subscribe', async (req, res) => {
         return res.json({ success: true, message: 'Welcome back to the gang!' });
       }
     }
+    // Generate unique referral code for new subscriber
+    const referralCode = require('crypto').createHash('md5').update(email).digest('hex').slice(0, 8);
+
     await supabaseQuery('subscribers', 'POST', {
-      email, name, role, region: region || 'north', segment: role, source: 'website', is_active: true
+      email, name, role, region: region || 'north', segment: role,
+      source: ref ? 'referral' : 'website',
+      is_active: true,
+      referral_code: referralCode,
+      referral_count: 0
     });
+
+    // Track referral if came via referral link
+    if (ref) {
+      try {
+        await fetch(`${SUPA_URL}/rest/v1/referrals`, {
+          method: 'POST',
+          headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ referrer_email: ref, referred_email: email })
+        });
+        // Find referrer by code and increment count
+        const referrers = await supabaseQuery(`subscribers?referral_code=eq.${encodeURIComponent(ref)}&select=email,referral_count`);
+        if (referrers && referrers.length > 0) {
+          const referrer = referrers[0];
+          await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(referrer.email)}`, {
+            method: 'PATCH',
+            headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ referral_count: (referrer.referral_count || 0) + 1 })
+          });
+          console.log(`✅ Referral counted: ${referrer.email} referred ${email}`);
+        }
+      } catch (refErr) {
+        console.error(`⚠️ Referral tracking failed (non-critical): ${refErr.message}`);
+      }
+    }
     console.log(`✅ Subscribed: ${email} [${role}] [${region}]`);
     try {
       const firstName = name.split(' ')[0];
@@ -361,6 +392,84 @@ app.post('/api/trigger-newsletter', adminAuth, async (req, res) => {
       else console.log('Newsletter triggered successfully');
     });
     res.json({ success: true, message: 'Newsletter triggered. Check Railway logs.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// ── REFERRAL SYSTEM ───────────────────────────────────────────────────────────
+
+// GET /referral/:code — track referral visit, redirect to homepage
+app.get('/referral/:code', async (req, res) => {
+  const { code } = req.params;
+  // Redirect to homepage with ref param — subscribe flow picks it up
+  res.redirect(302, `https://ayushbrief.online/?ref=${code}`);
+});
+
+// GET /api/referral/:email — get referral code + count for a subscriber
+app.get('/api/referral/:email', async (req, res) => {
+  try {
+    const email = decodeURIComponent(req.params.email);
+    const data = await supabaseQuery(
+      `subscribers?email=eq.${encodeURIComponent(email)}&select=referral_code,referral_count&is_active=eq.true`
+    );
+    if (!data || data.length === 0) return res.status(404).json({ error: 'Subscriber not found.' });
+    const { referral_code, referral_count } = data[0];
+    res.json({
+      referral_code,
+      referral_count: referral_count || 0,
+      referral_link: `https://ayushbrief.online/?ref=${referral_code}`
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/referral/track — called when someone subscribes via referral link
+app.post('/api/referral/track', async (req, res) => {
+  const { referral_code, referred_email } = req.body;
+  if (!referral_code || !referred_email) return res.json({ success: false });
+  try {
+    // Find referrer
+    const referrers = await supabaseQuery(
+      `subscribers?referral_code=eq.${encodeURIComponent(referral_code)}&select=email,referral_count`
+    );
+    if (!referrers || referrers.length === 0) return res.json({ success: false });
+    const referrer = referrers[0];
+
+    // Save referral record
+    await supabaseQuery('referrals', 'POST', {
+      referrer_email: referrer.email,
+      referred_email
+    });
+
+    // Increment referrer count
+    await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(referrer.email)}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ referral_count: (referrer.referral_count || 0) + 1 })
+    });
+
+    console.log(`✅ Referral tracked: ${referrer.email} referred ${referred_email}`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(`❌ Referral track error: ${err.message}`);
+    res.json({ success: false });
+  }
+});
+
+// GET /api/admin/referrals — top referrers for admin dashboard
+app.get('/api/admin/referrals', adminAuth, async (req, res) => {
+  try {
+    const data = await supabaseQuery(
+      'subscribers?is_active=eq.true&select=email,name,referral_count&order=referral_count.desc&limit=10'
+    );
+    res.json({ referrers: data.filter(s => (s.referral_count || 0) > 0) });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
