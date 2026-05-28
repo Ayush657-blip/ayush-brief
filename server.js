@@ -1,6 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
+const webpush = require('web-push');
+
+// ── WEB PUSH CONFIG ───────────────────────────────────────────────────────────
+webpush.setVapidDetails(
+  'mailto:ayush@ayushbrief.online',
+  process.env.VAPID_PUBLIC_KEY || 'BA3xL1dGZ0YdL343qWP7DHB1gjVA0iSTAVPXniKTMI5ODEMzIOVymOJcUQAICANdo7wZQWsUVgQt0_d5XJpYiXo',
+  process.env.VAPID_PRIVATE_KEY || 'qN-dj8gYjgjhF0kS7G8x4brG66meGNmHVahP6tfdwLA'
+);
 
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -470,6 +478,69 @@ app.get('/api/admin/referrals', adminAuth, async (req, res) => {
       'subscribers?is_active=eq.true&select=email,name,referral_count&order=referral_count.desc&limit=10'
     );
     res.json({ referrers: data.filter(s => (s.referral_count || 0) > 0) });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// ── PUSH NOTIFICATION ROUTES ──────────────────────────────────────────────────
+
+// GET /api/vapid-public-key — return public key to frontend
+app.get('/api/vapid-public-key', (req, res) => {
+  res.json({ publicKey: process.env.VAPID_PUBLIC_KEY || 'BA3xL1dGZ0YdL343qWP7DHB1gjVA0iSTAVPXniKTMI5ODEMzIOVymOJcUQAICANdo7wZQWsUVgQt0_d5XJpYiXo' });
+});
+
+// POST /api/push/subscribe — save push subscription
+app.post('/api/push/subscribe', async (req, res) => {
+  const { subscription, email } = req.body;
+  if (!subscription) return res.status(400).json({ error: 'Subscription required.' });
+  try {
+    // Save subscription to Supabase
+    const subStr = JSON.stringify(subscription);
+    await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email || '')}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ push_subscription: subStr })
+    });
+    console.log(`✅ Push subscription saved for ${email || 'anonymous'}`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(`❌ Push subscribe error: ${err.message}`);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/push/send-all — send push to all subscribers (admin only)
+app.post('/api/push/send-all', adminAuth, async (req, res) => {
+  const { title, body, url } = req.body;
+  try {
+    const subscribers = await supabaseQuery('subscribers?is_active=eq.true&select=email,push_subscription');
+    const withPush = subscribers.filter(s => s.push_subscription);
+    console.log(`📲 Sending push to ${withPush.length} subscribers`);
+    let sent = 0; let failed = 0;
+    for (const sub of withPush) {
+      try {
+        const subscription = JSON.parse(sub.push_subscription);
+        await webpush.sendNotification(subscription, JSON.stringify({
+          title: title || '☀️ The Dawn Brief',
+          body: body || 'Tera brief ready hai. Dekh le.',
+          url: url || 'https://ayushbrief.online'
+        }));
+        sent++;
+      } catch (err) {
+        failed++;
+        // Remove invalid subscriptions
+        if (err.statusCode === 410) {
+          await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(sub.email)}`, {
+            method: 'PATCH',
+            headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ push_subscription: null })
+          });
+        }
+      }
+    }
+    res.json({ success: true, sent, failed });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
