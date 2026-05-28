@@ -353,28 +353,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 <div class="glow-wrap"><div class="glow-a"></div><div class="glow-b"></div><div class="glow-c"></div></div>
 
 <!-- ── NAVBAR ── -->
-<nav>
-  <a class="logo" href="/" onclick="goHome(event)">
-    <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg1)" stroke-width="1.5" fill="none" clip-path="url(#cp1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
-    <div class="logo-text">
-      <span class="logo-the">The</span>
-      <span class="logo-dawn">Dawn</span>
-      <span class="logo-brief">Brief</span>
-      <span class="logo-tag">· News that feels like a friend</span>
-    </div>
-  </a>
-  <div class="nav-center">
-    <button class="nav-topic-btn" onclick="toggleTopics()">Topics ▾</button>
-  </div>
-  <div class="nav-right">
-    <button class="nav-icon-btn" onclick="toggleSearch()" title="Search (/)">🔍</button>
-    <button class="nav-icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
-    <button class="nav-icon-btn" onclick="toggleLang()" id="lang-btn" title="Toggle language">🇮🇳</button>
-    <button class="nav-login" id="nav-login-btn">Login</button>
-    <button class="nav-cta sub-btn">Subscribe →</button>
-  </div>
-</nav>
-
 <!-- Topics Dropdown -->
 <div class="topics-dropdown" id="topics-dd">
   <div class="td-inner">
@@ -400,6 +378,37 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   <input class="search-input" id="search-input" type="text" placeholder="Search stories... (Press Esc to close)" oninput="doSearch(this.value)" />
 </div>
 <div class="search-results" id="search-results"></div>
+
+<!-- ── UNIFIED NAVBAR (used by both public + personalised) ── -->
+<nav id="main-nav">
+  <a class="logo" href="/" onclick="goHome(event)">
+    <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg1)" stroke-width="1.5" fill="none" clip-path="url(#cp1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div class="logo-text">
+      <span class="logo-the">The</span>
+      <span class="logo-dawn">Dawn</span>
+      <span class="logo-brief">Brief</span>
+      <span class="logo-tag" id="nav-tagline">· News that feels like a friend</span>
+    </div>
+  </a>
+  <!-- Public nav items -->
+  <div class="nav-center" id="nav-public-center">
+    <button class="nav-topic-btn" onclick="toggleTopics()">Topics ▾</button>
+  </div>
+  <!-- Personalised nav items -->
+  <div class="nav-center" id="nav-pers-center" style="display:none;">
+    <div id="vp-pill" style="display:none;align-items:center;gap:7px;padding:5px 12px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);font-size:11px;color:var(--blue-p);"><div style="width:5px;height:5px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;"></div><span id="vp-label">Student</span></div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" onclick="toggleSearch()" title="Search (/)" id="nav-search-btn">🔍</button>
+    <button class="nav-icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+    <button class="nav-icon-btn" onclick="toggleLang()" id="lang-btn" title="Toggle language">🇮🇳</button>
+    <!-- Public buttons -->
+    <button class="nav-login" id="nav-login-btn">Login</button>
+    <button class="nav-cta sub-btn" id="nav-sub-btn">Subscribe →</button>
+    <!-- Personalised button -->
+    <button class="nav-login" id="nav-logout-btn" style="display:none;" onclick="logout()">Logout</button>
+  </div>
+</nav>
 
 <!-- ── MAIN HOMEPAGE ── -->
 <div id="hp">
@@ -501,17 +510,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 
 <!-- ── PERSONALISED HOMEPAGE ── -->
 <div id="pers-hp">
-  <nav style="position:fixed;">
-    <a class="logo" href="/" onclick="goHome(event)">
-      <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp2"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg2)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg2)" stroke-width="1.5" fill="none" clip-path="url(#cp2)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
-      <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
-    </a>
-    <div class="nav-right">
-      <div id="vp-pill" style="display:none;align-items:center;gap:7px;padding:5px 12px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);font-size:11px;color:var(--blue-p);"><div style="width:5px;height:5px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;"></div><span id="vp-label">Student</span></div>
-      <button class="nav-icon-btn" onclick="toggleTheme()">🌙</button>
-      <button class="nav-login" onclick="logout()">Logout</button>
-    </div>
-  </nav>
   <div class="pers-header">
     <div class="pers-greeting" id="pers-greeting">Good morning</div>
     <h1 class="pers-name">Hey <em id="pers-name-txt">friend</em> 👋</h1>
@@ -1098,6 +1096,12 @@ function showPersonalisedHP(user){
   document.getElementById('pers-role-badge').textContent=ROLE_LABELS[user.role]||user.role;
   document.getElementById('pers-region-badge').textContent=REGION_LABELS[user.region]||user.region||'India';
   document.getElementById('vp-label').textContent=user.role==='student'?'Student':'Professional';
+  // Switch navbar to personalised state
+  document.getElementById('nav-login-btn').style.display='none';
+  document.getElementById('nav-sub-btn').style.display='none';
+  document.getElementById('nav-logout-btn').style.display='flex';
+  document.getElementById('nav-public-center').style.display='none';
+  document.getElementById('nav-pers-center').style.display='flex';
   document.getElementById('vp-pill').style.display='flex';
   setGreeting();
   loadPersonalisedNews(user);
@@ -1161,6 +1165,12 @@ function logout(){
   ph.classList.remove('show');ph.style.display='none';
   var hp=document.getElementById('hp');
   hp.classList.remove('hide');hp.style.display='block';
+  // Restore public navbar
+  document.getElementById('nav-login-btn').style.display='flex';
+  document.getElementById('nav-sub-btn').style.display='flex';
+  document.getElementById('nav-logout-btn').style.display='none';
+  document.getElementById('nav-public-center').style.display='flex';
+  document.getElementById('nav-pers-center').style.display='none';
   document.getElementById('vp-pill').style.display='none';
   window.scrollTo({top:0,behavior:'smooth'});
 }
