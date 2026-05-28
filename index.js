@@ -24,7 +24,8 @@ const BLOCKED_KEYWORDS = [
 function isContentSafe(headline, summary) {
   const text = ((headline || '') + ' ' + (summary || '')).toLowerCase();
   for (const keyword of BLOCKED_KEYWORDS) {
-    if (text.includes(keyword.toLowerCase())) {
+    const regex = new RegExp(`\\b${keyword.toLowerCase()}\\b`);
+if (regex.test(text)) {
       console.log(`   🚫 Blocked: "${(headline||'').slice(0,50)}" — matched: "${keyword}"`);
       return false;
     }
