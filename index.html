@@ -48,16 +48,12 @@ html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;o
 @keyframes wlc-scale{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
 @keyframes pulse-glow{0%,100%{opacity:.6;}50%{opacity:1;}}
 @keyframes shimmer{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
-
-/* ── AMBIENT GLOW (Gemini style) ── */
 .glow-wrap{position:fixed;top:0;left:0;right:0;height:500px;z-index:0;pointer-events:none;overflow:hidden;}
 .glow-a{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.22) 0%,rgba(41,121,255,.08) 50%,transparent 100%);animation:pulse-glow 4s ease-in-out infinite;}
 .glow-b{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse 50% 40% at 50% 10%,rgba(0,180,255,.18) 0%,transparent 70%);filter:blur(40px);animation:pulse-glow 4s ease-in-out infinite .5s;}
 .glow-c{position:absolute;top:0;left:50%;transform:translateX(-50%);width:300px;height:200px;background:radial-gradient(ellipse 40% 30% at 50% 0%,rgba(92,200,255,.25) 0%,transparent 70%);filter:blur(20px);animation:pulse-glow 3s ease-in-out infinite 1s;}
 .top-line{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:300;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(0,180,255,.2) 10%,rgba(100,210,255,.95) 38%,#fff 50%,rgba(100,210,255,.95) 62%,rgba(0,180,255,.2) 90%,transparent 100%);}
 [data-theme="light"] .top-line{background:linear-gradient(90deg,transparent 0%,rgba(41,121,255,.3) 10%,rgba(41,121,255,.9) 38%,#2979FF 50%,rgba(41,121,255,.9) 62%,rgba(41,121,255,.3) 90%,transparent 100%);}
-
-/* ── NAVBAR ── */
 nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(24px);background:var(--nav-bg);border-bottom:.5px solid var(--border);}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;flex-shrink:0;}
 .logo-text{display:flex;align-items:baseline;gap:4px;}
@@ -74,8 +70,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .nav-login:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
 .nav-cta{padding:8px 20px;border-radius:100px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;}
 .nav-cta:hover{background:var(--blue-b);}
-
-/* Topics Dropdown */
 .topics-dropdown{position:fixed;top:64px;left:0;right:0;z-index:190;background:var(--bg2);border-bottom:.5px solid var(--border);padding:28px 48px;display:none;animation:fadeIn .2s ease;}
 .topics-dropdown.show{display:block;}
 .td-inner{max-width:900px;margin:0 auto;}
@@ -83,8 +77,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .td-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 16px;}
 .td-item{font-size:14px;color:var(--w7);cursor:pointer;padding:6px 0;transition:color .2s;text-decoration:none;display:block;}
 .td-item:hover{color:var(--blue-p);}
-
-/* Search Bar */
 .search-bar{position:fixed;top:64px;left:0;right:0;z-index:190;background:var(--bg2);border-bottom:.5px solid var(--border);padding:16px 48px;display:none;animation:fadeIn .2s ease;}
 .search-bar.show{display:flex;align-items:center;gap:12px;}
 .search-input{flex:1;background:var(--bg3);border:.5px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--w);font-family:'DM Sans',sans-serif;outline:none;max-width:600px;}
@@ -97,8 +89,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .sr-item:last-child{border-bottom:none;}
 .sr-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-p);margin-bottom:4px;}
 .sr-headline{font-size:14px;color:var(--w9);}
-
-/* ── HERO ── */
 #hp{transition:opacity .3s;}
 #hp.hide{opacity:0;pointer-events:none;}
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 48px 60px;position:relative;z-index:5;}
@@ -115,14 +105,10 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .hero-cta:hover{background:var(--blue-b);}
 .hero-login-btn{padding:15px 28px;border-radius:12px;background:transparent;border:1px solid var(--border2);color:var(--w5);font-size:15px;font-weight:400;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;}
 .hero-login-btn:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
-
-/* ── TICKER ── */
 .ticker-wrap{background:rgba(41,121,255,.06);border-top:.5px solid rgba(92,200,255,.1);border-bottom:.5px solid rgba(92,200,255,.1);overflow:hidden;padding:10px 0;position:relative;z-index:5;}
 .ticker-inner{display:flex;animation:ticker 35s linear infinite;white-space:nowrap;}
 .ti{padding:0 32px;font-size:11px;color:var(--blue-p);letter-spacing:.09em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;}
 .ts{width:3px;height:3px;border-radius:50%;background:rgba(92,200,255,.4);flex-shrink:0;}
-
-/* ── CATEGORY TABS ── */
 .cat-tabs-wrap{position:relative;z-index:5;overflow:hidden;}
 .cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 48px;scrollbar-width:none;}
 .cat-tabs::-webkit-scrollbar{display:none;}
@@ -130,15 +116,11 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .cat-tab:hover{border-color:rgba(92,200,255,.3);color:var(--w7);}
 .cat-tab.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.4);color:var(--blue-p);font-weight:500;}
 .cat-fade-r{position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to left,var(--bg),transparent);pointer-events:none;}
-
-/* ── NEWS GRID ── */
 .news-section{max-width:1100px;margin:0 auto;padding:28px 48px 80px;position:relative;z-index:5;}
 .news-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;}
 .news-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:5px;}
 .news-title-txt{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;color:var(--w);}
 .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-
-/* ── STORY CARD ── */
 .story-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column;text-decoration:none;}
 .story-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35);border-color:rgba(92,200,255,.25);}
 .card-top-bar{height:3px;width:100%;flex-shrink:0;}
@@ -152,8 +134,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .card-summary{font-size:12.5px;color:var(--w5);line-height:1.7;margin-bottom:12px;flex:1;}
 .card-readmore{font-size:11px;color:rgba(92,200,255,.6);font-weight:500;display:flex;align-items:center;gap:4px;margin-top:auto;}
 .card-readmore::after{content:'→';}
-
-/* Skeleton */
 .skel{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:1000px 100%;animation:shimmer 1.5s infinite;}
 .skel-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;}
 .skel-img{height:160px;}
@@ -162,8 +142,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .skel-line.short{width:40%;}
 .skel-line.med{width:70%;}
 .skel-line.full{width:100%;}
-
-/* News List (category view) */
 .news-list-item{display:flex;gap:16px;padding:20px 0;border-bottom:.5px solid var(--border);cursor:pointer;transition:opacity .2s;text-decoration:none;}
 .news-list-item:hover{opacity:.8;}
 .news-list-item:last-child{border-bottom:none;}
@@ -176,8 +154,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .cat-page-hdr{margin-bottom:28px;padding-bottom:20px;border-bottom:.5px solid var(--border);}
 .cat-page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--w);margin-bottom:6px;}
 .cat-page-desc{font-size:13px;color:var(--w3);line-height:1.7;}
-
-/* ── HOW IT WORKS ── */
 .how-sec{padding:70px 0;background:rgba(255,255,255,.012);border-top:.5px solid var(--border);position:relative;z-index:5;}
 .si{max-width:1100px;margin:0 auto;padding:0 48px;}
 .sec-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:10px;}
@@ -190,8 +166,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .how-title{font-size:14px;font-weight:500;color:var(--w);margin-bottom:6px;}
 .how-body{font-size:12px;color:var(--w3);line-height:1.65;}
 .how-time{display:inline-block;font-size:10px;color:var(--blue-p);letter-spacing:.08em;margin-top:10px;border:.5px solid rgba(92,200,255,.2);padding:3px 10px;border-radius:100px;}
-
-/* ── CTA SECTION ── */
 .cta-sec{padding:80px 0;position:relative;z-index:5;}
 .cta-box{background:linear-gradient(135deg,rgba(41,121,255,.1) 0%,rgba(0,100,200,.04) 50%,rgba(41,121,255,.1) 100%);border:.5px solid rgba(92,200,255,.18);border-radius:20px;padding:64px 48px;text-align:center;}
 .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,52px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:12px;color:var(--w);}
@@ -199,8 +173,6 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .cta-sub{font-size:14px;color:var(--w3);line-height:1.75;margin-bottom:28px;}
 .cta-btn{padding:15px 38px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .cta-btn:hover{background:var(--blue-b);}
-
-/* ── FOOTER ── */
 footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative;z-index:5;}
 .ft-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:28px;}
 .ft-brand .logo-dawn{font-size:20px;}
@@ -213,15 +185,11 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .ft-soc:hover{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.3);color:var(--blue-p);}
 .ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:20px;border-top:.5px solid var(--border);}
 .ft-copy{font-size:11px;color:var(--w3);}
-
-/* ── COOKIE BANNER ── */
 #cookie-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:900;background:var(--bg2);border:.5px solid var(--border2);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:16px;max-width:560px;width:calc(100% - 40px);box-shadow:0 8px 40px rgba(0,0,0,.4);}
 #cookie-banner.hide{display:none;}
 .cb-text{font-size:12px;color:var(--w5);line-height:1.6;flex:1;}
 .cb-text a{color:var(--blue-p);text-decoration:none;}
 .cb-btn{padding:8px 16px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;}
-
-/* ── ONBOARDING ── */
 #ob{position:fixed;inset:0;z-index:500;background:var(--bg);display:none;flex-direction:column;}
 #ob.show{display:flex;}
 .ob-nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;flex-shrink:0;border-bottom:.5px solid var(--border);}
@@ -246,8 +214,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .ob-err{font-size:12px;color:#FF6B6B;display:none;text-align:center;}
 .ob-trust{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--w3);}
 .ob-trust-dot{width:3px;height:3px;border-radius:50%;background:rgba(92,200,255,.4);}
-
-/* OTP */
 .otp-wrap{display:flex;gap:10px;justify-content:center;}
 .otp-box{width:48px;height:56px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:10px;font-size:22px;font-weight:600;color:var(--w);text-align:center;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
 .otp-box:focus{border-color:rgba(92,200,255,.4);}
@@ -255,24 +221,18 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .ob-resend span{color:var(--blue-p);cursor:pointer;}
 .ob-resend span:hover{text-decoration:underline;}
 .otp-expiry{font-size:11px;color:var(--w3);text-align:center;}
-
-/* Role Cards */
 .ob-role-cards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;width:100%;}
 .ob-role-card{flex:1;min-width:160px;max-width:200px;padding:24px 16px;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:all .2s;}
 .ob-role-card:hover,.ob-role-card.selected{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);transform:translateY(-2px);}
 .ob-role-icon{width:48px;height:48px;border-radius:50%;background:rgba(41,121,255,.15);border:1px solid rgba(92,200,255,.25);display:flex;align-items:center;justify-content:center;font-size:20px;}
 .ob-role-title{font-size:15px;font-weight:500;color:var(--w);}
 .ob-role-desc{font-size:11px;color:var(--w3);line-height:1.5;}
-
-/* Region Cards */
 .ob-region-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}
 .ob-region-card{padding:16px;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:all .2s;}
 .ob-region-card:hover,.ob-region-card.selected{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);}
 .ob-region-icon{font-size:22px;}
 .ob-region-title{font-size:14px;font-weight:500;color:var(--w);}
 .ob-region-lang{font-size:10px;color:var(--blue-p);letter-spacing:.06em;}
-
-/* ── LOGIN MODAL ── */
 .modal-ov{position:fixed;inset:0;z-index:800;background:rgba(7,7,15,.92);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px;}
 .modal-ov.show{display:flex;}
 .login-box{background:var(--bg2);border:.5px solid var(--border2);border-radius:20px;width:100%;max-width:420px;padding:36px;position:relative;animation:modal-in .3s ease forwards;text-align:center;}
@@ -291,8 +251,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .login-divider::before,.login-divider::after{content:'';flex:1;height:.5px;background:var(--border);}
 .login-signup{font-size:12px;color:var(--w3);}
 .login-signup span{color:var(--blue-p);cursor:pointer;}
-
-/* ── PERSONALISED HP ── */
 #pers-hp{display:none;position:relative;z-index:5;min-height:100vh;background:var(--bg);}
 #pers-hp.show{display:block;}
 .pers-header{padding:110px 48px 48px;text-align:center;position:relative;z-index:5;}
@@ -316,8 +274,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .thumb-btn:hover{border-color:rgba(92,200,255,.3);color:var(--w7);}
 .thumb-btn.active-up{background:rgba(0,200,150,.1);border-color:var(--green);color:var(--green);}
 .thumb-btn.active-down{background:rgba(255,77,109,.1);border-color:var(--red);color:var(--red);}
-
-/* ── WELCOME ── */
 #welcome{position:fixed;inset:0;z-index:600;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;}
 #welcome.show{display:flex;}
 .wlc-emoji{font-size:52px;animation:wlc-scale .5s ease forwards;}
@@ -327,8 +283,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .wlc-sub{font-size:13px;color:var(--w3);line-height:1.7;}
 .wlc-bar-wrap{width:240px;height:2px;background:var(--border);border-radius:2px;overflow:hidden;}
 .wlc-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-b));border-radius:2px;transition:width 2.2s linear;}
-
-/* ── RESPONSIVE ── */
 @media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}.pers-news-grid{grid-template-columns:repeat(2,1fr);}.how-grid{grid-template-columns:1fr;}}
 @media(max-width:640px){
   nav{padding:0 16px;}
@@ -352,7 +306,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 <div class="top-line"></div>
 <div class="glow-wrap"><div class="glow-a"></div><div class="glow-b"></div><div class="glow-c"></div></div>
 
-<!-- ── NAVBAR ── -->
 <!-- Topics Dropdown -->
 <div class="topics-dropdown" id="topics-dd">
   <div class="td-inner">
@@ -366,8 +319,8 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
       <a class="td-item" href="category.html?cat=Government">🏛️ Government</a>
       <a class="td-item" href="category.html?cat=International">🌍 International</a>
       <a class="td-item" href="category.html?cat=Climate">🌿 Climate</a>
-      <a class="td-item" href="category.html?cat=Auto">🚗 Auto</a>
-      <a class="td-item" href="category.html?cat=Science">🔬 Science</a>
+      <a class="td-item" href="category.html?cat=Startups & Auto">🚀 Startups & Auto</a>
+      <a class="td-item" href="category.html?cat=Science & Health">🔬 Science & Health</a>
       <a class="td-item" href="category.html?cat=Entertainment">🎬 Entertainment</a>
     </div>
   </div>
@@ -379,7 +332,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 </div>
 <div class="search-results" id="search-results"></div>
 
-<!-- ── UNIFIED NAVBAR (used by both public + personalised) ── -->
 <nav id="main-nav">
   <a class="logo" href="/" onclick="goHome(event)">
     <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp1"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg1)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg1)" stroke-width="1.5" fill="none" clip-path="url(#cp1)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
@@ -390,11 +342,9 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
       <span class="logo-tag" id="nav-tagline">· News that feels like a friend</span>
     </div>
   </a>
-  <!-- Public nav items -->
   <div class="nav-center" id="nav-public-center">
     <button class="nav-topic-btn" onclick="toggleTopics()">Topics ▾</button>
   </div>
-  <!-- Personalised nav items -->
   <div class="nav-center" id="nav-pers-center" style="display:none;">
     <div id="vp-pill" style="display:none;align-items:center;gap:7px;padding:5px 12px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);font-size:11px;color:var(--blue-p);"><div style="width:5px;height:5px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite;"></div><span id="vp-label">Student</span></div>
   </div>
@@ -402,15 +352,12 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
     <button class="nav-icon-btn" onclick="toggleSearch()" title="Search (/)" id="nav-search-btn">🔍</button>
     <button class="nav-icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
     <button class="nav-icon-btn" onclick="toggleLang()" id="lang-btn" title="Toggle language">🇮🇳</button>
-    <!-- Public buttons -->
     <button class="nav-login" id="nav-login-btn">Login</button>
     <button class="nav-cta sub-btn" id="nav-sub-btn">Subscribe →</button>
-    <!-- Personalised button -->
     <button class="nav-login" id="nav-logout-btn" style="display:none;" onclick="logout()">Logout</button>
   </div>
 </nav>
 
-<!-- ── MAIN HOMEPAGE ── -->
 <div id="hp">
   <section class="hero">
     <div class="hero-badge"><div class="hero-dot"></div><span id="badge-txt">Today's edition is live</span></div>
@@ -441,8 +388,8 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
       <button class="cat-tab" onclick="showCategory(this,'Government')">🏛️ Government</button>
       <button class="cat-tab" onclick="showCategory(this,'International')">🌍 International</button>
       <button class="cat-tab" onclick="showCategory(this,'Climate')">🌿 Climate</button>
-      <button class="cat-tab" onclick="showCategory(this,'Auto')">🚗 Auto</button>
-      <button class="cat-tab" onclick="showCategory(this,'Science')">🔬 Science</button>
+      <button class="cat-tab" onclick="showCategory(this,'Startups & Auto')">🚀 Startups & Auto</button>
+      <button class="cat-tab" onclick="showCategory(this,'Science & Health')">🔬 Science & Health</button>
       <button class="cat-tab" onclick="showCategory(this,'Entertainment')">🎬 Entertainment</button>
     </div>
     <div class="cat-fade-r"></div>
@@ -508,7 +455,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   </footer>
 </div>
 
-<!-- ── PERSONALISED HOMEPAGE ── -->
+<!-- PERSONALISED HOMEPAGE -->
 <div id="pers-hp">
   <div class="pers-header">
     <div class="pers-greeting" id="pers-greeting">Good morning</div>
@@ -534,7 +481,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   </div>
 </div>
 
-<!-- ── ONBOARDING ── -->
+<!-- ONBOARDING -->
 <div id="ob">
   <div class="ob-nav">
     <a class="logo" href="#"><svg width="30" height="24" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cp3"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lg3)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lg3)" stroke-width="1.5" fill="none" clip-path="url(#cp3)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg><div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div></a>
@@ -542,8 +489,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   </div>
   <div class="ob-prog-wrap"><div class="ob-prog-fill" id="ob-prog" style="width:20%"></div></div>
   <div class="ob-body">
-
-    <!-- Step 1 -->
     <div class="ob-step active" id="step-1">
       <div class="ob-eyebrow">Step 1 of 5</div>
       <div class="ob-head">Hey, what do I<br><em>call you?</em></div>
@@ -555,8 +500,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
       </div>
       <div class="ob-trust"><span>No spam</span><div class="ob-trust-dot"></div><span>Free forever</span><div class="ob-trust-dot"></div><span>Unsubscribe anytime</span></div>
     </div>
-
-    <!-- Step 2 -->
     <div class="ob-step" id="step-2">
       <div class="ob-eyebrow">Step 2 of 5</div>
       <div class="ob-head">Drop your <em>email.</em><br>I'll send a secret code.</div>
@@ -567,8 +510,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
         <button class="ob-btn" id="ob-send-otp">Send secret code →</button>
       </div>
     </div>
-
-    <!-- Step 3 - OTP -->
     <div class="ob-step" id="step-3">
       <div class="ob-eyebrow">Step 3 of 5</div>
       <div class="ob-head">Check your <em>inbox.</em></div>
@@ -588,8 +529,6 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
         <div class="ob-resend">Did not receive it? <span id="ob-resend-btn">Resend code</span></div>
       </div>
     </div>
-
-    <!-- Step 4 - Role -->
     <div class="ob-step" id="step-4">
       <div class="ob-eyebrow">Step 4 of 5</div>
       <div class="ob-head">Last thing —<br>are you <em>surviving…</em></div>
@@ -608,41 +547,22 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
       </div>
       <div class="ob-err" id="ob-err-4"></div>
     </div>
-
-    <!-- Step 5 - Region -->
     <div class="ob-step" id="step-5">
       <div class="ob-eyebrow">Step 5 of 5</div>
       <div class="ob-head">One more thing —<br>where are you <em>from?</em></div>
       <div class="ob-sub">We write differently for different regions. Because language matters.</div>
       <div class="ob-region-cards">
-        <div class="ob-region-card" id="region-north" onclick="selectRegion('north')">
-          <div class="ob-region-icon">🏔️</div>
-          <div class="ob-region-title">North India</div>
-          <div class="ob-region-lang">HINGLISH</div>
-        </div>
-        <div class="ob-region-card" id="region-west" onclick="selectRegion('west')">
-          <div class="ob-region-icon">🌊</div>
-          <div class="ob-region-title">West India</div>
-          <div class="ob-region-lang">HINGLISH</div>
-        </div>
-        <div class="ob-region-card" id="region-south" onclick="selectRegion('south')">
-          <div class="ob-region-icon">🌴</div>
-          <div class="ob-region-title">South India</div>
-          <div class="ob-region-lang">COMEDY ENGLISH</div>
-        </div>
-        <div class="ob-region-card" id="region-east" onclick="selectRegion('east')">
-          <div class="ob-region-icon">🌿</div>
-          <div class="ob-region-title">East India</div>
-          <div class="ob-region-lang">COMEDY ENGLISH</div>
-        </div>
+        <div class="ob-region-card" id="region-north" onclick="selectRegion('north')"><div class="ob-region-icon">🏔️</div><div class="ob-region-title">North India</div><div class="ob-region-lang">HINGLISH</div></div>
+        <div class="ob-region-card" id="region-west" onclick="selectRegion('west')"><div class="ob-region-icon">🌊</div><div class="ob-region-title">West India</div><div class="ob-region-lang">HINGLISH</div></div>
+        <div class="ob-region-card" id="region-south" onclick="selectRegion('south')"><div class="ob-region-icon">🌴</div><div class="ob-region-title">South India</div><div class="ob-region-lang">COMEDY ENGLISH</div></div>
+        <div class="ob-region-card" id="region-east" onclick="selectRegion('east')"><div class="ob-region-icon">🌿</div><div class="ob-region-title">East India</div><div class="ob-region-lang">COMEDY ENGLISH</div></div>
       </div>
       <div class="ob-err" id="ob-err-5"></div>
     </div>
-
   </div>
 </div>
 
-<!-- ── LOGIN MODAL ── -->
+<!-- LOGIN MODAL -->
 <div class="modal-ov" id="login-modal">
   <div class="login-box">
     <div class="modal-close" id="login-close">✕</div>
@@ -657,7 +577,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   </div>
 </div>
 
-<!-- ── WELCOME SCREEN ── -->
+<!-- WELCOME SCREEN -->
 <div id="welcome">
   <div class="wlc-emoji">☀️</div>
   <div class="wlc-head">Welcome to the gang,<br><em id="wlc-name">friend</em>.</div>
@@ -666,15 +586,13 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   <div class="wlc-bar-wrap"><div class="wlc-bar" id="wlc-bar"></div></div>
 </div>
 
-<!-- ── COOKIE BANNER ── -->
+<!-- COOKIE BANNER -->
 <div id="cookie-banner">
   <div class="cb-text">We use cookies to make your experience better. That is it. <a href="privacy.html">Privacy Policy</a></div>
   <button class="cb-btn" onclick="acceptCookies()">Got it</button>
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────────
-// ── CONFIG ────────────────────────────────────────────────────────────────────
 var API='https://ayush-brief-production.up.railway.app';
 var SUPA_URL='https://ygkviidhuqicfnvyuiiu.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0';
@@ -692,10 +610,11 @@ var loggedInUser=null;
 var ROLE_LABELS={'student':'🎓 Student Edition','professional':'💼 Professional Edition'};
 var REGION_LABELS={'north':'🏔️ North India','west':'🌊 West India','south':'🌴 South India','east':'🌿 East India'};
 var CARD_COLORS=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
-var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Auto':'🚗','Science':'🔬','Entertainment':'🎬'};
-var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is actually happening in Delhi.','International':'The world news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Auto':'New launches, EVs, and the roads ahead.','Science':'ISRO, health breakthroughs, and discoveries that matter.','Entertainment':'Films, OTT, and culture that is actually good.'};
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
+// ── UPDATED: Startups & Auto and Science & Health ──
+var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Startups & Auto':'🚀','Science & Health':'🔬','Entertainment':'🎬'};
+var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is actually happening in Delhi.','International':'The world news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Startups & Auto':'Funding rounds, new ventures, EVs, and the roads ahead.','Science & Health':'ISRO, NASA, discoveries, fitness, and what your body needs to know.','Entertainment':'Films, OTT, and culture that is actually good.'};
+
 document.addEventListener('DOMContentLoaded',function(){
   setDate();
   loadSubCount();
@@ -720,21 +639,17 @@ function setDate(){
   var el=document.getElementById('news-date');
   if(el)el.textContent=days[d.getDay()]+', '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
 }
-
 function setGreeting(){
   var h=new Date().getHours();
   var g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
   var el=document.getElementById('pers-greeting');
   if(el)el.textContent=g;
 }
-
 function goHome(e){
   e.preventDefault();
   if(loggedInUser){return;}
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
-// ── SUBSCRIBER COUNT ──────────────────────────────────────────────────────────
 async function loadSubCount(){
   try{
     var r=await fetch(SUPA_URL+'/rest/v1/subscribers?select=count&is_active=eq.true',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'count=exact'}});
@@ -746,15 +661,12 @@ async function loadSubCount(){
     if(el)el.textContent='Join the gang today';
   }
 }
-
-// ── NEWS LOADING ──────────────────────────────────────────────────────────────
 function showSkeletons(){
   var g=document.getElementById('news-grid');
   g.innerHTML=Array(9).fill(0).map(function(){
     return '<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line short" style="margin-bottom:8px;"></div><div class="skel skel-line med" style="margin-bottom:8px;"></div><div class="skel skel-line full"></div></div></div>';
   }).join('');
 }
-
 async function loadNewsFromData(){
   showSkeletons();
   try{
@@ -779,7 +691,6 @@ async function loadNewsFromData(){
     document.getElementById('news-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Could not load stories. Please refresh in a moment.</div>';
   }
 }
-
 function updateTicker(stories){
   if(!stories||!stories.length)return;
   var inner=document.getElementById('ticker-inner');
@@ -787,7 +698,6 @@ function updateTicker(stories){
   var items=stories.slice(0,10).map(function(s){return '<div class="ti">'+s.category+' <div class="ts"></div></div>';}).join('');
   inner.innerHTML=items+items;
 }
-
 function renderGrid(stories){
   storyData=stories;
   var g=document.getElementById('news-grid');
@@ -798,24 +708,19 @@ function renderGrid(stories){
     return '<a class="story-card" href="story.html?id='+i+'" onclick="saveStoryData()"><div class="card-top-bar" style="background:'+col+';"></div>'+img+'<div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM IST</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary">'+(s.summary||'')+'</div><div class="card-readmore">Read story</div></div></a>';
   }).join('');
 }
-
 function renderList(cat){
   var stories=allStories.filter(function(s){return s.category===cat;});
-  var others=allStories.filter(function(s){return s.category!==cat;});
-  var display=stories.concat(others).slice(0,12);
-  storyData=display;
+  storyData=stories.length>0?stories:allStories.slice(0,12);
   var desc=CAT_DESCS[cat]||'Latest '+cat+' news from The Dawn Brief.';
   var icon=CAT_ICONS[cat]||'📰';
   var html='<div class="cat-page-hdr"><div class="cat-page-title">'+icon+' '+cat+'</div><div class="cat-page-desc">'+desc+'</div></div>';
-  html+=display.map(function(s,i){
+  html+=storyData.map(function(s,i){
     var img=s.image?'<img class="nli-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.background=\'var(--bg3)\';" loading="lazy">':'<div class="nli-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;opacity:.3;">'+(CAT_ICONS[s.category]||'📰')+'</div>';
     return '<a class="news-list-item" href="story.html?id='+i+'" onclick="saveStoryData()">'+img+'<div class="nli-body"><div class="nli-cat">'+s.category+'</div><div class="nli-headline">'+s.headline+'</div><div class="nli-summary">'+(s.summary||'')+'</div><div class="nli-read">Read story →</div></div></a>';
   }).join('');
   document.getElementById('news-list').innerHTML=html;
 }
-
 function saveStoryData(){localStorage.setItem('db_stories',JSON.stringify(storyData));}
-
 function showCategory(btn,cat){
   document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
@@ -833,8 +738,6 @@ function showCategory(btn,cat){
     else loadNewsFromData().then(function(){renderList(cat);});
   }
 }
-
-// ── SEARCH ────────────────────────────────────────────────────────────────────
 function toggleSearch(){
   var sb=document.getElementById('search-bar');
   var si=document.getElementById('search-input');
@@ -854,19 +757,12 @@ function doSearch(q){
   sr.innerHTML=results.map(function(s,i){return '<div class="sr-item" onclick="window.location=\'story.html?id='+allStories.indexOf(s)+'\'"><div class="sr-cat">'+s.category+'</div><div class="sr-headline">'+s.headline+'</div></div>';}).join('');
   sr.classList.add('show');
 }
-
-// ── TOPICS ────────────────────────────────────────────────────────────────────
-function toggleTopics(){
-  var dd=document.getElementById('topics-dd');
-  dd.classList.toggle('show');
-}
+function toggleTopics(){document.getElementById('topics-dd').classList.toggle('show');}
 function closeTopics(){document.getElementById('topics-dd').classList.remove('show');}
 document.addEventListener('click',function(e){
   if(!e.target.closest('#topics-dd')&&!e.target.closest('.nav-topic-btn'))closeTopics();
   if(!e.target.closest('#search-bar')&&!e.target.closest('.nav-icon-btn')&&!e.target.closest('#search-results'))closeSearch();
 });
-
-// ── THEME ─────────────────────────────────────────────────────────────────────
 function toggleTheme(){
   var isDark=document.documentElement.getAttribute('data-theme')!=='light';
   document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
@@ -877,8 +773,6 @@ function toggleTheme(){
   var t=localStorage.getItem('db_theme');
   if(t==='light'){document.documentElement.setAttribute('data-theme','light');var btn=document.getElementById('theme-btn');if(btn)btn.textContent='☀️';}
 })();
-
-// ── LANGUAGE ──────────────────────────────────────────────────────────────────
 function toggleLang(){
   isHindi=!isHindi;
   document.getElementById('lang-btn').textContent=isHindi?'🇬🇧':'🇮🇳';
@@ -895,16 +789,9 @@ function toggleLang(){
     document.getElementById('badge-txt').textContent="Today's edition is live";
   }
 }
-(function(){
-  var l=localStorage.getItem('db_lang');
-  if(l==='hi'){isHindi=false;toggleLang();}
-})();
-
-// ── COOKIE ────────────────────────────────────────────────────────────────────
+(function(){var l=localStorage.getItem('db_lang');if(l==='hi'){isHindi=false;toggleLang();}})();
 function initCookie(){if(localStorage.getItem('db_cookie'))document.getElementById('cookie-banner').classList.add('hide');}
 function acceptCookies(){localStorage.setItem('db_cookie','1');document.getElementById('cookie-banner').classList.add('hide');}
-
-// ── ONBOARDING ────────────────────────────────────────────────────────────────
 function openOnboarding(){
   document.getElementById('hp').classList.add('hide');
   document.getElementById('ob').classList.add('show');
@@ -920,13 +807,10 @@ function showStep(n){
   obStep=n;
   document.getElementById('ob-prog').style.width=(n*20)+'%';
 }
-
 document.querySelectorAll('.sub-btn').forEach(function(b){b.addEventListener('click',openOnboarding);});
 document.getElementById('ob-back').addEventListener('click',function(){
   if(obStep===1)closeOnboarding();else showStep(obStep-1);
 });
-
-// Step 1 — Name
 document.getElementById('ob-next-1').addEventListener('click',function(){
   var name=document.getElementById('ob-name').value.trim();
   var err=document.getElementById('ob-err-1');
@@ -938,8 +822,6 @@ document.getElementById('ob-next-1').addEventListener('click',function(){
   document.getElementById('ob-email').focus();
 });
 document.getElementById('ob-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-next-1').click();});
-
-// Step 2 — Email + Send OTP
 document.getElementById('ob-send-otp').addEventListener('click',async function(){
   var email=document.getElementById('ob-email').value.trim();
   var err=document.getElementById('ob-err-2');
@@ -963,8 +845,6 @@ document.getElementById('ob-send-otp').addEventListener('click',async function()
   }catch(e){err.textContent='Network error. Please check your connection.';err.style.display='block';btn.disabled=false;btn.textContent='Send secret code →';}
 });
 document.getElementById('ob-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ob-send-otp').click();});
-
-// OTP Timer
 function startOtpTimer(){
   var seconds=600;
   if(otpTimer)clearInterval(otpTimer);
@@ -974,15 +854,9 @@ function startOtpTimer(){
     var s=seconds%60;
     var el=document.getElementById('otp-countdown');
     if(el)el.textContent=m+':'+(s<10?'0':'')+s;
-    if(seconds<=0){
-      clearInterval(otpTimer);
-      var te=document.getElementById('otp-timer');
-      if(te)te.textContent='Code expired. Please request a new one.';
-    }
+    if(seconds<=0){clearInterval(otpTimer);var te=document.getElementById('otp-timer');if(te)te.textContent='Code expired. Please request a new one.';}
   },1000);
 }
-
-// OTP Input Handling
 for(var i=1;i<=6;i++){
   (function(idx){
     var box=document.getElementById('otp-'+idx);
@@ -994,8 +868,6 @@ for(var i=1;i<=6;i++){
     box.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!this.value&&idx>1)document.getElementById('otp-'+(idx-1)).focus();});
   })(i);
 }
-
-// Step 3 — Verify OTP
 document.getElementById('ob-verify-otp').addEventListener('click',async function(){
   var err=document.getElementById('ob-err-3');
   err.style.display='none';
@@ -1015,23 +887,18 @@ document.getElementById('ob-verify-otp').addEventListener('click',async function
     showStep(4);
   }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Verify code →';}
 });
-
 document.getElementById('ob-resend-btn').addEventListener('click',async function(){
   var err=document.getElementById('ob-err-3');
   err.style.display='none';
   try{
     await fetch(API+'/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userData.email,name:userData.name})});
-    err.textContent='New code sent! Check your inbox.';
-    err.style.color='var(--green)';
-    err.style.display='block';
+    err.textContent='New code sent! Check your inbox.';err.style.color='var(--green)';err.style.display='block';
     for(var i=1;i<=6;i++)document.getElementById('otp-'+i).value='';
     document.getElementById('otp-1').focus();
     startOtpTimer();
     setTimeout(function(){err.style.display='none';err.style.color='#FF6B6B';},3000);
   }catch(e){}
 });
-
-// Step 4 — Role Selection
 function selectRole(role){
   selectedRole=role;
   document.querySelectorAll('.ob-role-card').forEach(function(c){c.classList.remove('selected');});
@@ -1040,8 +907,6 @@ function selectRole(role){
   trackEvent('role_selected',{role:role,step:4});
   setTimeout(function(){showStep(5);},300);
 }
-
-// Step 5 — Region Selection + Complete
 function selectRegion(region){
   selectedRegion=region;
   document.querySelectorAll('.ob-region-card').forEach(function(c){c.classList.remove('selected');});
@@ -1049,7 +914,6 @@ function selectRegion(region){
   userData.region=region;
   setTimeout(function(){completeOnboarding();},300);
 }
-
 async function completeOnboarding(){
   try{
     var ref=new URLSearchParams(window.location.search).get('ref')||'';
@@ -1070,18 +934,14 @@ async function completeOnboarding(){
   setTimeout(function(){document.getElementById('wlc-bar').style.width='100%';},60);
   setTimeout(function(){wlc.classList.remove('show');showPersonalisedHP(user);},2600);
 }
-
-// ── LOGIN ─────────────────────────────────────────────────────────────────────
 function openLoginModal(){document.getElementById('login-modal').classList.add('show');setTimeout(function(){document.getElementById('login-email').focus();},100);}
 function closeLoginModal(){document.getElementById('login-modal').classList.remove('show');}
-
 document.getElementById('nav-login-btn').addEventListener('click',openLoginModal);
 document.getElementById('hero-login-btn').addEventListener('click',openLoginModal);
 document.getElementById('login-close').addEventListener('click',closeLoginModal);
 document.getElementById('login-to-signup').addEventListener('click',function(){closeLoginModal();openOnboarding();});
 document.getElementById('login-modal').addEventListener('click',function(e){if(e.target===this)closeLoginModal();});
 document.getElementById('login-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-btn').click();});
-
 document.getElementById('login-btn').addEventListener('click',async function(){
   var email=document.getElementById('login-email').value.trim();
   var err=document.getElementById('login-err');
@@ -1099,15 +959,12 @@ document.getElementById('login-btn').addEventListener('click',async function(){
     showPersonalisedHP(user);
   }catch(e){err.textContent='Network error. Please try again.';err.style.display='block';btn.disabled=false;btn.textContent='Get my brief →';}
 });
-
-// ── PERSONALISED HP ───────────────────────────────────────────────────────────
 function showPersonalisedHP(user){
   loggedInUser=user;
   document.getElementById('hp').style.display='none';
   document.getElementById('ob').classList.remove('show');
   var ph=document.getElementById('pers-hp');
-  ph.classList.add('show');
-  ph.style.display='block';
+  ph.classList.add('show');ph.style.display='block';
   var fname=user.name?user.name.split(' ')[0]:'friend';
   fname=fname.charAt(0).toUpperCase()+fname.slice(1);
   document.getElementById('pers-name-txt').textContent=fname;
@@ -1126,22 +983,24 @@ function showPersonalisedHP(user){
   requestPushPermission(user);
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 async function loadPersonalisedNews(user){
   var grid=document.getElementById('pers-news-grid');
   grid.innerHTML=Array(9).fill(0).map(function(){return '<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line short" style="margin-bottom:8px;"></div><div class="skel skel-line med" style="margin-bottom:8px;"></div><div class="skel skel-line full"></div></div></div>';}).join('');
   try{
     var r=await fetch(API+'/data');
     var data=await r.json();
-    var stories=(data.stories||[]).slice(0,9);
+    var stories=(data.stories||[]).filter(function(s){return s.hasVoice;}).slice(0,9);
     var roleKey=user.role==='student'?'student':'professional';
+    var isHinglish=user.region==='north'||user.region==='west';
+    var regionGroup=isHinglish?'north':'south';
+    var voiceKey=roleKey+'_'+regionGroup;
     var voiceStyle={
       student:{bg:'rgba(255,77,109,.08)',border:'#FF4D6D',lbl:'🎓 Student',color:'#FF4D6D'},
       professional:{bg:'rgba(255,165,50,.08)',border:'#FFAA55',lbl:'💼 Professional',color:'#FFAA55'}
     };
     var vs=voiceStyle[roleKey]||voiceStyle['student'];
     grid.innerHTML=stories.map(function(s,i){
-      var voiceText=s.voices&&s.voices[roleKey]?s.voices[roleKey]:(s.summary||s.headline);
+      var voiceText=s.voices&&s.voices[voiceKey]?s.voices[voiceKey]:s.voices&&s.voices[roleKey]?s.voices[roleKey]:(s.summary||s.headline);
       var col=CARD_COLORS[i%CARD_COLORS.length];
       return '<div class="pers-card" onclick="goToStory('+i+',true)">'
         +'<div class="card-top-bar" style="background:'+col+';height:3px;"></div>'
@@ -1162,12 +1021,10 @@ async function loadPersonalisedNews(user){
     grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">Yaar, something broke on our end. Give us 2 minutes. 🙏</div>';
   }
 }
-
 function goToStory(idx,isPersonalised){
   localStorage.setItem('db_stories',JSON.stringify(isPersonalised?[]:storyData));
   window.location='story.html?id='+idx+(isPersonalised?'&pers=1':'');
 }
-
 async function thumbFeedback(btn,idx,type){
   btn.parentElement.querySelectorAll('.thumb-btn').forEach(function(b){b.classList.remove('active-up','active-down');});
   btn.classList.add(type==='up'?'active-up':'active-down');
@@ -1175,7 +1032,6 @@ async function thumbFeedback(btn,idx,type){
     await fetch(SUPA_URL+'/rest/v1/story_feedback',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({story_index:idx,feedback:type,user_email:loggedInUser?.email||'anonymous'})});
   }catch(e){}
 }
-
 function logout(){
   localStorage.removeItem('db_user');
   loggedInUser=null;
@@ -1191,13 +1047,10 @@ function logout(){
   document.getElementById('vp-pill').style.display='none';
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function checkAutoLogin(){
   var saved=localStorage.getItem('db_user');
   if(saved){try{var u=JSON.parse(saved);if(u&&u.email&&u.role)showPersonalisedHP(u);}catch(e){localStorage.removeItem('db_user');}}
 }
-
-// ── REFERRAL ──────────────────────────────────────────────────────────────────
 async function loadReferralLink(user){
   try{
     var r=await fetch(API+'/api/referral/'+encodeURIComponent(user.email));
@@ -1212,24 +1065,14 @@ async function loadReferralLink(user){
     }
   }catch(e){}
 }
-
 function copyReferralLink(){
   var txt=document.getElementById('referral-link-txt');
-  if(txt){
-    navigator.clipboard.writeText(txt.textContent).then(function(){
-      showToastMsg('✅ Referral link copied!');
-    });
-  }
+  if(txt){navigator.clipboard.writeText(txt.textContent).then(function(){showToastMsg('✅ Referral link copied!');});}
 }
-
 function shareReferralWA(){
   var txt=document.getElementById('referral-link-txt');
-  if(txt){
-    var msg=encodeURIComponent('Yaar yeh news app try kar — The Dawn Brief. News jo dost ki tarah bataye. '+txt.textContent);
-    window.open('https://wa.me/?text='+msg,'_blank');
-  }
+  if(txt){var msg=encodeURIComponent('Yaar yeh news app try kar — The Dawn Brief. News jo dost ki tarah bataye. '+txt.textContent);window.open('https://wa.me/?text='+msg,'_blank');}
 }
-
 function showToastMsg(msg){
   var t=document.createElement('div');
   t.textContent=msg;
@@ -1237,8 +1080,6 @@ function showToastMsg(msg){
   document.body.appendChild(t);
   setTimeout(function(){t.remove();},3000);
 }
-
-// ── PUSH NOTIFICATIONS ───────────────────────────────────────────────────────
 function urlBase64ToUint8Array(base64String){
   var padding='='.repeat((4-base64String.length%4)%4);
   var base64=(base64String+padding).replace(/-/g,'+').replace(/_/g,'/');
@@ -1247,7 +1088,6 @@ function urlBase64ToUint8Array(base64String){
   for(var i=0;i<rawData.length;++i)outputArray[i]=rawData.charCodeAt(i);
   return outputArray;
 }
-
 async function requestPushPermission(user){
   if(!('serviceWorker' in navigator)||!('PushManager' in window))return;
   if(localStorage.getItem('push_asked'))return;
@@ -1258,27 +1098,13 @@ async function requestPushPermission(user){
     var reg=await navigator.serviceWorker.ready;
     var keyRes=await fetch(API+'/api/vapid-public-key');
     var keyData=await keyRes.json();
-    var subscription=await reg.pushManager.subscribe({
-      userVisibleOnly:true,
-      applicationServerKey:urlBase64ToUint8Array(keyData.publicKey)
-    });
-    await fetch(API+'/api/push/subscribe',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({subscription:subscription,email:user.email})
-    });
-    console.log('✅ Push subscription registered');
-  }catch(e){
-    console.log('Push permission declined or failed');
-  }
+    var subscription=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlBase64ToUint8Array(keyData.publicKey)});
+    await fetch(API+'/api/push/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subscription:subscription,email:user.email})});
+  }catch(e){}
 }
-
-// ── ANALYTICS ─────────────────────────────────────────────────────────────────
 function trackEvent(name,data){
   if(typeof gtag!=='undefined')gtag('event',name,data);
-  try{
-    fetch(SUPA_URL+'/rest/v1/page_visits',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({event:name,data:JSON.stringify(data),url:window.location.href})});
-  }catch(e){}
+  try{fetch(SUPA_URL+'/rest/v1/page_visits',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({event:name,data:JSON.stringify(data),url:window.location.href})});}catch(e){}
 }
 trackEvent('page_view',{page:'homepage'});
 </script>
