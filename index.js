@@ -60,10 +60,10 @@ const RSS_FEEDS = {
     'https://timesofindia.indiatimes.com/rssfeeds/4719161.cms'
   ],
   'Government': [
-  'https://feeds.feedburner.com/ndtvnews-india-news',
-  'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
-  'https://www.thehindu.com/news/national/feeder/default.rss'
-],
+    'https://feeds.feedburner.com/ndtvnews-india-news',
+    'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
+    'https://www.thehindu.com/news/national/feeder/default.rss'
+  ],
   'International': [
     'https://feeds.bbci.co.uk/news/world/rss.xml',
     'https://rss.nytimes.com/services/xml/rss/nyt/World.xml'
@@ -73,15 +73,11 @@ const RSS_FEEDS = {
     'https://www.theguardian.com/environment/climate-crisis/rss'
   ],
   'Auto': [
-  'https://timesofindia.indiatimes.com/business/automobiles/rssfeeds/3936326.cms',
-  'https://www.autocarindia.com/rss.xml',
-  'https://www.zigwheels.com/rss/news.xml'
-],
+    'NEWSAPI:automobile car EV electric vehicle India Tata Maruti Hyundai'
+  ],
   'Science': [
-  'https://www.thehindu.com/sci-tech/science/feeder/default.rss',
-  'https://timesofindia.indiatimes.com/rssfeeds/3093287.cms',
-  'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml'
-],
+    'NEWSAPI:science research ISRO NASA space medicine technology India'
+  ],
   'Entertainment': [
     'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
     'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms'
@@ -100,6 +96,27 @@ async function fetchFeed(url) {
     }));
   } catch (err) {
     console.log(`⚠️  Feed failed: ${url} — ${err.message}`);
+    return [];
+  }
+}
+
+// ── FETCH NEWS API ────────────────────────────────────────────────────────────
+async function fetchNewsAPI(query) {
+  try {
+    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&pageSize=15&apiKey=${process.env.NEWS_API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.status !== 'ok') throw new Error(data.message || 'NewsAPI error');
+    return (data.articles || [])
+      .map(a => ({
+        title: (a.title || '').trim(),
+        summary: (a.description || '').trim(),
+        link: a.url || '',
+        pubDate: a.publishedAt || ''
+      }))
+      .filter(a => a.title && a.title !== '[Removed]' && a.summary);
+  } catch (err) {
+    console.log(`⚠️  NewsAPI failed: ${err.message}`);
     return [];
   }
 }
@@ -229,16 +246,24 @@ function isEnglishHeadline(title) {
 }
 
 // ── PROCESS ONE CATEGORY ──────────────────────────────────────────────────────
-// Fetches 10 stories per category
-// Generates full 4-voice summaries for top 3 stories
-// Stores plain summary for stories 4-10
 async function processCategory(category, urls) {
   console.log(`\n📰 Processing: ${category}`);
   const allItems = [];
+
   for (const url of urls) {
-    const items = await fetchFeed(url);
-    allItems.push(...items);
+    // NewsAPI or RSS — detected by prefix
+    if (url.startsWith('NEWSAPI:')) {
+      const query = url.replace('NEWSAPI:', '');
+      console.log(`   🌐 NewsAPI: "${query.slice(0, 50)}"`);
+      const items = await fetchNewsAPI(query);
+      console.log(`   ✓ NewsAPI returned ${items.length} items`);
+      allItems.push(...items);
+    } else {
+      const items = await fetchFeed(url);
+      allItems.push(...items);
+    }
   }
+
   if (allItems.length === 0) {
     console.log(`   ⚠️  No items found for ${category}`);
     return [];
@@ -282,11 +307,10 @@ async function processCategory(category, urls) {
   for (let idx = 0; idx < pool.length; idx++) {
     const item = pool[idx];
     const plainSummary = item.summary.slice(0, 250);
-    const isVoiceStory = idx < 5; // First 3 get full voice generation
+    const isVoiceStory = idx < 5;
 
     if (isVoiceStory) {
-      // Generate full 4-voice summaries
-      console.log(`   🤖 [${idx+1}/3] Generating voices for: "${item.title.slice(0,50)}..."`);
+      console.log(`   🤖 [${idx+1}/5] Generating voices for: "${item.title.slice(0,50)}..."`);
       const voices = {};
       const combinations = [
         { role: 'student', region: 'north' },
@@ -312,7 +336,6 @@ async function processCategory(category, urls) {
         voices
       });
     } else {
-      // Plain summary only — no Claude call
       results.push({
         category,
         headline: item.title,
@@ -367,10 +390,7 @@ function buildEmailHTML(stories, date, subscriber) {
   const { name, role, region } = subscriber;
   const firstName = ((name || 'friend').split(' ')[0]);
   const isHinglish = region === 'north' || region === 'west';
-
-  // Email gets top voice stories only — best 6
   const voiceStories = stories.filter(s => s.hasVoice).slice(0, 6);
-
   const roleLabel = role === 'student' ? '🎓 Student' : '💼 Professional';
   const roleColor = role === 'student' ? '#FF4D6D' : '#FFAA55';
 
@@ -518,6 +538,7 @@ async function main() {
   console.log(`Claude API: ${CLAUDE_API_KEY ? '✅ Connected' : '❌ Missing'}`);
   console.log(`Supabase: ${SUPA_KEY ? '✅ Connected' : '❌ Missing'}`);
   console.log(`Resend: ${process.env.RESEND_API_KEY ? '✅ Connected' : '❌ Missing'}`);
+  console.log(`NewsAPI: ${process.env.NEWS_API_KEY ? '✅ Connected' : '❌ Missing'}`);
 
   const date = new Date().toLocaleDateString('en-IN', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -559,7 +580,6 @@ async function main() {
     }
   }
 
-  // Save data.json
   const dataToSave = {
     generated: new Date().toISOString(),
     date,
@@ -575,7 +595,6 @@ async function main() {
     console.log('✅ data-backup.json updated');
   }
 
-  // Send emails — only voice stories
   const voiceStories = finalStories.filter(s => s.hasVoice);
   if (voiceStories.length > 0) {
     console.log(`\n📧 Sending to ${subscribers.length} subscribers...`);
