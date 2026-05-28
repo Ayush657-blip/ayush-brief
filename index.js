@@ -73,11 +73,13 @@ const RSS_FEEDS = {
     'https://www.theguardian.com/environment/climate-crisis/rss'
   ],
   'Auto': [
-    'NEWSAPI:automobile car EV electric vehicle India Tata Maruti Hyundai'
-  ],
-  'Science': [
-    'NEWSAPI:science research ISRO NASA space medicine technology India'
-  ],
+  'NEWSAPI:car OR automobile OR EV OR electric vehicle OR Tata OR Maruti',
+  'https://feeds.bbci.co.uk/news/technology/rss.xml'
+],
+'Science': [
+  'NEWSAPI:science OR ISRO OR NASA OR space OR research',
+  'https://www.thehindu.com/sci-tech/science/feeder/default.rss'
+],
   'Entertainment': [
     'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
     'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms'
