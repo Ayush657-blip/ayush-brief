@@ -118,31 +118,79 @@ async function callClaudeAPI(prompt, maxTokens = 300) {
 
 // ── CLASSIFY STORY CATEGORY ───────────────────────────────────────────────────
 async function classifyStory(headline, summary) {
-  const prompt = `You are a news classifier. Read this headline and summary, then assign it to exactly ONE category from the list below.
+  const prompt = `You are a strict news classifier for an Indian news app.
+Assign this story to exactly ONE category. Be very precise.
 
-CATEGORIES:
-- Business: Company news, corporate strategy, mergers, acquisitions, profits, losses
-- Indian Economy: India GDP, RBI, inflation, rupee, trade, economic policy, budget
-- Finance: Stock markets, Sensex, Nifty, mutual funds, IPO, personal finance, banking
-- Tech: Technology, AI, software, apps, gadgets, internet, cybersecurity, social media
-- Sports: Cricket, football, tennis, Olympics, IPL, any sport
-- Government: India government, parliament, ministry, elections, BJP, Congress, policy, law
-- International: World news, geopolitics, USA, China, Russia, war, diplomacy
-- Climate: Environment, pollution, climate change, renewable energy, carbon, wildlife
-- Startups & Auto: Startups, funding rounds, VC, EVs, electric vehicles, cars, automobiles
-- Science & Health: Science, space, ISRO, NASA, medical research, health, disease, medicine
-- Entertainment: Films, OTT, Bollywood, music, celebrities, TV shows, awards
+CATEGORY RULES WITH EXAMPLES:
 
-HEADLINE: "${headline}"
-SUMMARY: "${(summary || '').slice(0, 150)}"
+Business:
+- Company profits, losses, mergers, acquisitions, corporate strategy
+- Examples: "HUL Q3 results disappoint", "Tata Steel acquires company", "Mukesh Ambani salary"
+- NOT: government policy, stock markets, startups
 
-Reply with ONLY the category name. Nothing else. No explanation.`;
+Indian Economy:
+- India macroeconomy — GDP, inflation, RBI, rupee, trade policy, budget, economic reforms
+- Examples: "RBI cuts repo rate", "India GDP grows 7%", "Rupee falls against dollar", "GST collections rise"
+- NOT: company news, global economy, stock prices
+
+Finance:
+- Stock markets, Sensex, Nifty, IPOs, mutual funds, personal investing, banking results
+- Examples: "Sensex hits 80000", "IPO subscribed 10x", "SBI reports profit", "Mutual fund inflows"
+- NOT: company strategy, economy policy
+
+Tech:
+- Technology products, AI, software, apps, gadgets, internet companies, cybersecurity
+- Examples: "Apple launches iPhone", "OpenAI raises funding", "Google antitrust case", "Meta AI update"
+- NOT: non-tech startups, food, agriculture
+
+Sports:
+- Any sport — cricket, football, tennis, Olympics, IPL, kabaddi
+- Examples: "Virat Kohli century", "India beats Pakistan", "Messi scores", "French Open results"
+- NOT: sports business, esports funding
+
+Government:
+- ONLY India government actions — parliament bills, ministry schemes, elections, court verdicts, BJP/Congress, India policy
+- Examples: "Parliament passes bill", "PM Modi launches scheme", "Supreme Court verdict", "BJP wins election"
+- NOT: economic analysis, business regulation, foreign governments, social issues about jobs/employment
+
+International:
+- ONLY news about foreign countries — USA, China, UK, Russia, Middle East, Europe, Africa
+- Examples: "Trump signs executive order", "China GDP slows", "Iran attacks US base", "EU imposes sanctions"
+- NOT: Indian news with global context, employment trends, coffee prices
+
+Climate:
+- Environment, pollution, climate change, weather events, renewable energy, wildlife, natural disasters, heatwave
+- Examples: "Heatwave hits Delhi", "Cyclone Odisha", "Solar power rises", "Air pollution Delhi"
+- NOT: space news, food/fruit agriculture
+
+Startups & Auto:
+- Startup funding, VC investments, unicorns AND car launches, EV news, automobile industry
+- Examples: "Byju's raises funds", "Ola Electric IPO", "Tata Nexon EV review", "Startup gets Series B"
+- NOT: food, fruit, agriculture, non-startup business
+
+Science & Health:
+- Scientific research, space missions, ISRO, NASA, medical discoveries, disease, hospitals, fitness, nutrition
+- Examples: "ISRO launches satellite", "NASA moon mission", "Cancer vaccine", "Dengue cases rise"
+- NOT: weather, tech products
+
+Entertainment:
+- Films, OTT, Bollywood, music, celebrities, awards, TV, streaming
+- Examples: "Pathaan box office", "Netflix launches show", "Grammy winners"
+- NOT: sports, news
+
+STORY:
+Headline: "${headline}"
+Summary: "${(summary || '').slice(0, 200)}"
+
+Reply with ONLY the exact category name:
+Business, Indian Economy, Finance, Tech, Sports, Government, International, Climate, Startups & Auto, Science & Health, Entertainment
+
+No explanation. No punctuation. Just the category name.`;
 
   try {
     const result = await callClaudeAPI(prompt, 20);
-    const cleaned = result.trim().replace(/['"]/g, '');
+    const cleaned = result.trim().replace(/['".,\n]/g, '');
     if (VALID_CATEGORIES.includes(cleaned)) return cleaned;
-    // fuzzy match
     const match = VALID_CATEGORIES.find(c =>
       cleaned.toLowerCase().includes(c.toLowerCase()) ||
       c.toLowerCase().includes(cleaned.toLowerCase())
