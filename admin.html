@@ -14,8 +14,6 @@
   --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
 }
 body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-serif;min-height:100vh;}
-
-/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100;}
 .login-box{background:var(--bg2);border:.5px solid var(--border2);border-radius:20px;padding:40px;width:360px;text-align:center;}
 .login-logo{font-size:36px;margin-bottom:12px;}
@@ -23,8 +21,6 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .login-sub{font-size:13px;color:var(--w3);margin-bottom:24px;}
 .login-input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--w);outline:none;margin-bottom:12px;}
 .login-btn{width:100%;padding:12px;border-radius:10px;background:var(--blue);border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;}
-
-/* MAIN */
 #main{display:none;}
 .top-bar{position:sticky;top:0;z-index:50;background:rgba(7,7,15,.95);backdrop-filter:blur(20px);border-bottom:.5px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .top-bar-left{display:flex;align-items:center;gap:12px;}
@@ -40,26 +36,13 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .btn-danger:hover{background:rgba(255,77,109,.25);}
 .btn-ghost{background:transparent;color:var(--w5);border:.5px solid var(--border);}
 .btn-ghost:hover{background:rgba(255,255,255,.05);}
-.btn-success{background:rgba(0,200,150,.15);color:var(--green);border:.5px solid rgba(0,200,150,.3);}
-.btn-success:hover{background:rgba(0,200,150,.25);}
-
-/* SUBMIT BAR */
 #submit-bar{background:linear-gradient(135deg,rgba(41,121,255,.15),rgba(0,100,200,.05));border-bottom:.5px solid rgba(92,200,255,.2);padding:12px 24px;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 #submit-bar.show{display:flex;}
-.submit-status{font-size:13px;color:var(--blue-p);}
-.submit-btn-big{padding:10px 28px;border-radius:10px;background:var(--green);border:none;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
-.submit-btn-big:disabled{opacity:.4;cursor:not-allowed;}
-
-/* UNDO BAR */
 #undo-bar{background:rgba(0,200,150,.08);border-bottom:.5px solid rgba(0,200,150,.2);padding:10px 24px;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 #undo-bar.show{display:flex;}
 .undo-msg{font-size:13px;color:var(--green);}
 .undo-timer{font-size:12px;color:var(--w3);}
-
-/* CONTENT */
 .content{padding:20px 24px;max-width:1400px;margin:0 auto;}
-
-/* CATEGORY SECTION */
 .cat-section{background:var(--bg2);border:.5px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;}
 .cat-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid var(--border);cursor:pointer;user-select:none;}
 .cat-header:hover{background:rgba(255,255,255,.02);}
@@ -69,20 +52,14 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .cat-prev-day{font-size:11px;padding:3px 8px;border-radius:100px;background:rgba(255,170,85,.15);border:.5px solid rgba(255,170,85,.3);color:var(--orange);}
 .cat-progress{font-size:12px;color:var(--w3);}
 .cat-body{padding:16px 20px;}
-
-/* PHASE TABS */
 .phase-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
 .phase-tab{padding:6px 14px;border-radius:100px;font-size:12px;cursor:pointer;border:.5px solid var(--border);background:transparent;color:var(--w3);font-family:inherit;transition:all .2s;}
 .phase-tab.active{background:rgba(41,121,255,.15);border-color:rgba(92,200,255,.4);color:var(--blue-p);}
-
-/* STORY GRID */
 .story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;}
 .story-card{background:var(--bg3);border:.5px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;position:relative;}
 .story-card:hover{border-color:rgba(92,200,255,.3);}
 .story-card.selected-10{border-color:var(--blue-p);background:rgba(41,121,255,.08);}
 .story-card.selected-5{border-color:var(--green);background:rgba(0,200,150,.08);}
-.story-card.rejected{opacity:.4;border-color:var(--border);}
-
 .story-importance{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
 .importance-dot{font-size:14px;}
 .importance-reason{font-size:11px;color:var(--w3);line-height:1.4;}
@@ -94,51 +71,27 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .story-link{font-size:11px;color:var(--blue-p);text-decoration:none;}
 .story-link:hover{text-decoration:underline;}
 .story-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;font-size:11px;}
-.story-card.selected-10 .story-check,.story-card.selected-5 .story-check{background:var(--blue);border-color:var(--blue);color:#fff;}
-.story-card.selected-5 .story-check{background:var(--green);border-color:var(--green);}
-
-/* VOICE PANEL */
-.voice-panel{margin-top:16px;border-top:.5px solid var(--border);padding-top:16px;display:none;}
-.voice-panel.show{display:block;}
-.voice-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.voice-tab{padding:5px 12px;border-radius:100px;font-size:11px;cursor:pointer;border:.5px solid var(--border);background:transparent;color:var(--w3);font-family:inherit;}
-.voice-tab.active{background:rgba(255,77,109,.15);border-color:rgba(255,77,109,.4);color:var(--red);}
-.voice-tab.active.prof{background:rgba(255,170,85,.15);border-color:rgba(255,170,85,.4);color:var(--orange);}
+.story-card.selected-10 .story-check{background:var(--blue);border-color:var(--blue);color:#fff;}
+.story-card.selected-5 .story-check{background:var(--green);border-color:var(--green);color:#fff;}
 .voice-card{background:var(--bg2);border:.5px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;}
 .voice-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--w3);margin-bottom:6px;}
-.voice-text{font-size:13px;color:var(--w7);line-height:1.6;width:100%;background:transparent;border:none;color:var(--w7);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;min-height:60px;outline:none;}
-.voice-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
 .voice-btn{padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;border:none;font-family:inherit;}
 .approve-btn{background:rgba(0,200,150,.15);color:var(--green);border:.5px solid rgba(0,200,150,.3);}
-.reject-btn{background:rgba(255,77,109,.15);color:var(--red);border:.5px solid rgba(255,77,109,.3);}
 .regen-btn{background:rgba(41,121,255,.15);color:var(--blue-p);border:.5px solid rgba(92,200,255,.3);}
 .save-btn{background:rgba(255,255,255,.08);color:var(--w7);border:.5px solid var(--border2);}
-.feedback-input{width:100%;background:rgba(255,255,255,.04);border:.5px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--w);font-family:inherit;outline:none;margin-top:6px;display:none;}
 .voice-approved{background:rgba(0,200,150,.08);border-color:rgba(0,200,150,.3);}
-
-/* GENERATE BTN */
 .generate-section{padding:16px 0;text-align:center;border-top:.5px solid var(--border);margin-top:12px;}
 .generate-btn{padding:10px 28px;border-radius:10px;background:var(--blue);border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;}
 .generate-btn:disabled{opacity:.4;cursor:not-allowed;}
-
-/* TOAST */
 #toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:.5px solid var(--border2);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--w);z-index:1000;display:none;box-shadow:0 8px 40px rgba(0,0,0,.4);}
-
-/* LOADING */
 .loading{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--w3);padding:20px 0;}
 .spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--blue-p);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-@media(max-width:640px){
-  .top-bar{padding:10px 16px;}
-  .content{padding:12px 16px;}
-  .story-grid{grid-template-columns:1fr;}
-}
+@media(max-width:640px){.top-bar{padding:10px 16px;}.content{padding:12px 16px;}.story-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">☀️</div>
@@ -149,10 +102,7 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
   </div>
 </div>
 
-<!-- MAIN -->
 <div id="main">
-
-  <!-- TOP BAR -->
   <div class="top-bar">
     <div class="top-bar-left">
       <div class="top-logo">☀️ Dawn Brief</div>
@@ -161,19 +111,17 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
     <div class="top-bar-right">
       <div class="progress-pill" id="progress-pill">0 / 11 categories done</div>
       <button class="btn btn-ghost" onclick="refreshStories()">🔄 Refresh</button>
-      <button class="btn btn-primary submit-btn-big" id="submit-btn" disabled onclick="submitAll()">
+      <button class="btn btn-primary" id="submit-btn" disabled onclick="submitAll()" style="background:var(--blue);color:#fff;">
         🚀 Submit & Publish
       </button>
     </div>
   </div>
 
-  <!-- SUBMIT STATUS BAR -->
   <div id="submit-bar">
-    <div class="submit-status" id="submit-status-msg">✅ Published successfully</div>
+    <div style="font-size:13px;color:var(--blue-p)">✅ Published successfully</div>
     <button class="btn btn-danger" onclick="undoSubmit()">↩️ Undo (15 min window)</button>
   </div>
 
-  <!-- UNDO BAR -->
   <div id="undo-bar">
     <div>
       <div class="undo-msg">✅ Submitted & live</div>
@@ -182,19 +130,17 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
     <button class="btn btn-danger" onclick="undoSubmit()">↩️ Undo Submit</button>
   </div>
 
-  <!-- CONTENT -->
   <div class="content" id="content">
     <div class="loading"><div class="spinner"></div>Loading today's stories...</div>
   </div>
-
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
 const API = 'https://ayush-brief-production.up.railway.app';
 const ADMIN_PASS = 'dawnbrief2026';
+let ADMIN_KEY = '';
 
 const CATEGORIES = [
   'Business','Indian Economy','Finance','Tech','Sports',
@@ -208,18 +154,31 @@ const CAT_ICONS = {
   'Science & Health':'🔬','Entertainment':'🎬'
 };
 
-// State
-let allStories = {}; // { category: [stories] }
-let selected10 = {}; // { category: Set of story ids }
-let selected5 = {};  // { category: Set of story ids }
-let approvedVoices = {}; // { storyId: { voiceKey: true } }
-let catDone = {};    // { category: true }
+let allStories = {};
+let selected10 = {};
+let selected5 = {};
+let approvedVoices = {};
+let catDone = {};
 let undoTimer = null;
+
+// ── HELPERS ────────────────────────────────────────────────────────
+function authHeaders(extra) {
+  return { 'x-admin-key': ADMIN_KEY, ...extra };
+}
+
+function apiPost(url, body) {
+  return fetch(url, {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(body)
+  });
+}
 
 // ── LOGIN ──────────────────────────────────────────────────────────
 function doLogin() {
   const pass = document.getElementById('login-pass').value;
   if (pass === ADMIN_PASS) {
+    ADMIN_KEY = pass;
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('main').style.display = 'block';
     loadStories();
@@ -237,19 +196,18 @@ async function loadStories() {
   document.getElementById('top-date').textContent = new Date().toLocaleDateString('en-IN', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata'
   });
-
   try {
-    const res = await fetch(`${API}/api/admin/stories?date=${today}`);
+    const res = await fetch(`${API}/api/admin/stories?date=${today}`, {
+      headers: authHeaders()
+    });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
-
     allStories = data.grouped;
     CATEGORIES.forEach(c => {
       selected10[c] = new Set();
       selected5[c] = new Set();
       catDone[c] = false;
     });
-
     renderAllCategories();
     updateProgress();
   } catch (err) {
@@ -263,10 +221,9 @@ async function refreshStories() {
   await loadStories();
 }
 
-// ── RENDER ALL CATEGORIES ──────────────────────────────────────────
+// ── RENDER ─────────────────────────────────────────────────────────
 function renderAllCategories() {
-  const content = document.getElementById('content');
-  content.innerHTML = CATEGORIES.map(cat => renderCategory(cat)).join('');
+  document.getElementById('content').innerHTML = CATEGORIES.map(cat => renderCategory(cat)).join('');
 }
 
 function renderCategory(cat) {
@@ -276,19 +233,18 @@ function renderCategory(cat) {
   const sel10 = selected10[cat] ? selected10[cat].size : 0;
   const sel5 = selected5[cat] ? selected5[cat].size : 0;
   const done = catDone[cat];
-
   return `
 <div class="cat-section" id="cat-${cat.replace(/[^a-z0-9]/gi,'_')}">
   <div class="cat-header" onclick="toggleCat('${cat}')">
     <div class="cat-title">
       <span style="font-size:18px">${CAT_ICONS[cat]||'📰'}</span>
       <span class="cat-name">${cat}</span>
-      ${hasPrevDay ? '<span class="cat-prev-day">📦 Previous Day</span>' : ''}
+      ${hasPrevDay?'<span class="cat-prev-day">📦 Previous Day</span>':''}
       <span class="cat-badge">${stories.length} stories · 🔴 ${mustCount} must</span>
-      ${done ? '<span style="color:var(--green);font-size:12px">✅ Done</span>' : ''}
+      ${done?'<span style="color:var(--green);font-size:12px">✅ Done</span>':''}
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <span class="cat-progress">${sel10}/10 selected · ${sel5}/5 final</span>
+      <span class="cat-progress" id="cat-prog-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel10}/10 selected · ${sel5}/5 final</span>
       <span style="color:var(--w3);font-size:12px">▼</span>
     </div>
   </div>
@@ -300,34 +256,20 @@ function renderCategory(cat) {
 
 function renderCategoryBody(cat) {
   const stories = allStories[cat] || [];
-  if (stories.length === 0) {
-    return '<div style="padding:20px;text-align:center;color:var(--w3)">No stories available for this category today.</div>';
-  }
-
+  if (stories.length === 0) return '<div style="padding:20px;text-align:center;color:var(--w3)">No stories today.</div>';
   const phase = getCurrentPhase(cat);
-
   return `
 <div class="phase-tabs">
-  <button class="phase-tab ${phase===1?'active':''}" onclick="setPhase('${cat}',1)">
-    Phase 1: Select 10
-  </button>
-  <button class="phase-tab ${phase===2?'active':''}" onclick="setPhase('${cat}',2)" id="phase2-tab-${cat.replace(/[^a-z0-9]/gi,'_')}">
-    Phase 2: Select 5 Final
-  </button>
-  <button class="phase-tab ${phase===3?'active':''}" onclick="setPhase('${cat}',3)" id="phase3-tab-${cat.replace(/[^a-z0-9]/gi,'_')}">
-    Phase 3: Review Summaries
-  </button>
+  <button class="phase-tab ${phase===1?'active':''}" onclick="setPhase('${cat}',1)">Phase 1: Select 10</button>
+  <button class="phase-tab ${phase===2?'active':''}" onclick="setPhase('${cat}',2)">Phase 2: Select 5 Final</button>
+  <button class="phase-tab ${phase===3?'active':''}" onclick="setPhase('${cat}',3)">Phase 3: Review Summaries</button>
 </div>
-<div id="phase-content-${cat.replace(/[^a-z0-9]/gi,'_')}">
-  ${renderPhase(cat, phase)}
-</div>`;
+<div id="phase-content-${cat.replace(/[^a-z0-9]/gi,'_')}">${renderPhase(cat, phase)}</div>`;
 }
 
 function getCurrentPhase(cat) {
-  const sel10 = selected10[cat] ? selected10[cat].size : 0;
-  const sel5 = selected5[cat] ? selected5[cat].size : 0;
-  if (sel5 > 0 || catDone[cat]) return 3;
-  if (sel10 >= 10) return 2;
+  if (selected5[cat] && selected5[cat].size > 0) return 3;
+  if (selected10[cat] && selected10[cat].size >= 10) return 2;
   return 1;
 }
 
@@ -338,114 +280,74 @@ function renderPhase(cat, phase) {
   return '';
 }
 
-// Phase 1: Show all 20, select 10
 function renderPhase1(cat) {
   const stories = allStories[cat] || [];
   const sel = selected10[cat] || new Set();
-
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">
-  🔴 Must cover stories are shown first. Select your top 10.
-  <span style="color:var(--blue-p)">${sel.size}/10 selected</span>
-</p>
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">🔴 Must cover stories shown first. Select your top 10. <span style="color:var(--blue-p)" id="sel10-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel.size}/10 selected</span></p>
 <div class="story-grid">
-  ${stories.map(s => {
-    const isSelected = sel.has(s.id);
-    return `
-<div class="story-card ${isSelected?'selected-10':''}" onclick="toggleSelect10('${cat}', ${s.id}, this)">
+${stories.map(s => {
+  const isSelected = sel.has(s.id);
+  return `<div class="story-card ${isSelected?'selected-10':''}" onclick="toggleSelect10('${cat}',${s.id},this)">
   <div class="story-check">${isSelected?'✓':''}</div>
-  <div class="story-importance">
-    <span class="importance-dot">${s.importance}</span>
-    <span class="importance-reason">${s.reason || ''}</span>
-  </div>
+  <div class="story-importance"><span class="importance-dot">${s.importance}</span><span class="importance-reason">${s.reason||''}</span></div>
   <div class="story-headline">${s.headline}</div>
-  <div class="story-summary">${s.summary || ''}</div>
+  <div class="story-summary">${s.summary||''}</div>
   <div class="story-meta">
     <span class="story-cat-tag">${s.category}</span>
-    ${s.is_previous_day ? '<span class="story-prev">📦 Yesterday</span>' : ''}
+    ${s.is_previous_day?'<span class="story-prev">📦 Yesterday</span>':''}
     <a href="${s.link}" target="_blank" class="story-link" onclick="event.stopPropagation()">Read →</a>
   </div>
 </div>`;
-  }).join('')}
+}).join('')}
 </div>
-${sel.size >= 10 ? `
-<div class="generate-section">
-  <button class="generate-btn" onclick="proceedToPhase2('${cat}')">
-    Next: Select 5 Final →
-  </button>
-</div>` : ''}`;
+${sel.size >= 10 ? `<div class="generate-section"><button class="generate-btn" onclick="setPhase('${cat}',2)">Next: Select 5 Final →</button></div>` : ''}`;
 }
 
-// Phase 2: Show selected 10, pick 5 final
 function renderPhase2(cat) {
   const sel10ids = selected10[cat] || new Set();
   const sel5ids = selected5[cat] || new Set();
   const stories = (allStories[cat] || []).filter(s => sel10ids.has(s.id));
-
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">
-  From your 10 selected stories, pick the 5 best for today's brief.
-  <span style="color:var(--green)">${sel5ids.size}/5 selected</span>
-</p>
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">From your 10, pick the 5 best. <span style="color:var(--green)" id="sel5-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel5ids.size}/5 selected</span></p>
 <div class="story-grid">
-  ${stories.map(s => {
-    const isSelected = sel5ids.has(s.id);
-    return `
-<div class="story-card ${isSelected?'selected-5':''}" onclick="toggleSelect5('${cat}', ${s.id}, this)">
+${stories.map(s => {
+  const isSelected = sel5ids.has(s.id);
+  return `<div class="story-card ${isSelected?'selected-5':''}" onclick="toggleSelect5('${cat}',${s.id},this)">
   <div class="story-check">${isSelected?'✓':''}</div>
-  <div class="story-importance">
-    <span class="importance-dot">${s.importance}</span>
-    <span class="importance-reason">${s.reason || ''}</span>
-  </div>
+  <div class="story-importance"><span class="importance-dot">${s.importance}</span><span class="importance-reason">${s.reason||''}</span></div>
   <div class="story-headline">${s.headline}</div>
-  <div class="story-summary">${s.summary || ''}</div>
+  <div class="story-summary">${s.summary||''}</div>
   <div class="story-meta">
     <span class="story-cat-tag">${s.category}</span>
-    ${s.is_previous_day ? '<span class="story-prev">📦 Yesterday</span>' : ''}
+    ${s.is_previous_day?'<span class="story-prev">📦 Yesterday</span>':''}
     <a href="${s.link}" target="_blank" class="story-link" onclick="event.stopPropagation()">Read →</a>
   </div>
 </div>`;
-  }).join('')}
+}).join('')}
 </div>
-${sel5ids.size >= 5 ? `
-<div class="generate-section">
-  <button class="generate-btn" id="gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}" onclick="generateSummaries('${cat}')">
-    🤖 Generate Voice Summaries →
-  </button>
-</div>` : ''}`;
+${sel5ids.size >= 5 ? `<div class="generate-section"><button class="generate-btn" id="gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}" onclick="generateSummaries('${cat}')">🤖 Generate Voice Summaries →</button></div>` : ''}`;
 }
 
-// Phase 3: Review voice summaries
 function renderPhase3(cat) {
   const sel5ids = selected5[cat] || new Set();
   const stories = (allStories[cat] || []).filter(s => sel5ids.has(s.id));
-  const approvedCount = stories.filter(s => isStoryApproved(s.id)).length;
-
+  const approvedCount = stories.filter(s => isStoryFullyApproved(s.id)).length;
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">
-  Review voice summaries. Edit, regenerate, or approve each one.
-  <span style="color:var(--green)">${approvedCount}/5 approved</span>
-</p>
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">Review voice summaries. Edit, regenerate, or approve. <span style="color:var(--green)">${approvedCount}/5 approved</span></p>
 ${stories.map(s => renderVoiceReview(s, cat)).join('')}
-${approvedCount >= 5 ? `
-<div class="generate-section">
-  <button class="generate-btn" style="background:var(--green)" onclick="markCatDone('${cat}')">
-    ✅ Category Done →
-  </button>
-</div>` : ''}`;
+${approvedCount >= 5 ? `<div class="generate-section"><button class="generate-btn" style="background:var(--green)" onclick="markCatDone('${cat}')">✅ Category Done →</button></div>` : ''}`;
 }
 
 function renderVoiceReview(story, cat) {
   const voices = story.voices || {};
   const voiceKeys = [
-    { key: 'student_north', label: '🎓 Student · Hinglish' },
-    { key: 'student_south', label: '🎓 Student · English' },
-    { key: 'professional_north', label: '💼 Professional · Hinglish' },
-    { key: 'professional_south', label: '💼 Professional · English' },
+    {key:'student_north', label:'🎓 Student · Hinglish'},
+    {key:'student_south', label:'🎓 Student · English'},
+    {key:'professional_north', label:'💼 Professional · Hinglish'},
+    {key:'professional_south', label:'💼 Professional · English'},
   ];
-
-  const allApproved = voiceKeys.every(v => approvedVoices[story.id] && approvedVoices[story.id][v.key]);
-
+  const allApproved = isStoryFullyApproved(story.id);
   return `
 <div class="voice-card ${allApproved?'voice-approved':''}" id="vc-${story.id}">
   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;">
@@ -453,41 +355,41 @@ function renderVoiceReview(story, cat) {
       <div class="voice-label">${story.category}</div>
       <div style="font-size:14px;font-weight:500;color:var(--w7);line-height:1.4">${story.headline}</div>
     </div>
-    ${allApproved ? '<span style="color:var(--green);font-size:20px">✅</span>' : ''}
+    ${allApproved?'<span style="color:var(--green);font-size:20px">✅</span>':''}
   </div>
-  ${voiceKeys.map(v => `
-  <div style="margin-bottom:12px;border:.5px solid var(--border);border-radius:8px;padding:10px;" id="vk-${story.id}-${v.key}">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-      <span style="font-size:11px;color:var(--w3)">${v.label}</span>
-      ${approvedVoices[story.id]&&approvedVoices[story.id][v.key] ? '<span style="color:var(--green);font-size:12px">✅ Approved</span>' : ''}
-    </div>
-    <textarea
-      id="voice-text-${story.id}-${v.key}"
-      style="width:100%;background:transparent;border:none;color:var(--w7);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;min-height:60px;outline:none;"
-      onchange="markEdited(${story.id},'${v.key}')"
-    >${voices[v.key] || 'Not generated yet'}</textarea>
-    <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
-      <button class="voice-btn approve-btn" onclick="approveVoice(${story.id},'${v.key}','${cat}')">✅ Approve</button>
-      <button class="voice-btn regen-btn" onclick="showFeedback(${story.id},'${v.key}')">🔄 Regenerate</button>
-      <button class="voice-btn save-btn" onclick="saveVoice(${story.id},'${v.key}')">💾 Save Edit</button>
-    </div>
-    <div id="feedback-${story.id}-${v.key}" style="display:none;margin-top:8px;">
-      <input type="text" placeholder="What's wrong? e.g. Too boring, not Hinglish enough..." 
-        id="feedback-input-${story.id}-${v.key}"
-        style="width:100%;background:rgba(255,255,255,.04);border:.5px solid var(--border2);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--w);font-family:inherit;outline:none;"
-      />
-      <button class="voice-btn regen-btn" style="margin-top:6px" onclick="regenerateWithFeedback(${story.id},'${v.key}')">
-        🔄 Regenerate with feedback
-      </button>
-    </div>
-  </div>`).join('')}
+  ${voiceKeys.map(v => {
+    const isApproved = approvedVoices[story.id] && approvedVoices[story.id][v.key];
+    return `
+<div style="margin-bottom:12px;border:.5px solid ${isApproved?'rgba(0,200,150,.3)':' var(--border)'};border-radius:8px;padding:10px;background:${isApproved?'rgba(0,200,150,.04)':'transparent'}" id="vk-${story.id}-${v.key}">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+    <span style="font-size:11px;color:var(--w3)">${v.label}</span>
+    ${isApproved?'<span style="color:var(--green);font-size:12px">✅ Approved</span>':''}
+  </div>
+  <textarea id="voice-text-${story.id}-${v.key}"
+    style="width:100%;background:transparent;border:none;color:var(--w7);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;min-height:60px;outline:none;"
+    onchange="markEdited(${story.id},'${v.key}')"
+  >${voices[v.key]||'Not generated yet'}</textarea>
+  <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
+    <button class="voice-btn approve-btn" onclick="approveVoice(${story.id},'${v.key}','${cat}')">✅ Approve</button>
+    <button class="voice-btn regen-btn" onclick="showFeedback(${story.id},'${v.key}')">🔄 Regenerate</button>
+    <button class="voice-btn save-btn" onclick="saveVoiceEdit(${story.id},'${v.key}')">💾 Save Edit</button>
+  </div>
+  <div id="feedback-${story.id}-${v.key}" style="display:none;margin-top:8px;">
+    <input type="text" placeholder="What's wrong? e.g. Too boring, not Hinglish enough..."
+      id="feedback-input-${story.id}-${v.key}"
+      style="width:100%;background:rgba(255,255,255,.04);border:.5px solid var(--border2);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--w);font-family:inherit;outline:none;"
+    />
+    <button class="voice-btn regen-btn" style="margin-top:6px" onclick="regenerateWithFeedback(${story.id},'${v.key}','${cat}')">🔄 Regenerate with feedback</button>
+  </div>
+</div>`;
+  }).join('')}
 </div>`;
 }
 
 // ── INTERACTIONS ───────────────────────────────────────────────────
 function toggleCat(cat) {
   const body = document.getElementById(`cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+  if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
 }
 
 function setPhase(cat, phase) {
@@ -507,16 +409,9 @@ function toggleSelect10(cat, id, el) {
     el.classList.add('selected-10');
     el.querySelector('.story-check').textContent = '✓';
   }
-  // Update counter
-  const body = document.getElementById(`cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  const counter = body.querySelector('.phase-tabs + div p span');
+  const counter = document.getElementById(`sel10-count-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (counter) counter.textContent = `${sel.size}/10 selected`;
-
-  // Show next button if 10 selected
-  const genSection = body.querySelector('.generate-section');
-  if (sel.size >= 10 && !genSection) {
-    setPhase(cat, 1); // re-render to show button
-  }
+  if (sel.size >= 10) setPhase(cat, 1);
   updateCatHeader(cat);
 }
 
@@ -532,43 +427,26 @@ function toggleSelect5(cat, id, el) {
     el.classList.add('selected-5');
     el.querySelector('.story-check').textContent = '✓';
   }
-  // Re-render counter
-  const phaseContent = document.getElementById(`phase-content-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  const counter = phaseContent.querySelector('p span');
+  const counter = document.getElementById(`sel5-count-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (counter) counter.textContent = `${sel.size}/5 selected`;
-  // Show generate button if 5 selected
   if (sel.size >= 5) setPhase(cat, 2);
   updateCatHeader(cat);
-}
-
-function proceedToPhase2(cat) {
-  setPhase(cat, 2);
 }
 
 async function generateSummaries(cat) {
   const sel5ids = Array.from(selected5[cat] || []);
   if (sel5ids.length < 5) { showToast('Please select 5 stories first'); return; }
-
   const btn = document.getElementById(`gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Generating...'; }
-
-  showToast('Generating voice summaries... This takes ~2 minutes');
-
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Generating... (~2 min)'; }
+  showToast('Generating voice summaries... Please wait');
   try {
-    const res = await fetch(`${API}/api/admin/generate-voices`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ story_ids: sel5ids })
-    });
+    const res = await apiPost(`${API}/api/admin/generate-voices`, { story_ids: sel5ids });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
-
-    // Update local story voices
     data.stories.forEach(s => {
       const story = (allStories[cat] || []).find(st => st.id === s.id);
       if (story) story.voices = s.voices;
     });
-
     showToast('✅ Voice summaries generated!');
     setPhase(cat, 3);
   } catch (err) {
@@ -580,28 +458,9 @@ async function generateSummaries(cat) {
 function approveVoice(storyId, voiceKey, cat) {
   if (!approvedVoices[storyId]) approvedVoices[storyId] = {};
   approvedVoices[storyId][voiceKey] = true;
-
-  // Update UI
-  const container = document.getElementById(`vk-${storyId}-${voiceKey}`);
-  if (container) {
-    const statusEl = container.querySelector('span[style*="color:var(--green)"]');
-    if (!statusEl) {
-      const header = container.querySelector('div');
-      header.innerHTML += '<span style="color:var(--green);font-size:12px">✅ Approved</span>';
-    }
-  }
-
-  // Check if all 4 voices approved
-  const voiceKeys = ['student_north','student_south','professional_north','professional_south'];
-  const allApproved = voiceKeys.every(k => approvedVoices[storyId] && approvedVoices[storyId][k]);
-  if (allApproved) {
-    const vc = document.getElementById(`vc-${storyId}`);
-    if (vc) vc.classList.add('voice-approved');
-    showToast('✅ All voices approved for this story!');
-  }
-
-  // Re-render phase 3 to update approved count
   setPhase(cat, 3);
+  const allDone = isStoryFullyApproved(storyId);
+  if (allDone) showToast('✅ All voices approved for this story!');
 }
 
 function showFeedback(storyId, voiceKey) {
@@ -609,161 +468,109 @@ function showFeedback(storyId, voiceKey) {
   if (fb) fb.style.display = fb.style.display === 'none' ? 'block' : 'none';
 }
 
-async function regenerateWithFeedback(storyId, voiceKey) {
+async function regenerateWithFeedback(storyId, voiceKey, cat) {
   const feedbackInput = document.getElementById(`feedback-input-${storyId}-${voiceKey}`);
   const feedback = feedbackInput ? feedbackInput.value : '';
-
   showToast('🔄 Regenerating...');
   try {
-    const res = await fetch(`${API}/api/admin/regenerate-voice`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ story_id: storyId, voice_key: voiceKey, feedback })
-    });
+    const res = await apiPost(`${API}/api/admin/regenerate-voice`, { story_id: storyId, voice_key: voiceKey, feedback });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
-
     const textarea = document.getElementById(`voice-text-${storyId}-${voiceKey}`);
     if (textarea) textarea.value = data.new_voice;
-
-    // Update local
     const story = Object.values(allStories).flat().find(s => s.id === storyId);
-    if (story) {
-      if (!story.voices) story.voices = {};
-      story.voices[voiceKey] = data.new_voice;
-    }
-
+    if (story) { if (!story.voices) story.voices = {}; story.voices[voiceKey] = data.new_voice; }
     showToast('✅ Regenerated!');
     const fb = document.getElementById(`feedback-${storyId}-${voiceKey}`);
     if (fb) fb.style.display = 'none';
-  } catch (err) {
-    showToast(`❌ ${err.message}`);
-  }
+  } catch (err) { showToast(`❌ ${err.message}`); }
 }
 
-async function saveVoice(storyId, voiceKey) {
+async function saveVoiceEdit(storyId, voiceKey) {
   const textarea = document.getElementById(`voice-text-${storyId}-${voiceKey}`);
   if (!textarea) return;
-  const voiceText = textarea.value;
-
   try {
-    await fetch(`${API}/api/admin/save-voice`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ story_id: storyId, voice_key: voiceKey, voice_text: voiceText })
-    });
-
+    await apiPost(`${API}/api/admin/save-voice`, { story_id: storyId, voice_key: voiceKey, voice_text: textarea.value });
     const story = Object.values(allStories).flat().find(s => s.id === storyId);
-    if (story) {
-      if (!story.voices) story.voices = {};
-      story.voices[voiceKey] = voiceText;
-    }
+    if (story) { if (!story.voices) story.voices = {}; story.voices[voiceKey] = textarea.value; }
     showToast('💾 Saved!');
-  } catch (err) {
-    showToast(`❌ ${err.message}`);
-  }
+  } catch (err) { showToast(`❌ ${err.message}`); }
 }
 
 function markEdited(storyId, voiceKey) {
-  if (approvedVoices[storyId]) {
-    delete approvedVoices[storyId][voiceKey];
-  }
+  if (approvedVoices[storyId]) delete approvedVoices[storyId][voiceKey];
 }
 
-function isStoryApproved(storyId) {
+function isStoryFullyApproved(storyId) {
   const keys = ['student_north','student_south','professional_north','professional_south'];
   return keys.every(k => approvedVoices[storyId] && approvedVoices[storyId][k]);
 }
 
 function markCatDone(cat) {
   catDone[cat] = true;
-  updateCatHeader(cat);
   updateProgress();
   showToast(`✅ ${cat} done!`);
-  // Collapse the category
   const body = document.getElementById(`cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (body) body.style.display = 'none';
+  // Update header to show done badge
+  renderAllCategories();
 }
 
 function updateCatHeader(cat) {
   const sel10 = selected10[cat] ? selected10[cat].size : 0;
   const sel5 = selected5[cat] ? selected5[cat].size : 0;
-  const done = catDone[cat];
-  const header = document.querySelector(`#cat-${cat.replace(/[^a-z0-9]/gi,'_')} .cat-progress`);
-  if (header) header.textContent = `${sel10}/10 selected · ${sel5}/5 final`;
-  const doneSpan = document.querySelector(`#cat-${cat.replace(/[^a-z0-9]/gi,'_')} .cat-title span:last-child`);
+  const el = document.getElementById(`cat-prog-${cat.replace(/[^a-z0-9]/gi,'_')}`);
+  if (el) el.textContent = `${sel10}/10 selected · ${sel5}/5 final`;
 }
 
 function updateProgress() {
   const doneCount = Object.values(catDone).filter(Boolean).length;
   document.getElementById('progress-pill').textContent = `${doneCount} / 11 categories done`;
-
-  const submitBtn = document.getElementById('submit-btn');
+  const btn = document.getElementById('submit-btn');
   if (doneCount >= 11) {
-    submitBtn.disabled = false;
-    submitBtn.style.background = 'var(--green)';
+    btn.disabled = false;
+    btn.style.background = 'var(--green)';
   } else {
-    submitBtn.disabled = true;
-    submitBtn.style.background = '';
+    btn.disabled = true;
+    btn.style.background = 'var(--blue)';
   }
 }
 
-// ── SUBMIT ─────────────────────────────────────────────────────────
 async function submitAll() {
   if (!confirm('Publish today\'s brief to website and send emails to all subscribers?')) return;
-
   const approvedIds = [];
-  CATEGORIES.forEach(cat => {
-    selected5[cat].forEach(id => approvedIds.push(id));
-  });
-
+  CATEGORIES.forEach(cat => { if (selected5[cat]) selected5[cat].forEach(id => approvedIds.push(id)); });
   if (approvedIds.length === 0) { showToast('No stories selected'); return; }
-
-  document.getElementById('submit-btn').disabled = true;
-  document.getElementById('submit-btn').textContent = '🚀 Publishing...';
-
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = '🚀 Publishing...';
   try {
     const today = new Date().toISOString().split('T')[0];
-    const res = await fetch(`${API}/api/admin/submit`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ approved_ids: approvedIds, date: today })
-    });
+    const res = await apiPost(`${API}/api/admin/submit`, { approved_ids: approvedIds, date: today });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
-
     document.getElementById('undo-bar').classList.add('show');
-    document.getElementById('submit-btn').textContent = '✅ Published!';
+    btn.textContent = '✅ Published!';
     showToast(`✅ ${data.stories_published} stories published! Emails sent.`);
-
-    // Start undo countdown
     startUndoCountdown(data.can_undo_until);
   } catch (err) {
     showToast(`❌ ${err.message}`);
-    document.getElementById('submit-btn').disabled = false;
-    document.getElementById('submit-btn').textContent = '🚀 Submit & Publish';
+    btn.disabled = false; btn.textContent = '🚀 Submit & Publish';
   }
 }
 
 async function undoSubmit() {
-  if (!confirm('Undo submission? This will unpublish the brief.')) return;
+  if (!confirm('Undo submission?')) return;
   try {
     const today = new Date().toISOString().split('T')[0];
-    const res = await fetch(`${API}/api/admin/undo-submit`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date: today })
-    });
+    const res = await apiPost(`${API}/api/admin/undo-submit`, { date: today });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
     document.getElementById('undo-bar').classList.remove('show');
-    document.getElementById('submit-btn').disabled = false;
-    document.getElementById('submit-btn').textContent = '🚀 Submit & Publish';
-    showToast('↩️ Undone. Brief unpublished.');
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = false; btn.textContent = '🚀 Submit & Publish';
+    showToast('↩️ Undone.');
     clearInterval(undoTimer);
-  } catch (err) {
-    showToast(`❌ ${err.message}`);
-  }
+  } catch (err) { showToast(`❌ ${err.message}`); }
 }
 
 function startUndoCountdown(undoUntil) {
@@ -774,19 +581,14 @@ function startUndoCountdown(undoUntil) {
     const secs = Math.floor((remaining % 60000) / 1000);
     const el = document.getElementById('undo-timer');
     if (el) el.textContent = `Undo available for ${mins}:${secs.toString().padStart(2,'0')}`;
-    if (remaining <= 0) {
-      clearInterval(undoTimer);
-      document.getElementById('undo-bar').classList.remove('show');
-    }
+    if (remaining <= 0) { clearInterval(undoTimer); document.getElementById('undo-bar').classList.remove('show'); }
   }, 1000);
 }
 
-// ── TOAST ──────────────────────────────────────────────────────────
 let toastTimer;
 function showToast(msg) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.style.display = 'block';
+  el.textContent = msg; el.style.display = 'block';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
