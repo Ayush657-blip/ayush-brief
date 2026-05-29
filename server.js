@@ -347,7 +347,7 @@ app.get('/api/admin/funnel', adminAuth, async (req, res) => {
   }
 });
 
-app.get('/api/admin/stories', adminAuth, async (req, res) => {
+app.get('/api/admin/analytics', adminAuth, async (req, res) => {
   try {
     const clicks = await supabaseQuery('story_clicks?select=headline,category');
     const clickMap = {};
