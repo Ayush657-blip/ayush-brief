@@ -7,125 +7,93 @@ const parser = new Parser({ timeout: 10000, headers: { 'User-Agent': 'Mozilla/5.
 const resend = new Resend(process.env.RESEND_API_KEY);
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
 
-// ── SUPABASE CONFIG ───────────────────────────────────────────────────────────
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 
-// ── RSS FEEDS ─────────────────────────────────────────────────────────────────
-const RSS_FEEDS = {
-  'Business': [
-    'https://feeds.bbci.co.uk/news/business/rss.xml',
-    'https://www.livemint.com/rss/companies',
-    'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'
-  ],
-  'Indian Economy': [
-    'https://www.livemint.com/rss/economy',
-    'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms',
-    'https://feeds.bbci.co.uk/news/business/rss.xml'
-  ],
-  'Finance': [
-    'https://www.livemint.com/rss/market',
-    'https://feeds.bbci.co.uk/news/business/rss.xml',
-    'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'
-  ],
-  'Tech': [
-    'https://feeds.bbci.co.uk/news/technology/rss.xml',
-    'https://techcrunch.com/feed/',
-    'https://timesofindia.indiatimes.com/rssfeeds/66949542.cms'
-  ],
-  'Sports': [
-    'https://feeds.bbci.co.uk/sport/rss.xml',
-    'https://timesofindia.indiatimes.com/rssfeeds/4719161.cms'
-  ],
-  'Government': [
-    'https://feeds.feedburner.com/ndtvnews-india-news',
-    'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
-    'https://www.thehindu.com/news/national/feeder/default.rss'
-  ],
-  'International': [
-    'https://feeds.bbci.co.uk/news/world/rss.xml',
-    'https://rss.nytimes.com/services/xml/rss/nyt/World.xml'
-  ],
-  'Climate': [
-    'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
-    'https://www.theguardian.com/environment/climate-crisis/rss'
-  ],
-  'Startups & Auto': [
-    'https://techcrunch.com/feed/',
-    'https://feeds.bbci.co.uk/news/technology/rss.xml',
-    'https://timesofindia.indiatimes.com/rssfeeds/66949542.cms',
-    'https://www.thehindu.com/business/Industry/feeder/default.rss',
-    'NEWSAPI:startup OR funding OR EV OR electric vehicle OR Tata OR Maruti'
-  ],
-  'Science & Health': [
-    'https://feeds.bbci.co.uk/news/health/rss.xml',
-    'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
-    'https://www.thehindu.com/sci-tech/health/feeder/default.rss',
-    'https://www.thehindu.com/sci-tech/science/feeder/default.rss',
-    'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',
-    'https://www.theguardian.com/science/rss'
-  ],
-  'Entertainment': [
-    'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
-    'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms'
-  ]
-};
+// ── VALID CATEGORIES ──────────────────────────────────────────────────────────
+const VALID_CATEGORIES = [
+  'Business', 'Indian Economy', 'Finance', 'Tech', 'Sports',
+  'Government', 'International', 'Climate', 'Startups & Auto',
+  'Science & Health', 'Entertainment'
+];
 
-// ── SENSITIVE TOPICS DETECTION ────────────────────────────────────────────────
+// ── BROAD RSS FEEDS — cast wide net, Claude classifies ────────────────────────
+const BROAD_FEEDS = [
+  // Business & Economy
+  'https://feeds.bbci.co.uk/news/business/rss.xml',
+  'https://www.livemint.com/rss/companies',
+  'https://www.livemint.com/rss/economy',
+  'https://www.livemint.com/rss/market',
+  'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms',
+  // Tech & Startups
+  'https://feeds.bbci.co.uk/news/technology/rss.xml',
+  'https://techcrunch.com/feed/',
+  'https://timesofindia.indiatimes.com/rssfeeds/66949542.cms',
+  // Sports
+  'https://feeds.bbci.co.uk/sport/rss.xml',
+  'https://timesofindia.indiatimes.com/rssfeeds/4719161.cms',
+  // India News & Government
+  'https://feeds.feedburner.com/ndtvnews-india-news',
+  'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
+  'https://www.thehindu.com/news/national/feeder/default.rss',
+  // World News
+  'https://feeds.bbci.co.uk/news/world/rss.xml',
+  'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+  // Climate & Environment
+  'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
+  'https://www.theguardian.com/environment/climate-crisis/rss',
+  // Science & Health
+  'https://feeds.bbci.co.uk/news/health/rss.xml',
+  'https://www.thehindu.com/sci-tech/science/feeder/default.rss',
+  'https://www.thehindu.com/sci-tech/health/feeder/default.rss',
+  'https://www.theguardian.com/science/rss',
+  'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',
+  // Auto — hidden in industry/business feeds
+  'https://www.thehindu.com/business/Industry/feeder/default.rss',
+  // Entertainment
+  'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
+  'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms',
+];
+
+// ── SENSITIVE TOPICS ──────────────────────────────────────────────────────────
 const SENSITIVE_WORDS = [
-  'killed', 'dead', 'death', 'died', 'dies', 'fatal', 'tragedy', 'tragic',
-  'disaster', 'accident', 'crash', 'fire', 'flood', 'earthquake', 'cyclone',
-  'suicide', 'murder', 'rape', 'assault', 'attack', 'explosion', 'blast',
-  'massacre', 'genocide', 'war', 'conflict', 'refugees', 'missing', 'abducted'
+  'killed','dead','death','died','dies','fatal','tragedy','tragic',
+  'disaster','accident','crash','fire','flood','earthquake','cyclone',
+  'suicide','murder','rape','assault','attack','explosion','blast',
+  'massacre','genocide','war','conflict','refugees','missing','abducted'
 ];
 
 function isSensitiveTopic(headline, summary) {
-  const text = ((headline || '') + ' ' + (summary || '')).toLowerCase();
-  return SENSITIVE_WORDS.some(word => {
-    const regex = new RegExp(`\\b${word}\\b`);
-    return regex.test(text);
-  });
+  const text = ((headline||'') + ' ' + (summary||'')).toLowerCase();
+  return SENSITIVE_WORDS.some(word => new RegExp(`\\b${word}\\b`).test(text));
+}
+
+// ── IS ENGLISH HEADLINE ───────────────────────────────────────────────────────
+function isEnglishHeadline(title) {
+  if (!title) return false;
+  const latinChars = (title.match(/[a-zA-Z]/g) || []).length;
+  const totalChars = title.replace(/\s/g, '').length;
+  return totalChars === 0 || (latinChars / totalChars) > 0.5;
 }
 
 // ── FETCH RSS FEED ────────────────────────────────────────────────────────────
 async function fetchFeed(url) {
   try {
     const feed = await parser.parseURL(url);
-    return feed.items.slice(0, 15).map(item => ({
+    return feed.items.slice(0, 10).map(item => ({
       title: (item.title || '').trim(),
       summary: (item.contentSnippet || item.content || item.summary || '').trim(),
       link: item.link || '',
       pubDate: item.pubDate || item.isoDate || ''
     }));
   } catch (err) {
-    console.log(`⚠️  Feed failed: ${url} — ${err.message}`);
-    return [];
-  }
-}
-
-// ── FETCH NEWS API ────────────────────────────────────────────────────────────
-async function fetchNewsAPI(query) {
-  try {
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&pageSize=15&apiKey=${process.env.NEWS_API_KEY}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.status !== 'ok') throw new Error(data.message || 'NewsAPI error');
-    return (data.articles || [])
-      .map(a => ({
-        title: (a.title || '').trim(),
-        summary: (a.description || '').trim(),
-        link: a.url || '',
-        pubDate: a.publishedAt || ''
-      }))
-      .filter(a => a.title && a.title !== '[Removed]' && a.summary);
-  } catch (err) {
-    console.log(`⚠️  NewsAPI failed: ${err.message}`);
+    console.log(`⚠️  Feed failed: ${url.slice(0,60)} — ${err.message}`);
     return [];
   }
 }
 
 // ── CALL CLAUDE API ───────────────────────────────────────────────────────────
-async function callClaudeAPI(prompt) {
+async function callClaudeAPI(prompt, maxTokens = 300) {
   if (!CLAUDE_API_KEY) throw new Error('CLAUDE_API_KEY not set');
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -136,7 +104,7 @@ async function callClaudeAPI(prompt) {
     },
     body: JSON.stringify({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 300,
+      max_tokens: maxTokens,
       messages: [{ role: 'user', content: prompt }]
     })
   });
@@ -146,6 +114,43 @@ async function callClaudeAPI(prompt) {
   }
   const data = await res.json();
   return data.content[0].text.trim();
+}
+
+// ── CLASSIFY STORY CATEGORY ───────────────────────────────────────────────────
+async function classifyStory(headline, summary) {
+  const prompt = `You are a news classifier. Read this headline and summary, then assign it to exactly ONE category from the list below.
+
+CATEGORIES:
+- Business: Company news, corporate strategy, mergers, acquisitions, profits, losses
+- Indian Economy: India GDP, RBI, inflation, rupee, trade, economic policy, budget
+- Finance: Stock markets, Sensex, Nifty, mutual funds, IPO, personal finance, banking
+- Tech: Technology, AI, software, apps, gadgets, internet, cybersecurity, social media
+- Sports: Cricket, football, tennis, Olympics, IPL, any sport
+- Government: India government, parliament, ministry, elections, BJP, Congress, policy, law
+- International: World news, geopolitics, USA, China, Russia, war, diplomacy
+- Climate: Environment, pollution, climate change, renewable energy, carbon, wildlife
+- Startups & Auto: Startups, funding rounds, VC, EVs, electric vehicles, cars, automobiles
+- Science & Health: Science, space, ISRO, NASA, medical research, health, disease, medicine
+- Entertainment: Films, OTT, Bollywood, music, celebrities, TV shows, awards
+
+HEADLINE: "${headline}"
+SUMMARY: "${(summary || '').slice(0, 150)}"
+
+Reply with ONLY the category name. Nothing else. No explanation.`;
+
+  try {
+    const result = await callClaudeAPI(prompt, 20);
+    const cleaned = result.trim().replace(/['"]/g, '');
+    if (VALID_CATEGORIES.includes(cleaned)) return cleaned;
+    // fuzzy match
+    const match = VALID_CATEGORIES.find(c =>
+      cleaned.toLowerCase().includes(c.toLowerCase()) ||
+      c.toLowerCase().includes(cleaned.toLowerCase())
+    );
+    return match || null;
+  } catch (err) {
+    return null;
+  }
 }
 
 // ── FETCH VOICE SOUL FROM LIBRARY ─────────────────────────────────────────────
@@ -163,7 +168,6 @@ async function fetchVoiceSoul(voice) {
     }
     return [];
   } catch (err) {
-    console.log(`⚠️  Voice library fetch failed: ${err.message}`);
     return [];
   }
 }
@@ -187,8 +191,8 @@ ${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}
   }
 
   const sensitivityNote = sensitive
-    ? `\nIMPORTANT: This news involves a sensitive or tragic topic — death, disaster, accident, or human suffering. Do NOT make jokes. Write with warmth, empathy, and human dignity. Be the friend who acknowledges the gravity with care. Keep it brief and respectful.\n`
-    : `\nIMPORTANT: If this news involves death, tragedy, or human suffering — write with warmth and respect, not jokes. For all other news — full energy, full fun.\n`;
+    ? `\nIMPORTANT: This news involves a sensitive or tragic topic. Do NOT make jokes. Write with warmth, empathy, and human dignity. Keep it brief and respectful.\n`
+    : `\nIMPORTANT: If this news involves death or tragedy — write with warmth and respect. For all other news — full energy, full fun.\n`;
 
   let persona = '';
   if (role === 'student' && isHinglish) {
@@ -204,7 +208,6 @@ ${sensitivityNote}`;
 You both speak in Comedy English — clean, punchy, like a smart WhatsApp message.
 Your friend is dealing with placements, assignments, that one professor who never passes anyone.
 Every news you connect to his real campus life and future worries.
-You make heavy news feel light because that's what friends do.
 Language: Comedy English. Short sharp sentences. Dry humor. One line that hits at the end.
 ${sensitivityNote}`;
   } else if (role === 'professional' && isHinglish) {
@@ -212,7 +215,6 @@ ${sensitivityNote}`;
 You both speak Hinglish — like chai break conversation, not a formal briefing.
 Your friend deals with boss pressure, salary tension, appraisals, office politics daily.
 Every news you connect to his real work life — EMI, targets, that one annoying manager.
-You give him the full picture in 30 seconds with a joke that makes the pain bearable.
 Language: Natural Hinglish. Punchy. Real. One line punchline that makes him go "yaar bilkul sahi bola".
 ${sensitivityNote}`;
   } else {
@@ -220,7 +222,6 @@ ${sensitivityNote}`;
 You both speak in sharp Comedy English — like two colleagues at the coffee machine.
 Your friend deals with deadlines, boss moods, appraisal season, office politics.
 Every news you connect to his real professional life — salary, career, work stress.
-You are warm, sharp, and always have that one line that makes him feel understood.
 Language: Comedy English. Sharp and warm. Short sentences. One punchline at end.
 ${sensitivityNote}`;
   }
@@ -244,124 +245,9 @@ Do not use quotation marks to wrap the whole thing.`;
     const summary = await callClaudeAPI(prompt);
     return summary.replace(/^["'""]|["'""]$/g, '').trim();
   } catch (err) {
-    console.log(`⚠️  Claude failed for "${headline.slice(0, 40)}..." — ERROR: ${err.message}`);
+    console.log(`⚠️  Voice failed for "${headline.slice(0, 40)}..."`);
     return plainSummary.slice(0, 200);
   }
-}
-
-// ── IS ENGLISH HEADLINE ───────────────────────────────────────────────────────
-function isEnglishHeadline(title) {
-  if (!title) return false;
-  const latinChars = (title.match(/[a-zA-Z]/g) || []).length;
-  const totalChars = title.replace(/\s/g, '').length;
-  return totalChars === 0 || (latinChars / totalChars) > 0.5;
-}
-
-// ── PROCESS ONE CATEGORY ──────────────────────────────────────────────────────
-async function processCategory(category, urls) {
-  console.log(`\n📰 Processing: ${category}`);
-  const allItems = [];
-
-  for (const url of urls) {
-    if (url.startsWith('NEWSAPI:')) {
-      const query = url.replace('NEWSAPI:', '');
-      console.log(`   🌐 NewsAPI: "${query.slice(0, 50)}"`);
-      const items = await fetchNewsAPI(query);
-      console.log(`   ✓ NewsAPI returned ${items.length} items`);
-      allItems.push(...items);
-    } else {
-      const items = await fetchFeed(url);
-      allItems.push(...items);
-    }
-  }
-
-  if (allItems.length === 0) {
-    console.log(`   ⚠️  No items found for ${category}`);
-    return [];
-  }
-
-  // English only filter
-  const safeItems = allItems.filter(i => isEnglishHeadline(i.title));
-
-  if (safeItems.length === 0) {
-    console.log(`   ⚠️  No English items for ${category}`);
-    return [];
-  }
-
-  // Deduplicate by headline
-  const seen = new Set();
-  const unique = safeItems.filter(i => {
-    const key = i.title.slice(0, 60).toLowerCase();
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
-  // Pick top 10 stories with best content
-  const pool = unique
-    .filter(i => i.title && i.summary && i.summary.length > 30)
-    .slice(0, 10);
-
-  if (pool.length === 0) {
-    console.log(`   ⚠️  No quality items for ${category}`);
-    return [];
-  }
-
-  console.log(`   ✓ Found ${pool.length} stories`);
-
-  const results = [];
-
-  for (let idx = 0; idx < pool.length; idx++) {
-    const item = pool[idx];
-    const plainSummary = item.summary.slice(0, 250);
-    const isVoiceStory = idx < 5;
-    const sensitive = isSensitiveTopic(item.title, plainSummary);
-
-    if (isVoiceStory) {
-      console.log(`   🤖 [${idx+1}/5] ${sensitive ? '🕊️ ' : ''}Generating voices for: "${item.title.slice(0,50)}..."`);
-      const voices = {};
-      const combinations = [
-        { role: 'student', region: 'north' },
-        { role: 'student', region: 'south' },
-        { role: 'professional', region: 'north' },
-        { role: 'professional', region: 'south' }
-      ];
-      for (const combo of combinations) {
-        const key = `${combo.role}_${combo.region}`;
-        voices[key] = await generateVoiceSummary(item.title, plainSummary, category, combo.role, combo.region);
-        await new Promise(r => setTimeout(r, 200));
-      }
-      voices['student'] = voices['student_north'];
-      voices['professional'] = voices['professional_south'];
-
-      results.push({
-        category,
-        headline: item.title,
-        link: item.link || '',
-        pubDate: item.pubDate || '',
-        summary: plainSummary,
-        hasVoice: true,
-        sensitive,
-        voices
-      });
-    } else {
-      results.push({
-        category,
-        headline: item.title,
-        link: item.link || '',
-        pubDate: item.pubDate || '',
-        summary: plainSummary,
-        hasVoice: false,
-        sensitive,
-        voices: null
-      });
-    }
-
-    await new Promise(r => setTimeout(r, 300));
-  }
-
-  console.log(`   ✅ ${category}: ${results.filter(s=>s.hasVoice).length} voice + ${results.filter(s=>!s.hasVoice).length} plain`);
-  return results;
 }
 
 // ── FETCH SUBSCRIBERS ─────────────────────────────────────────────────────────
@@ -490,7 +376,6 @@ function buildEmailHTML(stories, date, subscriber) {
 async function sendToSubscriber(subscriber, stories, date) {
   const { email, role, region } = subscriber;
   const isHinglish = region === 'north' || region === 'west';
-
   const subject = role === 'student' && isHinglish
     ? `☀️ Yaar sun — aaj ki brief aai hai`
     : role === 'student'
@@ -498,7 +383,6 @@ async function sendToSubscriber(subscriber, stories, date) {
     : isHinglish
     ? `☀️ Chai le aur padh — aaj ki brief`
     : `☀️ Your morning brief — The Dawn Brief`;
-
   try {
     const html = buildEmailHTML(stories, date, subscriber);
     const { data, error } = await resend.emails.send({
@@ -507,23 +391,11 @@ async function sendToSubscriber(subscriber, stories, date) {
       subject,
       html
     });
-    if (error) {
-      console.log(`❌ Failed for ${email}: ${JSON.stringify(error)}`);
-    } else {
-      console.log(`✅ Sent → ${email} [${role}/${region}]`);
-    }
+    if (error) console.log(`❌ Failed for ${email}: ${JSON.stringify(error)}`);
+    else console.log(`✅ Sent → ${email} [${role}/${region}]`);
   } catch (err) {
     console.log(`❌ Error for ${email}: ${err.message}`);
   }
-}
-
-// ── VALIDATE DATA ─────────────────────────────────────────────────────────────
-function validateStories(stories) {
-  if (!stories || stories.length < 5) {
-    console.log(`⚠️  Only ${stories?.length || 0} stories — minimum 5 required`);
-    return false;
-  }
-  return true;
 }
 
 // ── LOAD BACKUP ───────────────────────────────────────────────────────────────
@@ -532,12 +404,9 @@ function loadBackup() {
     const backupPath = path.join(__dirname, 'data-backup.json');
     if (fs.existsSync(backupPath)) {
       const data = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
-      console.log(`📦 Loaded backup with ${data.stories?.length || 0} stories`);
       return data.stories || [];
     }
-  } catch (err) {
-    console.log(`⚠️  Could not load backup: ${err.message}`);
-  }
+  } catch (err) {}
   return [];
 }
 
@@ -548,7 +417,6 @@ async function main() {
   console.log(`Claude API: ${CLAUDE_API_KEY ? '✅ Connected' : '❌ Missing'}`);
   console.log(`Supabase: ${SUPA_KEY ? '✅ Connected' : '❌ Missing'}`);
   console.log(`Resend: ${process.env.RESEND_API_KEY ? '✅ Connected' : '❌ Missing'}`);
-  console.log(`NewsAPI: ${process.env.NEWS_API_KEY ? '✅ Connected' : '❌ Missing'}`);
 
   const date = new Date().toLocaleDateString('en-IN', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -557,60 +425,139 @@ async function main() {
 
   console.log('\n👥 Fetching subscribers...');
   const subscribers = await fetchSubscribers();
-  if (subscribers.length === 0) {
-    console.log('❌ No subscribers. Exiting.');
-    return;
-  }
+  if (subscribers.length === 0) { console.log('❌ No subscribers. Exiting.'); return; }
 
-  console.log('\n📰 Fetching and processing news...');
+  // ── STEP 1: Fetch all stories from all broad feeds ─────────────────────────
+  console.log('\n📡 Fetching from all feeds...');
+  const rawItems = [];
+  for (const url of BROAD_FEEDS) {
+    const items = await fetchFeed(url);
+    rawItems.push(...items);
+    await new Promise(r => setTimeout(r, 200));
+  }
+  console.log(`✓ Fetched ${rawItems.length} raw stories`);
+
+  // ── STEP 2: Filter English + deduplicate ──────────────────────────────────
+  const seen = new Set();
+  const uniqueItems = rawItems.filter(i => {
+    if (!isEnglishHeadline(i.title)) return false;
+    if (!i.title || !i.summary || i.summary.length < 30) return false;
+    const key = i.title.slice(0, 60).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  console.log(`✓ ${uniqueItems.length} unique English stories after dedup`);
+
+  // ── STEP 3: Claude classifies every story ─────────────────────────────────
+  console.log('\n🤖 Classifying stories...');
+  const classified = {}; // { category: [stories] }
+  VALID_CATEGORIES.forEach(c => classified[c] = []);
+
+  let classifyCount = 0;
+  for (const item of uniqueItems) {
+    const category = await classifyStory(item.title, item.summary);
+    if (category) {
+      classified[category].push({ ...item, category });
+      classifyCount++;
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+  console.log(`✓ ${classifyCount} stories classified`);
+
+  // Log category counts
+  VALID_CATEGORIES.forEach(c => {
+    console.log(`   ${c}: ${classified[c].length} stories`);
+  });
+
+  // ── STEP 4: Generate voices for top 5 per category ────────────────────────
+  console.log('\n🎙️ Generating voice summaries...');
   const allStories = [];
 
-  for (const [category, urls] of Object.entries(RSS_FEEDS)) {
-    try {
-      const categoryStories = await processCategory(category, urls);
-      allStories.push(...categoryStories);
-      await new Promise(r => setTimeout(r, 500));
-    } catch (err) {
-      console.log(`❌ ${category}: ${err.message}`);
+  for (const category of VALID_CATEGORIES) {
+    const pool = classified[category].slice(0, 10);
+    if (pool.length === 0) {
+      console.log(`⚠️  ${category}: no stories — will use backup`);
+      continue;
     }
+    console.log(`\n📰 ${category}: ${pool.length} stories`);
+
+    for (let idx = 0; idx < pool.length; idx++) {
+      const item = pool[idx];
+      const plainSummary = item.summary.slice(0, 250);
+      const isVoiceStory = idx < 5;
+      const sensitive = isSensitiveTopic(item.title, plainSummary);
+
+      if (isVoiceStory) {
+        console.log(`   🤖 [${idx+1}/5] ${sensitive ? '🕊️ ' : ''}${item.title.slice(0, 50)}...`);
+        const voices = {};
+        const combos = [
+          { role: 'student', region: 'north' },
+          { role: 'student', region: 'south' },
+          { role: 'professional', region: 'north' },
+          { role: 'professional', region: 'south' }
+        ];
+        for (const combo of combos) {
+          const key = `${combo.role}_${combo.region}`;
+          voices[key] = await generateVoiceSummary(item.title, plainSummary, category, combo.role, combo.region);
+          await new Promise(r => setTimeout(r, 200));
+        }
+        voices['student'] = voices['student_north'];
+        voices['professional'] = voices['professional_south'];
+
+        allStories.push({
+          category, headline: item.title, link: item.link || '',
+          pubDate: item.pubDate || '', summary: plainSummary,
+          hasVoice: true, sensitive, voices
+        });
+      } else {
+        allStories.push({
+          category, headline: item.title, link: item.link || '',
+          pubDate: item.pubDate || '', summary: plainSummary,
+          hasVoice: false, sensitive, voices: null
+        });
+      }
+      await new Promise(r => setTimeout(r, 300));
+    }
+    console.log(`   ✅ ${category}: ${Math.min(pool.length,5)} voice + ${Math.max(0,pool.length-5)} plain`);
   }
 
-  console.log(`\n✅ Total: ${allStories.length} stories (${allStories.filter(s=>s.hasVoice).length} with voice, ${allStories.filter(s=>!s.hasVoice).length} plain)`);
-
-  let finalStories = allStories;
-  if (!validateStories(allStories)) {
-    console.log('⚠️  Not enough stories — loading from backup');
+  // ── STEP 5: Fill missing categories from backup ───────────────────────────
+  const coveredCats = new Set(allStories.map(s => s.category));
+  const missingCats = VALID_CATEGORIES.filter(c => !coveredCats.has(c));
+  if (missingCats.length > 0) {
+    console.log(`\n⚠️  Missing categories: ${missingCats.join(', ')} — filling from backup`);
     const backupStories = loadBackup();
-    if (backupStories.length > 0) {
-      finalStories = backupStories;
-      console.log(`✅ Using ${backupStories.length} backup stories`);
-    } else {
-      console.log('❌ No backup available. Exiting.');
-      return;
+    for (const cat of missingCats) {
+      const backupForCat = backupStories.filter(s => s.category === cat).slice(0, 10);
+      allStories.push(...backupForCat);
+      if (backupForCat.length > 0) console.log(`   ✓ ${cat}: ${backupForCat.length} from backup`);
     }
   }
 
+  console.log(`\n✅ Total: ${allStories.length} stories (${allStories.filter(s=>s.hasVoice).length} voice, ${allStories.filter(s=>!s.hasVoice).length} plain)`);
+
+  // ── STEP 6: Save data ─────────────────────────────────────────────────────
   const dataToSave = {
     generated: new Date().toISOString(),
     date,
-    totalStories: finalStories.length,
-    stories: finalStories
+    totalStories: allStories.length,
+    stories: allStories
   };
-
   fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(dataToSave, null, 2));
-  console.log(`✅ data.json saved (${finalStories.length} stories)`);
-
-  if (finalStories.length >= 5) {
+  console.log('✅ data.json saved');
+  if (allStories.length >= 5) {
     fs.writeFileSync(path.join(__dirname, 'data-backup.json'), JSON.stringify(dataToSave, null, 2));
     console.log('✅ data-backup.json updated');
   }
 
-  const voiceStories = finalStories.filter(s => s.hasVoice);
+  // ── STEP 7: Send emails ───────────────────────────────────────────────────
+  const voiceStories = allStories.filter(s => s.hasVoice);
   if (voiceStories.length > 0) {
     console.log(`\n📧 Sending to ${subscribers.length} subscribers...`);
     console.log('─'.repeat(50));
     for (const subscriber of subscribers) {
-      await sendToSubscriber(subscriber, finalStories, date);
+      await sendToSubscriber(subscriber, allStories, date);
       await new Promise(r => setTimeout(r, 300));
     }
     console.log('─'.repeat(50));
