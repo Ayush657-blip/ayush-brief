@@ -545,5 +545,12 @@ app.post('/api/push/send-all', adminAuth, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+const curation = require('./curation-routes');
+app.get('/api/admin/stories', curation.getAdminStories);
+app.post('/api/admin/generate-voices', curation.generateVoices);
+app.post('/api/admin/regenerate-voice', curation.regenerateVoice);
+app.post('/api/admin/save-voice', curation.saveVoice);
+app.post('/api/admin/submit', curation.submitApproved);
+app.post('/api/admin/undo-submit', curation.undoSubmit);
+app.post('/api/admin/auto-fallback', curation.autoFallback);
 app.listen(PORT, () => console.log(`\n🌅 Dawn Brief API running on port ${PORT} | SUPABASE_KEY: ${SUPA_KEY ? 'SET ✅' : 'MISSING ❌'}`));
