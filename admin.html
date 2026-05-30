@@ -60,6 +60,7 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .story-card:hover{border-color:rgba(92,200,255,.3);}
 .story-card.selected-10{border-color:var(--blue-p);background:rgba(41,121,255,.08);}
 .story-card.selected-5{border-color:var(--green);background:rgba(0,200,150,.08);}
+.story-card.selected-khatarnak{border-color:var(--red);background:rgba(255,77,109,.08);}
 .story-importance{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
 .importance-dot{font-size:14px;}
 .importance-reason{font-size:11px;color:var(--w3);line-height:1.4;}
@@ -73,6 +74,7 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .story-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;font-size:11px;}
 .story-card.selected-10 .story-check{background:var(--blue);border-color:var(--blue);color:#fff;}
 .story-card.selected-5 .story-check{background:var(--green);border-color:var(--green);color:#fff;}
+.story-card.selected-khatarnak .story-check{background:var(--red);border-color:var(--red);color:#fff;}
 .voice-card{background:var(--bg2);border:.5px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;}
 .voice-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--w3);margin-bottom:6px;}
 .voice-btn{padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;border:none;font-family:inherit;}
@@ -83,11 +85,20 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .generate-section{padding:16px 0;text-align:center;border-top:.5px solid var(--border);margin-top:12px;}
 .generate-btn{padding:10px 28px;border-radius:10px;background:var(--blue);border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;}
 .generate-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ── KHATARNAK SECTION ─────────────────────────────────────────── */
+.khatarnak-section{background:var(--bg2);border:1px solid rgba(255,77,109,.3);border-radius:16px;margin-bottom:20px;overflow:hidden;}
+.khatarnak-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,77,109,.2);cursor:pointer;background:rgba(255,77,109,.04);}
+.khatarnak-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--red);}
+.khatarnak-body{padding:20px;}
+.khatarnak-pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin-bottom:16px;}
+.khatarnak-voice-section{margin-top:16px;padding-top:16px;border-top:.5px solid var(--border);}
+
 #toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:.5px solid var(--border2);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--w);z-index:1000;display:none;box-shadow:0 8px 40px rgba(0,0,0,.4);}
 .loading{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--w3);padding:20px 0;}
 .spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--blue-p);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-@media(max-width:640px){.top-bar{padding:10px 16px;}.content{padding:12px 16px;}.story-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){.top-bar{padding:10px 16px;}.content{padding:12px 16px;}.story-grid{grid-template-columns:1fr;}.khatarnak-pool{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -161,7 +172,13 @@ let approvedVoices = {};
 let catDone = {};
 let undoTimer = null;
 
-// ── HELPERS ────────────────────────────────────────────────────────
+// Khatarnak state
+let khatarnakPool = []; // auto-populated: top 1 from each category
+let selectedKhatarnak = new Set(); // 5 manually selected
+let khatarnakVoices = {}; // {storyId: {student: '...', professional: '...'}}
+let khatarnakApproved = {}; // {storyId: {student: true, professional: true}}
+let khatarnakDone = false;
+
 function authHeaders(extra) {
   return { 'x-admin-key': ADMIN_KEY, ...extra };
 }
@@ -221,11 +238,291 @@ async function refreshStories() {
   await loadStories();
 }
 
-// ── RENDER ─────────────────────────────────────────────────────────
-function renderAllCategories() {
-  document.getElementById('content').innerHTML = CATEGORIES.map(cat => renderCategory(cat)).join('');
+// ── KHATARNAK POOL — auto build from top 1 per category ───────────
+function buildKhatarnakPool() {
+  khatarnakPool = [];
+  CATEGORIES.forEach(cat => {
+    const stories = allStories[cat] || [];
+    // Top 1 = first 🔴 story, or first story if none
+    const must = stories.find(s => s.importance === '🔴');
+    const top = must || stories[0];
+    if (top) khatarnakPool.push({ ...top, _cat: cat });
+  });
 }
 
+// ── RENDER ALL ─────────────────────────────────────────────────────
+function renderAllCategories() {
+  buildKhatarnakPool();
+  const cats = CATEGORIES.map(cat => renderCategory(cat)).join('');
+  const khatarnak = renderKhatarnakSection();
+  document.getElementById('content').innerHTML = cats + khatarnak;
+}
+
+// ── KHATARNAK SECTION ──────────────────────────────────────────────
+function renderKhatarnakSection() {
+  const selCount = selectedKhatarnak.size;
+  return `
+<div class="khatarnak-section" id="khatarnak-section">
+  <div class="khatarnak-header" onclick="toggleKhatarnak()">
+    <div class="khatarnak-title">
+      ⚡ Khatarnak News — Bhai Mode
+      ${khatarnakDone ? '<span style="color:var(--green);font-size:13px;font-weight:400">✅ Done</span>' : ''}
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:12px;color:var(--w3)" id="khatarnak-progress">${selCount}/5 selected</span>
+      <span style="color:var(--w3);font-size:12px">▼</span>
+    </div>
+  </div>
+  <div class="khatarnak-body" id="khatarnak-body">
+    <p style="font-size:12px;color:var(--w3);margin-bottom:16px;">
+      Har category ki top story automatically li hai. <strong style="color:var(--w)">Inme se 5 choose karo</strong> — ye Bhai Mode mein "Khatarnak News" ke liye use hogi.
+    </p>
+    <div class="khatarnak-pool" id="khatarnak-pool">
+      ${khatarnakPool.map(s => renderKhatarnakCard(s)).join('')}
+    </div>
+    ${selCount >= 5 ? renderKhatarnakVoiceSection() : `<div style="text-align:center;padding:12px;font-size:13px;color:var(--w3);">5 stories select karo phir voice generate hogi ⚡</div>`}
+  </div>
+</div>`;
+}
+
+function renderKhatarnakCard(story) {
+  const isSelected = selectedKhatarnak.has(story.id);
+  return `
+<div class="story-card ${isSelected ? 'selected-khatarnak' : ''}" id="kc-${story.id}" onclick="toggleKhatarnakSelect(${story.id})">
+  <div class="story-check">${isSelected ? '✓' : ''}</div>
+  <div class="story-importance">
+    <span class="importance-dot">${story.importance || '🟡'}</span>
+    <span style="font-size:10px;padding:2px 7px;border-radius:100px;background:rgba(255,77,109,.1);border:.5px solid rgba(255,77,109,.3);color:var(--red);">${story._cat}</span>
+  </div>
+  <div class="story-headline">${story.headline}</div>
+  <div class="story-summary">${story.summary || ''}</div>
+  <div class="story-meta">
+    <a href="${story.link}" target="_blank" class="story-link" onclick="event.stopPropagation()">Read →</a>
+  </div>
+</div>`;
+}
+
+function renderKhatarnakVoiceSection() {
+  const selectedStories = khatarnakPool.filter(s => selectedKhatarnak.has(s.id));
+  const approvedCount = selectedStories.filter(s => isKhatarnakStoryApproved(s.id)).length;
+
+  return `
+<div class="khatarnak-voice-section">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+    <div style="font-size:14px;font-weight:600;color:var(--red);">⚡ Khatarnak Voice Summaries</div>
+    <div style="font-size:12px;color:var(--w3);">${approvedCount}/5 approved</div>
+  </div>
+  <p style="font-size:12px;color:var(--w3);margin-bottom:14px;">Ye summaries short aur punchy hongi — Bhai Mode mein bolne ke liye. Normal voice se alag.</p>
+  ${Object.keys(khatarnakVoices).length === 0 ?
+    `<div class="generate-section" style="border:none;padding:0;">
+      <button class="generate-btn" style="background:var(--red);" id="khatarnak-gen-btn" onclick="generateKhatarnakVoices()">
+        ⚡ Generate Khatarnak Voices
+      </button>
+    </div>` :
+    selectedStories.map(s => renderKhatarnakVoiceCard(s)).join('')
+  }
+  ${approvedCount >= 5 ?
+    `<div class="generate-section">
+      <button class="generate-btn" style="background:var(--green);" onclick="markKhatarnakDone()">✅ Khatarnak Done →</button>
+    </div>` : ''
+  }
+</div>`;
+}
+
+function renderKhatarnakVoiceCard(story) {
+  const voices = khatarnakVoices[story.id] || {};
+  const voiceKeys = [
+    { key: 'student', label: '🎓 Student · Hinglish · Punchy' },
+    { key: 'professional', label: '💼 Professional · Hinglish · Punchy' }
+  ];
+  const allApproved = isKhatarnakStoryApproved(story.id);
+
+  return `
+<div class="voice-card ${allApproved ? 'voice-approved' : ''}" id="kvc-${story.id}">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;">
+    <div>
+      <div style="font-size:10px;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;">⚡ ${story._cat}</div>
+      <div style="font-size:14px;font-weight:500;color:var(--w7);line-height:1.4">${story.headline}</div>
+    </div>
+    ${allApproved ? '<span style="color:var(--green);font-size:20px">✅</span>' : ''}
+  </div>
+  ${voiceKeys.map(v => {
+    const isApproved = khatarnakApproved[story.id] && khatarnakApproved[story.id][v.key];
+    return `
+<div style="margin-bottom:12px;border:.5px solid ${isApproved ? 'rgba(0,200,150,.3)' : 'var(--border)'};border-radius:8px;padding:10px;background:${isApproved ? 'rgba(0,200,150,.04)' : 'transparent'}">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+    <span style="font-size:11px;color:var(--w3)">${v.label}</span>
+    ${isApproved ? '<span style="color:var(--green);font-size:12px">✅ Approved</span>' : ''}
+  </div>
+  <textarea id="kv-text-${story.id}-${v.key}"
+    style="width:100%;background:transparent;border:none;color:var(--w7);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;min-height:60px;outline:none;"
+  >${voices[v.key] || 'Not generated yet'}</textarea>
+  <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
+    <button class="voice-btn approve-btn" onclick="approveKhatarnakVoice(${story.id},'${v.key}')">✅ Approve</button>
+    <button class="voice-btn regen-btn" onclick="regenKhatarnakVoice(${story.id},'${v.key}')">🔄 Regenerate</button>
+    <button class="voice-btn save-btn" onclick="saveKhatarnakVoice(${story.id},'${v.key}')">💾 Save</button>
+  </div>
+</div>`;
+  }).join('')}
+</div>`;
+}
+
+// ── KHATARNAK INTERACTIONS ─────────────────────────────────────────
+function toggleKhatarnak() {
+  const body = document.getElementById('khatarnak-body');
+  if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleKhatarnakSelect(id) {
+  if (selectedKhatarnak.has(id)) {
+    selectedKhatarnak.delete(id);
+  } else {
+    if (selectedKhatarnak.size >= 5) { showToast('Maximum 5 khatarnak stories'); return; }
+    selectedKhatarnak.add(id);
+  }
+  // Update card UI
+  const card = document.getElementById(`kc-${id}`);
+  if (card) {
+    const isSelected = selectedKhatarnak.has(id);
+    card.className = `story-card ${isSelected ? 'selected-khatarnak' : ''}`;
+    card.querySelector('.story-check').textContent = isSelected ? '✓' : '';
+  }
+  // Update progress
+  const prog = document.getElementById('khatarnak-progress');
+  if (prog) prog.textContent = `${selectedKhatarnak.size}/5 selected`;
+
+  // If 5 selected, show voice section
+  if (selectedKhatarnak.size === 5) {
+    refreshKhatarnakVoiceSection();
+  }
+  updateProgress();
+}
+
+function refreshKhatarnakVoiceSection() {
+  const body = document.getElementById('khatarnak-body');
+  if (!body) return;
+  // Re-render just the voice section part
+  const poolDiv = body.querySelector('.khatarnak-pool');
+  if (poolDiv) {
+    const existing = body.querySelector('.khatarnak-voice-section');
+    if (existing) existing.remove();
+    const hint = body.querySelector('[style*="5 stories select"]');
+    if (hint) hint.remove();
+    body.insertAdjacentHTML('beforeend', renderKhatarnakVoiceSection());
+  }
+}
+
+async function generateKhatarnakVoices() {
+  const selectedStories = khatarnakPool.filter(s => selectedKhatarnak.has(s.id));
+  if (selectedStories.length < 5) { showToast('5 stories select karo pehle'); return; }
+
+  const btn = document.getElementById('khatarnak-gen-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⚡ Generating... (~2 min)'; }
+  showToast('Khatarnak voices generate ho rahi hain...');
+
+  try {
+    // Generate voice for each selected story — punchy khatarnak style
+    for (const story of selectedStories) {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': ADMIN_KEY
+        }
+      });
+      // Use backend endpoint
+    }
+
+    // Use existing generate-voices endpoint but with khatarnak flag
+    const ids = selectedStories.map(s => s.id);
+    const res = await apiPost(`${API}/api/admin/generate-khatarnak-voices`, { story_ids: ids });
+    const data = await res.json();
+
+    if (!data.success) throw new Error(data.error);
+
+    data.stories.forEach(s => {
+      khatarnakVoices[s.id] = s.voices;
+    });
+
+    showToast('✅ Khatarnak voices ready!');
+    refreshKhatarnakVoiceSection();
+
+  } catch (err) {
+    showToast(`❌ ${err.message}`);
+    if (btn) { btn.disabled = false; btn.textContent = '⚡ Generate Khatarnak Voices'; }
+  }
+}
+
+async function regenKhatarnakVoice(storyId, voiceKey) {
+  showToast('🔄 Regenerating...');
+  try {
+    const res = await apiPost(`${API}/api/admin/regenerate-khatarnak-voice`, {
+      story_id: storyId,
+      voice_key: voiceKey
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+    if (!khatarnakVoices[storyId]) khatarnakVoices[storyId] = {};
+    khatarnakVoices[storyId][voiceKey] = data.new_voice;
+    const textarea = document.getElementById(`kv-text-${storyId}-${voiceKey}`);
+    if (textarea) textarea.value = data.new_voice;
+    showToast('✅ Regenerated!');
+  } catch (err) { showToast(`❌ ${err.message}`); }
+}
+
+function approveKhatarnakVoice(storyId, voiceKey) {
+  if (!khatarnakApproved[storyId]) khatarnakApproved[storyId] = {};
+  khatarnakApproved[storyId][voiceKey] = true;
+  // Save text from textarea
+  const textarea = document.getElementById(`kv-text-${storyId}-${voiceKey}`);
+  if (textarea) {
+    if (!khatarnakVoices[storyId]) khatarnakVoices[storyId] = {};
+    khatarnakVoices[storyId][voiceKey] = textarea.value;
+  }
+  refreshKhatarnakVoiceSection();
+  showToast('✅ Approved!');
+}
+
+async function saveKhatarnakVoice(storyId, voiceKey) {
+  const textarea = document.getElementById(`kv-text-${storyId}-${voiceKey}`);
+  if (!textarea) return;
+  if (!khatarnakVoices[storyId]) khatarnakVoices[storyId] = {};
+  khatarnakVoices[storyId][voiceKey] = textarea.value;
+  showToast('💾 Saved!');
+}
+
+function isKhatarnakStoryApproved(storyId) {
+  return ['student', 'professional'].every(k => khatarnakApproved[storyId] && khatarnakApproved[storyId][k]);
+}
+
+async function markKhatarnakDone() {
+  // Save khatarnak flags to Supabase
+  const selectedIds = Array.from(selectedKhatarnak);
+
+  try {
+    // Mark stories as khatarnak in Supabase + save khatarnak_voice
+    for (const id of selectedIds) {
+      const voices = khatarnakVoices[id] || {};
+      await fetch(`https://ygkviidhuqicfnvyuiiu.supabase.co/rest/v1/daily_stories?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ is_khatarnak: true, khatarnak_voice: voices })
+      });
+    }
+    khatarnakDone = true;
+    showToast('✅ Khatarnak saved! Submit karo jab ready ho.');
+    updateProgress();
+    renderAllCategories();
+  } catch (err) {
+    showToast(`❌ ${err.message}`);
+  }
+}
+
+// ── EXISTING CATEGORY FUNCTIONS (unchanged) ────────────────────────
 function renderCategory(cat) {
   const stories = allStories[cat] || [];
   const hasPrevDay = stories.some(s => s.is_previous_day);
@@ -384,7 +681,6 @@ function renderVoiceReview(story, cat) {
 </div>`;
 }
 
-// ── INTERACTIONS ───────────────────────────────────────────────────
 function toggleCat(cat) {
   const body = document.getElementById(`cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
@@ -510,7 +806,6 @@ function markCatDone(cat) {
   showToast(`✅ ${cat} done!`);
   const body = document.getElementById(`cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (body) body.style.display = 'none';
-  // Update header to show done badge
   renderAllCategories();
 }
 
@@ -523,9 +818,10 @@ function updateCatHeader(cat) {
 
 function updateProgress() {
   const doneCount = Object.values(catDone).filter(Boolean).length;
-  document.getElementById('progress-pill').textContent = `${doneCount} / 11 categories done`;
+  const kDone = khatarnakDone ? 1 : 0;
+  document.getElementById('progress-pill').textContent = `${doneCount} / 11 categories done · Khatarnak: ${kDone ? '✅' : '⏳'}`;
   const btn = document.getElementById('submit-btn');
-  if (doneCount >= 11) {
+  if (doneCount >= 11 && khatarnakDone) {
     btn.disabled = false;
     btn.style.background = 'var(--green)';
   } else {
