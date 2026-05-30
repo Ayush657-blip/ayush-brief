@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// CURATION ROUTES — Add these to your existing server.js
+// CURATION ROUTES
 // ═══════════════════════════════════════════════════════════════════
 
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
@@ -98,6 +98,49 @@ Poori cheez ko quotes mein mat wrap karo.`;
   return await callClaude(prompt);
 }
 
+// ── KHATARNAK VOICE — short punchy for Bhai Mode ─────────────────────────────
+async function generateOneKhatarnakVoice(headline, summary, category, role) {
+  const voiceType = role === 'student' ? 'student' : 'employee';
+  const soulExamples = await fetchVoiceSoul(voiceType);
+
+  const sensitiveWords = ['killed','dead','death','died','fatal','tragedy','disaster','accident','crash','suicide','murder','rape','assault','attack','explosion','massacre','war'];
+  const text = (headline + ' ' + summary).toLowerCase();
+  const sensitive = sensitiveWords.some(w => new RegExp(`\\b${w}\\b`).test(text));
+
+  let soulContext = '';
+  if (soulExamples.length > 0) {
+    soulContext = `\nIs energy se inspire ho — copy mat karo:\n${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}\n`;
+  }
+
+  const persona = role === 'student'
+    ? `Tu ek PGDM student ka chuddy buddy dost hai. Hinglish. Seedha, punchy, dramatic. Jaise breaking news sun ke bol raha ho — "bhai ye sun, ye bada waala hai."`
+    : `Tu ek professional ka chuddy buddy dost hai. Hinglish. Seedha, punchy, dramatic. Jaise chai pe bol raha ho — "yaar ye news dekhi, ye serious hai."`;
+
+  const sensitivityNote = sensitive
+    ? `Ye sensitive news hai. Warmth aur gravity se bol. Drama nahi, but seriousness zaroor.`
+    : `Full energy. Bhai mode mein sunne wali news. Punchy aur memorable.`;
+
+  const prompt = `${persona}
+${soulContext}
+
+KHATARNAK NEWS — BHAI MODE KE LIYE:
+Headline: "${headline}"
+Kya hua: "${summary}"
+Category: ${category}
+
+${sensitivityNote}
+
+RULES:
+- Maximum 35 words — ye bolne ke liye hai, padhne ke liye nahi
+- Ek line headline reaction + ek line context
+- Hinglish only
+- Dramatic opening — jaise "Bhai sun," ya "Yaar ye dekh," ya seedha khabar
+- Koi preamble nahi, koi quotes nahi
+- Punchy end — subscriber ko lagey "ye important hai"`;
+
+  return await callClaude(prompt, 150);
+}
+
 // ── ROUTE 1: Get today's stories for admin ────────────────────────────────────
 async function getAdminStories(req, res) {
   try {
@@ -135,7 +178,6 @@ async function generateVoices(req, res) {
       console.log(`🤖 Generating voices for: ${story.headline.slice(0, 50)}...`);
       const voices = {};
 
-      // Only 2 voices — Student Hinglish + Professional Hinglish
       try {
         voices['student'] = await generateOneVoice(story.headline, story.summary, story.category, 'student');
       } catch (err) {
@@ -150,14 +192,9 @@ async function generateVoices(req, res) {
       }
       await new Promise(r => setTimeout(r, 300));
 
-      // Save to Supabase
       await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
         method: 'PATCH',
-        headers: {
-          'apikey': SUPA_KEY,
-          'Authorization': `Bearer ${SUPA_KEY}`,
-          'Content-Type': 'application/json'
-        },
+        headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ voices, status: 'voices_generated' })
       });
 
@@ -213,11 +250,7 @@ Behtar 2-3 line reaction likho. Fresh. Max 55 words. Quotes nahi. Preamble nahi.
 
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
       method: 'PATCH',
-      headers: {
-        'apikey': SUPA_KEY,
-        'Authorization': `Bearer ${SUPA_KEY}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ voices: updatedVoices })
     });
 
@@ -240,11 +273,7 @@ async function saveVoice(req, res) {
     const updatedVoices = { ...(stories[0].voices || {}), [voice_key]: voice_text };
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
       method: 'PATCH',
-      headers: {
-        'apikey': SUPA_KEY,
-        'Authorization': `Bearer ${SUPA_KEY}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ voices: updatedVoices })
     });
     res.json({ success: true });
@@ -264,11 +293,7 @@ async function submitApproved(req, res) {
 
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=in.(${ids})`, {
       method: 'PATCH',
-      headers: {
-        'apikey': SUPA_KEY,
-        'Authorization': `Bearer ${SUPA_KEY}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'approved', approved_at: new Date().toISOString() })
     });
 
@@ -287,7 +312,9 @@ async function submitApproved(req, res) {
       hasVoice: !!(s.voices && (s.voices.student || s.voices.professional)),
       sensitive: false,
       voices: s.voices || null,
-      is_previous_day: s.is_previous_day || false
+      is_previous_day: s.is_previous_day || false,
+      is_khatarnak: s.is_khatarnak || false,
+      khatarnak_voice: s.khatarnak_voice || null
     }));
 
     const dateDisplay = new Date().toLocaleDateString('en-IN', {
@@ -341,11 +368,7 @@ async function undoSubmit(req, res) {
       `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}&status=eq.approved`,
       {
         method: 'PATCH',
-        headers: {
-          'apikey': SUPA_KEY,
-          'Authorization': `Bearer ${SUPA_KEY}`,
-          'Content-Type': 'application/json'
-        },
+        headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'voices_generated', approved_at: null })
       }
     );
@@ -384,7 +407,9 @@ async function autoFallback(req, res) {
       hasVoice: !!(s.voices),
       sensitive: false,
       voices: s.voices || null,
-      is_previous_day: true
+      is_previous_day: true,
+      is_khatarnak: s.is_khatarnak || false,
+      khatarnak_voice: s.khatarnak_voice || null
     }));
 
     const dateDisplay = new Date().toLocaleDateString('en-IN', {
@@ -411,6 +436,70 @@ async function autoFallback(req, res) {
   }
 }
 
+// ── ROUTE 8: Generate khatarnak voices ───────────────────────────────────────
+async function generateKhatarnakVoices(req, res) {
+  try {
+    const { story_ids } = req.body;
+    if (!story_ids || story_ids.length === 0) return res.status(400).json({ error: 'No story IDs provided' });
+    if (story_ids.length > 5) return res.status(400).json({ error: 'Maximum 5 khatarnak stories' });
+
+    const ids = story_ids.join(',');
+    const response = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?id=in.(${ids})&select=*`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const stories = await response.json();
+    const results = [];
+
+    for (const story of stories) {
+      console.log(`⚡ Generating khatarnak voices for: ${story.headline.slice(0, 50)}...`);
+      const voices = {};
+
+      try {
+        voices['student'] = await generateOneKhatarnakVoice(story.headline, story.summary, story.category, 'student');
+      } catch (err) {
+        voices['student'] = story.summary.slice(0, 150);
+      }
+      await new Promise(r => setTimeout(r, 300));
+
+      try {
+        voices['professional'] = await generateOneKhatarnakVoice(story.headline, story.summary, story.category, 'professional');
+      } catch (err) {
+        voices['professional'] = story.summary.slice(0, 150);
+      }
+      await new Promise(r => setTimeout(r, 300));
+
+      results.push({ id: story.id, headline: story.headline, voices });
+    }
+
+    res.json({ success: true, stories: results });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// ── ROUTE 9: Regenerate one khatarnak voice ──────────────────────────────────
+async function regenerateKhatarnakVoice(req, res) {
+  try {
+    const { story_id, voice_key } = req.body;
+
+    const response = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}&select=*`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const stories = await response.json();
+    if (!stories || stories.length === 0) return res.status(404).json({ error: 'Story not found' });
+
+    const story = stories[0];
+    const role = voice_key === 'student' ? 'student' : 'professional';
+    const newVoice = await generateOneKhatarnakVoice(story.headline, story.summary, story.category, role);
+
+    res.json({ success: true, voice_key, new_voice: newVoice });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 // ── EMAIL SENDER ──────────────────────────────────────────────────────────────
 async function sendEmailsToSubscribers(stories, date) {
   try {
@@ -428,7 +517,6 @@ async function sendEmailsToSubscribers(stories, date) {
       const { email, name, role, region } = subscriber;
       const firstName = (name || 'friend').split(' ')[0];
       const isHinglish = region === 'north' || region === 'west';
-      // Always use Hinglish voices
       const voiceKey = role === 'student' ? 'student' : 'professional';
       const roleLabel = role === 'student' ? '🎓 Student' : '💼 Professional';
       const roleColor = role === 'student' ? '#FF4D6D' : '#FFAA55';
@@ -527,5 +615,7 @@ module.exports = {
   saveVoice,
   submitApproved,
   undoSubmit,
-  autoFallback
+  autoFallback,
+  generateKhatarnakVoices,
+  regenerateKhatarnakVoice
 };
