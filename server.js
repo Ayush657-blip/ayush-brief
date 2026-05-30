@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     "default-src 'self'; " +
     "script-src 'self' 'unsafe-inline'; " +
     "style-src 'self' 'unsafe-inline'; " +
-    "connect-src 'self' https://*.supabase.co https://api.anthropic.com https://api.resend.com; " +
+    "connect-src 'self' https://*.supabase.co https://api.anthropic.com https://api.resend.com https://api.elevenlabs.io; " +
     "img-src 'self' data: https:; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "frame-ancestors 'none';"
@@ -172,9 +172,7 @@ app.post('/subscribe', async (req, res) => {
         return res.json({ success: true, message: 'Welcome back to the gang!' });
       }
     }
-    // Generate unique referral code for new subscriber
     const referralCode = require('crypto').createHash('md5').update(email).digest('hex').slice(0, 8);
-
     await supabaseQuery('subscribers', 'POST', {
       email, name, role, region: region || 'north', segment: role,
       source: ref ? 'referral' : 'website',
@@ -182,8 +180,6 @@ app.post('/subscribe', async (req, res) => {
       referral_code: referralCode,
       referral_count: 0
     });
-
-    // Track referral if came via referral link
     if (ref) {
       try {
         await fetch(`${SUPA_URL}/rest/v1/referrals`, {
@@ -191,7 +187,6 @@ app.post('/subscribe', async (req, res) => {
           headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
           body: JSON.stringify({ referrer_email: ref, referred_email: email })
         });
-        // Find referrer by code and increment count
         const referrers = await supabaseQuery(`subscribers?referral_code=eq.${encodeURIComponent(ref)}&select=email,referral_count`);
         if (referrers && referrers.length > 0) {
           const referrer = referrers[0];
@@ -405,17 +400,12 @@ app.post('/api/trigger-newsletter', adminAuth, async (req, res) => {
   }
 });
 
-
 // ── REFERRAL SYSTEM ───────────────────────────────────────────────────────────
-
-// GET /referral/:code — track referral visit, redirect to homepage
 app.get('/referral/:code', async (req, res) => {
   const { code } = req.params;
-  // Redirect to homepage with ref param — subscribe flow picks it up
   res.redirect(302, `https://ayushbrief.online/?ref=${code}`);
 });
 
-// GET /api/referral/:email — get referral code + count for a subscriber
 app.get('/api/referral/:email', async (req, res) => {
   try {
     const email = decodeURIComponent(req.params.email);
@@ -434,35 +424,24 @@ app.get('/api/referral/:email', async (req, res) => {
   }
 });
 
-// POST /api/referral/track — called when someone subscribes via referral link
 app.post('/api/referral/track', async (req, res) => {
   const { referral_code, referred_email } = req.body;
   if (!referral_code || !referred_email) return res.json({ success: false });
   try {
-    // Find referrer
     const referrers = await supabaseQuery(
       `subscribers?referral_code=eq.${encodeURIComponent(referral_code)}&select=email,referral_count`
     );
     if (!referrers || referrers.length === 0) return res.json({ success: false });
     const referrer = referrers[0];
-
-    // Save referral record
     await supabaseQuery('referrals', 'POST', {
       referrer_email: referrer.email,
       referred_email
     });
-
-    // Increment referrer count
     await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(referrer.email)}`, {
       method: 'PATCH',
-      headers: {
-        'apikey': SUPA_KEY,
-        'Authorization': `Bearer ${SUPA_KEY}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ referral_count: (referrer.referral_count || 0) + 1 })
     });
-
     console.log(`✅ Referral tracked: ${referrer.email} referred ${referred_email}`);
     res.json({ success: true });
   } catch (err) {
@@ -471,7 +450,6 @@ app.post('/api/referral/track', async (req, res) => {
   }
 });
 
-// GET /api/admin/referrals — top referrers for admin dashboard
 app.get('/api/admin/referrals', adminAuth, async (req, res) => {
   try {
     const data = await supabaseQuery(
@@ -483,20 +461,15 @@ app.get('/api/admin/referrals', adminAuth, async (req, res) => {
   }
 });
 
-
 // ── PUSH NOTIFICATION ROUTES ──────────────────────────────────────────────────
-
-// GET /api/vapid-public-key — return public key to frontend
 app.get('/api/vapid-public-key', (req, res) => {
   res.json({ publicKey: process.env.VAPID_PUBLIC_KEY });
 });
 
-// POST /api/push/subscribe — save push subscription
 app.post('/api/push/subscribe', async (req, res) => {
   const { subscription, email } = req.body;
   if (!subscription) return res.status(400).json({ error: 'Subscription required.' });
   try {
-    // Save subscription to Supabase
     const subStr = JSON.stringify(subscription);
     await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email || '')}`, {
       method: 'PATCH',
@@ -511,7 +484,6 @@ app.post('/api/push/subscribe', async (req, res) => {
   }
 });
 
-// POST /api/push/send-all — send push to all subscribers (admin only)
 app.post('/api/push/send-all', adminAuth, async (req, res) => {
   const { title, body, url } = req.body;
   try {
@@ -530,7 +502,6 @@ app.post('/api/push/send-all', adminAuth, async (req, res) => {
         sent++;
       } catch (err) {
         failed++;
-        // Remove invalid subscriptions
         if (err.statusCode === 410) {
           await fetch(`${SUPA_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(sub.email)}`, {
             method: 'PATCH',
@@ -545,6 +516,120 @@ app.post('/api/push/send-all', adminAuth, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ════════════════════════════════════════════════════════════════════
+// BHAI MODE — VOICE ROUTES
+// ════════════════════════════════════════════════════════════════════
+
+// POST /api/voice/speak — text ko ElevenLabs se audio mein convert karo
+app.post('/api/voice/speak', async (req, res) => {
+  try {
+    const { text, voice_sample } = req.body;
+    if (!text) return res.status(400).json({ error: 'Text required.' });
+
+    const VOICE_IDS = {
+      'sample1': '9lB2zeiclGQj6fcbsPT2',
+      'sample2': 'LexxJMz1bqPc5O2p2GbV'
+    };
+    const voiceId = VOICE_IDS[voice_sample] || VOICE_IDS['sample1'];
+
+    const elRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': process.env.ELEVENLABS_API_KEY,
+        'Content-Type': 'application/json',
+        'Accept': 'audio/mpeg'
+      },
+      body: JSON.stringify({
+        text,
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: {
+          stability: 0.4,
+          similarity_boost: 0.8,
+          style: 0.5,
+          use_speaker_boost: true
+        }
+      })
+    });
+
+    if (!elRes.ok) {
+      const err = await elRes.text();
+      console.error(`❌ ElevenLabs error: ${err}`);
+      return res.status(500).json({ error: 'Voice generation failed.' });
+    }
+
+    res.setHeader('Content-Type', 'audio/mpeg');
+    res.setHeader('Cache-Control', 'no-cache');
+    elRes.body.pipe(res);
+
+  } catch (err) {
+    console.error(`❌ Voice speak error: ${err.message}`);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/voice/stories — aaj ki approved stories voice mode ke liye
+app.get('/api/voice/stories', async (req, res) => {
+  try {
+    const { email } = req.query;
+
+    // Subscriber ka role fetch karo
+    let role = 'student';
+    if (email) {
+      const subData = await supabaseQuery(
+        `subscribers?email=eq.${encodeURIComponent(email)}&select=role&is_active=eq.true`
+      );
+      if (subData && subData.length > 0) role = subData[0].role || 'student';
+    }
+
+    // Aaj ki approved stories
+    const today = new Date().toISOString().split('T')[0];
+    const response = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${today}&status=eq.approved&select=*`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const stories = await response.json();
+
+    // Category wise group karo
+    const byCategory = {};
+    stories.forEach(s => {
+      if (!byCategory[s.category]) byCategory[s.category] = [];
+      byCategory[s.category].push({
+        id: s.id,
+        headline: s.headline,
+        voice_summary: s.voices && s.voices[role] ? s.voices[role] : s.summary,
+        is_khatarnak: s.is_khatarnak || false
+      });
+    });
+
+    // Khatarnak 5 — manually selected by admin
+    const khatarnak = stories
+      .filter(s => s.is_khatarnak)
+      .slice(0, 5)
+      .map(s => ({
+        id: s.id,
+        headline: s.headline,
+        voice_summary: s.khatarnak_voice && s.khatarnak_voice[role]
+          ? s.khatarnak_voice[role]
+          : (s.voices && s.voices[role] ? s.voices[role] : s.summary),
+        category: s.category
+      }));
+
+    res.json({
+      success: true,
+      role,
+      khatarnak,
+      categories: byCategory,
+      available_categories: Object.keys(byCategory)
+    });
+
+  } catch (err) {
+    console.error(`❌ Voice stories error: ${err.message}`);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── CURATION ROUTES ───────────────────────────────────────────────────────────
 const curation = require('./curation-routes');
 app.get('/api/admin/stories', adminAuth, curation.getAdminStories);
 app.post('/api/admin/generate-voices', adminAuth, curation.generateVoices);
@@ -553,4 +638,5 @@ app.post('/api/admin/save-voice', adminAuth, curation.saveVoice);
 app.post('/api/admin/submit', adminAuth, curation.submitApproved);
 app.post('/api/admin/undo-submit', adminAuth, curation.undoSubmit);
 app.post('/api/admin/auto-fallback', adminAuth, curation.autoFallback);
+
 app.listen(PORT, () => console.log(`\n🌅 Dawn Brief API running on port ${PORT} | SUPABASE_KEY: ${SUPA_KEY ? 'SET ✅' : 'MISSING ❌'}`));
