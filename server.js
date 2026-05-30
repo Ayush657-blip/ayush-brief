@@ -629,6 +629,13 @@ app.get('/api/voice/stories', async (req, res) => {
   }
 });
 
+// ── ADMIN CONFIG — secure keys for frontend ──────────────────────────────────
+app.get('/api/admin/config', adminAuth, (req, res) => {
+  res.json({
+    deepgramKey: process.env.DEEPGRAM_KEY || ''
+  });
+});
+
 // ── CURATION ROUTES ───────────────────────────────────────────────────────────
 const curation = require('./curation-routes');
 app.get('/api/admin/stories', adminAuth, curation.getAdminStories);
