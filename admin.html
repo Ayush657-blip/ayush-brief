@@ -342,10 +342,8 @@ ${approvedCount >= 5 ? `<div class="generate-section"><button class="generate-bt
 function renderVoiceReview(story, cat) {
   const voices = story.voices || {};
   const voiceKeys = [
-    {key:'student_north', label:'🎓 Student · Hinglish'},
-    {key:'student_south', label:'🎓 Student · English'},
-    {key:'professional_north', label:'💼 Professional · Hinglish'},
-    {key:'professional_south', label:'💼 Professional · English'},
+    {key:'student', label:'🎓 Student · Hinglish'},
+    {key:'professional', label:'💼 Professional · Hinglish'},
   ];
   const allApproved = isStoryFullyApproved(story.id);
   return `
@@ -502,7 +500,7 @@ function markEdited(storyId, voiceKey) {
 }
 
 function isStoryFullyApproved(storyId) {
-  const keys = ['student_north','student_south','professional_north','professional_south'];
+  const keys = ['student','professional'];
   return keys.every(k => approvedVoices[storyId] && approvedVoices[storyId][k]);
 }
 
