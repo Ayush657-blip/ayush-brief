@@ -99,6 +99,26 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--blue-p);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 @media(max-width:640px){.top-bar{padding:10px 16px;}.content{padding:12px 16px;}.story-grid{grid-template-columns:1fr;}.khatarnak-pool{grid-template-columns:1fr;}}
+
+/* ── RAVIS PANEL ─────────────────────────────────────────────────── */
+#ravis-btn{position:fixed;right:24px;bottom:24px;z-index:200;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1.5px solid rgba(232,197,88,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 24px rgba(0,0,0,.4);transition:all .3s;}
+#ravis-btn:hover{border-color:var(--gold);box-shadow:0 4px 32px rgba(232,197,88,.3);}
+#ravis-btn.active{background:linear-gradient(135deg,#2979FF,#00B4FF);border-color:#5CC8FF;animation:ravis-pulse 2s ease-in-out infinite;}
+@keyframes ravis-pulse{0%,100%{box-shadow:0 4px 24px rgba(41,121,255,.4);}50%{box-shadow:0 4px 40px rgba(41,121,255,.7);}}
+#ravis-panel{position:fixed;right:24px;bottom:92px;z-index:200;width:320px;background:var(--bg2);border:1px solid rgba(232,197,88,.3);border-radius:16px;padding:16px;display:none;box-shadow:0 8px 40px rgba(0,0,0,.5);}
+#ravis-panel.show{display:block;}
+.ravis-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:.5px solid var(--border);}
+.ravis-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2979FF,#00B4FF);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.ravis-name{font-size:14px;font-weight:600;color:var(--gold);}
+.ravis-role{font-size:11px;color:var(--w3);}
+.ravis-status{font-size:12px;color:var(--blue-p);padding:8px 12px;background:rgba(41,121,255,.08);border-radius:8px;margin-bottom:10px;min-height:36px;display:flex;align-items:center;}
+.ravis-transcript{font-size:11px;color:var(--w3);padding:6px 10px;background:rgba(255,255,255,.03);border-radius:6px;margin-bottom:10px;min-height:28px;font-style:italic;}
+.ravis-type-row{display:flex;gap:8px;}
+.ravis-type-input{flex:1;background:rgba(255,255,255,.04);border:.5px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--w);font-family:inherit;outline:none;}
+.ravis-type-input:focus{border-color:rgba(92,200,255,.4);}
+.ravis-type-btn{padding:8px 12px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:12px;cursor:pointer;}
+.ravis-stop-btn{width:100%;padding:8px;border-radius:8px;background:rgba(255,77,109,.12);border:.5px solid rgba(255,77,109,.3);color:var(--red);font-size:12px;cursor:pointer;margin-top:8px;}
+
 </style>
 </head>
 <body>
@@ -887,5 +907,132 @@ function showToast(msg) {
   toastTimer = setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 </script>
+
+<!-- RAVIS BUTTON -->
+<button id="ravis-btn" onclick="toggleRavis()" title="Ravis — Senior Editor">🎙</button>
+
+<!-- RAVIS PANEL -->
+<div id="ravis-panel">
+  <div class="ravis-header">
+    <div class="ravis-avatar">R</div>
+    <div>
+      <div class="ravis-name">Ravis</div>
+      <div class="ravis-role">Senior Editor · Dawn Brief</div>
+    </div>
+  </div>
+  <div class="ravis-status" id="ravis-status">Click to start...</div>
+  <div class="ravis-transcript" id="ravis-transcript">—</div>
+  <div class="ravis-type-row">
+    <input class="ravis-type-input" id="ravis-type" placeholder="Ya yahan type karein..." onkeydown="ravisTypeInput(event)" />
+    <button class="ravis-type-btn" onclick="ravisSendType()">Send</button>
+  </div>
+  <button class="ravis-stop-btn" onclick="stopRavis()">⏹ Ravis Band Karo</button>
+</div>
+
+<script src="ravis.js"></script>
+<script>
+let ravisInstance = null;
+let ravisActive = false;
+
+function toggleRavis() {
+  if (ravisActive) {
+    stopRavis();
+  } else {
+    startRavis();
+  }
+}
+
+async function startRavis() {
+  if (!ADMIN_KEY) { showToast('Pehle login karo'); return; }
+
+  await loadRavisConfig();
+  if (!RAVIS_CONFIG.deepgramKey) { showToast('Config load nahi hua. Retry karo.'); return; }
+
+  ravisActive = true;
+  document.getElementById('ravis-btn').classList.add('active');
+  document.getElementById('ravis-panel').classList.add('show');
+
+  // Create Ravis instance with access to admin state
+  const adminState = {
+    allStories,
+    selected10,
+    selected5,
+    approvedVoices,
+    catDone,
+    selectedKhatarnak,
+    khatarnakVoices,
+    khatarnakApproved,
+    khatarnakDone: false
+  };
+
+  ravisInstance = new Ravis(adminState);
+
+  ravisInstance.onStatusUpdate = (msg) => {
+    document.getElementById('ravis-status').textContent = msg;
+  };
+
+  ravisInstance.onTranscript = (text) => {
+    document.getElementById('ravis-transcript').textContent = '"' + text + '"';
+  };
+
+  ravisInstance.startListening();
+  ravisInstance.startGreeting();
+}
+
+function stopRavis() {
+  ravisActive = false;
+  document.getElementById('ravis-btn').classList.remove('active');
+  document.getElementById('ravis-panel').classList.remove('show');
+  if (ravisInstance) {
+    ravisInstance.stopListening();
+    ravisInstance = null;
+  }
+}
+
+function ravisTypeInput(e) {
+  if (e.key === 'Enter') ravisSendType();
+}
+
+function ravisSendType() {
+  const input = document.getElementById('ravis-type');
+  const text = input.value.trim();
+  if (!text || !ravisInstance) return;
+  input.value = '';
+  document.getElementById('ravis-transcript').textContent = '"' + text + '"';
+  ravisInstance.handleTranscript(text);
+}
+
+// Override submitAll to support Ravis call
+const _originalSubmitAll = window.submitAll;
+window.submitAll = async function(calledByRavis = false) {
+  if (calledByRavis) {
+    // Skip confirm dialog when Ravis calls
+    const approvedIds = [];
+    CATEGORIES.forEach(cat => { if (selected5[cat]) selected5[cat].forEach(id => approvedIds.push(id)); });
+    if (approvedIds.length === 0) return;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true; btn.textContent = '🚀 Publishing...';
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const res = await fetch(`${API}/api/admin/submit`, {
+        method: 'POST',
+        headers: { 'x-admin-key': ADMIN_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approved_ids: approvedIds, date: today })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      document.getElementById('undo-bar').classList.add('show');
+      btn.textContent = '✅ Published!';
+      showToast(`✅ ${data.stories_published} stories published!`);
+    } catch (err) {
+      showToast(`❌ ${err.message}`);
+      btn.disabled = false; btn.textContent = '🚀 Submit & Publish';
+    }
+  } else {
+    return _originalSubmitAll();
+  }
+};
+</script>
+
 </body>
 </html>
