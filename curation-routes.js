@@ -45,8 +45,7 @@ async function fetchVoiceSoul(voice) {
   } catch { return []; }
 }
 
-async function generateOneVoice(headline, summary, category, role, region) {
-  const isHinglish = region === 'north' || region === 'west';
+async function generateOneVoice(headline, summary, category, role) {
   const voiceType = role === 'student' ? 'student' : 'employee';
   const soulExamples = await fetchVoiceSoul(voiceType);
 
@@ -55,110 +54,103 @@ async function generateOneVoice(headline, summary, category, role, region) {
   const sensitive = sensitiveWords.some(w => new RegExp(`\\b${w}\\b`).test(text));
 
   const sensitivityNote = sensitive
-    ? `\nThis is a sensitive/tragic topic. Write with warmth and dignity. No jokes.\n`
-    : `\nFor sensitive/tragic news — warmth and respect. For all other news — full energy and fun.\n`;
+    ? `\nYeh sensitive/tragic topic hai. Warmth aur dignity se likho. Jokes mat karo.\n`
+    : `\nSensitive news ke liye — warmth aur respect. Baaki sab ke liye — full energy aur fun.\n`;
 
   let persona = '';
-  if (role === 'student' && isHinglish) {
-    persona = `You are the smart funny batchmate of an Indian PGDM/MBA student from North or West India. You speak Hinglish naturally. Connect news to college life, placements, campus stress. Short punchy sentences. One punchline at end.${sensitivityNote}`;
-  } else if (role === 'student' && !isHinglish) {
-    persona = `You are the sharp funny friend of an Indian college student from South or East India. Comedy English. Connect to campus life, placements. Short sharp sentences. Dry humor.${sensitivityNote}`;
-  } else if (role === 'professional' && isHinglish) {
-    persona = `You are the sharp funny colleague of a working professional from North or West India. Hinglish like chai break conversation. Connect to boss, salary, EMI, appraisals. One punchline that makes him go "yaar bilkul sahi bola".${sensitivityNote}`;
+  if (role === 'student') {
+    persona = `Tu ek Indian PGDM/MBA student ka smart funny batchmate hai — North ya West India se.
+Dono Hinglish mein baat karte hain — natural, forced nahi, bas waise jaise actually bolte hain.
+Tera dost placements, assignments, campus life se stressed hai.
+Har badi news ko uski real life se connect karo — college, future, woh paisa jo abhi nahi hai.
+Tum dono milke situation pe hasoge — yahi survival hai.
+Language: Natural Hinglish. Short punchy sentences. End mein ek unexpected punchline.
+${sensitivityNote}`;
   } else {
-    persona = `You are the smart colleague of a working professional from South or East India. Comedy English like coffee machine conversation. Connect to salary, boss, deadlines. One warm punchline.${sensitivityNote}`;
+    persona = `Tu ek working professional ka sharp funny colleague hai — North ya West India se.
+Dono Hinglish mein baat karte hain — chai break conversation, formal briefing nahi.
+Tera dost boss pressure, salary tension, appraisals, office politics se deal karta hai daily.
+Har news ko uski real work life se connect karo — EMI, targets, woh ek annoying manager.
+30 seconds mein poori picture, ek joke jo dard ko bearable banaye.
+Language: Natural Hinglish. Punchy. Real. End mein ek line jo usse lagey "yaar bilkul sahi bola".
+${sensitivityNote}`;
   }
 
   let soulContext = '';
   if (soulExamples.length > 0) {
-    soulContext = `\nStudy the energy and rhythm — do NOT copy:\n${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}\n`;
+    soulContext = `\nIs tarah ki energy aur rhythm study karo — copy mat karo:\n${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}\n`;
   }
 
   const prompt = `${persona}
 ${soulContext}
-NEWS:
+AAJ KI NEWS:
 Headline: "${headline}"
-What happened: "${summary}"
+Kya hua: "${summary}"
 Category: ${category}
 
-Write 2-3 line reaction as that friend. Fresh, specific to this news. Max 55 words. No quotes around it. No preamble.`;
+Is specific news pe 2-3 line ka reaction likho us dost ki tarah.
+Fresh likho — upar ke examples sirf feeling dikhane ke liye hain, copy nahi karne.
+Is actual news pe react karo. Is insaan ki real life se connect karo.
+Koi preamble nahi. Koi "Yahan summary hai" nahi. Seedha likho.
+Maximum 55 words.
+Poori cheez ko quotes mein mat wrap karo.`;
 
   return await callClaude(prompt);
 }
 
 // ── ROUTE 1: Get today's stories for admin ────────────────────────────────────
-// GET /api/admin/stories?date=2026-05-29
 async function getAdminStories(req, res) {
   try {
     const date = req.query.date || new Date().toISOString().split('T')[0];
-
     const response = await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}&select=*&order=importance.asc,id.asc`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const stories = await response.json();
-
-    // Group by category
     const grouped = {};
     VALID_CATEGORIES.forEach(c => grouped[c] = []);
-    stories.forEach(s => {
-      if (grouped[s.category]) grouped[s.category].push(s);
-    });
-
+    stories.forEach(s => { if (grouped[s.category]) grouped[s.category].push(s); });
     res.json({ success: true, date, grouped, total: stories.length });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
 
-// ── ROUTE 2: Generate voice summaries for selected stories ────────────────────
-// POST /api/admin/generate-voices
-// Body: { story_ids: [1, 2, 3, 4, 5] }
+// ── ROUTE 2: Generate voice summaries for selected 5 stories ─────────────────
 async function generateVoices(req, res) {
   try {
     const { story_ids } = req.body;
-    if (!story_ids || story_ids.length === 0) {
-      return res.status(400).json({ error: 'No story IDs provided' });
-    }
-    if (story_ids.length > 5) {
-      return res.status(400).json({ error: 'Maximum 5 stories per category' });
-    }
+    if (!story_ids || story_ids.length === 0) return res.status(400).json({ error: 'No story IDs provided' });
+    if (story_ids.length > 5) return res.status(400).json({ error: 'Maximum 5 stories' });
 
-    // Fetch stories from Supabase
     const ids = story_ids.join(',');
     const response = await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?id=in.(${ids})&select=*`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const stories = await response.json();
-
     const results = [];
 
     for (const story of stories) {
       console.log(`🤖 Generating voices for: ${story.headline.slice(0, 50)}...`);
       const voices = {};
-      const combos = [
-        { role: 'student', region: 'north' },
-        { role: 'student', region: 'south' },
-        { role: 'professional', region: 'north' },
-        { role: 'professional', region: 'south' }
-      ];
 
-      for (const combo of combos) {
-        const key = `${combo.role}_${combo.region}`;
-        try {
-          voices[key] = await generateOneVoice(
-            story.headline, story.summary, story.category, combo.role, combo.region
-          );
-        } catch (err) {
-          voices[key] = story.summary.slice(0, 200);
-        }
-        await new Promise(r => setTimeout(r, 200));
+      // Only 2 voices — Student Hinglish + Professional Hinglish
+      try {
+        voices['student'] = await generateOneVoice(story.headline, story.summary, story.category, 'student');
+      } catch (err) {
+        voices['student'] = story.summary.slice(0, 200);
       }
-      voices['student'] = voices['student_north'];
-      voices['professional'] = voices['professional_south'];
+      await new Promise(r => setTimeout(r, 300));
 
-      // Save voices to Supabase
+      try {
+        voices['professional'] = await generateOneVoice(story.headline, story.summary, story.category, 'professional');
+      } catch (err) {
+        voices['professional'] = story.summary.slice(0, 200);
+      }
+      await new Promise(r => setTimeout(r, 300));
+
+      // Save to Supabase
       await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
         method: 'PATCH',
         headers: {
@@ -170,7 +162,6 @@ async function generateVoices(req, res) {
       });
 
       results.push({ id: story.id, headline: story.headline, voices });
-      await new Promise(r => setTimeout(r, 300));
     }
 
     res.json({ success: true, stories: results });
@@ -180,8 +171,6 @@ async function generateVoices(req, res) {
 }
 
 // ── ROUTE 3: Regenerate one voice with feedback ───────────────────────────────
-// POST /api/admin/regenerate-voice
-// Body: { story_id, voice_key, feedback }
 async function regenerateVoice(req, res) {
   try {
     const { story_id, voice_key, feedback } = req.body;
@@ -194,44 +183,34 @@ async function regenerateVoice(req, res) {
     if (!stories || stories.length === 0) return res.status(404).json({ error: 'Story not found' });
 
     const story = stories[0];
-    const [role, region] = voice_key.split('_');
-
-    const isHinglish = region === 'north' || region === 'west';
+    const role = voice_key === 'student' ? 'student' : 'professional';
     const voiceType = role === 'student' ? 'student' : 'employee';
     const soulExamples = await fetchVoiceSoul(voiceType);
 
     let soulContext = '';
     if (soulExamples.length > 0) {
-      soulContext = `\nStudy the energy — do NOT copy:\n${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}\n`;
+      soulContext = `\nEnergy study karo — copy mat karo:\n${soulExamples.map((ex, i) => `Example ${i+1}: ${ex}`).join('\n')}\n`;
     }
 
-    let persona = '';
-    if (role === 'student' && isHinglish) {
-      persona = `Smart funny batchmate of PGDM/MBA student from North/West India. Hinglish. Connect to placements, campus life.`;
-    } else if (role === 'student') {
-      persona = `Sharp funny friend of college student from South/East India. Comedy English. Connect to campus life.`;
-    } else if (isHinglish) {
-      persona = `Sharp funny colleague of working professional from North/West India. Hinglish. Connect to boss, salary, EMI.`;
-    } else {
-      persona = `Smart colleague of working professional from South/East India. Comedy English. Connect to work stress.`;
-    }
+    const persona = role === 'student'
+      ? `Indian PGDM/MBA student ka smart funny batchmate. Hinglish. Placements, campus life se connect karo.`
+      : `Working professional ka sharp funny colleague. Hinglish. Boss, salary, EMI se connect karo.`;
 
-    const feedbackNote = feedback ? `\nEditor feedback on previous attempt: "${feedback}"\nMake sure to address this feedback.\n` : '';
+    const feedbackNote = feedback ? `\nEditor feedback pichle attempt pe: "${feedback}"\nIs feedback ko zaroor address karo.\n` : '';
 
     const prompt = `${persona}
 ${soulContext}
 ${feedbackNote}
 NEWS:
 Headline: "${story.headline}"
-What happened: "${story.summary}"
+Kya hua: "${story.summary}"
 Category: ${story.category}
 
-Write a better 2-3 line reaction. Fresh. Max 55 words. No quotes. No preamble.`;
+Behtar 2-3 line reaction likho. Fresh. Max 55 words. Quotes nahi. Preamble nahi.`;
 
     const newVoice = await callClaude(prompt);
-
-    // Update in Supabase
     const updatedVoices = { ...(story.voices || {}), [voice_key]: newVoice };
+
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
       method: 'PATCH',
       headers: {
@@ -249,19 +228,15 @@ Write a better 2-3 line reaction. Fresh. Max 55 words. No quotes. No preamble.`;
 }
 
 // ── ROUTE 4: Save edited voice ────────────────────────────────────────────────
-// POST /api/admin/save-voice
-// Body: { story_id, voice_key, voice_text }
 async function saveVoice(req, res) {
   try {
     const { story_id, voice_key, voice_text } = req.body;
-
     const response = await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}&select=voices`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const stories = await response.json();
     if (!stories || stories.length === 0) return res.status(404).json({ error: 'Story not found' });
-
     const updatedVoices = { ...(stories[0].voices || {}), [voice_key]: voice_text };
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
       method: 'PATCH',
@@ -272,7 +247,6 @@ async function saveVoice(req, res) {
       },
       body: JSON.stringify({ voices: updatedVoices })
     });
-
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -280,19 +254,14 @@ async function saveVoice(req, res) {
 }
 
 // ── ROUTE 5: Submit approved stories ─────────────────────────────────────────
-// POST /api/admin/submit
-// Body: { approved_ids: [1,2,3,...], date: '2026-05-29' }
 async function submitApproved(req, res) {
   try {
     const { approved_ids, date } = req.body;
-    if (!approved_ids || approved_ids.length === 0) {
-      return res.status(400).json({ error: 'No approved stories' });
-    }
+    if (!approved_ids || approved_ids.length === 0) return res.status(400).json({ error: 'No approved stories' });
 
     const runDate = date || new Date().toISOString().split('T')[0];
-
-    // Mark approved stories
     const ids = approved_ids.join(',');
+
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=in.(${ids})`, {
       method: 'PATCH',
       headers: {
@@ -303,21 +272,19 @@ async function submitApproved(req, res) {
       body: JSON.stringify({ status: 'approved', approved_at: new Date().toISOString() })
     });
 
-    // Fetch approved stories
     const response = await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?id=in.(${ids})&select=*`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const approvedStories = await response.json();
 
-    // Build data.json
     const formattedStories = approvedStories.map(s => ({
       category: s.category,
       headline: s.headline,
       summary: s.summary,
       link: s.link || '',
       pubDate: s.pub_date || '',
-      hasVoice: !!(s.voices),
+      hasVoice: !!(s.voices && (s.voices.student || s.voices.professional)),
       sensitive: false,
       voices: s.voices || null,
       is_previous_day: s.is_previous_day || false
@@ -337,53 +304,39 @@ async function submitApproved(req, res) {
       can_undo_until: new Date(Date.now() + 15 * 60 * 1000).toISOString()
     };
 
-    // Save data.json
     require('fs').writeFileSync(
       require('path').join(__dirname, 'data.json'),
       JSON.stringify(dataToSave, null, 2)
     );
-
-    // Update data-backup.json
     require('fs').writeFileSync(
       require('path').join(__dirname, 'data-backup.json'),
       JSON.stringify(dataToSave, null, 2)
     );
 
-    // Trigger email sending
     sendEmailsToSubscribers(formattedStories, dateDisplay);
 
     res.json({
       success: true,
       stories_published: formattedStories.length,
       can_undo_until: dataToSave.can_undo_until,
-      message: `${formattedStories.length} stories published. 15 minutes to undo.`
+      message: `${formattedStories.length} stories published.`
     });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
 
 // ── ROUTE 6: Undo submit ──────────────────────────────────────────────────────
-// POST /api/admin/undo-submit
-// Body: { date: '2026-05-29' }
 async function undoSubmit(req, res) {
   try {
     const date = req.body.date || new Date().toISOString().split('T')[0];
-
-    // Check if within 15 minute window
     const dataPath = require('path').join(__dirname, 'data.json');
     if (require('fs').existsSync(dataPath)) {
       const data = JSON.parse(require('fs').readFileSync(dataPath, 'utf8'));
-      if (data.can_undo_until) {
-        const undoDeadline = new Date(data.can_undo_until);
-        if (new Date() > undoDeadline) {
-          return res.status(400).json({ error: 'Undo window expired (15 minutes)' });
-        }
+      if (data.can_undo_until && new Date() > new Date(data.can_undo_until)) {
+        return res.status(400).json({ error: 'Undo window expired (15 minutes)' });
       }
     }
-
-    // Reset approved stories back to voices_generated
     await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}&status=eq.approved`,
       {
@@ -396,34 +349,28 @@ async function undoSubmit(req, res) {
         body: JSON.stringify({ status: 'voices_generated', approved_at: null })
       }
     );
-
-    // Restore backup
     const backupPath = require('path').join(__dirname, 'data-backup.json');
     if (require('fs').existsSync(backupPath)) {
       require('fs').copyFileSync(backupPath, require('path').join(__dirname, 'data.json'));
     }
-
-    res.json({ success: true, message: 'Submit undone. Stories back to review.' });
+    res.json({ success: true, message: 'Submit undone.' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
 
-// ── ROUTE 7: Auto-fallback (called by cron if no submit by 6:45 AM) ───────────
-// POST /api/admin/auto-fallback
+// ── ROUTE 7: Auto-fallback ────────────────────────────────────────────────────
 async function autoFallback(req, res) {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const yDate = yesterday.toISOString().split('T')[0];
 
-    // Fetch yesterday's approved stories
     const response = await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${yDate}&status=eq.approved&select=*`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const prevStories = await response.json();
-
     if (!prevStories || prevStories.length === 0) {
       return res.json({ success: false, message: 'No previous day stories found' });
     }
@@ -458,10 +405,7 @@ async function autoFallback(req, res) {
       JSON.stringify(dataToSave, null, 2)
     );
 
-    res.json({
-      success: true,
-      message: `Auto-fallback: ${formattedStories.length} previous day stories published`
-    });
+    res.json({ success: true, message: `Auto-fallback: ${formattedStories.length} stories published` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -484,9 +428,8 @@ async function sendEmailsToSubscribers(stories, date) {
       const { email, name, role, region } = subscriber;
       const firstName = (name || 'friend').split(' ')[0];
       const isHinglish = region === 'north' || region === 'west';
-      const roleKey = role === 'student' ? 'student' : 'professional';
-      const regionKey = isHinglish ? 'north' : 'south';
-      const voiceKey = `${roleKey}_${regionKey}`;
+      // Always use Hinglish voices
+      const voiceKey = role === 'student' ? 'student' : 'professional';
       const roleLabel = role === 'student' ? '🎓 Student' : '💼 Professional';
       const roleColor = role === 'student' ? '#FF4D6D' : '#FFAA55';
 
@@ -508,17 +451,12 @@ async function sendEmailsToSubscribers(stories, date) {
 
       const voiceStories = stories.filter(s => s.hasVoice).slice(0, 6);
       const storyCards = voiceStories.map(s => {
-        const voiceText = s.voices && s.voices[voiceKey]
-          ? s.voices[voiceKey]
-          : s.voices && s.voices[roleKey]
-          ? s.voices[roleKey]
-          : s.summary;
-
+        const voiceText = s.voices && s.voices[voiceKey] ? s.voices[voiceKey] : s.summary;
         return `<tr><td style="padding:0 0 14px 0;">
           <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C0C18;border-radius:12px;border:0.5px solid rgba(255,255,255,.07);overflow:hidden;">
             <tr><td style="height:2px;background:linear-gradient(90deg,#2979FF,#00B4FF);"></td></tr>
             <tr><td style="padding:16px 20px;">
-              <p style="margin:0 0 6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(92,200,255,.6);font-weight:600;">${s.category}${s.is_previous_day ? ' · Yesterday' : ''}</p>
+              <p style="margin:0 0 6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(92,200,255,.6);font-weight:600;">${s.category}${s.is_previous_day?' · Yesterday':''}</p>
               <h3 style="margin:0 0 10px;font-family:Georgia,serif;font-size:15px;color:rgba(255,255,255,.9);line-height:1.4;font-style:italic;">${s.headline}</h3>
               <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:rgba(255,255,255,.03);border-radius:8px;border-left:2.5px solid ${roleColor};">
                 <tr><td style="padding:10px 13px;">
