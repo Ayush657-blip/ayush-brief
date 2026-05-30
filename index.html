@@ -848,6 +848,7 @@ function toggleBhaiMode() {
 
 async function openBhaiMode() {
   bhaiActive = true;
+  trackEvent('bhai_mode_open', {email: loggedInUser ? loggedInUser.email : 'unknown'});
   document.getElementById('bhai-toggle-btn').classList.add('active');
   var overlay = document.getElementById('bhai-overlay');
   overlay.classList.add('show');
@@ -956,6 +957,7 @@ async function confirmCategory(cat) {
   }
 
   if (matchYes(alternatives)) {
+    trackEvent('bhai_mode_category', {category: cat, email: loggedInUser ? loggedInUser.email : 'unknown'});
     // Start playing
     if (cat === 'Khatarnak') {
       await playKhatarnak();
@@ -981,6 +983,7 @@ async function confirmCategory(cat) {
 
 function closeBhaiMode() {
   bhaiActive = false;
+  trackEvent('bhai_mode_close', {email: loggedInUser ? loggedInUser.email : 'unknown'});
   stopListening();
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   document.getElementById('bhai-toggle-btn').classList.remove('active');
