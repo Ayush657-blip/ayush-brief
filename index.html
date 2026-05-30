@@ -16,7 +16,6 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GWES74J2CT"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GWES74J2CT');</script>
 <style>
@@ -48,6 +47,9 @@ html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;o
 @keyframes wlc-scale{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
 @keyframes pulse-glow{0%,100%{opacity:.6;}50%{opacity:1;}}
 @keyframes shimmer{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
+@keyframes wave-expand{0%{opacity:.5;transform:translate(-50%,-60%) scale(.8);}100%{opacity:0;transform:translate(-50%,-60%) scale(1.2);}}
+@keyframes soundbar{0%,100%{transform:scaleY(.4);}50%{transform:scaleY(1);}}
+@keyframes bhai-in{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 .glow-wrap{position:fixed;top:0;left:0;right:0;height:500px;z-index:0;pointer-events:none;overflow:hidden;}
 .glow-a{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse 60% 50% at 50% 20%,rgba(0,90,255,.22) 0%,rgba(41,121,255,.08) 50%,transparent 100%);animation:pulse-glow 4s ease-in-out infinite;}
 .glow-b{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse 50% 40% at 50% 10%,rgba(0,180,255,.18) 0%,transparent 70%);filter:blur(40px);animation:pulse-glow 4s ease-in-out infinite .5s;}
@@ -63,13 +65,63 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .nav-center{display:flex;align-items:center;gap:4px;}
 .nav-topic-btn{background:transparent;border:none;color:var(--w5);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:5px;transition:all .2s;}
 .nav-topic-btn:hover{background:var(--w1);color:var(--w);}
-.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-right{display:flex;align-items:center;gap:8px;}
 .nav-icon-btn{width:36px;height:36px;border-radius:10px;background:transparent;border:.5px solid var(--border);color:var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s;}
 .nav-icon-btn:hover{background:var(--w1);color:var(--w);border-color:var(--border2);}
 .nav-login{padding:8px 16px;border-radius:100px;background:transparent;color:var(--w5);border:.5px solid var(--border);cursor:pointer;font-size:13px;font-weight:400;font-family:'DM Sans',sans-serif;transition:all .2s;}
 .nav-login:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
 .nav-cta{padding:8px 20px;border-radius:100px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;}
 .nav-cta:hover{background:var(--blue-b);}
+/* ── BHAI MODE TOGGLE ──────────────────────────────────────────────────────── */
+.bhai-toggle{display:none;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;background:transparent;border:.5px solid var(--border);color:var(--w5);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .3s;white-space:nowrap;}
+.bhai-toggle.visible{display:flex;}
+.bhai-toggle:hover{border-color:rgba(92,200,255,.3);color:var(--w7);}
+.bhai-toggle.active{background:rgba(41,121,255,.12);border-color:rgba(92,200,255,.4);color:var(--blue-p);}
+.bhai-mic{font-size:14px;}
+.bhai-toggle.active .bhai-mic{animation:blink 1.5s infinite;}
+/* ── BHAI MODE OVERLAY ─────────────────────────────────────────────────────── */
+#bhai-overlay{position:fixed;inset:0;z-index:700;background:rgba(7,7,15,.97);backdrop-filter:blur(30px);display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px;}
+#bhai-overlay.show{display:flex;}
+.bhai-wave{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;}
+.bhai-wave-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);border-radius:50%;border:1px solid rgba(92,200,255,.08);animation:wave-expand 3s ease-out infinite;}
+.bhai-wave-ring:nth-child(1){width:200px;height:200px;animation-delay:0s;}
+.bhai-wave-ring:nth-child(2){width:350px;height:350px;animation-delay:.5s;}
+.bhai-wave-ring:nth-child(3){width:500px;height:500px;animation-delay:1s;}
+.bhai-wave-ring:nth-child(4){width:650px;height:650px;animation-delay:1.5s;}
+#bhai-overlay.speaking .bhai-wave-ring{border-color:rgba(232,197,88,.15);animation-duration:1s;}
+.bhai-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;width:100%;padding:0 24px;}
+.bhai-status-text{font-size:12px;color:var(--w3);letter-spacing:.08em;text-transform:uppercase;min-height:18px;}
+.bhai-big-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3.5vw,28px);font-weight:300;font-style:italic;color:var(--w);max-width:520px;line-height:1.5;min-height:72px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.bhai-speaking-bar{display:flex;align-items:center;gap:4px;height:28px;}
+.bhai-speaking-bar span{width:3px;border-radius:3px;background:var(--gold-m);animation:soundbar .8s ease-in-out infinite;}
+.bhai-speaking-bar span:nth-child(1){height:8px;animation-delay:0s;}
+.bhai-speaking-bar span:nth-child(2){height:16px;animation-delay:.1s;}
+.bhai-speaking-bar span:nth-child(3){height:24px;animation-delay:.2s;}
+.bhai-speaking-bar span:nth-child(4){height:16px;animation-delay:.3s;}
+.bhai-speaking-bar span:nth-child(5){height:8px;animation-delay:.4s;}
+.bhai-speaking-bar{display:none;}
+#bhai-overlay.speaking .bhai-speaking-bar{display:flex;}
+/* Bhai bottom panel */
+.bhai-panel{width:100%;max-width:520px;display:flex;flex-direction:column;gap:10px;padding:0 24px;animation:bhai-in .3s ease forwards;}
+.bhai-menu-item{width:100%;padding:14px 20px;border-radius:14px;background:rgba(255,255,255,.04);border:.5px solid var(--border2);color:var(--w7);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:12px;}
+.bhai-menu-item:hover{background:rgba(41,121,255,.1);border-color:rgba(92,200,255,.35);color:var(--w);}
+.bhai-menu-item .bm-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center;}
+.bhai-menu-item .bm-text strong{display:block;font-size:14px;color:var(--w);font-weight:500;margin-bottom:2px;}
+.bhai-menu-item .bm-text span{font-size:11px;color:var(--w3);}
+.bhai-news-item{width:100%;padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.03);border:.5px solid var(--border);display:flex;flex-direction:column;gap:5px;}
+.bhai-news-item.active-news{border-color:rgba(232,197,88,.5);background:rgba(232,197,88,.05);}
+.bn-num{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-p);}
+.bn-headline{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--w9);line-height:1.3;}
+.bhai-ask-row{display:flex;gap:10px;width:100%;}
+.bhai-ask-btn{flex:1;padding:13px;border-radius:12px;border:.5px solid var(--border2);background:rgba(255,255,255,.04);color:var(--w7);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;text-align:center;}
+.bhai-ask-btn:hover{background:rgba(41,121,255,.1);border-color:rgba(92,200,255,.3);color:var(--w);}
+.bhai-ask-btn.yes{border-color:rgba(0,200,150,.3);}
+.bhai-ask-btn.yes:hover{background:rgba(0,200,150,.1);color:var(--green);}
+.bhai-ask-btn.no{border-color:rgba(255,77,109,.2);}
+.bhai-ask-btn.no:hover{background:rgba(255,77,109,.08);color:var(--red);}
+.bhai-close-btn{padding:10px 28px;border-radius:100px;background:transparent;border:.5px solid var(--border);color:var(--w3);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;align-self:center;margin-top:4px;}
+.bhai-close-btn:hover{border-color:rgba(255,77,109,.4);color:var(--red);}
+/* rest of existing styles */
 .topics-dropdown{position:fixed;top:64px;left:0;right:0;z-index:190;background:var(--bg2);border-bottom:.5px solid var(--border);padding:28px 48px;display:none;animation:fadeIn .2s ease;}
 .topics-dropdown.show{display:block;}
 .td-inner{max-width:900px;margin:0 auto;}
@@ -299,6 +351,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   .search-results{left:16px;right:16px;}
   footer .ft-inner{flex-direction:column;gap:16px;}
   .pers-header{padding:90px 20px 36px;}
+  .bhai-panel{padding:0 16px;}
 }
 </style>
 </head>
@@ -352,11 +405,34 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
     <button class="nav-icon-btn" onclick="toggleSearch()" title="Search (/)" id="nav-search-btn">🔍</button>
     <button class="nav-icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
     <button class="nav-icon-btn" onclick="toggleLang()" id="lang-btn" title="Toggle language">🇮🇳</button>
+    <!-- BHAI MODE TOGGLE — only visible after login -->
+    <button class="bhai-toggle" id="bhai-toggle-btn" onclick="toggleBhaiMode()" title="Bhai Mode">
+      <span class="bhai-mic">🎙️</span>
+      <span>Bhai Mode</span>
+    </button>
     <button class="nav-login" id="nav-login-btn">Login</button>
     <button class="nav-cta sub-btn" id="nav-sub-btn">Subscribe →</button>
     <button class="nav-login" id="nav-logout-btn" style="display:none;" onclick="logout()">Logout</button>
   </div>
 </nav>
+
+<!-- ── BHAI MODE OVERLAY ───────────────────────────────────────────────────── -->
+<div id="bhai-overlay">
+  <div class="bhai-wave">
+    <div class="bhai-wave-ring"></div>
+    <div class="bhai-wave-ring"></div>
+    <div class="bhai-wave-ring"></div>
+    <div class="bhai-wave-ring"></div>
+  </div>
+  <div class="bhai-center">
+    <div class="bhai-speaking-bar">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="bhai-big-text" id="bhai-big-text">Ek second, teri news la raha hoon...</div>
+    <div class="bhai-status-text" id="bhai-status">Loading</div>
+  </div>
+  <div class="bhai-panel" id="bhai-panel"></div>
+</div>
 
 <div id="hp">
   <section class="hero">
@@ -610,10 +686,564 @@ var loggedInUser=null;
 var ROLE_LABELS={'student':'🎓 Student Edition','professional':'💼 Professional Edition'};
 var REGION_LABELS={'north':'🏔️ North India','west':'🌊 West India','south':'🌴 South India','east':'🌿 East India'};
 var CARD_COLORS=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
-
-// ── UPDATED: Startups & Auto and Science & Health ──
 var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Startups & Auto':'🚀','Science & Health':'🔬','Entertainment':'🎬'};
 var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is actually happening in Delhi.','International':'The world news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Startups & Auto':'Funding rounds, new ventures, EVs, and the roads ahead.','Science & Health':'ISRO, NASA, discoveries, fitness, and what your body needs to know.','Entertainment':'Films, OTT, and culture that is actually good.'};
+
+// ═══════════════════════════════════════════════════════════════════════
+// BHAI MODE — FULL VOICE ENGINE
+// Replaces the bhai mode section in index.html
+// ═══════════════════════════════════════════════════════════════════════
+
+var bhaiActive = false;
+var bhaiStories = { khatarnak: [], categories: {} };
+var bhaiCurrentNews = [];
+var bhaiCurrentIndex = 0;
+var bhaiState = 'idle'; // idle | greeting | listening | confirming | playing | paused | ask_more
+var currentAudio = null;
+var bhaiRecognition = null;
+var bhaiPausedAt = 0; // which story index we paused at
+var bhaiConfirmCategory = null; // category pending confirmation
+
+// ── SPEECH RECOGNITION SETUP ─────────────────────────────────────────
+function createRecognition() {
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return null;
+  var r = new SpeechRecognition();
+  r.lang = 'hi-IN';
+  r.continuous = false;
+  r.interimResults = false;
+  r.maxAlternatives = 3;
+  return r;
+}
+
+function listenFor(timeoutMs, onResult) {
+  return new Promise(function(resolve) {
+    var rec = createRecognition();
+    if (!rec) { resolve(null); return; }
+
+    bhaiRecognition = rec;
+    var settled = false;
+    var timer = null;
+
+    function done(result) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      try { rec.stop(); } catch(e) {}
+      bhaiRecognition = null;
+      resolve(result);
+    }
+
+    // Auto timeout
+    timer = setTimeout(function() { done(null); }, timeoutMs);
+
+    rec.onresult = function(e) {
+      var alternatives = [];
+      for (var i = 0; i < e.results[0].length; i++) {
+        alternatives.push(e.results[0][i].transcript.toLowerCase().trim());
+      }
+      done(alternatives);
+    };
+
+    rec.onerror = function() { done(null); };
+    rec.onend = function() { done(null); };
+
+    try { rec.start(); } catch(e) { done(null); }
+  });
+}
+
+function stopListening() {
+  if (bhaiRecognition) {
+    try { bhaiRecognition.stop(); } catch(e) {}
+    bhaiRecognition = null;
+  }
+}
+
+// ── CATEGORY MATCHING ────────────────────────────────────────────────
+var CATEGORY_KEYWORDS = {
+  'Business':        ['business', 'biznес', 'व्यापार', 'vyapar'],
+  'Indian Economy':  ['economy', 'economic', 'indian economy', 'india economy', 'arthvyavastha', 'अर्थव्यवस्था', 'economy news'],
+  'Finance':         ['finance', 'financial', 'paisa', 'पैसा', 'money', 'market'],
+  'Tech':            ['tech', 'technology', 'teknology', 'teknaloji', 'ai', 'startup'],
+  'Sports':          ['sports', 'sport', 'cricket', 'football', 'ipl', 'khel', 'खेल'],
+  'Government':      ['government', 'govt', 'sarkar', 'सरकार', 'politics', 'political'],
+  'International':   ['international', 'world', 'duniya', 'दुनिया', 'global'],
+  'Climate':         ['climate', 'environment', 'paryavaran', 'पर्यावरण', 'nature', 'weather'],
+  'Startups & Auto': ['startup', 'auto', 'car', 'gaadi', 'गाड़ी', 'ev', 'electric'],
+  'Science & Health':['science', 'health', 'sehat', 'सेहत', 'medical', 'isro', 'nasa'],
+  'Entertainment':   ['entertainment', 'movie', 'film', 'ott', 'bollywood', 'music', 'tv']
+};
+
+var KHATARNAK_KEYWORDS = ['khatarnak', 'खतरनाक', 'top', 'best', 'main', 'important', 'badi', 'बड़ी', 'sabse', 'must'];
+var YES_KEYWORDS = ['haan', 'han', 'ha', 'yes', 'haa', 'bilkul', 'theek', 'thik', 'sahi', 'ok', 'okay', 'kar', 'suna', 'हां', 'हाँ'];
+var NO_KEYWORDS  = ['nahi', 'nahi', 'no', 'band', 'mat', 'रुक', 'ruk', 'नहीं', 'na', 'nope', 'bas'];
+var STOP_KEYWORDS = ['ruk', 'ruko', 'rukja', 'ruk ja', 'stop', 'band', 'pause', 'रुक', 'रुको'];
+var RESUME_KEYWORDS = ['shuru', 'chalu', 'continue', 'play', 'chalao', 'शुरू', 'चालू', 'resume', 'haan', 'ha'];
+
+function matchCategory(alternatives) {
+  for (var ai = 0; ai < alternatives.length; ai++) {
+    var text = alternatives[ai];
+    // Khatarnak check first
+    for (var ki = 0; ki < KHATARNAK_KEYWORDS.length; ki++) {
+      if (text.includes(KHATARNAK_KEYWORDS[ki])) return 'Khatarnak';
+    }
+    // Category check
+    var cats = Object.keys(CATEGORY_KEYWORDS);
+    for (var ci = 0; ci < cats.length; ci++) {
+      var cat = cats[ci];
+      var keywords = CATEGORY_KEYWORDS[cat];
+      for (var wi = 0; wi < keywords.length; wi++) {
+        if (text.includes(keywords[wi])) return cat;
+      }
+    }
+  }
+  return null;
+}
+
+function matchYes(alternatives) {
+  for (var ai = 0; ai < alternatives.length; ai++) {
+    var text = alternatives[ai];
+    for (var i = 0; i < YES_KEYWORDS.length; i++) {
+      if (text.includes(YES_KEYWORDS[i])) return true;
+    }
+  }
+  return false;
+}
+
+function matchNo(alternatives) {
+  for (var ai = 0; ai < alternatives.length; ai++) {
+    var text = alternatives[ai];
+    for (var i = 0; i < NO_KEYWORDS.length; i++) {
+      if (text.includes(NO_KEYWORDS[i])) return true;
+    }
+  }
+  return false;
+}
+
+function matchStop(alternatives) {
+  for (var ai = 0; ai < alternatives.length; ai++) {
+    var text = alternatives[ai];
+    for (var i = 0; i < STOP_KEYWORDS.length; i++) {
+      if (text.includes(STOP_KEYWORDS[i])) return true;
+    }
+  }
+  return false;
+}
+
+function matchResume(alternatives) {
+  for (var ai = 0; ai < alternatives.length; ai++) {
+    var text = alternatives[ai];
+    for (var i = 0; i < RESUME_KEYWORDS.length; i++) {
+      if (text.includes(RESUME_KEYWORDS[i])) return true;
+    }
+  }
+  return false;
+}
+
+// ── MAIN BHAI MODE FUNCTIONS ─────────────────────────────────────────
+function toggleBhaiMode() {
+  if (bhaiActive) { closeBhaiMode(); }
+  else { openBhaiMode(); }
+}
+
+async function openBhaiMode() {
+  bhaiActive = true;
+  document.getElementById('bhai-toggle-btn').classList.add('active');
+  var overlay = document.getElementById('bhai-overlay');
+  overlay.classList.add('show');
+  overlay.classList.remove('speaking');
+  setBhaiText('Ek second...', '');
+  setBhaiPanel('');
+
+  // Fetch stories
+  try {
+    var email = loggedInUser ? loggedInUser.email : '';
+    var r = await fetch(API + '/api/voice/stories?email=' + encodeURIComponent(email));
+    var data = await r.json();
+    if (data.success) {
+      bhaiStories.khatarnak = data.khatarnak || [];
+      bhaiStories.categories = data.categories || {};
+    }
+  } catch(e) {
+    bhaiStories.khatarnak = [];
+    bhaiStories.categories = {};
+  }
+
+  await startGreetingFlow();
+}
+
+async function startGreetingFlow() {
+  if (!bhaiActive) return;
+  bhaiState = 'greeting';
+
+  var cats = Object.keys(bhaiStories.categories).join(', ');
+  var hasKhatarnak = bhaiStories.khatarnak && bhaiStories.khatarnak.length > 0;
+  var catList = hasKhatarnak
+    ? 'Khatarnak news, ' + cats
+    : cats;
+
+  var greeting = 'Ram Ram bhaiyo! Kya sunna hai mere bhai ko? ' + catList + ' — bol kya chahiye.';
+  setBhaiText('Ram Ram bhaiyo! Kya sunna hai mere bhai ko?', '');
+  showBhaiListeningUI('Bol kya sunna hai...');
+
+  await speakText(greeting);
+  if (!bhaiActive) return;
+
+  await listenForCategory();
+}
+
+async function listenForCategory() {
+  if (!bhaiActive) return;
+  bhaiState = 'listening';
+  setBhaiStatus('Sun raha hoon...');
+  showBhaiListeningUI('Sun raha hoon...');
+
+  var alternatives = await listenFor(7000);
+
+  if (!bhaiActive) return;
+
+  if (!alternatives) {
+    // Nothing heard — ask again
+    var retry = 'Bhai, kuch suna nahi. Dobara bol — kya sunna hai?';
+    setBhaiText(retry, '');
+    await speakText(retry);
+    if (!bhaiActive) return;
+    await listenForCategory();
+    return;
+  }
+
+  var cat = matchCategory(alternatives);
+
+  if (!cat) {
+    var notUnderstood = 'Samajh nahi aaya. Business, Economy, Sports — kuch bhi bol.';
+    setBhaiText(notUnderstood, '');
+    await speakText(notUnderstood);
+    if (!bhaiActive) return;
+    await listenForCategory();
+    return;
+  }
+
+  // Confirm
+  bhaiConfirmCategory = cat;
+  await confirmCategory(cat);
+}
+
+async function confirmCategory(cat) {
+  if (!bhaiActive) return;
+  bhaiState = 'confirming';
+
+  var confirmText = cat === 'Khatarnak'
+    ? 'Aaj ki khatarnak news sunau?'
+    : cat + ' ki news sunau?';
+
+  setBhaiText(confirmText, '');
+  showBhaiListeningUI('Haan ya Nahi bol...');
+  await speakText(confirmText);
+  if (!bhaiActive) return;
+
+  setBhaiStatus('Haan ya Nahi...');
+  var alternatives = await listenFor(5000);
+
+  if (!bhaiActive) return;
+
+  if (!alternatives) {
+    // 5 sec no response — listen again for category
+    setBhaiText('Koi baat nahi. Dobara bol kya sunna hai?', '');
+    await speakText('Koi baat nahi. Dobara bol kya sunna hai?');
+    if (!bhaiActive) return;
+    await listenForCategory();
+    return;
+  }
+
+  if (matchYes(alternatives)) {
+    // Start playing
+    if (cat === 'Khatarnak') {
+      await playKhatarnak();
+    } else {
+      await playCategory(cat);
+    }
+  } else if (matchNo(alternatives)) {
+    // Go back to listening
+    var backText = 'Theek hai. Kya sunna hai?';
+    setBhaiText(backText, '');
+    await speakText(backText);
+    if (!bhaiActive) return;
+    await listenForCategory();
+  } else {
+    // Unrecognised — treat as no, try again
+    var tryAgain = 'Samajh nahi aaya. ' + confirmText;
+    setBhaiText(tryAgain, '');
+    await speakText(tryAgain);
+    if (!bhaiActive) return;
+    await confirmCategory(cat);
+  }
+}
+
+function closeBhaiMode() {
+  bhaiActive = false;
+  stopListening();
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  document.getElementById('bhai-toggle-btn').classList.remove('active');
+  document.getElementById('bhai-overlay').classList.remove('show', 'speaking');
+  setBhaiPanel('');
+  bhaiState = 'idle';
+  bhaiCurrentNews = [];
+  bhaiCurrentIndex = 0;
+  bhaiConfirmCategory = null;
+}
+
+function setBhaiText(text, status) {
+  document.getElementById('bhai-big-text').textContent = text;
+  if (status !== undefined) document.getElementById('bhai-status').textContent = status || '';
+}
+
+function setBhaiStatus(s) {
+  var el = document.getElementById('bhai-status');
+  if (el) el.textContent = s || '';
+}
+
+function setBhaiPanel(html) {
+  document.getElementById('bhai-panel').innerHTML = html;
+}
+
+function showBhaiListeningUI(statusText) {
+  setBhaiStatus(statusText || 'Sun raha hoon...');
+  setBhaiPanel('<button class="bhai-close-btn" onclick="closeBhaiMode()">Band kar</button>');
+}
+
+async function playKhatarnak() {
+  bhaiCurrentNews = bhaiStories.khatarnak || [];
+  if (bhaiCurrentNews.length === 0) {
+    var msg = 'Aaj ki khatarnak news abhi nahi aayi. Koi aur category sunoge?';
+    setBhaiText(msg, '');
+    await speakText(msg);
+    if (!bhaiActive) return;
+    await listenForCategory();
+    return;
+  }
+  bhaiCurrentIndex = 0;
+  await playNewsSequence();
+}
+
+async function playCategory(cat) {
+  bhaiCurrentNews = bhaiStories.categories[cat] || [];
+  if (bhaiCurrentNews.length === 0) {
+    var msg = cat + ' ki news abhi nahi hai. Koi aur category sunoge?';
+    setBhaiText(msg, '');
+    await speakText(msg);
+    if (!bhaiActive) return;
+    await listenForCategory();
+    return;
+  }
+  bhaiCurrentIndex = 0;
+  await playNewsSequence();
+}
+
+async function playNewsSequence() {
+  bhaiState = 'playing';
+  var total = bhaiCurrentNews.length;
+
+  for (var i = bhaiCurrentIndex; i < total; i++) {
+    if (!bhaiActive) return;
+
+    // Check if paused
+    if (bhaiState === 'paused') {
+      bhaiCurrentIndex = i;
+      return;
+    }
+
+    bhaiCurrentIndex = i;
+    var story = bhaiCurrentNews[i];
+
+    // Show news cards
+    renderNewsCards(i, total);
+
+    // Speak headline
+    var headlineText = story.headline;
+    setBhaiText(headlineText, 'Bol raha hoon...');
+    document.getElementById('bhai-overlay').classList.add('speaking');
+    await speakTextWithStopListen(headlineText);
+    if (!bhaiActive) return;
+    if (bhaiState === 'paused') { bhaiCurrentIndex = i; return; }
+
+    await sleep(300);
+
+    // Speak summary
+    if (story.voice_summary) {
+      setBhaiText(story.voice_summary, '');
+      await speakTextWithStopListen(story.voice_summary);
+      if (!bhaiActive) return;
+      if (bhaiState === 'paused') { bhaiCurrentIndex = i; return; }
+    }
+
+    await sleep(500);
+    document.getElementById('bhai-overlay').classList.remove('speaking');
+  }
+
+  // All done
+  await askMore();
+}
+
+// Speak + listen for stop command simultaneously
+async function speakTextWithStopListen(text) {
+  if (!bhaiActive) return;
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+
+  document.getElementById('bhai-overlay').classList.add('speaking');
+
+  return new Promise(async function(resolve) {
+    var audioEnded = false;
+    var stopDetected = false;
+
+    // Start audio
+    var audioPromise = speakText(text).then(function() {
+      audioEnded = true;
+      if (!stopDetected) resolve();
+    });
+
+    // Listen for stop in background
+    var stopCheck = async function() {
+      while (!audioEnded && bhaiActive && bhaiState !== 'paused') {
+        var alts = await listenFor(3000);
+        if (!bhaiActive) { resolve(); return; }
+        if (alts && matchStop(alts)) {
+          stopDetected = true;
+          if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+          document.getElementById('bhai-overlay').classList.remove('speaking');
+          bhaiState = 'paused';
+          resolve();
+
+          // Tell user we paused
+          var pauseMsg = 'Theek hai, ruk gaya.';
+          setBhaiText(pauseMsg, 'Ruka hua hoon...');
+          await speakText(pauseMsg);
+          if (!bhaiActive) return;
+
+          // Wait for resume
+          await waitForResume();
+          return;
+        }
+      }
+    };
+
+    stopCheck();
+  });
+}
+
+async function waitForResume() {
+  if (!bhaiActive) return;
+  setBhaiText('Jab ready ho, bol — shuru kar.', 'Tera intezaar hai...');
+  setBhaiPanel('<button class="bhai-close-btn" onclick="closeBhaiMode()">Band kar</button>');
+
+  while (bhaiActive && bhaiState === 'paused') {
+    var alts = await listenFor(8000);
+    if (!bhaiActive) return;
+    if (alts && matchResume(alts)) {
+      bhaiState = 'playing';
+      var resumeMsg = 'Theek hai, wahi se shuru karte hain.';
+      setBhaiText(resumeMsg, '');
+      await speakText(resumeMsg);
+      if (!bhaiActive) return;
+      // Resume from where we left off
+      await playNewsSequence();
+      return;
+    } else if (alts) {
+      // Maybe they said something else — ask again
+      var againMsg = 'Shuru karna hai toh bol — shuru kar.';
+      setBhaiText(againMsg, '');
+      await speakText(againMsg);
+    }
+    // If nothing heard, keep waiting
+  }
+}
+
+async function askMore() {
+  if (!bhaiActive) return;
+  bhaiState = 'ask_more';
+  var msg = 'Bas itni news thi. Aur kuch sunna hai?';
+  setBhaiText(msg, '');
+  setBhaiPanel('<button class="bhai-close-btn" onclick="closeBhaiMode()">Band kar</button>');
+  await speakText(msg);
+  if (!bhaiActive) return;
+
+  setBhaiStatus('Bol — haan ya nahi...');
+  var alts = await listenFor(5000);
+  if (!bhaiActive) return;
+
+  if (alts && matchYes(alts)) {
+    // Back to category selection
+    await startGreetingFlow();
+  } else {
+    // Close
+    var byeMsg = 'Theek hai bhai. Kal phir milenge. Ram Ram!';
+    setBhaiText(byeMsg, '');
+    await speakText(byeMsg);
+    await sleep(2000);
+    closeBhaiMode();
+  }
+}
+
+function renderNewsCards(activeIdx, total) {
+  var cards = bhaiCurrentNews.map(function(s, idx) {
+    return '<div class="bhai-news-item' + (idx === activeIdx ? ' active-news' : '') + '">'
+      + '<div class="bn-num">Story ' + (idx + 1) + ' of ' + total + '</div>'
+      + '<div class="bn-headline">' + s.headline + '</div>'
+      + '</div>';
+  }).join('');
+  setBhaiPanel(cards + '<button class="bhai-close-btn" onclick="closeBhaiMode()">Band kar</button>');
+}
+
+async function speakText(text) {
+  if (!bhaiActive) return;
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+
+  document.getElementById('bhai-overlay').classList.add('speaking');
+
+  try {
+    var r = await fetch(API + '/api/voice/speak', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text, voice_sample: 'sample1' })
+    });
+    if (!r.ok) throw new Error('Voice API error');
+    var blob = await r.blob();
+    var url = URL.createObjectURL(blob);
+    return new Promise(function(resolve) {
+      var audio = new Audio(url);
+      currentAudio = audio;
+      audio.onended = function() {
+        document.getElementById('bhai-overlay').classList.remove('speaking');
+        URL.revokeObjectURL(url);
+        currentAudio = null;
+        resolve();
+      };
+      audio.onerror = function() {
+        document.getElementById('bhai-overlay').classList.remove('speaking');
+        resolve();
+      };
+      audio.play().catch(function() {
+        document.getElementById('bhai-overlay').classList.remove('speaking');
+        resolve();
+      });
+    });
+  } catch(e) {
+    console.error('speakText error:', e);
+    document.getElementById('bhai-overlay').classList.remove('speaking');
+  }
+}
+
+function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+// Close on outside click
+document.addEventListener('click', function(e) {
+  var overlay = document.getElementById('bhai-overlay');
+  if (bhaiActive && e.target === overlay) { closeBhaiMode(); }
+});
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// EXISTING CODE (unchanged)
+// ═══════════════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded',function(){
   setDate();
@@ -629,7 +1259,7 @@ document.addEventListener('keydown',function(e){
     var active=document.activeElement;
     if(active.tagName!=='INPUT'&&active.tagName!=='TEXTAREA'){e.preventDefault();toggleSearch();}
   }
-  if(e.key==='Escape'){closeSearch();closeTopics();closeLoginModal();}
+  if(e.key==='Escape'){closeSearch();closeTopics();closeLoginModal();if(bhaiActive)closeBhaiMode();}
 });
 
 function setDate(){
@@ -977,6 +1607,8 @@ function showPersonalisedHP(user){
   document.getElementById('nav-public-center').style.display='none';
   document.getElementById('nav-pers-center').style.display='flex';
   document.getElementById('vp-pill').style.display='flex';
+  // Show Bhai Mode toggle after login
+  document.getElementById('bhai-toggle-btn').classList.add('visible');
   setGreeting();
   loadPersonalisedNews(user);
   loadReferralLink(user);
@@ -1033,6 +1665,7 @@ async function thumbFeedback(btn,idx,type){
   }catch(e){}
 }
 function logout(){
+  if(bhaiActive)closeBhaiMode();
   localStorage.removeItem('db_user');
   loggedInUser=null;
   var ph=document.getElementById('pers-hp');
@@ -1045,6 +1678,7 @@ function logout(){
   document.getElementById('nav-public-center').style.display='flex';
   document.getElementById('nav-pers-center').style.display='none';
   document.getElementById('vp-pill').style.display='none';
+  document.getElementById('bhai-toggle-btn').classList.remove('visible','active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function checkAutoLogin(){
