@@ -636,11 +636,18 @@ ${sel.size >= Math.min(10, stories.length) ? `<div class="generate-section"><but
 function renderPhase2(cat) {
   const sel10ids = selected10[cat] || new Set();
   const sel5ids = selected5[cat] || new Set();
-  const stories = (allStories[cat] || []).filter(s => sel10ids.has(s.id));
+  let stories = (allStories[cat] || []).filter(s => sel10ids.has(s.id));
+  // Fallback: if no stories matched sel10ids, use all stories
+  if (stories.length === 0) {
+    stories = allStories[cat] || [];
+    // Auto-add to sel10 as well
+    stories.forEach(s => sel10ids.add(s.id));
+    selected10[cat] = sel10ids;
+  }
   const maxSelect = Math.min(5, stories.length);
 
-  // Auto-select all if less than 5 stories
-  if (stories.length <= 5 && sel5ids.size < stories.length) {
+  // Auto-select all stories if less than or equal to maxSelect
+  if (stories.length > 0 && stories.length <= maxSelect && sel5ids.size < stories.length) {
     stories.forEach(s => sel5ids.add(s.id));
     selected5[cat] = sel5ids;
   }
