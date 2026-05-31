@@ -607,8 +607,8 @@ function renderPhase1(cat) {
   const stories = allStories[cat] || [];
   const sel = selected10[cat] || new Set();
   const maxSelect = Math.min(10, stories.length);
-  // Auto-select all if less than 5 stories
-  if (stories.length <= 5 && sel.size === 0) {
+  // Auto-select all if less than 10 stories
+  if (stories.length < 10 && sel.size < stories.length) {
     stories.forEach(s => sel.add(s.id));
     selected10[cat] = sel;
   }
