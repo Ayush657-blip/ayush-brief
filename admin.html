@@ -773,7 +773,7 @@ function toggleSelect5(cat, id, el) {
 
 async function generateSummaries(cat) {
   const sel5ids = Array.from(selected5[cat] || []);
-  if (sel5ids.length < 5) { showToast('Please select 5 stories first'); return; }
+  if (sel5ids.length === 0) { showToast('Koi story select nahi hai'); return; }
   const btn = document.getElementById(`gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (btn) { btn.disabled = true; btn.textContent = '🤖 Generating... (~2 min)'; }
   showToast('Generating voice summaries... Please wait');
