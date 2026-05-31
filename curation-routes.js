@@ -167,7 +167,7 @@ async function generateVoices(req, res) {
   try {
     const { story_ids } = req.body;
     if (!story_ids || story_ids.length === 0) return res.status(400).json({ error: 'No story IDs provided' });
-    if (story_ids.length > 5) return res.status(400).json({ error: 'Maximum 5 stories' });
+    if (story_ids.length > 10) return res.status(400).json({ error: 'Maximum 10 stories' });
 
     const ids = story_ids.join(',');
     const response = await fetch(
