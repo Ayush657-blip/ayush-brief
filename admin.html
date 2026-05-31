@@ -246,10 +246,13 @@ async function loadStories() {
       selected5[c] = new Set();
       catDone[c] = false;
     });
-    const restored = restoreSession();
-    if (restored) showToast('✅ Wahan se shuru jahan chhoda tha!');
     renderAllCategories();
     updateProgress();
+    // Restore session after render
+    setTimeout(() => {
+      const restored = restoreSession();
+      if (restored) { showToast('✅ Wahan se shuru jahan chhoda tha!'); renderAllCategories(); updateProgress(); }
+    }, 100);
   } catch (err) {
     document.getElementById('content').innerHTML =
       `<div style="padding:40px;text-align:center;color:var(--red)">❌ ${err.message}<br><br><button class="btn btn-ghost" onclick="loadStories()">Retry</button></div>`;
@@ -952,7 +955,7 @@ function showToast(msg) {
   <button class="ravis-stop-btn" onclick="stopRavis()">⏹ Ravis Band Karo</button>
 </div>
 
-
+<script>
 // ── AUTO SAVE & RESTORE ────────────────────────────────────────────
 const SAVE_KEY = 'db_admin_session';
 
@@ -1016,9 +1019,9 @@ function clearSession() {
   location.reload();
 }
 
-// Auto-save every 15 seconds
 setInterval(saveSession, 15000);
 window.addEventListener('beforeunload', saveSession);
+</script>
 
 <script src="ravis.js"></script>
 <script>
