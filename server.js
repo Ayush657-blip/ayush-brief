@@ -636,6 +636,60 @@ app.get('/api/admin/config', adminAuth, (req, res) => {
   });
 });
 
+
+// ── MANUAL STORY ADD ──────────────────────────────────────────────────────────
+app.post('/api/admin/add-story', adminAuth, async (req, res) => {
+  try {
+    const { headline, summary, link, source, category } = req.body;
+    if (!headline || !category) return res.status(400).json({ error: 'Headline and category required' });
+    const runDate = new Date().toISOString().split('T')[0];
+    const story = {
+      headline: headline.trim(),
+      summary: (summary || '').trim(),
+      link: link || '',
+      pub_date: new Date().toISOString(),
+      source: source || 'Manual',
+      category,
+      importance: '🔴',
+      reason: 'Manually added by editor',
+      run_date: runDate,
+      status: 'pending',
+      voices: null,
+      is_previous_day: false
+    };
+    const r = await fetch(`${SUPA_URL}/rest/v1/daily_stories`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(story)
+    });
+    const data = await r.json();
+    console.log(`✅ Manual story added: ${headline}`);
+    res.json({ success: true, story: Array.isArray(data) ? data[0] : data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── DELETE STORY ──────────────────────────────────────────────────────────────
+app.delete('/api/admin/delete-story/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    console.log(`✅ Story deleted: ${id}`);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── CURATION ROUTES ───────────────────────────────────────────────────────────
 const curation = require('./curation-routes');
 app.get('/api/admin/stories', adminAuth, curation.getAdminStories);
