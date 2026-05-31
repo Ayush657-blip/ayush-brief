@@ -460,19 +460,6 @@ async function generateKhatarnakVoices() {
   showToast('Khatarnak voices generate ho rahi hain...');
 
   try {
-    // Generate voice for each selected story — punchy khatarnak style
-    for (const story of selectedStories) {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': ADMIN_KEY
-        }
-      });
-      // Use backend endpoint
-    }
-
-    // Use existing generate-voices endpoint but with khatarnak flag
     const ids = selectedStories.map(s => s.id);
     const res = await apiPost(`${API}/api/admin/generate-khatarnak-voices`, { story_ids: ids });
     const data = await res.json();
