@@ -699,7 +699,11 @@ app.post('/api/admin/save-voice', adminAuth, curation.saveVoice);
 app.post('/api/admin/submit', adminAuth, curation.submitApproved);
 app.post('/api/admin/undo-submit', adminAuth, curation.undoSubmit);
 app.post('/api/admin/auto-fallback', adminAuth, curation.autoFallback);
-app.post('/api/admin/generate-khatarnak-voices', adminAuth, curation.generateKhatarnakVoices);
+app.post('/api/admin/generate-khatarnak-voices', adminAuth, (req, res, next) => {
+  req.setTimeout(300000); // 5 minutes
+  res.setTimeout(300000);
+  next();
+}, curation.generateKhatarnakVoices);
 app.post('/api/admin/regenerate-khatarnak-voice', adminAuth, curation.regenerateKhatarnakVoice);
 
 app.listen(PORT, () => console.log(`\n🌅 Dawn Brief API running on port ${PORT} | SUPABASE_KEY: ${SUPA_KEY ? 'SET ✅' : 'MISSING ❌'}`));
