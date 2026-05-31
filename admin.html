@@ -795,8 +795,9 @@ async function generateSummaries(cat) {
 }
 
 function approveVoice(storyId, voiceKey, cat) {
-  if (!approvedVoices[storyId]) approvedVoices[storyId] = {};
-  approvedVoices[storyId][voiceKey] = true;
+  const id = String(storyId);
+  if (!approvedVoices[id]) approvedVoices[id] = {};
+  approvedVoices[id][voiceKey] = true;
   setPhase(cat, 3);
   const allDone = isStoryFullyApproved(storyId);
   if (allDone) showToast('✅ All voices approved for this story!');
@@ -843,7 +844,11 @@ function markEdited(storyId, voiceKey) {
 
 function isStoryFullyApproved(storyId) {
   const keys = ['student','professional'];
-  return keys.every(k => approvedVoices[storyId] && approvedVoices[storyId][k]);
+  const id = String(storyId);
+  return keys.every(k =>
+    (approvedVoices[id] && approvedVoices[id][k]) ||
+    (approvedVoices[storyId] && approvedVoices[storyId][k])
+  );
 }
 
 function markCatDone(cat) {
