@@ -214,12 +214,15 @@ function authHeaders(extra) {
   return { 'x-admin-key': ADMIN_KEY, ...extra };
 }
 
-function apiPost(url, body) {
+function apiPost(url, body, timeoutMs = 300000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   return fetch(url, {
     method: 'POST',
     headers: authHeaders({ 'Content-Type': 'application/json' }),
-    body: JSON.stringify(body)
-  });
+    body: JSON.stringify(body),
+    signal: controller.signal
+  }).finally(() => clearTimeout(timeoutId));
 }
 
 // ── LOGIN ──────────────────────────────────────────────────────────
