@@ -23,13 +23,20 @@ const BROAD_FEEDS = [
   'https://feeds.bbci.co.uk/news/technology/rss.xml',
   'https://techcrunch.com/feed/',
   'https://timesofindia.indiatimes.com/rssfeeds/66949542.cms',
-  'https://feeds.bbci.co.uk/sport/rss.xml',
+  // Sports — fresh Indian feeds
+  'https://www.espncricinfo.com/rss/content/story/feeds/0.xml',
   'https://timesofindia.indiatimes.com/rssfeeds/4719161.cms',
+  'https://sportstar.thehindu.com/feeder/default.rss',
+  'https://www.cricbuzz.com/rss/cricbuzz-news.xml',
+  'https://timesofindia.indiatimes.com/rssfeeds/4719148.cms',
+  // Government & India news
   'https://feeds.feedburner.com/ndtvnews-india-news',
   'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
   'https://www.thehindu.com/news/national/feeder/default.rss',
+  // International
   'https://feeds.bbci.co.uk/news/world/rss.xml',
   'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+  // Science & Health
   'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
   'https://www.theguardian.com/environment/climate-crisis/rss',
   'https://feeds.bbci.co.uk/news/health/rss.xml',
@@ -37,6 +44,7 @@ const BROAD_FEEDS = [
   'https://www.thehindu.com/sci-tech/health/feeder/default.rss',
   'https://www.theguardian.com/science/rss',
   'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',
+  // Business & Entertainment
   'https://www.thehindu.com/business/Industry/feeder/default.rss',
   'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
   'https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms',
@@ -50,15 +58,28 @@ function isEnglishHeadline(title) {
   return totalChars === 0 || (latinChars / totalChars) > 0.5;
 }
 
+// Filter out old stories — only keep last 48 hours
+function isRecent(pubDate) {
+  if (!pubDate) return true; // if no date, include it
+  try {
+    const date = new Date(pubDate);
+    const now = new Date();
+    const diffHours = (now - date) / (1000 * 60 * 60);
+    return diffHours <= 48;
+  } catch (e) {
+    return true;
+  }
+}
+
 async function fetchFeed(url) {
   try {
     const feed = await parser.parseURL(url);
-    return feed.items.slice(0, 10).map(item => ({
+    return feed.items.slice(0, 15).map(item => ({
       title: (item.title || '').trim(),
       summary: (item.contentSnippet || item.content || item.summary || '').trim(),
       link: item.link || '',
       pubDate: item.pubDate || item.isoDate || ''
-    }));
+    })).filter(item => isRecent(item.pubDate));
   } catch (err) {
     console.log(`⚠️  Feed failed: ${url.slice(0, 60)}`);
     return [];
@@ -194,7 +215,6 @@ REASON: [one short sentence why]`;
 // ── SAVE STORIES TO SUPABASE ──────────────────────────────────────────────────
 async function saveStoriesToSupabase(stories, runDate) {
   try {
-    // Clear today's pending stories first
     await fetch(
       `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${runDate}&status=eq.pending`,
       {
@@ -203,7 +223,6 @@ async function saveStoriesToSupabase(stories, runDate) {
       }
     );
 
-    // Insert new stories in batches of 20
     const batchSize = 20;
     for (let i = 0; i < stories.length; i += batchSize) {
       const batch = stories.slice(i, i + batchSize);
@@ -260,7 +279,6 @@ async function main() {
     timeZone: 'Asia/Kolkata'
   });
 
-  // ── STEP 1: Fetch all stories ─────────────────────────────────────────────
   console.log('\n📡 Fetching from all feeds...');
   const rawItems = [];
   for (const url of BROAD_FEEDS) {
@@ -270,7 +288,6 @@ async function main() {
   }
   console.log(`✓ Fetched ${rawItems.length} raw stories`);
 
-  // ── STEP 2: Deduplicate ───────────────────────────────────────────────────
   const seen = new Set();
   const uniqueItems = rawItems.filter(i => {
     if (!isEnglishHeadline(i.title)) return false;
@@ -280,9 +297,8 @@ async function main() {
     seen.add(key);
     return true;
   });
-  console.log(`✓ ${uniqueItems.length} unique English stories`);
+  console.log(`✓ ${uniqueItems.length} unique English stories (last 48 hours)`);
 
-  // ── STEP 3: Classify + Score every story ─────────────────────────────────
   console.log('\n🤖 Classifying and scoring stories...');
   const classified = {};
   VALID_CATEGORIES.forEach(c => classified[c] = []);
@@ -307,14 +323,12 @@ async function main() {
     await new Promise(r => setTimeout(r, 150));
   }
 
-  // ── STEP 4: Sort by importance, cap at 20 per category ───────────────────
   console.log('\n📊 Category summary:');
   const allStories = [];
 
   for (const category of VALID_CATEGORIES) {
     const stories = classified[category];
 
-    // Sort: 🔴 first, then 🟡
     stories.sort((a, b) => {
       if (a.importance === '🔴' && b.importance !== '🔴') return -1;
       if (b.importance === '🔴' && a.importance !== '🔴') return 1;
@@ -324,7 +338,6 @@ async function main() {
     const top20 = stories.slice(0, 20);
 
     if (top20.length === 0) {
-      // Load previous day stories
       console.log(`   ⚠️  ${category}: 0 stories — loading previous day`);
       const prevStories = await loadPreviousDayStories(category);
       const prevMarked = prevStories.slice(0, 20).map(s => ({
@@ -345,11 +358,9 @@ async function main() {
     }
   }
 
-  // ── STEP 5: Save to Supabase ──────────────────────────────────────────────
   console.log('\n💾 Saving to Supabase...');
   await saveStoriesToSupabase(allStories, runDate);
 
-  // ── STEP 6: Save summary to data-fetch.json for Railway ──────────────────
   const summary = {
     run_date: runDate,
     run_date_display: runDateIST,
@@ -369,7 +380,7 @@ async function main() {
   );
   console.log('✅ data-fetch.json saved');
   console.log(`\n✅ Total ${allStories.length} stories ready for curation`);
-  console.log('🌅 Fetch complete! Admin can now curate at ayushbrief.online/admin.html');
+  console.log('🌅 Fetch complete!');
   console.log('='.repeat(50));
 }
 
