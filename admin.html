@@ -86,6 +86,16 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .generate-btn{padding:10px 28px;border-radius:10px;background:var(--blue);border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;}
 .generate-btn:disabled{opacity:.4;cursor:not-allowed;}
 
+.delete-story-btn{position:absolute;top:10px;right:36px;background:rgba(255,77,109,.15);border:.5px solid rgba(255,77,109,.3);color:var(--red);border-radius:6px;padding:2px 7px;font-size:11px;cursor:pointer;z-index:10;}
+.delete-story-btn:hover{background:rgba(255,77,109,.3);}
+.add-story-btn{width:100%;padding:10px;border-radius:10px;background:rgba(0,200,150,.1);border:.5px solid rgba(0,200,150,.3);color:var(--green);font-size:13px;font-family:inherit;cursor:pointer;margin-top:12px;transition:all .2s;}
+.add-story-btn:hover{background:rgba(0,200,150,.2);}
+.add-story-form{background:var(--bg3);border:.5px solid var(--border2);border-radius:12px;padding:16px;margin-top:10px;display:none;}
+.add-story-form.show{display:block;}
+.add-story-form input,.add-story-form textarea{width:100%;background:rgba(255,255,255,.04);border:.5px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--w);font-family:inherit;outline:none;margin-bottom:8px;}
+.add-story-form textarea{min-height:70px;resize:vertical;}
+.add-story-submit{padding:9px 20px;border-radius:8px;background:var(--green);border:none;color:#fff;font-size:13px;font-family:inherit;cursor:pointer;}
+
 /* ── KHATARNAK SECTION ─────────────────────────────────────────── */
 .khatarnak-section{background:var(--bg2);border:1px solid rgba(255,77,109,.3);border-radius:16px;margin-bottom:20px;overflow:hidden;}
 .khatarnak-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,77,109,.2);cursor:pointer;background:rgba(255,77,109,.04);}
@@ -573,6 +583,16 @@ function renderCategory(cat) {
   </div>
   <div class="cat-body" id="cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}">
     ${renderCategoryBody(cat)}
+    <div style="padding:0 0 12px;">
+      <button class="add-story-btn" onclick="toggleAddForm('${cat}')">+ Add Story Manually</button>
+      <div class="add-story-form" id="add-form-${cat.replace(/[^a-z0-9]/gi,'_')}">
+        <input type="text" id="add-headline-${cat.replace(/[^a-z0-9]/gi,'_')}" placeholder="Headline *" />
+        <textarea id="add-summary-${cat.replace(/[^a-z0-9]/gi,'_')}" placeholder="Summary *"></textarea>
+        <input type="text" id="add-source-${cat.replace(/[^a-z0-9]/gi,'_')}" placeholder="Source (e.g. The Hindu)" />
+        <input type="text" id="add-link-${cat.replace(/[^a-z0-9]/gi,'_')}" placeholder="Link (optional)" />
+        <button class="add-story-submit" onclick="addStoryManually('${cat}')">✅ Add Story</button>
+      </div>
+    </div>
   </div>
 </div>`;
 }
@@ -617,14 +637,19 @@ function renderPhase1(cat) {
 <div class="story-grid">
 ${stories.map(s => {
   const isSelected = sel.has(s.id);
+  const dateStr = s.pub_date ? new Date(s.pub_date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Kolkata'}) : '';
+  const sourceStr = s.source || '';
   return `<div class="story-card ${isSelected?'selected-10':''}" onclick="toggleSelect10('${cat}',${s.id},this)">
   <div class="story-check">${isSelected?'✓':''}</div>
+  <button class="delete-story-btn" onclick="event.stopPropagation();deleteStory(${s.id},'${cat}')" title="Delete story">🗑️</button>
   <div class="story-importance"><span class="importance-dot">${s.importance}</span><span class="importance-reason">${s.reason||''}</span></div>
   <div class="story-headline">${s.headline}</div>
   <div class="story-summary">${s.summary||''}</div>
   <div class="story-meta">
     <span class="story-cat-tag">${s.category}</span>
     ${s.is_previous_day?'<span class="story-prev">📦 Yesterday</span>':''}
+    ${dateStr?`<span style="font-size:10px;color:var(--orange);">📅 ${dateStr}</span>`:''}
+    ${sourceStr?`<span style="font-size:10px;color:var(--w3);">• ${sourceStr}</span>`:''}
     <a href="${s.link}" target="_blank" class="story-link" onclick="event.stopPropagation()">Read →</a>
   </div>
 </div>`;
@@ -936,6 +961,77 @@ function startUndoCountdown(undoUntil) {
     if (el) el.textContent = `Undo available for ${mins}:${secs.toString().padStart(2,'0')}`;
     if (remaining <= 0) { clearInterval(undoTimer); document.getElementById('undo-bar').classList.remove('show'); }
   }, 1000);
+}
+
+// ── ADD / DELETE STORY ────────────────────────────────────────────────────────
+function toggleAddForm(cat) {
+  const form = document.getElementById('add-form-' + cat.replace(/[^a-z0-9]/gi,'_'));
+  if (form) form.classList.toggle('show');
+}
+
+async function addStoryManually(cat) {
+  const slug = cat.replace(/[^a-z0-9]/gi,'_');
+  const headline = document.getElementById('add-headline-' + slug)?.value.trim();
+  const summary = document.getElementById('add-summary-' + slug)?.value.trim();
+  const source = document.getElementById('add-source-' + slug)?.value.trim();
+  const link = document.getElementById('add-link-' + slug)?.value.trim();
+
+  if (!headline || !summary) { showToast('Headline aur Summary required hai'); return; }
+
+  try {
+    const res = await fetch(`${API}/api/admin/add-story`, {
+      method: 'POST',
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify({ headline, summary, source, link, category: cat })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    // Add to allStories
+    if (!allStories[cat]) allStories[cat] = [];
+    allStories[cat].unshift(data.story);
+
+    showToast('✅ Story added!');
+    toggleAddForm(cat);
+
+    // Clear form
+    document.getElementById('add-headline-' + slug).value = '';
+    document.getElementById('add-summary-' + slug).value = '';
+    document.getElementById('add-source-' + slug).value = '';
+    document.getElementById('add-link-' + slug).value = '';
+
+    // Re-render category
+    const body = document.getElementById('cat-body-' + slug);
+    if (body) body.innerHTML = renderCategoryBody(cat) + body.innerHTML.split(renderCategoryBody(cat))[1];
+    renderAllCategories();
+  } catch (err) {
+    showToast('❌ ' + err.message);
+  }
+}
+
+async function deleteStory(id, cat) {
+  if (!confirm('Is story ko delete karo?')) return;
+  try {
+    const res = await fetch(`${API}/api/admin/delete-story/${id}`, {
+      method: 'DELETE',
+      headers: authHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    // Remove from allStories
+    if (allStories[cat]) {
+      allStories[cat] = allStories[cat].filter(s => s.id !== id);
+    }
+    // Remove from selections
+    if (selected10[cat]) selected10[cat].delete(id);
+    if (selected5[cat]) selected5[cat].delete(id);
+
+    showToast('🗑️ Story deleted');
+    renderAllCategories();
+  } catch (err) {
+    showToast('❌ ' + err.message);
+  }
 }
 
 let toastTimer;
