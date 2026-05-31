@@ -142,6 +142,7 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
     <div class="top-bar-right">
       <div class="progress-pill" id="progress-pill">0 / 11 categories done</div>
       <button class="btn btn-ghost" onclick="refreshStories()">🔄 Refresh</button>
+      <button class="btn btn-ghost" onclick="clearSession()" title="Aaj ka session clear karo">🗑️ Clear</button>
       <button class="btn btn-primary" id="submit-btn" disabled onclick="submitAll()" style="background:var(--blue);color:#fff;">
         🚀 Submit & Publish
       </button>
@@ -245,6 +246,10 @@ async function loadStories() {
       selected5[c] = new Set();
       catDone[c] = false;
     });
+    // Restore previous session if same day
+    const restored = restoreSession();
+    if (restored) showToast('✅ Wahan se shuru jahan chhoda tha!');
+
     renderAllCategories();
     updateProgress();
   } catch (err) {
@@ -743,6 +748,7 @@ function toggleSelect10(cat, id, el) {
   if (counter) counter.textContent = `${sel.size}/10 selected`;
   if (sel.size >= 10) setPhase(cat, 1);
   updateCatHeader(cat);
+  saveSession();
 }
 
 function toggleSelect5(cat, id, el) {
@@ -761,6 +767,7 @@ function toggleSelect5(cat, id, el) {
   if (counter) counter.textContent = `${sel.size}/5 selected`;
   if (sel.size >= 5) setPhase(cat, 2);
   updateCatHeader(cat);
+  saveSession();
 }
 
 async function generateSummaries(cat) {
@@ -791,6 +798,7 @@ function approveVoice(storyId, voiceKey, cat) {
   setPhase(cat, 3);
   const allDone = isStoryFullyApproved(storyId);
   if (allDone) showToast('✅ All voices approved for this story!');
+  saveSession();
 }
 
 function showFeedback(storyId, voiceKey) {
@@ -839,6 +847,7 @@ function isStoryFullyApproved(storyId) {
 function markCatDone(cat) {
   catDone[cat] = true;
   updateProgress();
+  saveSession();
   showToast(`✅ ${cat} done!`);
   const body = document.getElementById(`cat-body-${cat.replace(/[^a-z0-9]/gi,'_')}`);
   if (body) body.style.display = 'none';
