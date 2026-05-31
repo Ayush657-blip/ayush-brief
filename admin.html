@@ -600,8 +600,14 @@ function renderPhase(cat, phase) {
 function renderPhase1(cat) {
   const stories = allStories[cat] || [];
   const sel = selected10[cat] || new Set();
+  const maxSelect = Math.min(10, stories.length);
+  // Auto-select all if less than 5 stories
+  if (stories.length <= 5 && sel.size === 0) {
+    stories.forEach(s => sel.add(s.id));
+    selected10[cat] = sel;
+  }
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">🔴 Must cover stories shown first. Select your top 10. <span style="color:var(--blue-p)" id="sel10-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel.size}/10 selected</span></p>
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">🔴 Must cover stories shown first. Select your top ${maxSelect}. <span style="color:var(--blue-p)" id="sel10-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel.size}/${maxSelect} selected</span></p>
 <div class="story-grid">
 ${stories.map(s => {
   const isSelected = sel.has(s.id);
@@ -618,15 +624,24 @@ ${stories.map(s => {
 </div>`;
 }).join('')}
 </div>
-${sel.size >= 10 ? `<div class="generate-section"><button class="generate-btn" onclick="setPhase('${cat}',2)">Next: Select 5 Final →</button></div>` : ''}`;
+${sel.size >= Math.min(10, stories.length) ? `<div class="generate-section"><button class="generate-btn" onclick="setPhase('${cat}',2)">Next: Select 5 Final →</button></div>` : ''}`;
 }
 
 function renderPhase2(cat) {
   const sel10ids = selected10[cat] || new Set();
   const sel5ids = selected5[cat] || new Set();
   const stories = (allStories[cat] || []).filter(s => sel10ids.has(s.id));
+  const maxSelect = Math.min(5, stories.length);
+
+  // Auto-select all if less than 5 stories
+  if (stories.length <= 5 && sel5ids.size < stories.length) {
+    stories.forEach(s => sel5ids.add(s.id));
+    selected5[cat] = sel5ids;
+  }
+
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">From your 10, pick the 5 best. <span style="color:var(--green)" id="sel5-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel5ids.size}/5 selected</span></p>
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">From your stories, pick the ${maxSelect} best. <span style="color:var(--green)" id="sel5-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel5ids.size}/${maxSelect} selected</span></p>
+${stories.length <= 5 ? `<p style="font-size:11px;color:var(--orange);margin-bottom:12px;">⚠️ Sirf ${stories.length} stories hain — sab auto-select ho gayi hain.</p>` : ''}
 <div class="story-grid">
 ${stories.map(s => {
   const isSelected = sel5ids.has(s.id);
@@ -643,7 +658,7 @@ ${stories.map(s => {
 </div>`;
 }).join('')}
 </div>
-${sel5ids.size >= 5 ? `<div class="generate-section"><button class="generate-btn" id="gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}" onclick="generateSummaries('${cat}')">🤖 Generate Voice Summaries →</button></div>` : ''}`;
+${sel5ids.size >= maxSelect ? `<div class="generate-section"><button class="generate-btn" id="gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}" onclick="generateSummaries('${cat}')">🤖 Generate Voice Summaries →</button></div>` : ''}`;
 }
 
 function renderPhase3(cat) {
@@ -718,7 +733,8 @@ function toggleSelect10(cat, id, el) {
     el.classList.remove('selected-10');
     el.querySelector('.story-check').textContent = '';
   } else {
-    if (sel.size >= 10) { showToast('Maximum 10 stories per category'); return; }
+    const maxSel = Math.min(10, (allStories[cat]||[]).length);
+    if (sel.size >= maxSel) { showToast(`Maximum ${maxSel} stories for this category`); return; }
     sel.add(id);
     el.classList.add('selected-10');
     el.querySelector('.story-check').textContent = '✓';
