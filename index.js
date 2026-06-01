@@ -355,9 +355,10 @@ async function saveStoriesToSupabase(stories, runDate) {
       headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
     });
     const batchSize = 20;
+    let savedCount = 0;
     for (let i = 0; i < stories.length; i += batchSize) {
       const batch = stories.slice(i, i + batchSize);
-      await fetch(`${SUPA_URL}/rest/v1/daily_stories`, {
+      const r = await fetch(`${SUPA_URL}/rest/v1/daily_stories`, {
         method: 'POST',
         headers: {
           'apikey': SUPA_KEY,
@@ -367,8 +368,14 @@ async function saveStoriesToSupabase(stories, runDate) {
         },
         body: JSON.stringify(batch)
       });
+      if (!r.ok) {
+        const errText = await r.text();
+        console.log(`❌ Batch ${i} save error ${r.status}: ${errText}`);
+      } else {
+        savedCount += batch.length;
+      }
     }
-    console.log(`✅ ${stories.length} stories saved to Supabase`);
+    console.log(`✅ ${savedCount}/${stories.length} stories saved to Supabase`);
   } catch (err) {
     console.log(`❌ Supabase save failed: ${err.message}`);
     throw err;
