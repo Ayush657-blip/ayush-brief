@@ -142,7 +142,8 @@ async function fetchFeed(url, sourceName) {
       summary: (item.contentSnippet || item.content || item.summary || '').trim(),
       link: item.link || '',
       pubDate: item.pubDate || item.isoDate || '',
-      source: sourceName || extractSource(url)
+      source: sourceName || extractSource(url),
+      _raw: item
     })).filter(item => isRecent(item.pubDate));
   } catch (err) {
     console.log(`⚠️  Feed failed: ${url.slice(0, 60)}`);
@@ -171,6 +172,88 @@ async function fetchNewsData(category) {
     console.log(`⚠️  NewsData failed for ${category}: ${err.message}`);
     return [];
   }
+}
+
+
+const PEXELS_KEY = process.env.PEXELS_KEY;
+const GITHUB_RAW = 'https://raw.githubusercontent.com/Ayush657-blip/ayush-brief/main/images';
+
+const CATEGORY_FOLDER_MAP = {
+  'Business': 'business',
+  'Indian Economy': 'economy',
+  'Finance': 'finance',
+  'Tech': 'tech',
+  'Sports': 'sports',
+  'Government': 'government',
+  'International': 'international',
+  'Climate': 'climate',
+  'Startups & Auto': 'startup',
+  'Science & Health': 'science',
+  'Entertainment': 'entertainment'
+};
+
+const PEXELS_CATEGORY_QUERIES = {
+  'Business': 'india business corporate office',
+  'Indian Economy': 'india economy market finance',
+  'Finance': 'stock market trading finance india',
+  'Tech': 'technology computer india',
+  'Sports': 'cricket india sports stadium',
+  'Government': 'india parliament government delhi',
+  'International': 'world globe international news',
+  'Climate': 'nature environment india climate',
+  'Startups & Auto': 'startup entrepreneur india car',
+  'Science & Health': 'science laboratory health india',
+  'Entertainment': 'bollywood entertainment india cinema'
+};
+
+// Extract image from RSS item
+function extractRSSImage(item) {
+  try {
+    if (item['media:content'] && item['media:content']['$'] && item['media:content']['$'].url) {
+      return item['media:content']['$'].url;
+    }
+    if (item.enclosure && item.enclosure.url) return item.enclosure.url;
+    if (item['media:thumbnail'] && item['media:thumbnail']['$']) return item['media:thumbnail']['$'].url;
+    return null;
+  } catch(e) { return null; }
+}
+
+// Fetch image from Pexels
+async function fetchPexelsImage(category) {
+  if (!PEXELS_KEY) return null;
+  try {
+    const query = PEXELS_CATEGORY_QUERIES[category] || category;
+    const r = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=15&orientation=landscape`, {
+      headers: { 'Authorization': PEXELS_KEY }
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    const photos = data.photos || [];
+    if (photos.length === 0) return null;
+    // Pick random from top 15
+    const photo = photos[Math.floor(Math.random() * photos.length)];
+    return { url: photo.src.medium, source: 'pexels', photographer: photo.photographer };
+  } catch(e) { return null; }
+}
+
+// Get GitHub fallback image
+function getGithubFallbackImage(category) {
+  const folder = CATEGORY_FOLDER_MAP[category] || 'business';
+  const num = Math.floor(Math.random() * 10) + 1;
+  return { url: `${GITHUB_RAW}/${folder}/${num}.jpg`, source: 'github' };
+}
+
+async function fetchImageForStory(item, category) {
+  // Layer 1: RSS image
+  const rssImage = extractRSSImage(item._raw || item);
+  if (rssImage) return { url: rssImage, source: 'rss' };
+
+  // Layer 2: Pexels
+  const pexelsImage = await fetchPexelsImage(category);
+  if (pexelsImage) return pexelsImage;
+
+  // Layer 3: GitHub fallback
+  return getGithubFallbackImage(category);
 }
 
 async function callClaudeAPI(prompt, maxTokens = 500) {
@@ -392,7 +475,9 @@ async function main() {
     for (const item of items.slice(0, 20)) {
       const { category: cat, importance, reason } = await classifyAndScore(item.title, item.summary, category);
       if (importance !== '⚪') {
-        classified.push({
+        // Fetch image
+      const imgData = await fetchImageForStory(item, cat);
+      classified.push({
           headline: item.title,
           summary: item.summary.slice(0, 500),
           link: item.link || '',
@@ -404,7 +489,9 @@ async function main() {
           run_date: runDate,
           status: 'pending',
           voices: null,
-          is_previous_day: false
+          is_previous_day: false,
+          image_url: imgData ? imgData.url : null,
+          image_source: imgData ? imgData.source : null
         });
       }
       await new Promise(r => setTimeout(r, 150));
