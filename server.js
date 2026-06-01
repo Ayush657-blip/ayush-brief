@@ -872,7 +872,11 @@ app.delete('/api/admin/delete-story/:id', adminAuth, async (req, res) => {
 
 // ── CURATION ROUTES ───────────────────────────────────────────────────────────
 const curation = require('./curation-routes');
-app.get('/api/admin/stories', adminAuth, curation.getAdminStories);
+app.get('/api/admin/stories', adminAuth, (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  next();
+}, curation.getAdminStories);
 app.post('/api/admin/generate-voices', adminAuth, curation.generateVoices);
 app.post('/api/admin/regenerate-voice', adminAuth, curation.regenerateVoice);
 app.post('/api/admin/save-voice', adminAuth, curation.saveVoice);
