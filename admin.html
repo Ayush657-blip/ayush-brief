@@ -273,12 +273,13 @@ async function loadStories() {
   document.getElementById('top-date').textContent = new Date().toLocaleDateString('en-IN', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata'
   });
+  document.getElementById('content').innerHTML = '<div style="padding:40px;text-align:center;color:var(--w3)">Loading stories...</div>';
   try {
-    const res = await fetch(`${API}/api/admin/stories?date=${today}`, {
-      headers: authHeaders()
+    const res = await fetch(API + '/api/admin/stories?date=' + today, {
+      headers: { 'x-admin-key': ADMIN_KEY }
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error);
+    if (!data.success) throw new Error(data.error || 'Server error');
     allStories = data.grouped;
     CATEGORIES.forEach(c => {
       selected10[c] = new Set();
@@ -287,10 +288,8 @@ async function loadStories() {
     });
     renderAllCategories();
     updateProgress();
-    // Session restore disabled
   } catch (err) {
-    document.getElementById('content').innerHTML =
-      `<div style="padding:40px;text-align:center;color:var(--red)">❌ ${err.message}<br><br><button class="btn btn-ghost" onclick="loadStories()">Retry</button></div>`;
+    document.getElementById('content').innerHTML = '<div style="padding:40px;text-align:center;color:var(--red)">❌ ' + err.message + '<br><br><button class="btn btn-ghost" onclick="loadStories()">Retry</button></div>';
   }
 }
 
