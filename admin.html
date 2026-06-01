@@ -1065,7 +1065,7 @@ function showToast(msg) {
 </script>
 
 <!-- RAVIS BUTTON -->
-<button id="ravis-btn" onclick="toggleRavis()" title="Ravis — Senior Editor">🎙</button>
+<!-- Ravis temporarily disabled -->
 
 <!-- RAVIS PANEL -->
 <div id="ravis-panel">
@@ -1169,8 +1169,9 @@ function toggleRavis() {
 async function startRavis() {
   if (!ADMIN_KEY) { showToast('Pehle login karo'); return; }
 
-  await loadRavisConfig();
-  if (!RAVIS_CONFIG.deepgramKey) { showToast('Config load nahi hua. Retry karo.'); return; }
+  try {
+    await loadRavisConfig();
+  } catch(e) { console.log('Ravis config error:', e); }
 
   ravisActive = true;
   document.getElementById('ravis-btn').classList.add('active');
