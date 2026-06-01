@@ -629,6 +629,36 @@ app.get('/api/voice/stories', async (req, res) => {
   }
 });
 
+
+// ── MARKET DATA PROXY ─────────────────────────────────────────────────────────
+app.get('/api/market', async (req, res) => {
+  try {
+    const symbols = '^BSESN,^NSEI,GC=F,SI=F';
+    const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols)}&fields=regularMarketPrice,regularMarketChange,regularMarketChangePercent,shortName`;
+    const r = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Accept': 'application/json'
+      }
+    });
+    if (!r.ok) throw new Error(`Yahoo error ${r.status}`);
+    const data = await r.json();
+    const quotes = data?.quoteResponse?.result || [];
+    const result = {};
+    quotes.forEach(q => {
+      result[q.symbol] = {
+        price: q.regularMarketPrice,
+        change: q.regularMarketChange,
+        changePct: q.regularMarketChangePercent
+      };
+    });
+    res.setHeader('Cache-Control', 'public, max-age=60');
+    res.json({ success: true, data: result });
+  } catch(err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // ── ADMIN CONFIG — secure keys for frontend ──────────────────────────────────
 app.get('/api/admin/config', adminAuth, (req, res) => {
   res.json({
