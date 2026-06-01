@@ -287,13 +287,7 @@ async function loadStories() {
     });
     renderAllCategories();
     updateProgress();
-    // Restore session safely
-    setTimeout(() => {
-      try {
-        const restored = restoreSession();
-        if (restored) { showToast('✅ Wahan se shuru jahan chhoda tha!'); updateProgress(); }
-      } catch(e) { console.log('Restore skipped'); }
-    }, 200);
+    // Session restore disabled
   } catch (err) {
     document.getElementById('content').innerHTML =
       `<div style="padding:40px;text-align:center;color:var(--red)">❌ ${err.message}<br><br><button class="btn btn-ghost" onclick="loadStories()">Retry</button></div>`;
@@ -1146,11 +1140,14 @@ function restoreSession() {
 
 function clearSession() {
   localStorage.removeItem(SAVE_KEY);
-  location.reload();
+  showToast('🗑️ Session cleared');
+  renderAllCategories();
+  updateProgress();
 }
 
-setInterval(saveSession, 15000);
-window.addEventListener('beforeunload', saveSession);
+// Auto-save disabled temporarily
+// setInterval(saveSession, 15000);
+// window.addEventListener('beforeunload', saveSession);
 </script>
 
 <script src="ravis.js"></script>
