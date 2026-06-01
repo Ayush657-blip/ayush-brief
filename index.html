@@ -149,14 +149,18 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;font-style:italic;letter-spacing:-.02em;line-height:1.05;color:var(--w);margin-bottom:8px;max-width:800px;}
 .hero-h1 em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l),var(--gold-m),var(--gold-d));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .hero-sub{font-size:16px;color:var(--w5);line-height:1.75;max-width:480px;font-weight:300;margin-bottom:12px;}
-.sub-count{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--w3);margin-bottom:32px;}
-.sc-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);}
-.sc-num{color:var(--green);font-weight:600;}
-.hero-btns{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;}
-.hero-cta{padding:15px 38px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+/* sub-count removed */
+.hero-subscribe-row{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;max-width:480px;width:100%;}
+.hero-email-input{flex:1;min-width:220px;padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid var(--border2);color:var(--w);font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.hero-email-input::placeholder{color:var(--w3);}
+.hero-email-input:focus{border-color:rgba(92,200,255,.4);}
+[data-theme="light"] .hero-email-input{background:rgba(10,10,20,.06);}
+.hero-cta{padding:14px 28px;border-radius:12px;background:var(--blue);border:none;color:#fff;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;white-space:nowrap;}
 .hero-cta:hover{background:var(--blue-b);}
-.hero-login-btn{padding:15px 28px;border-radius:12px;background:transparent;border:1px solid var(--border2);color:var(--w5);font-size:15px;font-weight:400;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;}
-.hero-login-btn:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
+.hero-err{font-size:12px;color:#FF6B6B;margin-top:8px;min-height:18px;}
+.hero-terms{font-size:12px;color:var(--w3);margin-top:10px;}
+.hero-terms a{color:var(--w5);text-decoration:underline;}
+.hero-terms a:hover{color:var(--blue-p);}
 .ticker-wrap{background:rgba(41,121,255,.06);border-top:.5px solid rgba(92,200,255,.1);border-bottom:.5px solid rgba(92,200,255,.1);overflow:hidden;padding:10px 0;position:relative;z-index:5;}
 .ticker-inner{display:flex;animation:ticker 35s linear infinite;white-space:nowrap;}
 .ti{padding:0 32px;font-size:11px;color:var(--blue-p);letter-spacing:.09em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;}
@@ -439,11 +443,12 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
     <div class="hero-badge"><div class="hero-dot"></div><span id="badge-txt">Today's edition is live</span></div>
     <h1 class="hero-h1" id="hero-h1">Read it before<br>your friend <em>does.</em></h1>
     <p class="hero-sub" id="hero-sub">The brief that speaks your language.<br>Written for those who move fast.</p>
-    <div class="sub-count"><div class="sc-dot"></div><span id="sub-count-txt">Loading...</span></div>
-    <div class="hero-btns">
-      <button class="hero-cta sub-btn" id="hero-sub-btn">Subscribe free →</button>
-      <button class="hero-login-btn" id="hero-login-btn">Login →</button>
+    <div class="hero-subscribe-row">
+      <input class="hero-email-input" type="email" id="hero-email-input" placeholder="your@email.com" />
+      <button class="hero-cta" id="hero-sub-btn" onclick="heroSubscribe()">Subscribe →</button>
     </div>
+    <div class="hero-err" id="hero-err"></div>
+    <p class="hero-terms">By subscribing, you accept our <a href="terms.html">Terms</a> &amp; <a href="privacy.html">Privacy Policy</a>.</p>
   </section>
 
   <div class="ticker-wrap">
@@ -497,7 +502,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
       <div class="cta-box">
         <div class="cta-title">Your daily edge<br>starts <em>tomorrow.</em></div>
         <p class="cta-sub">Join students and professionals who start their morning smarter. Free. Always.</p>
-        <button class="cta-btn sub-btn">Subscribe free →</button>
+        <button class="cta-btn sub-btn">Subscribe →</button>
       </div>
     </div>
   </section>
@@ -1222,7 +1227,6 @@ document.addEventListener('click', function(e) {
 
 document.addEventListener('DOMContentLoaded',function(){
   setDate();
-  loadSubCount();
   loadNewsFromData();
   checkAutoLogin();
   initCookie();
@@ -1397,10 +1401,34 @@ function toggleLang(){
 (function(){var l=localStorage.getItem('db_lang');if(l==='hi'){isHindi=false;toggleLang();}})();
 function initCookie(){if(localStorage.getItem('db_cookie'))document.getElementById('cookie-banner').classList.add('hide');}
 function acceptCookies(){localStorage.setItem('db_cookie','1');document.getElementById('cookie-banner').classList.add('hide');}
-function openOnboarding(){
+function heroSubscribe(){
+  var email = document.getElementById('hero-email-input').value.trim();
+  var err = document.getElementById('hero-err');
+  if (!email || !email.includes('@')) {
+    err.textContent = 'Please enter a valid email address.';
+    return;
+  }
+  err.textContent = '';
+  userData.email = email;
+  openOnboarding(true);
+}
+
+// Enter key on hero email input
+document.addEventListener('DOMContentLoaded', function(){
+  var inp = document.getElementById('hero-email-input');
+  if(inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter') heroSubscribe(); });
+});
+
+function openOnboarding(skipEmail){
   document.getElementById('hp').classList.add('hide');
   document.getElementById('ob').classList.add('show');
-  showStep(1);
+  if(skipEmail && userData.email){
+    // Pre-fill email and skip to step 2
+    document.getElementById('ob-email').value = userData.email;
+    showStep(2);
+  } else {
+    showStep(1);
+  }
 }
 function closeOnboarding(){
   document.getElementById('ob').classList.remove('show');
@@ -1542,7 +1570,7 @@ async function completeOnboarding(){
 function openLoginModal(){document.getElementById('login-modal').classList.add('show');setTimeout(function(){document.getElementById('login-email').focus();},100);}
 function closeLoginModal(){document.getElementById('login-modal').classList.remove('show');}
 document.getElementById('nav-login-btn').addEventListener('click',openLoginModal);
-document.getElementById('hero-login-btn').addEventListener('click',openLoginModal);
+// hero-login-btn removed from hero
 document.getElementById('login-close').addEventListener('click',closeLoginModal);
 document.getElementById('login-to-signup').addEventListener('click',function(){closeLoginModal();openOnboarding();});
 document.getElementById('login-modal').addEventListener('click',function(e){if(e.target===this)closeLoginModal();});
