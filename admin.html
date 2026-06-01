@@ -1023,9 +1023,7 @@ async function addStoryManually(cat) {
     document.getElementById('add-source-' + slug).value = '';
     document.getElementById('add-link-' + slug).value = '';
 
-    // Re-render category
-    const body = document.getElementById('cat-body-' + slug);
-    if (body) body.innerHTML = renderCategoryBody(cat) + body.innerHTML.split(renderCategoryBody(cat))[1];
+    // Re-render all
     renderAllCategories();
   } catch (err) {
     showToast('❌ ' + err.message);
