@@ -291,7 +291,7 @@ async function loadStories() {
     setTimeout(() => {
       try {
         const restored = restoreSession();
-        if (restored) { showToast('✅ Wahan se shuru jahan chhoda tha!'); renderAllCategories(); updateProgress(); }
+        if (restored) { showToast('✅ Wahan se shuru jahan chhoda tha!'); updateProgress(); }
       } catch(e) { console.log('Restore skipped'); }
     }, 200);
   } catch (err) {
