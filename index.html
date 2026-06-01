@@ -1301,7 +1301,7 @@ function renderGrid(stories){
   g.innerHTML=stories.map(function(s,i){
     var col=CARD_COLORS[i%CARD_COLORS.length];
     var icon=CAT_ICONS[s.category]||'📰';
-    var img=s.image?'<img class="card-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="card-img-placeholder" style="display:none;">'+icon+'</div>':'<div class="card-img-placeholder">'+icon+'</div>';
+    var img=(s.image_url||s.image)?'<img class="card-img" src="'+(s.image_url||s.image)+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="card-img-placeholder" style="display:none;">'+icon+'</div>':'<div class="card-img-placeholder">'+icon+'</div>';
     return '<a class="story-card" href="story.html?id='+i+'" onclick="saveStoryData()"><div class="card-top-bar" style="background:'+col+';"></div>'+img+'<div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM IST</span></div><div class="card-headline">'+s.headline+'</div><div class="card-summary">'+(s.summary||'')+'</div><div class="card-readmore">Read story</div></div></a>';
   }).join('');
 }
