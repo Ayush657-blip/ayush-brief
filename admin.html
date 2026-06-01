@@ -129,6 +129,32 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',system-ui,sans-se
 .ravis-type-btn{padding:8px 12px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:12px;cursor:pointer;}
 .ravis-stop-btn{width:100%;padding:8px;border-radius:8px;background:rgba(255,77,109,.12);border:.5px solid rgba(255,77,109,.3);color:var(--red);font-size:12px;cursor:pointer;margin-top:8px;}
 
+
+/* ── IMAGE PICKER ──────────────────────────────────────────────────────────── */
+.img-picker-btn{font-size:11px;padding:4px 10px;border-radius:6px;background:rgba(41,121,255,.12);border:.5px solid rgba(41,121,255,.3);color:var(--blue-p);cursor:pointer;margin-top:6px;}
+.img-picker-btn:hover{background:rgba(41,121,255,.25);}
+.img-remove-btn{font-size:11px;padding:4px 10px;border-radius:6px;background:rgba(255,77,109,.1);border:.5px solid rgba(255,77,109,.25);color:var(--red);cursor:pointer;margin-top:6px;margin-left:6px;}
+.story-img-preview{width:100%;height:80px;object-fit:cover;border-radius:8px;margin-top:6px;display:block;}
+.img-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;display:none;align-items:center;justify-content:center;}
+.img-modal.show{display:flex;}
+.img-modal-inner{background:var(--bg2);border-radius:16px;padding:24px;width:700px;max-width:95vw;max-height:85vh;overflow-y:auto;border:.5px solid var(--border);}
+.img-modal-title{font-size:16px;font-weight:600;color:var(--w);margin-bottom:16px;}
+.img-modal-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.img-modal-tab{padding:7px 16px;border-radius:8px;font-size:12px;border:.5px solid var(--border);color:var(--w3);cursor:pointer;background:transparent;}
+.img-modal-tab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.img-modal-search{display:flex;gap:8px;margin-bottom:14px;}
+.img-modal-search input{flex:1;background:rgba(255,255,255,.05);border:.5px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--w);font-family:inherit;outline:none;}
+.img-modal-search button{padding:9px 16px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:12px;cursor:pointer;}
+.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.img-grid-item{position:relative;cursor:pointer;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:var(--bg3);}
+.img-grid-item img{width:100%;height:100%;object-fit:cover;transition:opacity .2s;}
+.img-grid-item:hover img{opacity:.8;}
+.img-grid-item.selected{outline:3px solid var(--blue);}
+.img-url-input{width:100%;background:rgba(255,255,255,.05);border:.5px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--w);font-family:inherit;outline:none;margin-bottom:12px;}
+.img-modal-footer{display:flex;gap:10px;justify-content:flex-end;}
+.img-modal-cancel{padding:9px 20px;border-radius:8px;background:transparent;border:.5px solid var(--border2);color:var(--w3);font-size:13px;cursor:pointer;}
+.img-modal-confirm{padding:9px 20px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:13px;cursor:pointer;}
+
 </style>
 </head>
 <body>
@@ -635,6 +661,11 @@ ${stories.map(s => {
   <div class="story-importance"><span class="importance-dot">${s.importance}</span><span class="importance-reason">${s.reason||''}</span></div>
   <div class="story-headline">${s.headline}</div>
   <div class="story-summary">${s.summary||''}</div>
+  ${s.image_url ? `<img class="story-img-preview" src="${s.image_url}" onerror="this.style.display='none'" />` : ''}
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+    <button class="img-picker-btn" onclick="event.stopPropagation();openImgModal(${s.id},'${cat}')">🖼️ ${s.image_url ? 'Change Image' : 'Set Image'}</button>
+    ${s.image_url ? `<button class="img-remove-btn" onclick="event.stopPropagation();removeStoryImage(${s.id},'${cat}')">❌ Remove</button>` : ''}
+  </div>
   <div class="story-meta">
     <span class="story-cat-tag">${s.category}</span>
     ${s.is_previous_day?'<span class="story-prev">📦 Yesterday</span>':''}
@@ -1225,6 +1256,158 @@ window.submitAll = async function(calledByRavis = false) {
     return _originalSubmitAll();
   }
 };
+</script>
+
+
+<!-- IMAGE PICKER MODAL -->
+<div class="img-modal" id="img-modal">
+  <div class="img-modal-inner">
+    <div class="img-modal-title">🖼️ Image Select Karo</div>
+    <div class="img-modal-tabs">
+      <button class="img-modal-tab active" onclick="switchImgTab('pexels',this)">Pexels Search</button>
+      <button class="img-modal-tab" onclick="switchImgTab('github',this)">Category Images</button>
+      <button class="img-modal-tab" onclick="switchImgTab('url',this)">URL Paste Karo</button>
+    </div>
+    <!-- Pexels tab -->
+    <div id="img-tab-pexels">
+      <div class="img-modal-search">
+        <input type="text" id="pexels-search-input" placeholder="Search images... e.g. india business" onkeydown="if(event.key==='Enter')searchPexels()" />
+        <button onclick="searchPexels()">Search</button>
+      </div>
+      <div class="img-grid" id="pexels-grid"></div>
+    </div>
+    <!-- GitHub tab -->
+    <div id="img-tab-github" style="display:none;">
+      <p style="font-size:12px;color:var(--w3);margin-bottom:12px;">Category ke backup images:</p>
+      <div class="img-grid" id="github-grid"></div>
+    </div>
+    <!-- URL tab -->
+    <div id="img-tab-url" style="display:none;">
+      <p style="font-size:12px;color:var(--w3);margin-bottom:8px;">Image URL paste karo:</p>
+      <input type="text" class="img-url-input" id="img-url-input" placeholder="https://..." />
+      <div id="img-url-preview" style="margin-top:8px;"></div>
+    </div>
+    <div class="img-modal-footer">
+      <button class="img-modal-cancel" onclick="closeImgModal()">Cancel</button>
+      <button class="img-modal-confirm" onclick="confirmImageSelect()">✅ Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── IMAGE PICKER ────────────────────────────────────────────────────────────
+var imgModalStoryId = null;
+var imgModalCat = null;
+var imgModalSelected = null;
+var imgCurrentTab = 'pexels';
+
+function openImgModal(storyId, cat) {
+  imgModalStoryId = storyId;
+  imgModalCat = cat;
+  imgModalSelected = null;
+  document.getElementById('img-modal').classList.add('show');
+  // Load github images by default in github tab
+  loadGithubImages(cat);
+}
+
+function closeImgModal() {
+  document.getElementById('img-modal').classList.remove('show');
+  imgModalStoryId = null;
+  imgModalSelected = null;
+}
+
+function switchImgTab(tab, btn) {
+  imgCurrentTab = tab;
+  document.querySelectorAll('.img-modal-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('img-tab-pexels').style.display = tab === 'pexels' ? 'block' : 'none';
+  document.getElementById('img-tab-github').style.display = tab === 'github' ? 'block' : 'none';
+  document.getElementById('img-tab-url').style.display = tab === 'url' ? 'block' : 'none';
+}
+
+async function searchPexels() {
+  const query = document.getElementById('pexels-search-input').value.trim();
+  if (!query) return;
+  const grid = document.getElementById('pexels-grid');
+  grid.innerHTML = '<p style="color:var(--w3);font-size:12px;">Searching...</p>';
+  try {
+    const res = await fetch(`${API}/api/images/pexels?query=${encodeURIComponent(query)}`, { headers: authHeaders() });
+    const data = await res.json();
+    if (!data.success || !data.photos.length) { grid.innerHTML = '<p style="color:var(--w3);font-size:12px;">No images found.</p>'; return; }
+    grid.innerHTML = data.photos.map(p => `
+      <div class="img-grid-item" onclick="selectImage('${p.url}','pexels',this)" data-url="${p.url}">
+        <img src="${p.thumb}" loading="lazy" alt="${p.photographer}" />
+      </div>`).join('');
+  } catch(e) { grid.innerHTML = '<p style="color:var(--red);font-size:12px;">Error loading images.</p>'; }
+}
+
+async function loadGithubImages(cat) {
+  const grid = document.getElementById('github-grid');
+  grid.innerHTML = '<p style="color:var(--w3);font-size:12px;">Loading...</p>';
+  try {
+    const res = await fetch(`${API}/api/images/github/${encodeURIComponent(cat)}`, { headers: authHeaders() });
+    const data = await res.json();
+    grid.innerHTML = data.images.slice(0,12).map(img => `
+      <div class="img-grid-item" onclick="selectImage('${img.url}','github',this)" data-url="${img.url}">
+        <img src="${img.url}" loading="lazy" onerror="this.parentElement.style.display='none'" />
+      </div>`).join('');
+  } catch(e) { grid.innerHTML = '<p style="color:var(--red);font-size:12px;">Error.</p>'; }
+}
+
+function selectImage(url, source, el) {
+  document.querySelectorAll('.img-grid-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+  imgModalSelected = { url, source };
+}
+
+async function confirmImageSelect() {
+  let url = null, source = 'manual';
+  if (imgCurrentTab === 'url') {
+    url = document.getElementById('img-url-input').value.trim();
+    if (!url) { showToast('URL daalo'); return; }
+  } else if (imgModalSelected) {
+    url = imgModalSelected.url;
+    source = imgModalSelected.source;
+  } else { showToast('Pehle image select karo'); return; }
+
+  try {
+    const res = await fetch(`${API}/api/admin/update-image`, {
+      method: 'POST',
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify({ story_id: imgModalStoryId, image_url: url, image_source: source })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    // Update local state
+    for (const cat of Object.keys(allStories)) {
+      const story = allStories[cat].find(s => String(s.id) === String(imgModalStoryId));
+      if (story) { story.image_url = url; story.image_source = source; break; }
+    }
+
+    showToast('✅ Image updated!');
+    closeImgModal();
+    renderAllCategories();
+  } catch(e) { showToast('❌ ' + e.message); }
+}
+
+async function removeStoryImage(storyId, cat) {
+  try {
+    const res = await fetch(`${API}/api/admin/remove-image/${storyId}`, {
+      method: 'DELETE',
+      headers: authHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    // Update local state
+    const story = (allStories[cat] || []).find(s => String(s.id) === String(storyId));
+    if (story) { story.image_url = null; story.image_source = null; }
+
+    showToast('🗑️ Image removed');
+    renderAllCategories();
+  } catch(e) { showToast('❌ ' + e.message); }
+}
 </script>
 
 </body>
