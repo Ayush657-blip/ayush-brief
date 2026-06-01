@@ -287,11 +287,13 @@ async function loadStories() {
     });
     renderAllCategories();
     updateProgress();
-    // Restore session after render
+    // Restore session safely
     setTimeout(() => {
-      const restored = restoreSession();
-      if (restored) { showToast('✅ Wahan se shuru jahan chhoda tha!'); renderAllCategories(); updateProgress(); }
-    }, 100);
+      try {
+        const restored = restoreSession();
+        if (restored) { showToast('✅ Wahan se shuru jahan chhoda tha!'); renderAllCategories(); updateProgress(); }
+      } catch(e) { console.log('Restore skipped'); }
+    }, 200);
   } catch (err) {
     document.getElementById('content').innerHTML =
       `<div style="padding:40px;text-align:center;color:var(--red)">❌ ${err.message}<br><br><button class="btn btn-ghost" onclick="loadStories()">Retry</button></div>`;
