@@ -161,17 +161,7 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .hero-terms{font-size:12px;color:var(--w3);margin-top:10px;}
 .hero-terms a{color:var(--w5);text-decoration:underline;}
 .hero-terms a:hover{color:var(--blue-p);}
-.market-bar{background:rgba(7,7,15,.9);border-top:.5px solid rgba(255,255,255,.06);border-bottom:.5px solid rgba(255,255,255,.06);padding:8px 48px;position:relative;z-index:5;overflow:hidden;}
-.market-inner{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;}
-.market-item{display:inline-flex;align-items:center;gap:6px;}
-.market-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w3);font-weight:600;}
-.market-val{font-size:13px;font-weight:600;color:var(--w);font-family:'DM Sans',sans-serif;}
-.market-chg{font-size:11px;font-weight:500;}
-.market-chg.up{color:#00C896;}
-.market-chg.down{color:#FF4D6D;}
-.market-sep{color:var(--border2);font-size:16px;}
-.market-time .market-val{font-size:11px;color:var(--w3);font-weight:400;}
-[data-theme="light"] .market-bar{background:rgba(245,245,240,.9);}
+
 .cat-tabs-wrap{position:relative;z-index:5;overflow:hidden;}
 .cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 48px;scrollbar-width:none;}
 .cat-tabs::-webkit-scrollbar{display:none;}
@@ -460,22 +450,9 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 
 
 
-  <div class="cat-tabs-wrap">
+  <div class="cat-tabs-wrap" style="display:none;">
     <div class="cat-tabs">
-      <button class="cat-tab active" onclick="showCategory(this,'All')">🌐 All</button>
-      <button class="cat-tab" onclick="showCategory(this,'Business')">💼 Business</button>
-      <button class="cat-tab" onclick="showCategory(this,'Indian Economy')">🇮🇳 Indian Economy</button>
-      <button class="cat-tab" onclick="showCategory(this,'Finance')">📈 Finance</button>
-      <button class="cat-tab" onclick="showCategory(this,'Tech')">💻 Tech</button>
-      <button class="cat-tab" onclick="showCategory(this,'Sports')">⚽ Sports</button>
-      <button class="cat-tab" onclick="showCategory(this,'Government')">🏛️ Government</button>
-      <button class="cat-tab" onclick="showCategory(this,'International')">🌍 International</button>
-      <button class="cat-tab" onclick="showCategory(this,'Climate')">🌿 Climate</button>
-      <button class="cat-tab" onclick="showCategory(this,'Startups & Auto')">🚀 Startups & Auto</button>
-      <button class="cat-tab" onclick="showCategory(this,'Science & Health')">🔬 Science & Health</button>
-      <button class="cat-tab" onclick="showCategory(this,'Entertainment')">🎬 Entertainment</button>
     </div>
-    <div class="cat-fade-r"></div>
   </div>
 
   <div class="news-section">
