@@ -709,6 +709,114 @@ app.get('/api/admin/config', adminAuth, (req, res) => {
 });
 
 
+
+// ── IMAGE MANAGEMENT ──────────────────────────────────────────────────────────
+const PEXELS_KEY = process.env.PEXELS_KEY;
+const GITHUB_RAW = 'https://raw.githubusercontent.com/Ayush657-blip/ayush-brief/main/images';
+
+const CATEGORY_FOLDER_MAP = {
+  'Business': 'business',
+  'Indian Economy': 'economy',
+  'Finance': 'finance',
+  'Tech': 'tech',
+  'Sports': 'sports',
+  'Government': 'government',
+  'International': 'international',
+  'Climate': 'climate',
+  'Startups & Auto': 'startup',
+  'Science & Health': 'science',
+  'Entertainment': 'entertainment'
+};
+
+// Pexels search proxy
+app.get('/api/images/pexels', async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) return res.status(400).json({ error: 'Query required' });
+    if (!PEXELS_KEY) return res.status(500).json({ error: 'Pexels key not set' });
+    const r = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=9&orientation=landscape`, {
+      headers: { 'Authorization': PEXELS_KEY }
+    });
+    if (!r.ok) throw new Error(`Pexels error ${r.status}`);
+    const data = await r.json();
+    const photos = (data.photos || []).map(p => ({
+      id: p.id,
+      url: p.src.medium,
+      thumb: p.src.small,
+      photographer: p.photographer,
+      source: 'pexels'
+    }));
+    res.json({ success: true, photos });
+  } catch(err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// List GitHub category images
+app.get('/api/images/github/:category', async (req, res) => {
+  try {
+    const { category } = req.params;
+    const folder = CATEGORY_FOLDER_MAP[category] || category.toLowerCase();
+    // Return numbered images 1-20
+    const images = [];
+    for (let i = 1; i <= 20; i++) {
+      images.push({
+        url: `${GITHUB_RAW}/${folder}/${i}.jpg`,
+        thumb: `${GITHUB_RAW}/${folder}/${i}.jpg`,
+        source: 'github',
+        name: `${i}.jpg`
+      });
+    }
+    res.json({ success: true, images, folder });
+  } catch(err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Update story image
+app.post('/api/admin/update-image', adminAuth, async (req, res) => {
+  try {
+    const { story_id, image_url, image_source } = req.body;
+    if (!story_id || !image_url) return res.status(400).json({ error: 'story_id and image_url required' });
+    const r = await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ image_url, image_source: image_source || 'manual' })
+    });
+    if (!r.ok) throw new Error(`Supabase error ${r.status}`);
+    console.log(`✅ Image updated for story ${story_id}`);
+    res.json({ success: true });
+  } catch(err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Remove story image
+app.delete('/api/admin/remove-image/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const r = await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ image_url: null, image_source: null })
+    });
+    if (!r.ok) throw new Error(`Supabase error ${r.status}`);
+    res.json({ success: true });
+  } catch(err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // ── MANUAL STORY ADD ──────────────────────────────────────────────────────────
 app.post('/api/admin/add-story', adminAuth, async (req, res) => {
   try {
