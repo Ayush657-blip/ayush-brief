@@ -143,7 +143,7 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .sr-headline{font-size:14px;color:var(--w9);}
 #hp{transition:opacity .3s;}
 #hp.hide{opacity:0;pointer-events:none;}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 48px 60px;position:relative;z-index:5;}
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px 40px;position:relative;z-index:5;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);border:.5px solid rgba(92,200,255,.25);background:rgba(41,121,255,.07);padding:6px 16px;border-radius:100px;margin-bottom:24px;}
 .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--blue-b);box-shadow:0 0 6px var(--blue-b);animation:blink 2s infinite;}
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;font-style:italic;letter-spacing:-.02em;line-height:1.05;color:var(--w);margin-bottom:8px;max-width:800px;}
@@ -1733,58 +1733,7 @@ function trackEvent(name,data){
 }
 trackEvent('page_view',{page:'homepage'});
 
-// ── LIVE MARKET DATA ──────────────────────────────────────────────────────────
-var MARKET_SYMBOLS = {
-  sensex: '^BSESN',
-  nifty: '^NSEI',
-  giftnifty: 'GIFT.NS',
-  gold: 'GC=F',
-  silver: 'SI=F'
-};
 
-async function fetchMarketData() {
-  try {
-    var res = await fetch(API + '/api/market');
-    if (!res.ok) throw new Error('Market data failed');
-    var data = await res.json();
-    if (!data.success) throw new Error(data.error);
-    var map = data.data;
-
-    function updateItem(id, chgId, key, prefix, decimals) {
-      var q = map[key];
-      if (!q) return;
-      var price = q.price;
-      var chg = q.change;
-      var chgPct = q.changePct;
-      var valEl = document.getElementById(id);
-      var chgEl = document.getElementById(chgId);
-      if (valEl) valEl.textContent = (prefix || '') + price.toLocaleString('en-IN', {maximumFractionDigits: decimals || 0});
-      if (chgEl) {
-        var sign = chg >= 0 ? '+' : '';
-        chgEl.textContent = sign + chg.toFixed(2) + ' (' + sign + chgPct.toFixed(2) + '%)';
-        chgEl.className = 'market-chg ' + (chg >= 0 ? 'up' : 'down');
-      }
-    }
-
-    updateItem('m-sensex', 'm-sensex-chg', 'sensex', '', 0);
-    updateItem('m-nifty', 'm-nifty-chg', 'nifty', '', 0);
-    updateItem('m-giftnifty', 'm-giftnifty-chg', 'giftnifty', '', 0);
-
-    var timeEl = document.getElementById('m-time');
-    if (timeEl) {
-      var now = new Date();
-      timeEl.textContent = now.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit', timeZone:'Asia/Kolkata'}) + ' IST';
-    }
-  } catch(e) {
-    console.log('Market data fetch failed:', e.message);
-  }
-}
-
-// Fetch on load + every 60 seconds
-document.addEventListener('DOMContentLoaded', function() {
-  fetchMarketData();
-  setInterval(fetchMarketData, 60000);
-});
 
 </script>
 </body>
