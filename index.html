@@ -161,10 +161,17 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .hero-terms{font-size:12px;color:var(--w3);margin-top:10px;}
 .hero-terms a{color:var(--w5);text-decoration:underline;}
 .hero-terms a:hover{color:var(--blue-p);}
-.ticker-wrap{background:rgba(41,121,255,.06);border-top:.5px solid rgba(92,200,255,.1);border-bottom:.5px solid rgba(92,200,255,.1);overflow:hidden;padding:10px 0;position:relative;z-index:5;}
-.ticker-inner{display:flex;animation:ticker 35s linear infinite;white-space:nowrap;}
-.ti{padding:0 32px;font-size:11px;color:var(--blue-p);letter-spacing:.09em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;}
-.ts{width:3px;height:3px;border-radius:50%;background:rgba(92,200,255,.4);flex-shrink:0;}
+.market-bar{background:rgba(7,7,15,.9);border-top:.5px solid rgba(255,255,255,.06);border-bottom:.5px solid rgba(255,255,255,.06);padding:8px 48px;position:relative;z-index:5;overflow:hidden;}
+.market-inner{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;}
+.market-item{display:inline-flex;align-items:center;gap:6px;}
+.market-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w3);font-weight:600;}
+.market-val{font-size:13px;font-weight:600;color:var(--w);font-family:'DM Sans',sans-serif;}
+.market-chg{font-size:11px;font-weight:500;}
+.market-chg.up{color:#00C896;}
+.market-chg.down{color:#FF4D6D;}
+.market-sep{color:var(--border2);font-size:16px;}
+.market-time .market-val{font-size:11px;color:var(--w3);font-weight:400;}
+[data-theme="light"] .market-bar{background:rgba(245,245,240,.9);}
 .cat-tabs-wrap{position:relative;z-index:5;overflow:hidden;}
 .cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 48px;scrollbar-width:none;}
 .cat-tabs::-webkit-scrollbar{display:none;}
@@ -451,10 +458,19 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
     <p class="hero-terms">By subscribing, you accept our <a href="terms.html">Terms</a> &amp; <a href="privacy.html">Privacy Policy</a>.</p>
   </section>
 
-  <div class="ticker-wrap">
-    <div class="ticker-inner" id="ticker-inner">
-      <div class="ti">HUL <div class="ts"></div></div><div class="ti">RBI Rate Cut <div class="ts"></div></div><div class="ti">Blinkit 1,000 Dark Stores <div class="ts"></div></div><div class="ti">Rural Consumption High <div class="ts"></div></div><div class="ti">Sensex 82,000 <div class="ts"></div></div><div class="ti">GST Rationalisation <div class="ts"></div></div><div class="ti">ISRO Mission <div class="ts"></div></div><div class="ti">India GDP Growth <div class="ts"></div></div>
-      <div class="ti">HUL <div class="ts"></div></div><div class="ti">RBI Rate Cut <div class="ts"></div></div><div class="ti">Blinkit 1,000 Dark Stores <div class="ts"></div></div><div class="ti">Rural Consumption High <div class="ts"></div></div><div class="ti">Sensex 82,000 <div class="ts"></div></div><div class="ti">GST Rationalisation <div class="ts"></div></div><div class="ti">ISRO Mission <div class="ts"></div></div><div class="ti">India GDP Growth <div class="ts"></div></div>
+  <div class="market-bar" id="market-bar">
+    <div class="market-inner" id="market-inner">
+      <span class="market-item"><span class="market-label">SENSEX</span><span class="market-val" id="m-sensex">--</span><span class="market-chg" id="m-sensex-chg"></span></span>
+      <span class="market-sep">·</span>
+      <span class="market-item"><span class="market-label">NIFTY</span><span class="market-val" id="m-nifty">--</span><span class="market-chg" id="m-nifty-chg"></span></span>
+      <span class="market-sep">·</span>
+      <span class="market-item"><span class="market-label">GIFT NIFTY</span><span class="market-val" id="m-giftnifty">--</span><span class="market-chg" id="m-giftnifty-chg"></span></span>
+      <span class="market-sep">·</span>
+      <span class="market-item"><span class="market-label">GOLD</span><span class="market-val" id="m-gold">--</span><span class="market-chg" id="m-gold-chg"></span></span>
+      <span class="market-sep">·</span>
+      <span class="market-item"><span class="market-label">SILVER</span><span class="market-val" id="m-silver">--</span><span class="market-chg" id="m-silver-chg"></span></span>
+      <span class="market-sep">·</span>
+      <span class="market-item market-time"><span class="market-label">UPDATED</span><span class="market-val" id="m-time">--</span></span>
     </div>
   </div>
 
@@ -1744,6 +1760,63 @@ function trackEvent(name,data){
   try{fetch(SUPA_URL+'/rest/v1/page_visits',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({event:name,data:JSON.stringify(data),url:window.location.href})});}catch(e){}
 }
 trackEvent('page_view',{page:'homepage'});
+
+// ── LIVE MARKET DATA ──────────────────────────────────────────────────────────
+var MARKET_SYMBOLS = {
+  sensex: '^BSESN',
+  nifty: '^NSEI',
+  giftnifty: 'GIFT.NS',
+  gold: 'GC=F',
+  silver: 'SI=F'
+};
+
+async function fetchMarketData() {
+  try {
+    var res = await fetch(API + '/api/market');
+    if (!res.ok) throw new Error('Market data failed');
+    var data = await res.json();
+    if (!data.success) throw new Error(data.error);
+    var map = data.data;
+
+    function updateItem(id, chgId, symbol, prefix, decimals) {
+      var q = map[symbol];
+      if (!q) return;
+      var price = q.price;
+      var chg = q.change;
+      var chgPct = q.changePct;
+      
+      var valEl = document.getElementById(id);
+      var chgEl = document.getElementById(chgId);
+      if (valEl) valEl.textContent = (prefix || '') + price.toLocaleString('en-IN', {maximumFractionDigits: decimals || 0});
+      if (chgEl) {
+        var sign = chg >= 0 ? '+' : '';
+        chgEl.textContent = sign + chg.toFixed(2) + ' (' + sign + chgPct.toFixed(2) + '%)';
+        chgEl.className = 'market-chg ' + (chg >= 0 ? 'up' : 'down');
+      }
+    }
+
+    updateItem('m-sensex', 'm-sensex-chg', MARKET_SYMBOLS.sensex, '', 0);
+    updateItem('m-nifty', 'm-nifty-chg', MARKET_SYMBOLS.nifty, '', 0);
+    updateItem('m-giftnifty', 'm-giftnifty-chg', MARKET_SYMBOLS.giftnifty, '', 0);
+    updateItem('m-gold', 'm-gold-chg', MARKET_SYMBOLS.gold, '$', 2);
+    updateItem('m-silver', 'm-silver-chg', MARKET_SYMBOLS.silver, '$', 2);
+
+    var timeEl = document.getElementById('m-time');
+    if (timeEl) {
+      var now = new Date();
+      timeEl.textContent = now.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit', timeZone:'Asia/Kolkata'}) + ' IST';
+    }
+  } catch(e) {
+    console.log('Market data fetch failed:', e.message);
+  }
+}
+
+// Fetch on load + every 60 seconds
+document.addEventListener('DOMContentLoaded', function() {
+  fetchMarketData();
+  setInterval(fetchMarketData, 60000);
+});
+
 </script>
 </body>
 </html>
