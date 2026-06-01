@@ -1778,13 +1778,12 @@ async function fetchMarketData() {
     if (!data.success) throw new Error(data.error);
     var map = data.data;
 
-    function updateItem(id, chgId, symbol, prefix, decimals) {
-      var q = map[symbol];
+    function updateItem(id, chgId, key, prefix, decimals) {
+      var q = map[key];
       if (!q) return;
       var price = q.price;
       var chg = q.change;
       var chgPct = q.changePct;
-      
       var valEl = document.getElementById(id);
       var chgEl = document.getElementById(chgId);
       if (valEl) valEl.textContent = (prefix || '') + price.toLocaleString('en-IN', {maximumFractionDigits: decimals || 0});
@@ -1795,11 +1794,9 @@ async function fetchMarketData() {
       }
     }
 
-    updateItem('m-sensex', 'm-sensex-chg', MARKET_SYMBOLS.sensex, '', 0);
-    updateItem('m-nifty', 'm-nifty-chg', MARKET_SYMBOLS.nifty, '', 0);
-    updateItem('m-giftnifty', 'm-giftnifty-chg', MARKET_SYMBOLS.giftnifty, '', 0);
-    updateItem('m-gold', 'm-gold-chg', MARKET_SYMBOLS.gold, '$', 2);
-    updateItem('m-silver', 'm-silver-chg', MARKET_SYMBOLS.silver, '$', 2);
+    updateItem('m-sensex', 'm-sensex-chg', 'sensex', '', 0);
+    updateItem('m-nifty', 'm-nifty-chg', 'nifty', '', 0);
+    updateItem('m-giftnifty', 'm-giftnifty-chg', 'giftnifty', '', 0);
 
     var timeEl = document.getElementById('m-time');
     if (timeEl) {
