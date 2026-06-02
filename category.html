@@ -195,13 +195,11 @@ function renderHeader(){
 
 function renderCategory(cat){
   var content=document.getElementById('cat-content');
-  var catStories=allStories.filter(function(s){return s.category===cat;});
-  var others=allStories.filter(function(s){return s.category!==cat;});
-  // Show category stories first, fill with others if needed, always show minimum 6
-  var display=catStories.length>0?catStories.concat(others).slice(0,12):allStories.slice(0,12);
-  
+  // Show ONLY this category's stories — no mixing with others
+  var display=allStories.filter(function(s){return s.category===cat;});
+
   if(display.length===0){
-    content.innerHTML=renderHeader()+'<div class="empty-state"><div class="empty-icon">☀️</div><div class="empty-text">No stories yet. Check back after 6 AM.<br>Fresh news drops every morning.</div></div>';
+    content.innerHTML=renderHeader()+'<div class="empty-state"><div class="empty-icon">☀️</div><div class="empty-text">No stories in this category today.<br>Fresh news drops every morning at 6 AM.</div></div>';
     return;
   }
   
