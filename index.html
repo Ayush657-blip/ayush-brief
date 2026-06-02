@@ -338,19 +338,16 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .login-signup span{color:var(--blue-p);cursor:pointer;}
 #pers-hp{display:none;position:relative;z-index:5;min-height:100vh;background:var(--bg);}
 #pers-hp.show{display:block;}
-.pers-header{padding:110px 48px 48px;text-align:center;position:relative;z-index:5;}
-.pers-greeting{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(92,200,255,.6);margin-bottom:12px;}
-.pers-name{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,60px);font-weight:300;font-style:italic;margin-bottom:10px;color:var(--w);}
-.pers-name em{font-style:normal;font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.pers-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
-.pers-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:6px 14px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);color:var(--blue-p);}
+/* slim personalised welcome strip — news stays above the fold */
+.pers-welcome{max-width:1100px;margin:0 auto;padding:90px 48px 16px;position:relative;z-index:5;}
+.pers-welcome-inner{display:flex;align-items:center;flex-wrap:wrap;gap:9px;}
+.pw-greet{font-family:'Cormorant Garamond',serif;font-size:clamp(23px,3.3vw,32px);font-weight:300;font-style:italic;color:var(--w);}
+.pw-name{font-family:'Cormorant Garamond',serif;font-size:clamp(23px,3.3vw,32px);font-weight:600;background:linear-gradient(90deg,var(--gold-d),var(--gold-m),var(--gold-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.pw-wave{font-size:21px;line-height:1;}
+.pw-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:5px 12px;border-radius:100px;background:rgba(41,121,255,.1);border:.5px solid rgba(92,200,255,.25);color:var(--blue-p);}
+.pw-badge.first{margin-left:8px;}
+.pw-sub{font-size:12.5px;color:var(--w3);margin-top:8px;}
 .pers-news-section{max-width:1100px;margin:0 auto;padding:0 48px 80px;}
-.pers-news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.pers-card{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;}
-.pers-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35);border-color:rgba(92,200,255,.25);}
-.pers-card-body{padding:18px;}
-.pers-card-cat{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-p);margin-bottom:8px;}
-.pers-card-headline{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;font-style:italic;color:var(--w9);line-height:1.3;margin-bottom:10px;}
 .voice-bubble{border-radius:10px;padding:12px 13px;font-size:12.5px;line-height:1.7;margin-top:8px;}
 .voice-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
 .voice-txt{color:var(--w7);}
@@ -368,11 +365,11 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 .wlc-sub{font-size:13px;color:var(--w3);line-height:1.7;}
 .wlc-bar-wrap{width:240px;height:2px;background:var(--border);border-radius:2px;overflow:hidden;}
 .wlc-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-b));border-radius:2px;transition:width 2.2s linear;}
-@media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}.pers-news-grid{grid-template-columns:repeat(2,1fr);}.how-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}.how-grid{grid-template-columns:1fr;}}
 @media(max-width:640px){
   nav{padding:0 16px;}
   .nav-center{display:none;}
-  .news-grid,.pers-news-grid{grid-template-columns:1fr;}
+  .news-grid{grid-template-columns:1fr;}
   .news-section,.pers-news-section{padding:20px 16px 60px;}
   .cat-tabs{padding:12px 16px;}
   .hero{padding:90px 20px 50px;}
@@ -383,7 +380,7 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
   .topics-dropdown,.search-bar{padding:20px 16px;}
   .search-results{left:16px;right:16px;}
   footer .ft-inner{flex-direction:column;gap:16px;}
-  .pers-header{padding:90px 20px 36px;}
+  .pers-welcome{padding:82px 16px 12px;}
   .bhai-panel{padding:0 16px;}
 }
 .brief-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:#000;width:100%;box-sizing:border-box;border-top:.5px solid rgba(232,197,88,.15);border-bottom:.5px solid rgba(232,197,88,.15);}
@@ -552,27 +549,29 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 
 <!-- PERSONALISED HOMEPAGE -->
 <div id="pers-hp">
-  <div class="pers-header">
-    <div class="pers-greeting" id="pers-greeting">Good morning</div>
-    <h1 class="pers-name">Hey <em id="pers-name-txt">friend</em> 👋</h1>
-    <div class="pers-badges">
-      <div class="pers-badge" id="pers-role-badge">🎓 Student</div>
-      <div class="pers-badge" id="pers-region-badge">🌏 North India</div>
+  <div class="pers-welcome">
+    <div class="pers-welcome-inner">
+      <span class="pw-greet"><span id="pers-greeting">Good morning</span>,</span>
+      <span class="pw-name" id="pers-name-txt">friend</span>
+      <span class="pw-wave">👋</span>
+      <span class="pw-badge first" id="pers-role-badge">🎓 Student</span>
+      <span class="pw-badge" id="pers-region-badge">🏔️ North India</span>
     </div>
-    <p style="font-size:13px;color:var(--w3);">Here is today's brief, written just for you.</p>
-    <div id="referral-box" style="display:none;margin-top:20px;background:#0C0C1A;border:0.5px solid rgba(92,200,255,.2);border-radius:14px;padding:20px 24px;max-width:480px;margin-left:auto;margin-right:auto;">
+    <div class="pw-sub">Aaj ka brief — sirf tere liye, teri zubaan mein. ☀️</div>
+  </div>
+  <div class="pers-news-section">
+    <div id="pers-feat"></div>
+    <div class="news-grid" id="pers-news-grid"></div>
+    <div id="referral-box" style="display:none;margin-top:36px;background:#0C0C1A;border:0.5px solid rgba(92,200,255,.2);border-radius:14px;padding:22px 24px;">
       <p style="margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(92,200,255,.5);">Your Referral Link</p>
       <p style="margin:0 0 12px;font-size:13px;color:var(--w3);line-height:1.6;">Share with a friend. Every person you bring in makes the gang stronger. ☀️</p>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <code id="referral-link-txt" style="font-size:12px;color:var(--blue-p);background:var(--bg);padding:8px 14px;border-radius:8px;border:0.5px solid var(--border2);flex:1;min-width:200px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></code>
         <button onclick="copyReferralLink()" style="padding:8px 16px;border-radius:8px;background:var(--blue);border:none;color:#fff;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;">Copy link</button>
         <button onclick="shareReferralWA()" style="padding:8px 16px;border-radius:8px;background:rgba(37,211,102,.15);border:0.5px solid rgba(37,211,102,.3);color:#25D366;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;">WhatsApp</button>
       </div>
       <p style="margin:10px 0 0;font-size:12px;color:var(--w3);">👥 You have referred <span id="referral-count" style="color:var(--green);font-weight:600;">0</span> friends so far.</p>
     </div>
-  </div>
-  <div class="pers-news-section">
-    <div class="pers-news-grid" id="pers-news-grid"></div>
   </div>
 </div>
 
@@ -708,6 +707,25 @@ var CARD_COLORS=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0
 var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Startups & Auto':'🚀','Science & Health':'🔬','Entertainment':'🎬'};
 var CAT_GRADIENTS={'Business':'linear-gradient(135deg,#1a2a3d,#0e1622)','Indian Economy':'linear-gradient(135deg,#3a2f1a,#1a140a)','Finance':'linear-gradient(135deg,#13322a,#081a14)','Tech':'linear-gradient(135deg,#1d2547,#0c1024)','Sports':'linear-gradient(135deg,#3a1d2b,#1c0c14)','Government':'linear-gradient(135deg,#2a2440,#120f20)','International':'linear-gradient(135deg,#173040,#08161e)','Climate':'linear-gradient(135deg,#173a28,#0a1c12)','Startups & Auto':'linear-gradient(135deg,#3a2218,#1a0e08)','Science & Health':'linear-gradient(135deg,#22203f,#100f1f)','Entertainment':'linear-gradient(135deg,#3a1838,#1a0a18)'};
 function catGrad(cat){return CAT_GRADIENTS[cat]||'linear-gradient(135deg,var(--bg3),var(--bg2))';}
+// global image markup builder: real image if present, else designed gradient block (never broken)
+function imgBlock(s,heroBig){
+  var src=s.image_url||s.image;
+  var grad=catGrad(s.category);
+  if(heroBig){
+    var hfb='<div class="feat-hero-fallback" style="background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">The Dawn Brief</span></div>';
+    if(src){
+      return '<div class="img-wrap"><img class="feat-hero-img" src="'+src+'" alt="'+s.headline+'" onerror="this.parentElement.style.display=\'none\';this.parentElement.nextElementSibling.style.display=\'flex\';" loading="lazy"></div>'
+        +'<div class="feat-hero-fallback" style="display:none;background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">The Dawn Brief</span></div>';
+    }
+    return hfb;
+  }
+  var cfb='<div class="card-img-fallback" style="background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">Dawn Brief</span></div>';
+  if(src){
+    return '<div class="img-wrap"><img class="card-img" src="'+src+'" alt="'+s.headline+'" onerror="this.parentElement.style.display=\'none\';this.parentElement.nextElementSibling.style.display=\'flex\';" loading="lazy"></div>'
+      +'<div class="card-img-fallback" style="display:none;background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">Dawn Brief</span></div>';
+  }
+  return cfb;
+}
 var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is actually happening in Delhi.','International':'The world news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Startups & Auto':'Funding rounds, new ventures, EVs, and the roads ahead.','Science & Health':'ISRO, NASA, discoveries, fitness, and what your body needs to know.','Entertainment':'Films, OTT, and culture that is actually good.'};
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -1334,26 +1352,6 @@ function renderGrid(stories){
   var g=document.getElementById('news-grid');
   if(!stories||!stories.length){g.innerHTML='';return;}
 
-  // image markup builder: real image if present, else designed gradient block (never briefcase)
-  function imgBlock(s,heroBig){
-    var src=s.image_url||s.image;
-    var grad=catGrad(s.category);
-    if(heroBig){
-      var hfb='<div class="feat-hero-fallback" style="background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">The Dawn Brief</span></div>';
-      if(src){
-        return '<div class="img-wrap"><img class="feat-hero-img" src="'+src+'" alt="'+s.headline+'" onerror="this.parentElement.style.display=\'none\';this.parentElement.nextElementSibling.style.display=\'flex\';" loading="lazy"></div>'
-          +'<div class="feat-hero-fallback" style="display:none;background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">The Dawn Brief</span></div>';
-      }
-      return hfb;
-    }
-    var cfb='<div class="card-img-fallback" style="background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">Dawn Brief</span></div>';
-    if(src){
-      return '<div class="img-wrap"><img class="card-img" src="'+src+'" alt="'+s.headline+'" onerror="this.parentElement.style.display=\'none\';this.parentElement.nextElementSibling.style.display=\'flex\';" loading="lazy"></div>'
-        +'<div class="card-img-fallback" style="display:none;background:'+grad+';"><span class="fb-cat">'+s.category+'</span><span class="fb-tag">Dawn Brief</span></div>';
-    }
-    return cfb;
-  }
-
   var html='<div class="feat-wrap">';
   // ---- HERO (story 0) ----
   var h=stories[0];
@@ -1692,34 +1690,68 @@ function showPersonalisedHP(user){
   requestPushPermission(user);
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function persVoiceText(s,voiceKey,roleKey){
+  if(s.voices){
+    if(s.voices[voiceKey])return s.voices[voiceKey];
+    if(s.voices[roleKey])return s.voices[roleKey];
+  }
+  return s.summary||s.headline;
+}
 async function loadPersonalisedNews(user){
+  var feat=document.getElementById('pers-feat');
   var grid=document.getElementById('pers-news-grid');
-  grid.innerHTML=Array(9).fill(0).map(function(){return '<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line short" style="margin-bottom:8px;"></div><div class="skel skel-line med" style="margin-bottom:8px;"></div><div class="skel skel-line full"></div></div></div>';}).join('');
+  feat.innerHTML='';
+  grid.innerHTML=Array(6).fill(0).map(function(){return '<div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line short" style="margin-bottom:8px;"></div><div class="skel skel-line med" style="margin-bottom:8px;"></div><div class="skel skel-line full"></div></div></div>';}).join('');
   try{
     var r=await fetch(API+'/data');
     var data=await r.json();
-    var stories=(data.stories||[]).filter(function(s){return s.hasVoice;}).slice(0,9);
+    var stories=(data.stories||[]).slice(0,9);
+    if(stories.length===0){
+      grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);font-size:14px;">Aaj ka brief 6 AM ke baad ready hoga ☀️</div>';
+      return;
+    }
     var roleKey=user.role==='student'?'student':'professional';
     var isHinglish=user.region==='north'||user.region==='west';
     var regionGroup=isHinglish?'north':'south';
     var voiceKey=roleKey+'_'+regionGroup;
-    var voiceStyle={
-      student:{bg:'rgba(255,77,109,.08)',border:'#FF4D6D',lbl:'🎓 Student',color:'#FF4D6D'},
-      professional:{bg:'rgba(255,165,50,.08)',border:'#FFAA55',lbl:'💼 Professional',color:'#FFAA55'}
-    };
-    var vs=voiceStyle[roleKey]||voiceStyle['student'];
-    grid.innerHTML=stories.map(function(s,i){
-      var voiceText=s.voices&&s.voices[voiceKey]?s.voices[voiceKey]:s.voices&&s.voices[roleKey]?s.voices[roleKey]:(s.summary||s.headline);
+    var vs=roleKey==='student'
+      ?{bg:'rgba(255,77,109,.07)',border:'#FF4D6D',color:'#FF4D6D',lbl:'🎓 Student voice'}
+      :{bg:'rgba(255,165,50,.07)',border:'#FFAA55',color:'#FFAA55',lbl:'💼 Professional voice'};
+    var bubble=function(txt){return '<div class="voice-bubble" style="background:'+vs.bg+';border-left:2.5px solid '+vs.border+';"><div class="voice-lbl" style="color:'+vs.color+';">'+vs.lbl+'</div><div class="voice-txt">'+txt+'</div></div>';};
+
+    // ---- HERO (story 0) ----
+    var h=stories[0];
+    var html='<div class="feat-wrap">';
+    html+='<a class="feat-hero" href="story.html?id=0&pers=1" onclick="goToStory(0,true);return false;">'
+      +'<div class="card-top-bar" style="background:'+CARD_COLORS[0]+';"></div>'
+      +imgBlock(h,true)
+      +'<div class="feat-hero-body"><div class="card-meta"><span class="card-cat">'+h.category+'</span><span class="card-time">For you</span></div>'
+      +'<div class="card-headline">'+h.headline+'</div>'
+      +bubble(persVoiceText(h,voiceKey,roleKey))
+      +'<div class="card-readmore">Read story</div></div></a>';
+    // ---- SIDE LIST (stories 1-3) ----
+    html+='<div class="feat-side"><div class="feat-side-hdr"><span class="fsh-title">Aaj ki baaki</span></div>';
+    stories.slice(1,4).forEach(function(s,k){
+      var i=k+1;
+      html+='<a class="feat-side-item" href="story.html?id='+i+'&pers=1" onclick="goToStory('+i+',true);return false;">'
+        +'<div class="fsi-cat">'+s.category+'</div>'
+        +'<div class="fsi-headline">'+s.headline+'</div>'
+        +'<div class="fsi-time">For you</div></a>';
+    });
+    html+='</div></div>';
+    feat.innerHTML=html;
+
+    // ---- BOTTOM GRID (stories 4+) with voice + feedback ----
+    var rest=stories.slice(4);
+    grid.innerHTML=rest.map(function(s,k){
+      var i=k+4;
       var col=CARD_COLORS[i%CARD_COLORS.length];
-      return '<div class="pers-card" onclick="goToStory('+i+',true)">'
-        +'<div class="card-top-bar" style="background:'+col+';height:3px;"></div>'
-        +'<div class="pers-card-body">'
-        +'<div class="pers-card-cat">'+s.category+'</div>'
-        +'<div class="pers-card-headline">'+s.headline+'</div>'
-        +'<div class="voice-bubble" style="background:'+vs.bg+';border-left:2.5px solid '+vs.border+';">'
-        +'<div class="voice-lbl" style="color:'+vs.color+';">'+vs.lbl+'</div>'
-        +'<div class="voice-txt">'+voiceText+'</div>'
-        +'</div>'
+      return '<div class="story-card" onclick="goToStory('+i+',true)">'
+        +'<div class="card-top-bar" style="background:'+col+';"></div>'
+        +imgBlock(s,false)
+        +'<div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">For you</span></div>'
+        +'<div class="card-headline">'+s.headline+'</div>'
+        +bubble(persVoiceText(s,voiceKey,roleKey))
         +'<div class="thumb-row">'
         +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+i+',\'up\')">👍 Helpful</button>'
         +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+i+',\'down\')">👎 Nah</button>'
@@ -1727,6 +1759,7 @@ async function loadPersonalisedNews(user){
         +'</div></div>';
     }).join('');
   }catch(e){
+    feat.innerHTML='';
     grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--w3);">Yaar, something broke on our end. Give us 2 minutes. 🙏</div>';
   }
 }
