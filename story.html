@@ -231,20 +231,12 @@ async function loadStory(){
   var voiceHTML='';
   if(isSubscriber&&voiceText){
     voiceHTML='<div class="voice-box '+voiceClass+'"><div class="voice-label '+voiceLabelClass+'">'+voiceLabelText+'</div><div class="voice-text">'+voiceText+'</div></div>';
-  } else if(voiceText){
-    var preview=voiceText.substring(0,120)+'...';
-    var blurred=voiceText.substring(120)||voiceText;
+  } else {
+    var openText=story.summary||voiceText||'';
     voiceHTML='<div class="voice-box voice-box-default">'
-      +'<div class="voice-label voice-label-default">☀️ Friend Voice Preview</div>'
-      +'<div class="voice-preview">'
-      +'<div class="voice-text">'+preview+'</div>'
-      +'<div class="voice-text voice-blurred">'+blurred+'</div>'
-      +'<div class="voice-lock">'
-      +'<div class="lock-icon">🔒</div>'
-      +'<div class="lock-text">Subscribe to read the full story in your voice —<br>Student or Professional. Funny. In your language.</div>'
-      +'<button class="lock-btn" onclick="window.location=\'index.html\'">Subscribe free →</button>'
-      +'</div>'
-      +'</div></div>';
+      +'<div class="voice-label voice-label-default">☀️ The Dawn Brief</div>'
+      +'<div class="voice-text">'+openText+'</div>'
+      +'</div>';
   }
 
   var referralHTML='';
