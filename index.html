@@ -174,6 +174,7 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .news-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(92,200,255,.55);margin-bottom:5px;}
 .news-title-txt{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;color:var(--w);}
 .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start;}
+#news-grid{display:block;} /* hero layout: feat-wrap + inner .news-grid handle their own columns */
 /* ===== Featured (hero + side list) layout ===== */
 .feat-wrap{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;align-items:start;}
 .feat-hero{background:var(--card-bg);border:.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column;text-decoration:none;}
@@ -1404,7 +1405,7 @@ function showCategory(btn,cat){
   document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
   if(cat==='All'){
-    document.getElementById('news-grid').style.display='grid';
+    document.getElementById('news-grid').style.display='block';
     document.getElementById('news-list').style.display='none';
     document.getElementById('news-title').textContent="Today's Stories";
     if(allStories.length>0)renderGrid(allStories.slice(0,9));
