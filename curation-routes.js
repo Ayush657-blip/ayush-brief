@@ -45,6 +45,23 @@ async function fetchVoiceSoul(voice) {
   } catch { return []; }
 }
 
+// Clean, easy-to-read English summary for the website (~5 lines)
+async function generateCleanSummary(headline, summary, category) {
+  const prompt = `Write a clear, simple English summary of this news for an Indian student/professional reader.
+
+Headline: "${headline}"
+Details: "${(summary || '').slice(0, 600)}"
+Category: ${category}
+
+Rules:
+- Write 4 to 5 short sentences (about 80 to 110 words).
+- Plain, easy English. No jargon, no heavy or fancy words.
+- Explain what happened and why it matters.
+- Neutral and factual. If the news is tragic or sensitive, write with care and dignity, never casual.
+- No preamble, no "Here is the summary", no quotes around it. Just the summary text.`;
+  return await callClaude(prompt, 240);
+}
+
 async function generateOneVoice(headline, summary, category, role) {
   const voiceType = role === 'student' ? 'student' : 'employee';
   const soulExamples = await fetchVoiceSoul(voiceType);
@@ -181,6 +198,15 @@ async function generateVoices(req, res) {
       console.log(`🤖 Generating voices for: ${story.headline.slice(0, 50)}...`);
       const voices = {};
 
+      // Clean ~5-line English summary for the website
+      let cleanSummary = story.summary;
+      try {
+        cleanSummary = await generateCleanSummary(story.headline, story.summary, story.category);
+      } catch (err) {
+        cleanSummary = story.summary;
+      }
+      await new Promise(r => setTimeout(r, 300));
+
       try {
         voices['student'] = await generateOneVoice(story.headline, story.summary, story.category, 'student');
       } catch (err) {
@@ -198,10 +224,10 @@ async function generateVoices(req, res) {
       await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
         method: 'PATCH',
         headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ voices, status: 'voices_generated' })
+        body: JSON.stringify({ summary: cleanSummary, voices, status: 'voices_generated' })
       });
 
-      results.push({ id: story.id, headline: story.headline, voices });
+      results.push({ id: story.id, headline: story.headline, summary: cleanSummary, voices });
     }
 
     res.json({ success: true, stories: results });
