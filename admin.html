@@ -704,6 +704,7 @@ ${stories.map(s => {
   <div class="story-importance"><span class="importance-dot">${s.importance}</span><span class="importance-reason">${s.reason||''}</span></div>
   <div class="story-headline">${s.headline}</div>
   <div class="story-summary">${s.summary||''}</div>
+  ${s.image_url ? `<img class="story-img-preview" src="${s.image_url}" onerror="this.style.display='none'" />` : ''}
   <div class="story-meta">
     <span class="story-cat-tag">${s.category}</span>
     ${s.is_previous_day?'<span class="story-prev">📦 Yesterday</span>':''}
@@ -736,9 +737,12 @@ function renderVoiceReview(story, cat) {
   return `
 <div class="voice-card ${allApproved?'voice-approved':''}" id="vc-${story.id}">
   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;">
-    <div>
-      <div class="voice-label">${story.category}</div>
-      <div style="font-size:14px;font-weight:500;color:var(--w7);line-height:1.4">${story.headline}</div>
+    <div style="display:flex;gap:10px;align-items:flex-start;">
+      ${story.image_url ? `<img src="${story.image_url}" onerror="this.style.display='none'" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;" />` : ''}
+      <div>
+        <div class="voice-label">${story.category}</div>
+        <div style="font-size:14px;font-weight:500;color:var(--w7);line-height:1.4">${story.headline}</div>
+      </div>
     </div>
     ${allApproved?'<span style="color:var(--green);font-size:20px">✅</span>':''}
   </div>
