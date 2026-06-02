@@ -209,8 +209,9 @@ function renderCategory(cat){
   
   var listHTML=display.map(function(s,i){
     var globalIdx=allStories.indexOf(s);
-    var imgHTML=s.image
-      ?'<img class="sli-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="sli-img-ph" style="display:none;">'+(CAT_ICONS[s.category]||'📰')+'</div>'
+    var catImgSrc=s.image_url||s.image;
+    var imgHTML=catImgSrc
+      ?'<img class="sli-img" src="'+catImgSrc+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="sli-img-ph" style="display:none;">'+(CAT_ICONS[s.category]||'📰')+'</div>'
       :'<div class="sli-img-ph">'+(CAT_ICONS[s.category]||'📰')+'</div>';
     return '<a class="story-list-item" href="story.html?id='+globalIdx+'">'
       +imgHTML
