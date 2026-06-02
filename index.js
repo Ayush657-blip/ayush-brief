@@ -536,6 +536,7 @@ async function main() {
       if (importance !== '⚪') {
         // Fetch image
       const imgData = await fetchImageForStory(item, cat);
+      console.log(`   🖼️  [${cat}] "${item.title.slice(0,40)}" → ${imgData ? imgData.source + ': ' + imgData.url.slice(0,60) : 'NULL'}`);
       classified.push({
           headline: item.title,
           summary: item.summary.slice(0, 500),
