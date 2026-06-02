@@ -2,7 +2,17 @@ const Parser = require('rss-parser');
 const fs = require('fs');
 const path = require('path');
 
-const parser = new Parser({ timeout: 10000, headers: { 'User-Agent': 'Mozilla/5.0' } });
+const parser = new Parser({
+  timeout: 10000,
+  headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DawnBrief/1.0)' },
+  customFields: {
+    item: [
+      ['media:content', 'media:content', { keepArray: false }],
+      ['media:thumbnail', 'media:thumbnail', { keepArray: false }],
+      ['enclosure', 'enclosure']
+    ]
+  }
+});
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
@@ -206,14 +216,50 @@ const PEXELS_CATEGORY_QUERIES = {
   'Entertainment': 'bollywood entertainment india cinema'
 };
 
-// Extract image from RSS item
+// Extract image from RSS item (after customFields parsing)
 function extractRSSImage(item) {
   try {
-    if (item['media:content'] && item['media:content']['$'] && item['media:content']['$'].url) {
-      return item['media:content']['$'].url;
+    // media:content
+    const mc = item['media:content'];
+    if (mc) {
+      const url = (mc.$ && mc.$.url) || mc.url || (Array.isArray(mc) && mc[0] && (mc[0].$.url || mc[0].url));
+      if (url && typeof url === 'string' && url.startsWith('http')) return url;
     }
+    // media:thumbnail
+    const mt = item['media:thumbnail'];
+    if (mt) {
+      const url = (mt.$ && mt.$.url) || mt.url;
+      if (url && typeof url === 'string' && url.startsWith('http')) return url;
+    }
+    // enclosure
     if (item.enclosure && item.enclosure.url) return item.enclosure.url;
-    if (item['media:thumbnail'] && item['media:thumbnail']['$']) return item['media:thumbnail']['$'].url;
+    // itunes:image or image
+    if (item.image && typeof item.image === 'string') return item.image;
+    return null;
+  } catch(e) { return null; }
+}
+
+// Fetch og:image from the story's own URL (most reliable source of real images)
+async function fetchOgImage(link) {
+  if (!link || !link.startsWith('http')) return null;
+  try {
+    const ctrl = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), 3000);
+    const r = await fetch(link, {
+      signal: ctrl.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DawnBrief/1.0)' }
+    });
+    clearTimeout(timeout);
+    if (!r.ok) return null;
+    const html = await r.text();
+    // og:image
+    const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+                 || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+    if (ogMatch && ogMatch[1] && ogMatch[1].startsWith('http')) return ogMatch[1];
+    // twitter:image fallback
+    const twMatch = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
+                 || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+    if (twMatch && twMatch[1] && twMatch[1].startsWith('http')) return twMatch[1];
     return null;
   } catch(e) { return null; }
 }
@@ -244,16 +290,22 @@ function getGithubFallbackImage(category) {
 }
 
 async function fetchImageForStory(item, category) {
-  // Layer 1: RSS image
+  // Layer 1: RSS media tags (media:content, media:thumbnail, enclosure)
   const rssImage = extractRSSImage(item._raw || item);
   if (rssImage) return { url: rssImage, source: 'rss' };
 
-  // Layer 2: Pexels
+  // Layer 2: og:image from the story's own URL (best real image)
+  if (item.link) {
+    const ogImage = await fetchOgImage(item.link);
+    if (ogImage) return { url: ogImage, source: 'og' };
+  }
+
+  // Layer 3: Pexels (generic category image, last resort)
   const pexelsImage = await fetchPexelsImage(category);
   if (pexelsImage) return pexelsImage;
 
-  // Layer 3: GitHub fallback
-  return getGithubFallbackImage(category);
+  // Layer 4: null — frontend gradient handles it gracefully
+  return null;
 }
 
 async function callClaudeAPI(prompt, maxTokens = 500) {
