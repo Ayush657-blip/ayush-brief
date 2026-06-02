@@ -227,16 +227,63 @@ app.post('/subscribe', async (req, res) => {
 // ── DATA.JSON PROXY ───────────────────────────────────────────────────────────
 app.get('/data', async (req, res) => {
   try {
-    const fs = require('fs');
-    const path = require('path');
-    const dataPath = path.join(__dirname, 'data.json');
-    if (fs.existsSync(dataPath)) {
-      const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-      res.json(data);
-    } else {
-      res.json({ stories: [], date: '' });
+    const todayIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const today = todayIST.toISOString().split('T')[0];
+
+    // Read today's APPROVED stories directly from Supabase (survives redeploys)
+    const r = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${today}&status=eq.approved&select=*&order=importance.asc,id.asc`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    let stories = r.ok ? await r.json() : [];
+
+    // Fallback: if nothing approved today, serve the last good data.json (legacy)
+    if (!stories || stories.length === 0) {
+      const fs = require('fs');
+      const path = require('path');
+      const dataPath = path.join(__dirname, 'data.json');
+      if (fs.existsSync(dataPath)) {
+        return res.json(JSON.parse(fs.readFileSync(dataPath, 'utf8')));
+      }
+      return res.json({ stories: [], date: '' });
     }
+
+    const formatted = stories.map(s => ({
+      category: s.category,
+      headline: s.headline,
+      summary: s.summary,
+      link: s.link || '',
+      pubDate: s.pub_date || '',
+      image_url: s.image_url || null,
+      image_source: s.image_source || null,
+      hasVoice: !!(s.voices && (s.voices.student || s.voices.professional)),
+      sensitive: false,
+      voices: s.voices || null,
+      is_previous_day: s.is_previous_day || false,
+      is_khatarnak: s.is_khatarnak || false,
+      khatarnak_voice: s.khatarnak_voice || null
+    }));
+
+    const dateDisplay = todayIST.toLocaleDateString('en-IN', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata'
+    });
+
+    res.json({
+      generated: new Date().toISOString(),
+      date: dateDisplay,
+      totalStories: formatted.length,
+      stories: formatted
+    });
   } catch (err) {
+    // Last-resort fallback to disk file
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const dataPath = path.join(__dirname, 'data.json');
+      if (fs.existsSync(dataPath)) {
+        return res.json(JSON.parse(fs.readFileSync(dataPath, 'utf8')));
+      }
+    } catch (e) {}
     res.json({ stories: [], date: '' });
   }
 });
