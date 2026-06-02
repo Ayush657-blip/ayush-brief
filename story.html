@@ -64,7 +64,8 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .story-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,44px);font-weight:400;font-style:italic;color:var(--w9);line-height:1.2;margin-bottom:16px;}
 .story-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--w3);margin-bottom:28px;flex-wrap:wrap;}
 .story-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--w3);}
-.story-img{width:100%;border-radius:14px;overflow:hidden;margin-bottom:28px;background:var(--bg3);}
+.story-img{width:100%;border-radius:14px;overflow:hidden;margin-bottom:28px;background:var(--bg3);position:relative;}
+.story-img::after{content:'';position:absolute;top:0;right:0;width:40%;height:34%;background:linear-gradient(225deg,rgba(7,7,15,.8) 0%,rgba(7,7,15,.3) 45%,transparent 75%);pointer-events:none;}
 .story-img img{width:100%;display:block;max-height:400px;object-fit:cover;}
 .story-img-ph{height:240px;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:.2;}
 .voice-box{border-radius:14px;padding:24px;margin-bottom:28px;position:relative;overflow:hidden;}
@@ -201,7 +202,7 @@ async function loadStory(){
   document.title=story.headline+' — The Dawn Brief';
   var desc=(story.summary||story.headline).slice(0,160);
   var storyUrl=window.location.href;
-  var storyImg=story.image||'https://ayushbrief.online/og-image.png';
+  var storyImg=story.image_url||story.image||'https://ayushbrief.online/og-image.png';
   var setMeta=function(id,val){var el=document.getElementById(id);if(el)el.setAttribute('content',val);};
   setMeta('meta-desc',desc);
   setMeta('og-title',story.headline+' — The Dawn Brief');
@@ -254,7 +255,8 @@ async function loadStory(){
   var moreStories=stories.filter(function(_,i){return i!==storyId;}).slice(0,4);
   var moreHTML=moreStories.length?'<div style="margin-top:40px;"><div class="more-title">More stories</div><div class="more-grid">'+moreStories.map(function(s,i){var c=CARD_COLORS[(storyId+i+1)%CARD_COLORS.length];return '<a class="more-card" href="story.html?id='+stories.indexOf(s)+'"><div class="more-card-bar" style="background:'+c+';"></div><div class="more-card-body"><div class="more-card-cat">'+s.category+'</div><div class="more-card-hl">'+s.headline+'</div></div></a>';}).join('')+'</div></div>':'';
 
-  var imgHTML=story.image?'<div class="story-img"><img src="'+story.image+'" alt="'+story.headline+'" onerror="this.style.display=\'none\'" loading="eager"></div>':'<div class="story-img"><div class="story-img-ph">'+icon+'</div></div>';
+  var storyImageSrc=story.image_url||story.image;
+  var imgHTML=storyImageSrc?'<div class="story-img"><img src="'+storyImageSrc+'" alt="'+story.headline+'" onerror="this.style.display=\'none\'" loading="eager"></div>':'<div class="story-img"><div class="story-img-ph">'+icon+'</div></div>';
 
   wrap.innerHTML=
     '<div class="story-cat"><div class="story-cat-dot"></div>'+story.category+'</div>'
