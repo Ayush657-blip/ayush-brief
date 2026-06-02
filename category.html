@@ -203,7 +203,7 @@ function renderCategory(cat){
     return;
   }
   
-  localStorage.setItem('db_stories',JSON.stringify(display));
+  localStorage.setItem('db_stories',JSON.stringify(allStories));
   
   var listHTML=display.map(function(s,i){
     var globalIdx=allStories.indexOf(s);
