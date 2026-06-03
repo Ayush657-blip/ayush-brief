@@ -31,6 +31,66 @@ async function callClaude(prompt, maxTokens = 300) {
   return data.content[0].text.trim();
 }
 
+// Decode common HTML entities to plain text
+function decodeEntities(s) {
+  return (s || '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;|&rsquo;|&lsquo;/g, "'")
+    .replace(/&ldquo;|&rdquo;/g, '"')
+    .replace(/&#8377;/g, '₹')
+    .replace(/&#(\d+);/g, (_, n) => { try { return String.fromCharCode(parseInt(n, 10)); } catch (e) { return ''; } })
+    .replace(/&[a-zA-Z]+;/g, ' ');
+}
+
+// Fetch the full article text from its URL (best-effort, never throws).
+// Returns clean paragraph text, or null if it can't get enough.
+async function fetchArticleText(url) {
+  if (!url || !/^https?:\/\//i.test(url)) return null;
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(url, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-IN,en;q=0.9'
+      }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+    const ctype = res.headers.get('content-type') || '';
+    if (!ctype.includes('html')) return null;
+
+    let html = await res.text();
+    html = html
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<noscript[\s\S]*?<\/noscript>/gi, ' ')
+      .replace(/<!--[\s\S]*?-->/g, ' ');
+
+    // Extract <p> paragraph text (server-rendered article body)
+    const paras = [];
+    const re = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
+    let m;
+    while ((m = re.exec(html)) !== null) {
+      let txt = m[1].replace(/<[^>]+>/g, ' ');
+      txt = decodeEntities(txt).replace(/\s+/g, ' ').trim();
+      if (txt.length > 40) paras.push(txt);
+    }
+    let text = paras.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+    if (text.length < 200) return null; // paywall / JS-only / blocked
+    return text.slice(0, 6000);
+  } catch (e) {
+    return null;
+  }
+}
+
 async function fetchVoiceSoul(voice) {
   try {
     const res = await fetch(
@@ -46,20 +106,36 @@ async function fetchVoiceSoul(voice) {
 }
 
 // Clean, easy-to-read English summary for the website (at least 5-6 lines)
-async function generateCleanSummary(headline, summary, category) {
-  const prompt = `Write a clear, simple English summary of this news for an Indian student/professional reader.
+async function generateCleanSummary(headline, summary, category, link) {
+  // Try to read the full article; fall back to the RSS snippet if not possible.
+  let articleText = null;
+  try { articleText = await fetchArticleText(link); } catch (e) { articleText = null; }
+  const hasFull = !!(articleText && articleText.length > 200);
+  const source = hasFull ? articleText : (summary || '');
+
+  const prompt = `You are a writer for The Dawn Brief, read by Indian students and professionals. Write a DETAILED, engaging news summary — a full paragraph, not a one-liner.
 
 Headline: "${headline}"
-Details: "${(summary || '').slice(0, 800)}"
 Category: ${category}
+${hasFull ? 'Full article text' : 'Available details'}:
+"""
+${source.slice(0, 6000)}
+"""
 
-Rules:
-- Write AT LEAST 5 to 6 full sentences (about 110 to 150 words). Do not write less than 5 sentences.
-- Plain, easy English. No jargon, no heavy or fancy words.
-- Explain what happened, the key details, and why it matters to the reader.
+Write ONE flowing paragraph that covers, in this order:
+1. What happened (the main news).
+2. The key specifics taken from the text above — real names, numbers, dates, amounts, ₹/$ figures.
+3. The background or context (what led to this, or why now).
+4. Why it matters / what it means for an ordinary Indian reader.
+
+STRICT rules:
+- MINIMUM 5 sentences, ideally 6 (about 120 to 170 words). NEVER fewer than 5. A 1-2 sentence answer is WRONG.
+- Use ONLY facts present in the text above. Pull in the real numbers and names from it. Do NOT invent any fact, figure, quote, or name that is not in the text.
+- If the text is thin, write what is supported and explain the significance simply — but never fabricate specifics.
+- Plain, simple English. No jargon, no bullet points, no headings, no preamble like "Here is the summary".
 - Neutral and factual. If the news is tragic or sensitive, write with care and dignity, never casual.
-- No preamble, no "Here is the summary", no bullet points, no quotes around it. Just flowing summary text.`;
-  return await callClaude(prompt, 360);
+- Output ONLY the paragraph text, nothing else.`;
+  return await callClaude(prompt, 600);
 }
 
 async function generateOneVoice(headline, summary, category, role) {
@@ -199,7 +275,7 @@ async function generateVoices(req, res) {
       // Clean 5-6 line English summary for the website
       let cleanSummary = story.summary;
       try {
-        cleanSummary = await generateCleanSummary(story.headline, story.summary, story.category);
+        cleanSummary = await generateCleanSummary(story.headline, story.summary, story.category, story.link);
       } catch (err) {
         cleanSummary = story.summary;
       }
@@ -248,7 +324,7 @@ async function regenerateSummary(req, res) {
     const rows = await r.json();
     if (!rows || rows.length === 0) return res.status(404).json({ error: 'Story not found' });
     const s = rows[0];
-    const newSummary = await generateCleanSummary(s.headline, s.summary, s.category);
+    const newSummary = await generateCleanSummary(s.headline, s.summary, s.category, s.link);
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
       method: 'PATCH',
       headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
@@ -671,14 +747,14 @@ async function backfillSummaries(req, res) {
     const date = req.query.date || new Date().toISOString().split('T')[0];
     const statusFilter = req.query.all === '1' ? '' : '&status=eq.approved';
     const r = await fetch(
-      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}${statusFilter}&select=id,headline,summary,category`,
+      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}${statusFilter}&select=id,headline,summary,category,link`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const stories = r.ok ? await r.json() : [];
     let updated = 0;
     for (const story of stories) {
       try {
-        const clean = await generateCleanSummary(story.headline, story.summary, story.category);
+        const clean = await generateCleanSummary(story.headline, story.summary, story.category, story.link);
         if (clean && clean.length > 40) {
           await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
             method: 'PATCH',
