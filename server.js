@@ -93,6 +93,49 @@ app.get('/', (req, res) => {
   res.json({ status: 'ok', service: 'The Dawn Brief API', supabase_key_set: !!SUPA_KEY });
 });
 
+// ── HEALTH CHECK (for UptimeRobot / external monitoring) ──────────────────────
+// Lightweight liveness probe. Returns 200 if healthy, 503 if a critical
+// dependency is down — so an external monitor can alert on non-200.
+// No Claude calls → zero cost. Safe to ping every minute.
+app.get('/health', async (req, res) => {
+  const checks = {};
+
+  // 1) required env vars present (values never leaked)
+  checks.env = {
+    SUPABASE_KEY: !!process.env.SUPABASE_KEY,
+    RESEND_API_KEY: !!process.env.RESEND_API_KEY,
+    CLAUDE_API_KEY: !!process.env.CLAUDE_API_KEY,
+    VAPID_PUBLIC_KEY: !!process.env.VAPID_PUBLIC_KEY,
+    VAPID_PRIVATE_KEY: !!process.env.VAPID_PRIVATE_KEY
+  };
+  const envOk = checks.env.SUPABASE_KEY && checks.env.RESEND_API_KEY && checks.env.CLAUDE_API_KEY;
+
+  // 2) Supabase reachable (short timeout so the probe never hangs)
+  let supaOk = false, supaDetail = 'unknown';
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 5000);
+    const r = await fetch(`${SUPA_URL}/rest/v1/subscribers?select=count`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Prefer': 'count=exact' },
+      signal: ctrl.signal
+    });
+    clearTimeout(t);
+    supaOk = r.ok;
+    supaDetail = r.ok ? 'reachable' : `status ${r.status}`;
+  } catch (e) {
+    supaOk = false;
+    supaDetail = e.name === 'AbortError' ? 'timeout' : (e.message || 'error');
+  }
+  checks.supabase = { ok: supaOk, detail: supaDetail };
+
+  const healthy = envOk && supaOk;
+  res.status(healthy ? 200 : 503).json({
+    status: healthy ? 'ok' : 'degraded',
+    checks,
+    time: new Date().toISOString()
+  });
+});
+
 app.post('/send-otp', async (req, res) => {
   const ip = req.ip || req.connection.remoteAddress;
   if (!rateLimit(ip, 5, 60000)) return res.status(429).json({ error: 'Too many requests.' });
