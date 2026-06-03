@@ -1356,7 +1356,7 @@ function renderGrid(stories){
   var html='<div class="feat-wrap">';
   // ---- HERO (story 0) ----
   var h=stories[0];
-  html+='<a class="feat-hero" href="story.html?id=0" onclick="saveStoryData()">'
+  html+='<a class="feat-hero" href="story.html?id='+(h.id||0)+'" onclick="saveStoryData()">'
     +'<div class="card-top-bar" style="background:'+CARD_COLORS[0]+';"></div>'
     +imgBlock(h,true)
     +'<div class="feat-hero-body"><div class="card-meta"><span class="card-cat">'+h.category+'</span><span class="card-time">6:00 AM IST</span></div>'
@@ -1367,7 +1367,7 @@ function renderGrid(stories){
   html+='<div class="feat-side"><div class="feat-side-hdr"><span class="fsh-title">Aaj ki baaki</span></div>';
   stories.slice(1,4).forEach(function(s,k){
     var i=k+1;
-    html+='<a class="feat-side-item" href="story.html?id='+i+'" onclick="saveStoryData()">'
+    html+='<a class="feat-side-item" href="story.html?id='+s.id+'" onclick="saveStoryData()">'
       +'<div class="fsi-cat">'+s.category+'</div>'
       +'<div class="fsi-headline">'+s.headline+'</div>'
       +'<div class="fsi-time">6:00 AM IST</div></a>';
@@ -1380,7 +1380,7 @@ function renderGrid(stories){
     rest.forEach(function(s,k){
       var i=k+4;
       var col=CARD_COLORS[i%CARD_COLORS.length];
-      html+='<a class="story-card" href="story.html?id='+i+'" onclick="saveStoryData()"><div class="card-top-bar" style="background:'+col+';"></div>'+imgBlock(s,false)
+      html+='<a class="story-card" href="story.html?id='+s.id+'" onclick="saveStoryData()"><div class="card-top-bar" style="background:'+col+';"></div>'+imgBlock(s,false)
         +'<div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">6:00 AM IST</span></div>'
         +'<div class="card-headline">'+s.headline+'</div>'
         +'<div class="card-summary">'+(s.summary||'')+'</div>'
@@ -1398,7 +1398,7 @@ function renderList(cat){
   var html='<div class="cat-page-hdr"><div class="cat-page-title">'+icon+' '+cat+'</div><div class="cat-page-desc">'+desc+'</div></div>';
   html+=storyData.map(function(s,i){
     var img=s.image?'<img class="nli-img" src="'+s.image+'" alt="'+s.headline+'" onerror="this.style.background=\'var(--bg3)\';" loading="lazy">':'<div class="nli-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;opacity:.3;">'+(CAT_ICONS[s.category]||'📰')+'</div>';
-    return '<a class="news-list-item" href="story.html?id='+i+'" onclick="saveStoryData()">'+img+'<div class="nli-body"><div class="nli-cat">'+s.category+'</div><div class="nli-headline">'+s.headline+'</div><div class="nli-summary">'+(s.summary||'')+'</div><div class="nli-read">Read story →</div></div></a>';
+    return '<a class="news-list-item" href="story.html?id='+s.id+'" onclick="saveStoryData()">'+img+'<div class="nli-body"><div class="nli-cat">'+s.category+'</div><div class="nli-headline">'+s.headline+'</div><div class="nli-summary">'+(s.summary||'')+'</div><div class="nli-read">Read story →</div></div></a>';
   }).join('');
   document.getElementById('news-list').innerHTML=html;
 }
@@ -1723,7 +1723,7 @@ async function loadPersonalisedNews(user){
     // ---- HERO (story 0) ----
     var h=stories[0];
     var html='<div class="feat-wrap">';
-    html+='<a class="feat-hero" href="story.html?id=0&pers=1" onclick="goToStory(0,true);return false;">'
+    html+='<a class="feat-hero" href="story.html?id='+(h.id||0)+'&pers=1" onclick="goToStory('+(h.id||0)+',true);return false;">'
       +'<div class="card-top-bar" style="background:'+CARD_COLORS[0]+';"></div>'
       +imgBlock(h,true)
       +'<div class="feat-hero-body"><div class="card-meta"><span class="card-cat">'+h.category+'</span><span class="card-time">For you</span></div>'
@@ -1734,7 +1734,7 @@ async function loadPersonalisedNews(user){
     html+='<div class="feat-side"><div class="feat-side-hdr"><span class="fsh-title">Aaj ki baaki</span></div>';
     stories.slice(1,4).forEach(function(s,k){
       var i=k+1;
-      html+='<a class="feat-side-item" href="story.html?id='+i+'&pers=1" onclick="goToStory('+i+',true);return false;">'
+      html+='<a class="feat-side-item" href="story.html?id='+s.id+'&pers=1" onclick="goToStory('+i+',true);return false;">'
         +'<div class="fsi-cat">'+s.category+'</div>'
         +'<div class="fsi-headline">'+s.headline+'</div>'
         +'<div class="fsi-time">For you</div></a>';
@@ -1747,15 +1747,15 @@ async function loadPersonalisedNews(user){
     grid.innerHTML=rest.map(function(s,k){
       var i=k+4;
       var col=CARD_COLORS[i%CARD_COLORS.length];
-      return '<div class="story-card" onclick="goToStory('+i+',true)">'
+      return '<div class="story-card" onclick="goToStory('+s.id+',true)">'
         +'<div class="card-top-bar" style="background:'+col+';"></div>'
         +imgBlock(s,false)
         +'<div class="card-body"><div class="card-meta"><span class="card-cat">'+s.category+'</span><span class="card-time">For you</span></div>'
         +'<div class="card-headline">'+s.headline+'</div>'
         +bubble(persVoiceText(s,voiceKey,roleKey))
         +'<div class="thumb-row">'
-        +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+i+',\'up\')">👍 Helpful</button>'
-        +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+i+',\'down\')">👎 Nah</button>'
+        +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+s.id+',\'up\')">👍 Helpful</button>'
+        +'<button class="thumb-btn" onclick="event.stopPropagation();thumbFeedback(this,'+s.id+',\'down\')">👎 Nah</button>'
         +'</div>'
         +'</div></div>';
     }).join('');
@@ -1765,7 +1765,6 @@ async function loadPersonalisedNews(user){
   }
 }
 function goToStory(idx,isPersonalised){
-  localStorage.setItem('db_stories',JSON.stringify(isPersonalised?[]:storyData));
   window.location='story.html?id='+idx+(isPersonalised?'&pers=1':'');
 }
 async function thumbFeedback(btn,idx,type){
