@@ -946,6 +946,8 @@ app.get('/api/admin/stories', adminAuth, (req, res, next) => {
   next();
 }, curation.getAdminStories);
 app.post('/api/admin/generate-voices', adminAuth, curation.generateVoices);
+app.post('/api/admin/save-summary', adminAuth, curation.saveSummary);
+app.post('/api/admin/regenerate-summary', adminAuth, curation.regenerateSummary);
 app.post('/api/admin/backfill-summaries', adminAuth, curation.backfillSummaries);
 app.post('/api/admin/regenerate-voice', adminAuth, curation.regenerateVoice);
 app.post('/api/admin/save-voice', adminAuth, curation.saveVoice);
