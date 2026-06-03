@@ -1,0 +1,31 @@
+name: Dawn Brief Watchdog
+
+# Runs independently of the news cron, so it ALSO catches a totally failed cron.
+on:
+  schedule:
+    - cron: '45 23 * * *'   # 05:15 AM IST — early warning if the 5 AM cron failed
+    - cron: '0 2 * * *'     # 07:30 AM IST — full check (edition published? backend up?)
+  workflow_dispatch: {}     # lets you run it manually from the Actions tab anytime
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run watchdog
+        env:
+          SUPABASE_KEY:   ${{ secrets.SUPABASE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          MY_EMAIL:       ${{ secrets.MY_EMAIL }}
+          # Optional overrides:
+          # BACKEND_HEALTH_URL: https://api.ayushbrief.online/health
+          # MIN_STORIES: '5'
+          # HEARTBEAT: '1'   # set to send a daily "all good" email too
+        run: node watchdog.js
