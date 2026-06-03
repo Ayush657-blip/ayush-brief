@@ -135,7 +135,8 @@ STRICT rules:
 - Plain, simple English. No jargon, no bullet points, no headings, no preamble like "Here is the summary".
 - Neutral and factual. If the news is tragic or sensitive, write with care and dignity, never casual.
 - Output ONLY the paragraph text, nothing else.`;
-  return await callClaude(prompt, 600);
+  const text = await callClaude(prompt, 600);
+  return { text, src: hasFull ? 'article' : 'snippet', chars: source.length };
 }
 
 async function generateOneVoice(headline, summary, category, role) {
@@ -272,10 +273,13 @@ async function generateVoices(req, res) {
     for (const story of stories) {
       console.log(`📝 English summary for: ${story.headline.slice(0, 50)}...`);
 
-      // Clean 5-6 line English summary for the website
+      // Clean 5-6 line English summary for the website (from full article when possible)
       let cleanSummary = story.summary;
+      let summarySrc = 'snippet';
       try {
-        cleanSummary = await generateCleanSummary(story.headline, story.summary, story.category, story.link);
+        const gen = await generateCleanSummary(story.headline, story.summary, story.category, story.link);
+        cleanSummary = gen.text;
+        summarySrc = gen.src;
       } catch (err) {
         cleanSummary = story.summary;
       }
@@ -286,7 +290,7 @@ async function generateVoices(req, res) {
         body: JSON.stringify({ summary: cleanSummary, status: 'voices_generated' })
       });
 
-      results.push({ id: story.id, headline: story.headline, summary: cleanSummary });
+      results.push({ id: story.id, headline: story.headline, summary: cleanSummary, src: summarySrc });
       await new Promise(r => setTimeout(r, 300));
     }
 
@@ -324,13 +328,13 @@ async function regenerateSummary(req, res) {
     const rows = await r.json();
     if (!rows || rows.length === 0) return res.status(404).json({ error: 'Story not found' });
     const s = rows[0];
-    const newSummary = await generateCleanSummary(s.headline, s.summary, s.category, s.link);
+    const gen = await generateCleanSummary(s.headline, s.summary, s.category, s.link);
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
       method: 'PATCH',
       headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ summary: newSummary })
+      body: JSON.stringify({ summary: gen.text })
     });
-    res.json({ success: true, new_summary: newSummary });
+    res.json({ success: true, new_summary: gen.text, src: gen.src, chars: gen.chars });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -754,7 +758,8 @@ async function backfillSummaries(req, res) {
     let updated = 0;
     for (const story of stories) {
       try {
-        const clean = await generateCleanSummary(story.headline, story.summary, story.category, story.link);
+        const gen = await generateCleanSummary(story.headline, story.summary, story.category, story.link);
+        const clean = gen.text;
         if (clean && clean.length > 40) {
           await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
             method: 'PATCH',
