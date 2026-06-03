@@ -166,6 +166,7 @@ var storyId=parseInt(params.get('id')||'0');
 var isPersonalised=params.get('pers')==='1';
 var loggedInUser=null;
 var allStories=[];
+var currentStory=null;
 
 function toggleTheme(){
   var isDark=document.documentElement.getAttribute('data-theme')!=='light';
@@ -179,26 +180,17 @@ function toggleTheme(){
 
 async function loadStory(){
   var wrap=document.getElementById('story-wrap');
-  var cached=localStorage.getItem('db_stories');
-  var stories=[];
-  if(cached){try{stories=JSON.parse(cached);}catch(e){}}
-  // Re-fetch canonical full list if cache is empty OR doesn't contain this index
-  // (e.g. a category page may have cached only its own filtered stories)
-  if(!stories||stories.length===0||!stories[storyId]){
-    try{
-      var r=await fetch(API+'/data');
-      var d=await r.json();
-      stories=d.stories||[];
-    }catch(e){
-      try{var r2=await fetch('/data-backup.json');var d2=await r2.json();stories=d2.stories||[];}catch(e2){}
-    }
-  }
-  allStories=stories;
-  var story=stories[storyId];
+  var story=null, more=[];
+  try{
+    var r=await fetch(API+'/story?id='+encodeURIComponent(storyId));
+    var d=await r.json();
+    story=d.story; more=d.more||[];
+  }catch(e){}
   if(!story){
     wrap.innerHTML='<div style="text-align:center;padding:60px 0;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;color:var(--w3);">Story not found.</div><a href="index.html" style="color:var(--blue-p);text-decoration:none;font-size:14px;">← Go back home</a></div>';
     return;
   }
+  currentStory=story;
 
   // Update meta + OG tags dynamically
   document.title=story.headline+' — The Dawn Brief';
@@ -224,14 +216,12 @@ async function loadStory(){
   var voiceLabelClass=roleKey==='student'?'voice-label-student':roleKey==='professional'?'voice-label-professional':'voice-label-default';
   var voiceLabelText=roleKey==='student'?'🎓 Student Edition':roleKey==='professional'?'💼 Professional Edition':'☀️ The Dawn Brief';
 
-  var col=CARD_COLORS[storyId%CARD_COLORS.length];
+  var col=CARD_COLORS[(story.id||0)%CARD_COLORS.length];
   var icon=CAT_ICONS[story.category]||'📰';
-  var now=new Date();
-  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var dateStr=months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  var dateStr=story.date_display||'';
 
   var voiceHTML='';
-  if(isSubscriber&&voiceText){
+  if(isSubscriber&&story.voices&&story.voices[roleKey]){
     voiceHTML='<div class="voice-box '+voiceClass+'"><div class="voice-label '+voiceLabelClass+'">'+voiceLabelText+'</div><div class="voice-text">'+voiceText+'</div></div>';
   } else {
     var openText=story.summary||voiceText||'';
@@ -246,8 +236,7 @@ async function loadStory(){
     referralHTML='<div class="referral-box"><div class="referral-icon">👋</div><div class="referral-title">Your friend thought you would like this.</div><div class="referral-sub">They were right. Get your daily dose of news that does not bore you. Free. Every morning.</div><button class="referral-btn" onclick="window.location=\'index.html\'">Join the gang →</button></div>';
   }
 
-  var moreStories=stories.filter(function(_,i){return i!==storyId;}).slice(0,4);
-  var moreHTML=moreStories.length?'<div style="margin-top:40px;"><div class="more-title">More stories</div><div class="more-grid">'+moreStories.map(function(s,i){var c=CARD_COLORS[(storyId+i+1)%CARD_COLORS.length];return '<a class="more-card" href="story.html?id='+stories.indexOf(s)+'"><div class="more-card-bar" style="background:'+c+';"></div><div class="more-card-body"><div class="more-card-cat">'+s.category+'</div><div class="more-card-hl">'+s.headline+'</div></div></a>';}).join('')+'</div></div>':'';
+  var moreHTML=more.length?'<div style="margin-top:40px;"><div class="more-title">More stories</div><div class="more-grid">'+more.map(function(m,i){var c=CARD_COLORS[(i+1)%CARD_COLORS.length];return '<a class="more-card" href="story.html?id='+m.id+'"><div class="more-card-bar" style="background:'+c+';"></div><div class="more-card-body"><div class="more-card-cat">'+m.category+'</div><div class="more-card-hl">'+m.headline+'</div></div></a>';}).join('')+'</div></div>':'';
 
   var storyImageSrc=story.image_url||story.image;
   var imgHTML=storyImageSrc?'<div class="story-img"><img src="'+storyImageSrc+'" alt="'+story.headline+'" onerror="this.style.display=\'none\'" loading="eager"></div>':'<div class="story-img"><div class="story-img-ph">'+icon+'</div></div>';
@@ -269,13 +258,13 @@ async function loadStory(){
 }
 
 function shareWA(){
-  var story=allStories[storyId];
+  var story=currentStory;
   var text=encodeURIComponent((story?story.headline:'Check this out')+' — '+window.location.href+' via @thedawnbrief');
   window.open('https://wa.me/?text='+text,'_blank');
   trackEvent('share',{platform:'whatsapp',story:storyId});
 }
 function shareX(){
-  var story=allStories[storyId];
+  var story=currentStory;
   var text=encodeURIComponent((story?story.headline:'Check this out')+' '+window.location.href+' via @thedawnbrief');
   window.open('https://x.com/intent/tweet?text='+text,'_blank');
   trackEvent('share',{platform:'x',story:storyId});
