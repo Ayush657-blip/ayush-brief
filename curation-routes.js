@@ -219,32 +219,34 @@ async function generateOneKhatarnakVoice(headline, summary, category, role) {
   }
 
   const persona = role === 'student'
-    ? `Tu ek PGDM student ka chuddy buddy dost hai. Hinglish. Seedha, punchy, dramatic. Jaise breaking news sun ke bol raha ho — "bhai ye sun, ye bada waala hai."`
-    : `Tu ek professional ka chuddy buddy dost hai. Hinglish. Seedha, punchy, dramatic. Jaise chai pe bol raha ho — "yaar ye news dekhi, ye serious hai."`;
+    ? `Tu ek PGDM/MBA student ka sabse funny batchmate hai — North/West India se. Hinglish mein baat karte ho jaise dost actually bolte hain. Tera andaaz: savage, self-roast, dark desi humour, end pe ek punchline jo HASA de. Student life ke references — placement, attendance, hostel, exam, chai-sutta, jeb khaali, future ki tension.`
+    : `Tu ek working professional ka sharp funny colleague hai — North/West India se. Hinglish, chai-break waali baat. Tera andaaz: savage, dark office humour, end pe ek punchline. Office life ke references — boss, EMI, appraisal, salary, target, Monday, woh ek annoying manager.`;
 
   const sensitivityNote = sensitive
-    ? `Ye sensitive news hai. Warmth aur gravity se bol. Drama nahi, but seriousness zaroor.`
-    : `Full energy. Bhai mode mein sunne wali news. Punchy aur memorable.`;
+    ? `Ye sensitive/tragic news hai. Warmth aur dignity se likho — koi mazaak ya punchline NAHI. Seedhi, respectful Hinglish. "Tere liye matlab" line bhi serious aur insaani rakho.`
+    : `Full energy. Punchline kaat-ti honi chahiye.`;
 
   const prompt = `${persona}
 ${soulContext}
+TONE: Bilkul upar ke examples jaisा — savage, desi, dark, self-roast, end pe punchline. Halki crude desi humour chalegi (jaise "ghanta", "jeb phaati hui", "sutta") PAR gaali / maa-behen / bsdk type words bilkul NAHI. Examples ka level hi tera ceiling hai — usse aage mat jaa.
+${sensitivityNote}
 
-KHATARNAK NEWS — BHAI MODE KE LIYE:
+AAJ KI KHATARNAK NEWS:
 Headline: "${headline}"
 Kya hua: "${summary}"
 Category: ${category}
 
-${sensitivityNote}
+Do hisse mein likh (exactly is structure mein):
+1. KHABAR — 2 se 3 chhoti Hinglish lines. Kya hua + asli numbers/naam/figures (sirf jo upar diye hain — kuch invent mat karna). Yahan mazaak nahi — saaf, seedhi, samajhne wali info.
+2. Aakhri line "Tere liye matlab: " se shuru karo — phir ek savage/funny punchline us dost ki tarah, jo subscriber ke dimaag mein chipak jaaye.
 
 RULES:
-- Maximum 35 words — ye bolne ke liye hai, padhne ke liye nahi
-- Ek line headline reaction + ek line context
-- Hinglish only
-- Dramatic opening — jaise "Bhai sun," ya "Yaar ye dekh," ya seedha khabar
-- Koi preamble nahi, koi quotes nahi
-- Punchy end — subscriber ko lagey "ye important hai"`;
+- Hinglish only. Short punchy sentences.
+- Koi preamble nahi ("yahan summary hai" type), koi heading/label nahi, poori cheez quotes mein mat wrap karo.
+- "Tere liye matlab:" wo exact label use karo.
+- Total 60-85 words.`;
 
-  return await callClaude(prompt, 150);
+  return await callClaude(prompt, 280);
 }
 
 // ── ROUTE 1: Get today's stories for admin ────────────────────────────────────
@@ -657,7 +659,7 @@ async function generateKhatarnakVoices(req, res) {
   try {
     const { story_ids } = req.body;
     if (!story_ids || story_ids.length === 0) return res.status(400).json({ error: 'No story IDs provided' });
-    if (story_ids.length > 5) return res.status(400).json({ error: 'Maximum 5 khatarnak stories' });
+    if (story_ids.length > 10) return res.status(400).json({ error: 'Maximum 10 khatarnak stories' });
 
     const ids = story_ids.join(',');
     const response = await fetch(
