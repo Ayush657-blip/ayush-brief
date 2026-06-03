@@ -45,21 +45,21 @@ async function fetchVoiceSoul(voice) {
   } catch { return []; }
 }
 
-// Clean, easy-to-read English summary for the website (~5 lines)
+// Clean, easy-to-read English summary for the website (at least 5-6 lines)
 async function generateCleanSummary(headline, summary, category) {
   const prompt = `Write a clear, simple English summary of this news for an Indian student/professional reader.
 
 Headline: "${headline}"
-Details: "${(summary || '').slice(0, 600)}"
+Details: "${(summary || '').slice(0, 800)}"
 Category: ${category}
 
 Rules:
-- Write 4 to 5 short sentences (about 80 to 110 words).
+- Write AT LEAST 5 to 6 full sentences (about 110 to 150 words). Do not write less than 5 sentences.
 - Plain, easy English. No jargon, no heavy or fancy words.
-- Explain what happened and why it matters.
+- Explain what happened, the key details, and why it matters to the reader.
 - Neutral and factual. If the news is tragic or sensitive, write with care and dignity, never casual.
-- No preamble, no "Here is the summary", no quotes around it. Just the summary text.`;
-  return await callClaude(prompt, 240);
+- No preamble, no "Here is the summary", no bullet points, no quotes around it. Just flowing summary text.`;
+  return await callClaude(prompt, 360);
 }
 
 async function generateOneVoice(headline, summary, category, role) {
@@ -179,12 +179,11 @@ async function getAdminStories(req, res) {
   }
 }
 
-// ── ROUTE 2: Generate voice summaries for selected 5 stories ─────────────────
+// ── ROUTE 2: Generate clean English summaries for selected stories (any number)
 async function generateVoices(req, res) {
   try {
     const { story_ids } = req.body;
     if (!story_ids || story_ids.length === 0) return res.status(400).json({ error: 'No story IDs provided' });
-    if (story_ids.length > 10) return res.status(400).json({ error: 'Maximum 10 stories' });
 
     const ids = story_ids.join(',');
     const response = await fetch(
@@ -195,42 +194,67 @@ async function generateVoices(req, res) {
     const results = [];
 
     for (const story of stories) {
-      console.log(`🤖 Generating voices for: ${story.headline.slice(0, 50)}...`);
-      const voices = {};
+      console.log(`📝 English summary for: ${story.headline.slice(0, 50)}...`);
 
-      // Clean ~5-line English summary for the website
+      // Clean 5-6 line English summary for the website
       let cleanSummary = story.summary;
       try {
         cleanSummary = await generateCleanSummary(story.headline, story.summary, story.category);
       } catch (err) {
         cleanSummary = story.summary;
       }
-      await new Promise(r => setTimeout(r, 300));
-
-      try {
-        voices['student'] = await generateOneVoice(story.headline, story.summary, story.category, 'student');
-      } catch (err) {
-        voices['student'] = story.summary.slice(0, 200);
-      }
-      await new Promise(r => setTimeout(r, 300));
-
-      try {
-        voices['professional'] = await generateOneVoice(story.headline, story.summary, story.category, 'professional');
-      } catch (err) {
-        voices['professional'] = story.summary.slice(0, 200);
-      }
-      await new Promise(r => setTimeout(r, 300));
 
       await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
         method: 'PATCH',
         headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ summary: cleanSummary, voices, status: 'voices_generated' })
+        body: JSON.stringify({ summary: cleanSummary, status: 'voices_generated' })
       });
 
-      results.push({ id: story.id, headline: story.headline, summary: cleanSummary, voices });
+      results.push({ id: story.id, headline: story.headline, summary: cleanSummary });
+      await new Promise(r => setTimeout(r, 300));
     }
 
     res.json({ success: true, stories: results });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// ── ROUTE: Save an edited English summary ────────────────────────────────────
+async function saveSummary(req, res) {
+  try {
+    const { story_id, summary } = req.body;
+    if (!story_id || typeof summary !== 'string') return res.status(400).json({ error: 'story_id and summary required' });
+    await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ summary })
+    });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// ── ROUTE: Regenerate one English summary ────────────────────────────────────
+async function regenerateSummary(req, res) {
+  try {
+    const { story_id } = req.body;
+    if (!story_id) return res.status(400).json({ error: 'story_id required' });
+    const r = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}&select=*`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const rows = await r.json();
+    if (!rows || rows.length === 0) return res.status(404).json({ error: 'Story not found' });
+    const s = rows[0];
+    const newSummary = await generateCleanSummary(s.headline, s.summary, s.category);
+    await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ summary: newSummary })
+    });
+    res.json({ success: true, new_summary: newSummary });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -675,6 +699,8 @@ async function backfillSummaries(req, res) {
 module.exports = {
   getAdminStories,
   generateVoices,
+  saveSummary,
+  regenerateSummary,
   regenerateVoice,
   saveVoice,
   submitApproved,
