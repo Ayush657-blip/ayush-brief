@@ -641,6 +641,37 @@ async function sendEmailsToSubscribers(stories, date) {
   }
 }
 
+// ── ROUTE: One-time backfill — rewrite existing summaries to clean ~5-line English
+async function backfillSummaries(req, res) {
+  try {
+    const date = req.query.date || new Date().toISOString().split('T')[0];
+    const statusFilter = req.query.all === '1' ? '' : '&status=eq.approved';
+    const r = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}${statusFilter}&select=id,headline,summary,category`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const stories = r.ok ? await r.json() : [];
+    let updated = 0;
+    for (const story of stories) {
+      try {
+        const clean = await generateCleanSummary(story.headline, story.summary, story.category);
+        if (clean && clean.length > 40) {
+          await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
+            method: 'PATCH',
+            headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ summary: clean })
+          });
+          updated++;
+        }
+      } catch (e) { /* skip, keep old summary */ }
+      await new Promise(r2 => setTimeout(r2, 350));
+    }
+    res.json({ success: true, date, total: stories.length, updated });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 module.exports = {
   getAdminStories,
   generateVoices,
@@ -650,5 +681,6 @@ module.exports = {
   undoSubmit,
   autoFallback,
   generateKhatarnakVoices,
-  regenerateKhatarnakVoice
+  regenerateKhatarnakVoice,
+  backfillSummaries
 };
