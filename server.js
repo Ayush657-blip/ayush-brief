@@ -230,14 +230,33 @@ app.get('/data', async (req, res) => {
     const todayIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
     const today = todayIST.toISOString().split('T')[0];
 
-    // Read today's APPROVED stories directly from Supabase (survives redeploys)
-    const r = await fetch(
-      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${today}&status=eq.approved&select=*&order=importance.asc,id.asc`,
-      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
-    );
-    let stories = r.ok ? await r.json() : [];
+    const headers = { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` };
+    const fetchApprovedFor = async (date) => {
+      const r = await fetch(
+        `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}&status=eq.approved&select=*&order=importance.asc,id.asc`,
+        { headers }
+      );
+      return r.ok ? await r.json() : [];
+    };
 
-    // Fallback: if nothing approved today, serve the last good data.json (legacy)
+    // 1) Today's approved stories
+    let servedDate = today;
+    let stories = await fetchApprovedFor(today);
+
+    // 2) Fallback: most recent approved day from Supabase (keeps real images)
+    if (!stories || stories.length === 0) {
+      const latestR = await fetch(
+        `${SUPA_URL}/rest/v1/daily_stories?status=eq.approved&select=run_date&order=run_date.desc&limit=1`,
+        { headers }
+      );
+      const latest = latestR.ok ? await latestR.json() : [];
+      if (latest && latest.length > 0 && latest[0].run_date) {
+        servedDate = latest[0].run_date;
+        stories = await fetchApprovedFor(servedDate);
+      }
+    }
+
+    // 3) Last resort: legacy disk file
     if (!stories || stories.length === 0) {
       const fs = require('fs');
       const path = require('path');
@@ -264,7 +283,9 @@ app.get('/data', async (req, res) => {
       khatarnak_voice: s.khatarnak_voice || null
     }));
 
-    const dateDisplay = todayIST.toLocaleDateString('en-IN', {
+    // Display the actual date of the served news (today or the fallback day)
+    const dispDate = new Date(servedDate + 'T06:00:00+05:30');
+    const dateDisplay = dispDate.toLocaleDateString('en-IN', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata'
     });
 
