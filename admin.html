@@ -329,18 +329,18 @@ function renderKhatarnakSection() {
       ${khatarnakDone ? '<span style="color:var(--green);font-size:13px;font-weight:400">✅ Done</span>' : ''}
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:12px;color:var(--w3)" id="khatarnak-progress">${selCount}/5 selected</span>
+      <span style="font-size:12px;color:var(--w3)" id="khatarnak-progress">${selCount}/10 selected</span>
       <span style="color:var(--w3);font-size:12px">▼</span>
     </div>
   </div>
   <div class="khatarnak-body" id="khatarnak-body">
     <p style="font-size:12px;color:var(--w3);margin-bottom:16px;">
-      Har category ki top story automatically li hai. <strong style="color:var(--w)">Inme se 5 choose karo</strong> — ye Bhai Mode mein "Khatarnak News" ke liye use hogi.
+      Har category ki top story automatically li hai. <strong style="color:var(--w)">Inme se 1 se 10 choose karo</strong> — ye Bhai Mode mein "Khatarnak News" ke liye use hogi.
     </p>
     <div class="khatarnak-pool" id="khatarnak-pool">
       ${khatarnakPool.map(s => renderKhatarnakCard(s)).join('')}
     </div>
-    ${selCount >= 5 ? renderKhatarnakVoiceSection() : `<div style="text-align:center;padding:12px;font-size:13px;color:var(--w3);">5 stories select karo phir voice generate hogi ⚡</div>`}
+    ${selCount >= 1 ? renderKhatarnakVoiceSection() : `<div style="text-align:center;padding:12px;font-size:13px;color:var(--w3);">1 se 10 stories select karo phir voice generate hogi ⚡</div>`}
   </div>
 </div>`;
 }
@@ -370,7 +370,7 @@ function renderKhatarnakVoiceSection() {
 <div class="khatarnak-voice-section">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
     <div style="font-size:14px;font-weight:600;color:var(--red);">⚡ Khatarnak Voice Summaries</div>
-    <div style="font-size:12px;color:var(--w3);">${approvedCount}/5 approved</div>
+    <div style="font-size:12px;color:var(--w3);">${approvedCount}/${selectedStories.length} approved</div>
   </div>
   <p style="font-size:12px;color:var(--w3);margin-bottom:14px;">Ye summaries short aur punchy hongi — Bhai Mode mein bolne ke liye. Normal voice se alag.</p>
   ${Object.keys(khatarnakVoices).length === 0 ?
@@ -381,7 +381,7 @@ function renderKhatarnakVoiceSection() {
     </div>` :
     selectedStories.map(s => renderKhatarnakVoiceCard(s)).join('')
   }
-  ${approvedCount >= 5 ?
+  ${selectedStories.length > 0 && approvedCount >= selectedStories.length ?
     `<div class="generate-section">
       <button class="generate-btn" style="background:var(--green);" onclick="markKhatarnakDone()">✅ Khatarnak Done →</button>
     </div>` : ''
@@ -437,7 +437,7 @@ function toggleKhatarnakSelect(id) {
   if (selectedKhatarnak.has(id)) {
     selectedKhatarnak.delete(id);
   } else {
-    if (selectedKhatarnak.size >= 5) { showToast('Maximum 5 khatarnak stories'); return; }
+    if (selectedKhatarnak.size >= 10) { showToast('Maximum 10 khatarnak stories'); return; }
     selectedKhatarnak.add(id);
   }
   // Update card UI
@@ -449,12 +449,10 @@ function toggleKhatarnakSelect(id) {
   }
   // Update progress
   const prog = document.getElementById('khatarnak-progress');
-  if (prog) prog.textContent = `${selectedKhatarnak.size}/5 selected`;
+  if (prog) prog.textContent = `${selectedKhatarnak.size}/10 selected`;
 
-  // If 5 selected, show voice section
-  if (selectedKhatarnak.size === 5) {
-    refreshKhatarnakVoiceSection();
-  }
+  // Refresh voice section (shows from 1 selected, updates live)
+  refreshKhatarnakVoiceSection();
   updateProgress();
 }
 
@@ -466,7 +464,7 @@ function refreshKhatarnakVoiceSection() {
   if (poolDiv) {
     const existing = body.querySelector('.khatarnak-voice-section');
     if (existing) existing.remove();
-    const hint = body.querySelector('[style*="5 stories select"]');
+    const hint = body.querySelector('[style*="phir voice generate"]');
     if (hint) hint.remove();
     body.insertAdjacentHTML('beforeend', renderKhatarnakVoiceSection());
   }
@@ -474,7 +472,7 @@ function refreshKhatarnakVoiceSection() {
 
 async function generateKhatarnakVoices() {
   const selectedStories = khatarnakPool.filter(s => selectedKhatarnak.has(s.id));
-  if (selectedStories.length < 5) { showToast('5 stories select karo pehle'); return; }
+  if (selectedStories.length < 1) { showToast('Pehle stories select karo'); return; }
 
   const btn = document.getElementById('khatarnak-gen-btn');
   if (btn) { btn.disabled = true; btn.textContent = '⚡ Generating... (~2 min)'; }
@@ -588,7 +586,7 @@ function renderCategory(cat) {
       ${done?'<span style="color:var(--green);font-size:12px">✅ Done</span>':''}
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <span class="cat-progress" id="cat-prog-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel10}/10 selected · ${sel5}/5 final</span>
+      <span class="cat-progress" id="cat-prog-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel5} selected</span>
       <span style="color:var(--w3);font-size:12px">▼</span>
     </div>
   </div>
@@ -614,43 +612,35 @@ function renderCategoryBody(cat) {
   const phase = getCurrentPhase(cat);
   return `
 <div class="phase-tabs">
-  <button class="phase-tab ${phase===1?'active':''}" onclick="setPhase('${cat}',1)">Phase 1: Select 10</button>
-  <button class="phase-tab ${phase===2?'active':''}" onclick="setPhase('${cat}',2)">Phase 2: Select 5 Final</button>
-  <button class="phase-tab ${phase===3?'active':''}" onclick="setPhase('${cat}',3)">Phase 3: Review Summaries</button>
+  <button class="phase-tab ${phase===1?'active':''}" onclick="setPhase('${cat}',1)">1. Select Stories</button>
+  <button class="phase-tab ${phase===2?'active':''}" onclick="setPhase('${cat}',2)">2. Review Summaries</button>
 </div>
 <div id="phase-content-${cat.replace(/[^a-z0-9]/gi,'_')}">${renderPhase(cat, phase)}</div>`;
 }
 
 function getCurrentPhase(cat) {
-  if (selected5[cat] && selected5[cat].size > 0) return 3;
-  if (selected10[cat] && selected10[cat].size >= 10) return 2;
+  if (catDone[cat]) return 2;
   return 1;
 }
 
 function renderPhase(cat, phase) {
-  if (phase === 1) return renderPhase1(cat);
-  if (phase === 2) return renderPhase2(cat);
-  if (phase === 3) return renderPhase3(cat);
-  return '';
+  if (phase === 2) return renderPhase3(cat);
+  return renderPhase1(cat);
 }
 
 function renderPhase1(cat) {
   const stories = allStories[cat] || [];
-  const sel = selected10[cat] || new Set();
-  const maxSelect = Math.min(10, stories.length);
-  // Auto-select all if less than 10 stories
-  if (stories.length < 10 && sel.size < stories.length) {
-    stories.forEach(s => sel.add(s.id));
-    selected10[cat] = sel;
-  }
+  const sel = selected5[cat] || new Set();
+  selected5[cat] = sel;
+  const slug = cat.replace(/[^a-z0-9]/gi,'_');
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">🔴 Must cover stories shown first. Select your top ${maxSelect}. <span style="color:var(--blue-p)" id="sel10-count-${cat.replace(/[^a-z0-9]/gi,'_')}">${sel.size}/${maxSelect} selected</span></p>
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">🔴 Must-cover stories pehle. Jitni chahe utni select karo — har selected story website pe clean English summary ke saath jaayegi. <span style="color:var(--green)" id="sel5-count-${slug}">${sel.size} selected</span></p>
 <div class="story-grid">
 ${stories.map(s => {
   const isSelected = sel.has(s.id);
   const dateStr = s.pub_date ? new Date(s.pub_date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Kolkata'}) : '';
   const sourceStr = s.source || '';
-  return `<div class="story-card ${isSelected?'selected-10':''}" onclick="toggleSelect10('${cat}',${s.id},this)">
+  return `<div class="story-card ${isSelected?'selected-5':''}" onclick="toggleSelect5('${cat}',${s.id},this)">
   <div class="story-check">${isSelected?'✓':''}</div>
   <button class="delete-story-btn" onclick="event.stopPropagation();deleteStory(${s.id},'${cat}')" title="Delete story">🗑️</button>
   <div class="story-importance"><span class="importance-dot">${s.importance}</span><span class="importance-reason">${s.reason||''}</span></div>
@@ -671,7 +661,7 @@ ${stories.map(s => {
 </div>`;
 }).join('')}
 </div>
-${sel.size >= Math.min(10, stories.length) ? `<div class="generate-section"><button class="generate-btn" onclick="setPhase('${cat}',2)">Next: Select 5 Final →</button></div>` : ''}`;
+<div class="generate-section"><button class="generate-btn" id="gen-btn-${slug}" onclick="generateSummaries('${cat}')" ${sel.size===0?'disabled':''}>📝 Generate English Summaries (${sel.size}) →</button></div>`;
 }
 
 function renderPhase2(cat) {
@@ -722,9 +712,42 @@ function renderPhase3(cat) {
   const approvedCount = stories.filter(s => isStoryFullyApproved(s.id)).length;
   const totalStories = stories.length;
   return `
-<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">Review voice summaries. Edit, regenerate, or approve. <span style="color:var(--green)">${approvedCount}/${totalStories} approved</span></p>
-${stories.map(s => renderVoiceReview(s, cat)).join('')}
-${approvedCount >= totalStories ? `<div class="generate-section"><button class="generate-btn" style="background:var(--green)" onclick="markCatDone('${cat}')">✅ Category Done →</button></div>` : ''}`;
+<p style="font-size:12px;color:var(--w3);margin-bottom:12px;">English summaries review karo — edit, regenerate ya approve. <span style="color:var(--green)">${approvedCount}/${totalStories} approved</span></p>
+${totalStories === 0 ? '<p style="color:var(--w3);font-size:13px;padding:8px 0;">Pehle "1. Select Stories" se stories chuno aur "Generate English Summaries" dabao.</p>' : ''}
+${stories.map(s => renderSummaryReview(s, cat)).join('')}
+${totalStories > 0 && approvedCount >= totalStories ? `<div class="generate-section"><button class="generate-btn" style="background:var(--green)" onclick="markCatDone('${cat}')">✅ Category Done →</button></div>` : ''}`;
+}
+
+function renderSummaryReview(story, cat) {
+  const approved = isStoryFullyApproved(story.id);
+  return `
+<div class="voice-card ${approved?'voice-approved':''}" id="vc-${story.id}">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;gap:10px;align-items:flex-start;">
+      ${story.image_url ? `<img src="${story.image_url}" onerror="this.style.display='none'" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;" />` : ''}
+      <div>
+        <div class="voice-label">${story.category}</div>
+        <div style="font-size:14px;font-weight:500;color:var(--w7);line-height:1.4">${story.headline}</div>
+      </div>
+    </div>
+    ${approved?'<span style="color:var(--green);font-size:20px">✅</span>':''}
+  </div>
+  <div style="border:.5px solid ${approved?'rgba(0,200,150,.3)':'var(--border)'};border-radius:8px;padding:10px;background:${approved?'rgba(0,200,150,.04)':'transparent'}">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <span style="font-size:11px;color:var(--w3)">📝 English summary · website</span>
+      ${approved?'<span style="color:var(--green);font-size:12px">✅ Approved</span>':''}
+    </div>
+    <textarea id="sum-text-${story.id}"
+      style="width:100%;background:transparent;border:none;color:var(--w7);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;min-height:96px;outline:none;"
+      onchange="markEdited(${story.id})"
+    >${story.summary||'Not generated yet'}</textarea>
+    <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
+      <button class="voice-btn approve-btn" onclick="approveSummary(${story.id},'${cat}')">✅ Approve</button>
+      <button class="voice-btn regen-btn" onclick="regenSummary(${story.id},'${cat}')">🔄 Regenerate</button>
+      <button class="voice-btn save-btn" onclick="saveSummaryEdit(${story.id})">💾 Save Edit</button>
+    </div>
+  </div>
+</div>`;
 }
 
 function renderVoiceReview(story, cat) {
@@ -812,37 +835,41 @@ function toggleSelect5(cat, id, el) {
     el.classList.remove('selected-5');
     el.querySelector('.story-check').textContent = '';
   } else {
-    if (sel.size >= 5) { showToast('Maximum 5 stories per category'); return; }
     sel.add(id);
     el.classList.add('selected-5');
     el.querySelector('.story-check').textContent = '✓';
   }
-  const counter = document.getElementById(`sel5-count-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  if (counter) counter.textContent = `${sel.size}/5 selected`;
-  if (sel.size >= 5) setPhase(cat, 2);
+  const slug = cat.replace(/[^a-z0-9]/gi,'_');
+  const counter = document.getElementById(`sel5-count-${slug}`);
+  if (counter) counter.textContent = `${sel.size} selected`;
+  const gb = document.getElementById(`gen-btn-${slug}`);
+  if (gb) { gb.textContent = `📝 Generate English Summaries (${sel.size}) →`; gb.disabled = sel.size === 0; }
   updateCatHeader(cat);
   saveSession();
 }
 
 async function generateSummaries(cat) {
-  const sel5ids = Array.from(selected5[cat] || []);
-  if (sel5ids.length === 0) { showToast('Koi story select nahi hai'); return; }
-  const btn = document.getElementById(`gen-btn-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Generating... (~2 min)'; }
-  showToast('Generating voice summaries... Please wait');
+  const slug = cat.replace(/[^a-z0-9]/gi,'_');
+  const ids = Array.from(selected5[cat] || []);
+  if (ids.length === 0) { showToast('Koi story select nahi hai'); return; }
+  const btn = document.getElementById(`gen-btn-${slug}`);
+  if (btn) { btn.disabled = true; btn.textContent = `📝 Generating ${ids.length} summaries...`; }
+  showToast('Generating English summaries... Please wait');
   try {
-    const res = await apiPost(`${API}/api/admin/generate-voices`, { story_ids: sel5ids });
+    const res = await apiPost(`${API}/api/admin/generate-voices`, { story_ids: ids });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
     data.stories.forEach(s => {
       const story = (allStories[cat] || []).find(st => st.id === s.id);
-      if (story) story.voices = s.voices;
+      if (story) story.summary = s.summary;
+      if (approvedVoices[String(s.id)]) delete approvedVoices[String(s.id)];
     });
-    showToast('✅ Voice summaries generated!');
-    setPhase(cat, 3);
+    showToast('✅ English summaries generated!');
+    setPhase(cat, 2);
+    saveSession();
   } catch (err) {
     showToast(`❌ ${err.message}`);
-    if (btn) { btn.disabled = false; btn.textContent = '🤖 Generate Voice Summaries →'; }
+    if (btn) { btn.disabled = false; btn.textContent = `📝 Generate English Summaries (${ids.length}) →`; }
   }
 }
 
@@ -854,6 +881,42 @@ function approveVoice(storyId, voiceKey, cat) {
   const allDone = isStoryFullyApproved(storyId);
   if (allDone) showToast('✅ All voices approved for this story!');
   saveSession();
+}
+
+function approveSummary(storyId, cat) {
+  const id = String(storyId);
+  if (!approvedVoices[id]) approvedVoices[id] = {};
+  approvedVoices[id].summary = true;
+  setPhase(cat, 2);
+  showToast('✅ Summary approved!');
+  saveSession();
+}
+
+async function saveSummaryEdit(storyId) {
+  const ta = document.getElementById(`sum-text-${storyId}`);
+  if (!ta) return;
+  try {
+    await apiPost(`${API}/api/admin/save-summary`, { story_id: storyId, summary: ta.value });
+    const story = Object.values(allStories).flat().find(s => s.id === storyId);
+    if (story) story.summary = ta.value;
+    showToast('💾 Saved!');
+  } catch (err) { showToast(`❌ ${err.message}`); }
+}
+
+async function regenSummary(storyId, cat) {
+  showToast('🔄 Regenerating summary...');
+  try {
+    const res = await apiPost(`${API}/api/admin/regenerate-summary`, { story_id: storyId });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+    const ta = document.getElementById(`sum-text-${storyId}`);
+    if (ta) ta.value = data.new_summary;
+    const story = Object.values(allStories).flat().find(s => s.id === storyId);
+    if (story) story.summary = data.new_summary;
+    if (approvedVoices[String(storyId)]) delete approvedVoices[String(storyId)].summary;
+    showToast('✅ Regenerated!');
+    setPhase(cat, 2);
+  } catch (err) { showToast(`❌ ${err.message}`); }
 }
 
 function showFeedback(storyId, voiceKey) {
@@ -890,17 +953,13 @@ async function saveVoiceEdit(storyId, voiceKey) {
   } catch (err) { showToast(`❌ ${err.message}`); }
 }
 
-function markEdited(storyId, voiceKey) {
-  if (approvedVoices[storyId]) delete approvedVoices[storyId][voiceKey];
+function markEdited(storyId) {
+  if (approvedVoices[String(storyId)]) delete approvedVoices[String(storyId)].summary;
 }
 
 function isStoryFullyApproved(storyId) {
-  const keys = ['student','professional'];
   const id = String(storyId);
-  return keys.every(k =>
-    (approvedVoices[id] && approvedVoices[id][k]) ||
-    (approvedVoices[storyId] && approvedVoices[storyId][k])
-  );
+  return !!(approvedVoices[id] && approvedVoices[id].summary);
 }
 
 function markCatDone(cat) {
@@ -917,7 +976,7 @@ function updateCatHeader(cat) {
   const sel10 = selected10[cat] ? selected10[cat].size : 0;
   const sel5 = selected5[cat] ? selected5[cat].size : 0;
   const el = document.getElementById(`cat-prog-${cat.replace(/[^a-z0-9]/gi,'_')}`);
-  if (el) el.textContent = `${sel10}/10 selected · ${sel5}/5 final`;
+  if (el) el.textContent = `${sel5} selected`;
 }
 
 function updateProgress() {
