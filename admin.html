@@ -914,7 +914,11 @@ async function regenSummary(storyId, cat) {
     const story = Object.values(allStories).flat().find(s => s.id === storyId);
     if (story) story.summary = data.new_summary;
     if (approvedVoices[String(storyId)]) delete approvedVoices[String(storyId)].summary;
-    showToast('✅ Regenerated!');
+    if (data.src === 'article') {
+      showToast('✅ Regenerated from FULL ARTICLE (' + (data.chars||0) + ' chars)');
+    } else {
+      showToast('⚠️ Full article nahi mila — sirf snippet se bana (' + (data.chars||0) + ' chars)');
+    }
     setPhase(cat, 2);
   } catch (err) { showToast(`❌ ${err.message}`); }
 }
