@@ -26,7 +26,16 @@ async function callClaude(prompt, maxTokens = 300) {
       messages: [{ role: 'user', content: prompt }]
     })
   });
-  if (!res.ok) throw new Error(`Claude error ${res.status}`);
+  if (!res.ok) {
+    let detail = '';
+    try {
+      const e = await res.json();
+      detail = (e && e.error && e.error.message) ? e.error.message : JSON.stringify(e);
+    } catch (x) {
+      try { detail = await res.text(); } catch (y) { detail = ''; }
+    }
+    throw new Error((`Claude ${res.status}: ${detail}`).slice(0, 300));
+  }
   const data = await res.json();
   return data.content[0].text.trim();
 }
@@ -85,7 +94,7 @@ async function fetchArticleText(url) {
     }
     let text = paras.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
     if (text.length < 200) return null; // paywall / JS-only / blocked
-    return text.slice(0, 6000);
+    return text.slice(0, 4000);
   } catch (e) {
     return null;
   }
@@ -119,7 +128,7 @@ Headline: "${headline}"
 Category: ${category}
 ${hasFull ? 'Full article text' : 'Available details'}:
 """
-${source.slice(0, 6000)}
+${source.slice(0, 3000)}
 """
 
 Write ONE flowing paragraph that covers, in this order:
@@ -135,7 +144,7 @@ STRICT rules:
 - Plain, simple English. No jargon, no bullet points, no headings, no preamble like "Here is the summary".
 - Neutral and factual. If the news is tragic or sensitive, write with care and dignity, never casual.
 - Output ONLY the paragraph text, nothing else.`;
-  const text = await callClaude(prompt, 600);
+  const text = await callClaude(prompt, 350);
   return { text, src: hasFull ? 'article' : 'snippet', chars: source.length };
 }
 
