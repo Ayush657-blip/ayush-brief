@@ -268,11 +268,13 @@ app.get('/data', async (req, res) => {
     }
 
     const formatted = stories.map(s => ({
+      id: s.id,
       category: s.category,
       headline: s.headline,
       summary: s.summary,
       link: s.link || '',
       pubDate: s.pub_date || '',
+      run_date: s.run_date || '',
       image_url: s.image_url || null,
       image_source: s.image_source || null,
       hasVoice: !!(s.voices && (s.voices.student || s.voices.professional)),
@@ -306,6 +308,99 @@ app.get('/data', async (req, res) => {
       }
     } catch (e) {}
     res.json({ stories: [], date: '' });
+  }
+});
+
+// ── ARCHIVE: last 30 days of approved stories (newest day first) ───────────────
+app.get('/archive', async (req, res) => {
+  try {
+    const cat = req.query.cat || null;
+    const todayIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const cutoffDate = new Date(todayIST.getTime() - 29 * 24 * 60 * 60 * 1000);
+    const cutoff = cutoffDate.toISOString().split('T')[0];
+
+    let url = `${SUPA_URL}/rest/v1/daily_stories?status=eq.approved&run_date=gte.${cutoff}&select=*&order=run_date.desc,importance.asc,id.asc`;
+    if (cat) url += `&category=eq.${encodeURIComponent(cat)}`;
+
+    const r = await fetch(url, { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } });
+    const rows = r.ok ? await r.json() : [];
+
+    const fmtDate = (d) => {
+      try {
+        return new Date(d + 'T06:00:00+05:30').toLocaleDateString('en-IN', {
+          weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata'
+        });
+      } catch (e) { return d; }
+    };
+
+    const stories = rows.map(s => ({
+      id: s.id,
+      category: s.category,
+      headline: s.headline,
+      summary: s.summary,
+      link: s.link || '',
+      run_date: s.run_date || '',
+      date_display: fmtDate(s.run_date),
+      pubDate: s.pub_date || '',
+      image_url: s.image_url || null,
+      image_source: s.image_source || null,
+      is_previous_day: s.is_previous_day || false
+    }));
+
+    res.json({ cutoff, category: cat, totalStories: stories.length, stories });
+  } catch (err) {
+    res.json({ stories: [], category: req.query.cat || null });
+  }
+});
+
+// ── SINGLE STORY by permanent Supabase id (+ a few more) ──────────────────────
+app.get('/story', async (req, res) => {
+  try {
+    const id = req.query.id;
+    if (!id) return res.status(400).json({ error: 'id required' });
+
+    const r = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?id=eq.${id}&select=*`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const rows = r.ok ? await r.json() : [];
+    if (!rows || rows.length === 0) return res.json({ story: null, more: [] });
+    const s = rows[0];
+
+    const fmtDate = (d) => {
+      try {
+        return new Date(d + 'T06:00:00+05:30').toLocaleDateString('en-IN', {
+          weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata'
+        });
+      } catch (e) { return d; }
+    };
+
+    const story = {
+      id: s.id,
+      category: s.category,
+      headline: s.headline,
+      summary: s.summary,
+      link: s.link || '',
+      run_date: s.run_date || '',
+      date_display: fmtDate(s.run_date),
+      image_url: s.image_url || null,
+      voices: s.voices || null,
+      khatarnak_voice: s.khatarnak_voice || null
+    };
+
+    // a few other recent approved stories (newest first), excluding this one
+    let more = [];
+    try {
+      const mr = await fetch(
+        `${SUPA_URL}/rest/v1/daily_stories?status=eq.approved&id=neq.${id}&select=id,category,headline&order=run_date.desc,importance.asc,id.asc&limit=4`,
+        { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+      );
+      more = mr.ok ? await mr.json() : [];
+    } catch (e) {}
+
+    res.json({ story, more });
+  } catch (err) {
+    res.json({ story: null, more: [] });
   }
 });
 
