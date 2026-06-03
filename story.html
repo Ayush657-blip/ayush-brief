@@ -77,6 +77,8 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .voice-label-professional{color:#FFAA55;}
 .voice-label-default{color:var(--blue-p);}
 .voice-text{font-size:15px;color:var(--w7);line-height:1.85;}
+.voice-text p{margin:0 0 16px;}
+.voice-text p:last-child{margin-bottom:0;}
 .voice-preview{position:relative;}
 .voice-blurred{filter:blur(5px);user-select:none;pointer-events:none;opacity:.6;}
 .voice-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(to bottom,transparent 0%,var(--bg2) 60%);}
@@ -159,6 +161,26 @@ var API='https://api.ayushbrief.online';
 var SUPA_URL='https://ygkviidhuqicfnvyuiiu.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0';
 var CARD_COLORS=['#D97706','#7C3AED','#2563EB','#059669','#DC2626','#4F46E5','#0891B2','#7C2D12','#065F46'];
+
+// Split a long summary into 2-3 readable paragraphs (Morning Brew style).
+// Splits on sentence ends only (space + capital/quote/₹/$), so decimals like 3.2
+// and amounts like $10.3 billion are never broken. No AI call — pure formatting.
+function toParagraphs(text){
+  text=(text||'').trim();
+  if(!text) return '';
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  var parts=[text];
+  try{
+    var re=new RegExp('(?<=[.!?"\\u201D])\\s+(?=[A-Z"\\u201C\\u20B9$])');
+    parts=text.split(re).filter(function(x){return x&&x.trim();});
+  }catch(e){ parts=[text]; }
+  if(parts.length<=2) return '<p>'+esc(text)+'</p>';
+  var groups=parts.length>=6?3:2;
+  var per=Math.ceil(parts.length/groups);
+  var out=[];
+  for(var i=0;i<parts.length;i+=per){ out.push(parts.slice(i,i+per).join(' ')); }
+  return out.map(function(p){return '<p>'+esc(p.trim())+'</p>';}).join('');
+}
 var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Startups & Auto':'🚀','Science & Health':'🔬','Entertainment':'🎬'};
 
 var params=new URLSearchParams(window.location.search);
@@ -222,12 +244,12 @@ async function loadStory(){
 
   var voiceHTML='';
   if(isSubscriber&&story.voices&&story.voices[roleKey]){
-    voiceHTML='<div class="voice-box '+voiceClass+'"><div class="voice-label '+voiceLabelClass+'">'+voiceLabelText+'</div><div class="voice-text">'+voiceText+'</div></div>';
+    voiceHTML='<div class="voice-box '+voiceClass+'"><div class="voice-label '+voiceLabelClass+'">'+voiceLabelText+'</div><div class="voice-text">'+toParagraphs(voiceText)+'</div></div>';
   } else {
     var openText=story.summary||voiceText||'';
     voiceHTML='<div class="voice-box voice-box-default">'
       +'<div class="voice-label voice-label-default">☀️ The Dawn Brief</div>'
-      +'<div class="voice-text">'+openText+'</div>'
+      +'<div class="voice-text">'+toParagraphs(openText)+'</div>'
       +'</div>';
   }
 
