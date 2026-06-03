@@ -173,14 +173,14 @@ async function loadCategory(){
     +'</div>';
   
   try{
-    var r=await fetch(API+'/data');
+    var r=await fetch(API+'/archive?cat='+encodeURIComponent(currentCat));
     if(!r.ok)throw new Error('API error');
     var data=await r.json();
     allStories=data.stories||[];
   }catch(e){
-    try{var r2=await fetch('/data-backup.json');var d2=await r2.json();allStories=d2.stories||[];}catch(e2){allStories=[];}
+    allStories=[];
   }
-  
+
   renderCategory(currentCat);
 }
 
@@ -195,23 +195,30 @@ function renderHeader(){
 
 function renderCategory(cat){
   var content=document.getElementById('cat-content');
-  // Show ONLY this category's stories — no mixing with others
-  var display=allStories.filter(function(s){return s.category===cat;});
+  var stories=allStories; // already this category, newest day first
 
-  if(display.length===0){
-    content.innerHTML=renderHeader()+'<div class="empty-state"><div class="empty-icon">☀️</div><div class="empty-text">No stories in this category today.<br>Fresh news drops every morning at 6 AM.</div></div>';
+  if(!stories.length){
+    content.innerHTML=renderHeader()+'<div class="empty-state"><div class="empty-icon">☀️</div><div class="empty-text">No stories in this category yet.<br>Fresh news drops every morning at 6 AM.</div></div>';
     return;
   }
-  
-  localStorage.setItem('db_stories',JSON.stringify(allStories));
-  
-  var listHTML=display.map(function(s,i){
-    var globalIdx=allStories.indexOf(s);
+
+  var todayStr='';
+  try{ todayStr=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Kolkata'})).toISOString().split('T')[0]; }catch(e){}
+
+  // group by run_date, preserving newest-first order from the API
+  var groups=[], map={};
+  stories.forEach(function(s){
+    var k=s.run_date||'';
+    if(!map[k]){ map[k]={date:k,label:s.date_display||k,items:[]}; groups.push(map[k]); }
+    map[k].items.push(s);
+  });
+
+  function renderItem(s){
     var catImgSrc=s.image_url||s.image;
     var imgHTML=catImgSrc
       ?'<img class="sli-img" src="'+catImgSrc+'" alt="'+s.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="sli-img-ph" style="display:none;">'+(CAT_ICONS[s.category]||'📰')+'</div>'
       :'<div class="sli-img-ph">'+(CAT_ICONS[s.category]||'📰')+'</div>';
-    return '<a class="story-list-item" href="story.html?id='+globalIdx+'">'
+    return '<a class="story-list-item" href="story.html?id='+s.id+'">'
       +imgHTML
       +'<div class="sli-body">'
       +'<div class="sli-cat">'+s.category+'</div>'
@@ -219,9 +226,19 @@ function renderCategory(cat){
       +'<div class="sli-summary">'+(s.summary||'')+'</div>'
       +'<div class="sli-read">Read full story →</div>'
       +'</div></a>';
-  }).join('');
-  
-  content.innerHTML=renderHeader()+'<div>'+listHTML+'</div>';
+  }
+
+  var html=renderHeader();
+  groups.forEach(function(g){
+    var isToday=g.date && g.date===todayStr;
+    var label=isToday?('Aaj · '+g.label):g.label;
+    html+='<div style="margin:30px 0 8px;display:flex;align-items:center;gap:12px;">'
+      +'<span style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:20px;color:#E8C558;white-space:nowrap;">'+label+'</span>'
+      +'<span style="flex:1;height:1px;background:rgba(255,255,255,.08);"></span>'
+      +'</div>';
+    html+='<div>'+g.items.map(renderItem).join('')+'</div>';
+  });
+  content.innerHTML=html;
 }
 
 if(typeof gtag!=='undefined')gtag('event','page_view',{page:'category',category:currentCat});
