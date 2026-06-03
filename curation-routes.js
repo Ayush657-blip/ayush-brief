@@ -425,6 +425,58 @@ async function saveVoice(req, res) {
 }
 
 // ── ROUTE 5: Submit approved stories ─────────────────────────────────────────
+// ── Self-host story images on Supabase Storage so they load in every inbox ──
+const IMG_BUCKET = 'story-images';
+
+// Create the public bucket once (ignores "already exists")
+async function ensureImageBucket() {
+  try {
+    await fetch(`${SUPA_URL}/storage/v1/bucket`, {
+      method: 'POST',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: IMG_BUCKET, name: IMG_BUCKET, public: true })
+    });
+  } catch (e) { /* already exists or transient — fine */ }
+}
+
+// Copy an external image into our Supabase bucket; returns the self-hosted public URL.
+// On any failure, returns the original URL (never breaks publish).
+async function rehostImage(imageUrl, storyId) {
+  if (!imageUrl || typeof imageUrl !== 'string') return imageUrl;
+  // already self-hosted? skip (idempotent)
+  if (imageUrl.includes(`/storage/v1/object/public/${IMG_BUCKET}/`)) return imageUrl;
+  if (!/^https?:\/\//i.test(imageUrl)) return imageUrl;
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch(imageUrl, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return imageUrl;
+    const ctype = (res.headers.get('content-type') || '').toLowerCase();
+    if (!ctype.startsWith('image/')) return imageUrl;
+    const ext = ctype.includes('png') ? 'png' : ctype.includes('webp') ? 'webp' : ctype.includes('gif') ? 'gif' : 'jpg';
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (buf.length < 1000) return imageUrl; // too small / broken
+    const path = `published/${storyId}.${ext}`;
+    const up = await fetch(`${SUPA_URL}/storage/v1/object/${IMG_BUCKET}/${path}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`,
+        'Content-Type': ctype, 'x-upsert': 'true', 'Cache-Control': 'public, max-age=31536000'
+      },
+      body: buf
+    });
+    if (!up.ok) return imageUrl;
+    return `${SUPA_URL}/storage/v1/object/public/${IMG_BUCKET}/${path}`;
+  } catch (e) {
+    return imageUrl;
+  }
+}
+
 async function submitApproved(req, res) {
   try {
     const { approved_ids, date } = req.body;
@@ -444,6 +496,24 @@ async function submitApproved(req, res) {
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const approvedStories = await response.json();
+
+    // Copy each published story's image to our own Supabase Storage (reliable in email + website)
+    await ensureImageBucket();
+    for (const s of approvedStories) {
+      if (!s.image_url) continue;
+      const hosted = await rehostImage(s.image_url, s.id);
+      if (hosted && hosted !== s.image_url) {
+        try {
+          await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${s.id}`, {
+            method: 'PATCH',
+            headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image_url: hosted, image_source: 'supabase' })
+          });
+        } catch (e) { /* keep going */ }
+        s.image_url = hosted;
+        s.image_source = 'supabase';
+      }
+    }
 
     const formattedStories = approvedStories.map(s => ({
       category: s.category,
