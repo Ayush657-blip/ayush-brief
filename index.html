@@ -1495,13 +1495,12 @@ document.addEventListener('DOMContentLoaded', function(){
 function openOnboarding(skipEmail){
   document.getElementById('hp').classList.add('hide');
   document.getElementById('ob').classList.add('show');
+  // Always start at Step 1 (name) — backend requires name, so it can't be skipped.
+  // If the user already typed their email in the hero, preserve it for Step 2.
   if(skipEmail && userData.email){
-    // Pre-fill email and skip to step 2
     document.getElementById('ob-email').value = userData.email;
-    showStep(2);
-  } else {
-    showStep(1);
   }
+  showStep(1);
 }
 function closeOnboarding(){
   document.getElementById('ob').classList.remove('show');
