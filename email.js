@@ -107,11 +107,9 @@ function generateEmailHTML(stories, date, subscriber) {
   const name = (sub.name || '').trim();
 
   function getVoiceKey(r) {
-    if (r === 'student' || r === 'employee' || r === 'agent') return r;
-    if (r && r.includes('student')) return 'student';
-    if (r && r.includes('employee')) return 'employee';
+    if (r === 'student') return 'student';
     if (r === 'agent') return 'agent';
-    return 'student';
+    return 'professional'; // professional / employee / anything else
   }
   const voiceKey = getVoiceKey(sub.role);
 
