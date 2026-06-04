@@ -32,8 +32,16 @@ function splitParas(text) {
   const mid = Math.ceil(sentences.length / 2);
   return [sentences.slice(0, mid).join('').trim(), sentences.slice(mid).join('').trim()].filter(Boolean);
 }
+function cleanVoice(s) {
+  return String(s || '')
+    .replace(/\*+/g, '')                      // strip markdown asterisks (** , *)
+    .replace(/^\s*KHABAR\s*:?\s*/i, '')        // strip leading "KHABAR" label
+    .replace(/\bKHABAR\s*:?\s*/gi, '')         // strip any stray "KHABAR" label
+    .replace(/[ \t]{2,}/g, ' ')                // collapse double spaces
+    .trim();
+}
 function renderVoice(voiceText) {
-  const raw = String(voiceText || '').trim();
+  const raw = cleanVoice(voiceText);
   const P = 'margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.75;color:#D6D6E0;';
   const PLAST = 'margin:0 0 18px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.75;color:#D6D6E0;';
   const parts = raw.split(/tere\s+liye\s+matlab\s*:/i);
