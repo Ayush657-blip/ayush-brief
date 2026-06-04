@@ -230,12 +230,6 @@ function renderCategory(cat){
 
   var html=renderHeader();
   groups.forEach(function(g){
-    var isToday=g.date && g.date===todayStr;
-    var label=isToday?('Aaj · '+g.label):g.label;
-    html+='<div style="margin:30px 0 8px;display:flex;align-items:center;gap:12px;">'
-      +'<span style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:20px;color:#E8C558;white-space:nowrap;">'+label+'</span>'
-      +'<span style="flex:1;height:1px;background:rgba(255,255,255,.08);"></span>'
-      +'</div>';
     html+='<div>'+g.items.map(renderItem).join('')+'</div>';
   });
   content.innerHTML=html;
