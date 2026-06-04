@@ -807,6 +807,50 @@ async function backfillSummaries(req, res) {
   }
 }
 
+// ── ROUTE: Resend the latest published edition (FREE — NO Claude calls) ──
+// Re-sends already-approved stories with their already-generated voices.
+async function resendTodayEmail(req, res) {
+  try {
+    const latestRes = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?status=eq.approved&select=run_date&order=run_date.desc&limit=1`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const latest = await latestRes.json();
+    if (!latest || latest.length === 0) return res.status(400).json({ error: 'No approved stories found to resend.' });
+    const date = req.query.date || latest[0].run_date;
+
+    const r = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?run_date=eq.${date}&status=eq.approved&select=*&order=importance.asc,id.asc`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const approvedStories = await r.json();
+    if (!approvedStories || approvedStories.length === 0) return res.status(400).json({ error: `No approved stories for ${date}` });
+
+    const formattedStories = approvedStories.map(s => ({
+      id: s.id,
+      category: s.category,
+      headline: s.headline,
+      summary: s.summary,
+      link: s.link || '',
+      image_url: s.image_url || null,
+      image_source: s.image_source || null,
+      voices: s.voices || null,
+      khatarnak_voice: s.khatarnak_voice || null,
+      is_previous_day: s.is_previous_day || false,
+      is_khatarnak: s.is_khatarnak || false
+    }));
+
+    const dateDisplay = new Date().toLocaleDateString('en-IN', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata'
+    });
+
+    await sendEmailsToSubscribers(formattedStories, dateDisplay);
+    res.json({ success: true, resent_stories: formattedStories.length, run_date: date });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 module.exports = {
   getAdminStories,
   generateVoices,
@@ -819,5 +863,6 @@ module.exports = {
   autoFallback,
   generateKhatarnakVoices,
   regenerateKhatarnakVoice,
-  backfillSummaries
+  backfillSummaries,
+  resendTodayEmail
 };
