@@ -1090,6 +1090,14 @@ app.post('/api/admin/backfill-summaries', adminAuth, curation.backfillSummaries)
 app.post('/api/admin/regenerate-voice', adminAuth, curation.regenerateVoice);
 app.post('/api/admin/save-voice', adminAuth, curation.saveVoice);
 app.post('/api/admin/submit', adminAuth, curation.submitApproved);
+
+// Resend the latest published edition (FREE — no Claude). Trigger from browser:
+//   https://api.ayushbrief.online/api/admin/resend?key=dawnbrief2026
+app.get('/api/admin/resend', (req, res) => {
+  const key = req.query.key || req.headers['x-admin-key'];
+  if (key !== ADMIN_KEY) return res.status(401).json({ error: 'Unauthorized' });
+  return curation.resendTodayEmail(req, res);
+});
 app.post('/api/admin/undo-submit', adminAuth, curation.undoSubmit);
 app.post('/api/admin/auto-fallback', adminAuth, curation.autoFallback);
 app.post('/api/admin/generate-khatarnak-voices', adminAuth, (req, res, next) => {
