@@ -5,6 +5,7 @@
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
+const { generateEmailHTML } = require('./email');  // premium template engine
 
 const VALID_CATEGORIES = [
   'Business', 'Indian Economy', 'Finance', 'Tech', 'Sports',
@@ -518,6 +519,7 @@ async function submitApproved(req, res) {
     }
 
     const formattedStories = approvedStories.map(s => ({
+      id: s.id,
       category: s.category,
       headline: s.headline,
       summary: s.summary,
@@ -721,108 +723,55 @@ async function regenerateKhatarnakVoice(req, res) {
 // ── EMAIL SENDER ──────────────────────────────────────────────────────────────
 async function sendEmailsToSubscribers(stories, date) {
   try {
+    // EMPTY GUARD — never send a blank brief
+    if (!stories || stories.length === 0) {
+      console.log('\u26A0\uFE0F No stories to send \u2014 skipping email (no empty briefs).');
+      return;
+    }
+
     const { Resend } = require('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const subRes = await fetch(
-      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,role,region`,
+      `${SUPA_URL}/rest/v1/subscribers?is_active=eq.true&select=email,name,role,region,referral_code`,
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const subscribers = await subRes.json();
-    console.log(`📧 Sending to ${subscribers.length} subscribers...`);
+    console.log(`\uD83D\uDCE7 Sending ${stories.length} stories to ${subscribers.length} subscribers...`);
 
     for (const subscriber of subscribers) {
       const { email, name, role, region } = subscriber;
       const firstName = (name || 'friend').split(' ')[0];
       const isHinglish = region === 'north' || region === 'west';
-      const voiceKey = role === 'student' ? 'student' : 'professional';
-      const roleLabel = role === 'student' ? '🎓 Student' : '💼 Professional';
-      const roleColor = role === 'student' ? '#FF4D6D' : '#FFAA55';
-
-      const greeting = role === 'student' && isHinglish
-        ? `Yaar ${firstName}, aaj ki brief aa gayi. ☀️ 7 minute mein poori duniya.`
-        : role === 'student'
-        ? `Hey ${firstName}, your daily brief is here. ☀️ 5 minutes. Everything you need.`
-        : isHinglish
-        ? `${firstName} bhai, chai le aur padh. ☕ Aaj ki brief ready hai.`
-        : `Good morning ${firstName}. ☀️ Your daily brief is ready. 5 minutes.`;
 
       const subject = role === 'student' && isHinglish
-        ? `☀️ Yaar sun — aaj ki brief aai hai`
+        ? `\u2600\uFE0F Yaar sun \u2014 aaj ki brief aai hai`
         : role === 'student'
-        ? `☀️ Your daily brief is here`
+        ? `\u2600\uFE0F Your daily brief is here`
         : isHinglish
-        ? `☀️ Chai le aur padh — aaj ki brief`
-        : `☀️ Your morning brief — The Dawn Brief`;
+        ? `\u2600\uFE0F Chai le aur padh \u2014 aaj ki brief`
+        : `\u2600\uFE0F Your morning brief \u2014 The Dawn Brief`;
 
-      const voiceStories = stories.filter(s => s.hasVoice).slice(0, 6);
-      const storyCards = voiceStories.map(s => {
-        const voiceText = s.voices && s.voices[voiceKey] ? s.voices[voiceKey] : s.summary;
-        return `<tr><td style="padding:0 0 14px 0;">
-          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C0C18;border-radius:12px;border:0.5px solid rgba(255,255,255,.07);overflow:hidden;">
-            <tr><td style="height:2px;background:linear-gradient(90deg,#2979FF,#00B4FF);"></td></tr>
-            <tr><td style="padding:16px 20px;">
-              <p style="margin:0 0 6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(92,200,255,.6);font-weight:600;">${s.category}${s.is_previous_day?' · Yesterday':''}</p>
-              <h3 style="margin:0 0 10px;font-family:Georgia,serif;font-size:15px;color:rgba(255,255,255,.9);line-height:1.4;font-style:italic;">${s.headline}</h3>
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:rgba(255,255,255,.03);border-radius:8px;border-left:2.5px solid ${roleColor};">
-                <tr><td style="padding:10px 13px;">
-                  <p style="margin:0 0 4px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:${roleColor};font-weight:700;">${roleLabel}</p>
-                  <p style="margin:0;font-size:13px;color:rgba(255,255,255,.7);line-height:1.7;">${voiceText}</p>
-                </td></tr>
-              </table>
-              <p style="margin:8px 0 0;"><a href="${s.link}" style="color:#5CC8FF;font-size:11px;font-weight:600;text-decoration:none;">Read full story →</a></p>
-            </td></tr>
-          </table>
-        </td></tr>`;
-      }).join('');
-
-      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#07070F;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#07070F;padding:20px 0;">
-    <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
-        <tr><td style="height:1.5px;background:linear-gradient(90deg,transparent,#5CC8FF,#fff,#5CC8FF,transparent);"></td></tr>
-        <tr><td style="background:#07070F;padding:24px 28px 16px;text-align:center;border:0.5px solid rgba(255,255,255,.05);border-bottom:none;border-radius:16px 16px 0 0;">
-          <p style="margin:0 0 4px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(92,200,255,.4);">Daily Intelligence · India</p>
-          <h1 style="margin:0 0 4px;font-family:Georgia,serif;font-size:26px;color:#E8C558;">☀️ The Dawn Brief</h1>
-          <p style="margin:0;font-size:12px;color:rgba(255,255,255,.3);">${date}</p>
-        </td></tr>
-        <tr><td style="background:#0C0C18;padding:14px 28px;border-left:0.5px solid rgba(255,255,255,.05);border-right:0.5px solid rgba(255,255,255,.05);">
-          <p style="margin:0;font-size:14px;color:rgba(255,255,255,.65);line-height:1.65;">${greeting}</p>
-        </td></tr>
-        <tr><td style="background:#07070F;padding:16px 28px;border:0.5px solid rgba(255,255,255,.05);border-top:none;border-bottom:none;">
-          <table width="100%" cellpadding="0" cellspacing="0" border="0">${storyCards}</table>
-        </td></tr>
-        <tr><td style="background:#07070F;padding:16px 28px 20px;text-align:center;border:0.5px solid rgba(255,255,255,.05);border-top:none;border-radius:0 0 16px 16px;">
-          <p style="margin:0 0 6px;font-family:Georgia,serif;font-size:14px;color:#E8C558;">☀️ The Dawn Brief</p>
-          <p style="margin:0 0 8px;font-size:11px;color:rgba(255,255,255,.2);">News that feels like a friend · ayushbrief.online</p>
-          <p style="margin:0;font-size:11px;">
-            <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">Read on website</a>
-            &nbsp;·&nbsp;
-            <a href="https://ayushbrief.online/unsubscribe.html" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
-          </p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body></html>`;
+      // Premium template + savage khatarnak voice (per subscriber role)
+      const html = generateEmailHTML(stories, date, subscriber);
 
       try {
         await resend.emails.send({
-          from: 'The Dawn Brief <newsletter@ayushbrief.online>',
+          from: 'Ayush \u2014 The Dawn Brief <newsletter@ayushbrief.online>',
           to: [email],
+          replyTo: 'newsletter@ayushbrief.online',
           subject,
           html
         });
-        console.log(`✅ Sent → ${email} [${role}/${region}]`);
+        console.log(`\u2705 Sent \u2192 ${email} [${role}/${region}]`);
       } catch (err) {
-        console.log(`❌ Failed → ${email}: ${err.message}`);
+        console.log(`\u274C Failed \u2192 ${email}: ${err.message}`);
       }
       await new Promise(r => setTimeout(r, 300));
     }
-    console.log('✅ All emails sent');
+    console.log('\u2705 All emails sent');
   } catch (err) {
-    console.log(`❌ Email send failed: ${err.message}`);
+    console.log(`\u274C Email send failed: ${err.message}`);
   }
 }
 
