@@ -1,207 +1,279 @@
+// ============================================================================
+//  email.js — The Dawn Brief daily email (FINAL premium template)
+//  generateEmailHTML(stories, date, subscriber) → full HTML for ONE subscriber.
+//  Same signature as before (drop-in for the sender). Produces the approved
+//  rich template: header + logo + greeting + "In today's brief" teasers +
+//  story cards (savage Hinglish voice, gold "Tere liye matlab:") + quick hits +
+//  poll + referral + footer. Personalised per subscriber (name, role, unsub).
+//
+//  Story fields used: id, category, headline, image_url, link,
+//    khatarnak_voice[role]  (preferred — savage voice)
+//    voices[role]           (fallback)
+//    summary                (last resort)
+// ============================================================================
+
+// ── helpers ───────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function emphasize(s) {
+  return s
+    .replace(/(₹\s?[\d,]+(?:\.\d+)?(?:\s?(?:crore|lakh|cr|k))?)/gi, '<strong style="color:#FFFFFF;">$1</strong>')
+    .replace(/(\$\s?[\d,]+(?:\.\d+)?(?:\s?(?:billion|million|bn|mn))?)/gi, '<strong style="color:#FFFFFF;">$1</strong>')
+    .replace(/(\b\d+(?:\.\d+)?%)/g, '<strong style="color:#FFFFFF;">$1</strong>');
+}
+function splitParas(text) {
+  const t = String(text || '').trim();
+  if (!t) return [];
+  let sentences;
+  try { sentences = t.match(/[^.!?]+[.!?]+(?:\s|$)/g); } catch (e) { sentences = null; }
+  if (!sentences || sentences.length <= 2) return [t];
+  const mid = Math.ceil(sentences.length / 2);
+  return [sentences.slice(0, mid).join('').trim(), sentences.slice(mid).join('').trim()].filter(Boolean);
+}
+function renderVoice(voiceText) {
+  const raw = String(voiceText || '').trim();
+  const P = 'margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.75;color:#D6D6E0;';
+  const PLAST = 'margin:0 0 18px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.75;color:#D6D6E0;';
+  const parts = raw.split(/tere\s+liye\s+matlab\s*:/i);
+  const infoPart = parts[0].trim();
+  const punch = parts.length > 1 ? parts.slice(1).join(':').trim() : '';
+  const infoParas = splitParas(infoPart);
+  let html = infoParas.map((p, i) =>
+    `<p style="${(!punch && i === infoParas.length - 1) ? PLAST : P}">${emphasize(esc(p))}</p>`
+  ).join('');
+  if (punch) {
+    html += `<p style="${PLAST}"><strong style="color:#E8C558;">Tere liye matlab:</strong> ${emphasize(esc(punch))}</p>`;
+  }
+  return html || `<p style="${PLAST}">&nbsp;</p>`;
+}
+
+const CAT_EMOJI = {
+  'Business': '💼', 'Indian Economy': '🇮🇳', 'Finance': '💰', 'Tech': '🤖',
+  'Sports': '🏆', 'Government': '🏛️', 'International': '🌍', 'Climate': '🌱',
+  'Startups & Auto': '🚗', 'Science & Health': '🔬', 'Entertainment': '🎬'
+};
+
+function voiceFor(story, voiceKey) {
+  if (story.khatarnak_voice && story.khatarnak_voice[voiceKey]) return story.khatarnak_voice[voiceKey];
+  if (story.voices && story.voices[voiceKey]) return story.voices[voiceKey];
+  return story.summary || story.headline || '';
+}
+function storyUrl(s) {
+  return s.id ? `https://ayushbrief.online/story.html?id=${encodeURIComponent(s.id)}` : (s.link || 'https://ayushbrief.online');
+}
+
+function storyCard(s, voiceKey) {
+  const url = storyUrl(s);
+  const tag = esc(s.category || 'News');
+  const headline = esc(s.headline || '');
+  let media;
+  if (s.image_url) {
+    media = `
+        <tr><td style="padding:0 22px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0B0B14" style="background-color:#0B0B14;border-radius:12px;">
+            <tr><td style="padding:0;line-height:0;font-size:0;">
+              <a href="${url}" style="text-decoration:none;"><img src="${esc(s.image_url)}" width="532" alt="${esc(s.headline || 'Dawn Brief')}" style="width:100%;max-width:532px;height:auto;display:block;border-radius:12px;border:0;outline:none;" /></a>
+            </td></tr>
+          </table>
+        </td></tr>`;
+  } else {
+    const lbl = esc((s.category || 'Dawn Brief').split('·')[0].trim());
+    media = `
+        <tr><td style="padding:0 22px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0B0B14" style="background-color:#0B0B14;background-image:radial-gradient(circle at 28% 28%, rgba(232,197,88,.16), transparent 60%);border-radius:12px;">
+            <tr><td align="center" height="150" style="height:150px;font-family:Georgia,serif;font-style:italic;font-size:22px;color:rgba(255,255,255,.30);">${lbl}</td></tr>
+          </table>
+        </td></tr>`;
+  }
+  return `
+    <tr><td style="padding:14px 12px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F1A" style="background-color:#0F0F1A;border:1px solid #20202E;border-radius:16px;">
+        <tr><td style="padding:20px 22px 0;">
+          <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5CC8FF;font-weight:bold;">${tag}</p>
+          <h1 class="h-hero" style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:27px;line-height:1.22;color:#FFFFFF;">${headline}</h1>
+        </td></tr>${media}
+        <tr><td style="padding:18px 22px 20px;">
+          ${renderVoice(voiceFor(s, voiceKey))}
+          <a href="${url}" style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:bold;color:#E8C558;text-decoration:none;">Pura padho &nbsp;&rarr;</a>
+        </td></tr>
+      </table>
+    </td></tr>`;
+}
+
 function generateEmailHTML(stories, date, subscriber) {
+  const sub = subscriber || {};
+  const name = (sub.name || '').trim();
 
-  const { name, role } = subscriber;
-
-  // ── VOICE CONFIG ────────────────────────────────────────────────────────────
-  const VOICE_CONFIG = {
-    'student': {
-      label: '🎓 Student',
-      color: '#FF4D6D',
-      bg: '#FFF0F3',
-      textColor: '#1A0008'
-    },
-    'employee': {
-      label: '💼 Employee',
-      color: '#FFAA55',
-      bg: '#FFF8EE',
-      textColor: '#1A0E00'
-    },
-    'agent': {
-      label: '🌾 Commission Agent',
-      color: '#E8C558',
-      bg: '#FFFBEE',
-      textColor: '#1A1208'
-    }
-  };
-
-  // ── GET VOICE KEY ───────────────────────────────────────────────────────────
-  function getVoiceKey(role) {
-    if (role === 'student' || role === 'employee' || role === 'agent') return role;
-    if (role && role.includes('student')) return 'student';
-    if (role && role.includes('employee')) return 'employee';
-    if (role === 'agent') return 'agent';
+  function getVoiceKey(r) {
+    if (r === 'student' || r === 'employee' || r === 'agent') return r;
+    if (r && r.includes('student')) return 'student';
+    if (r && r.includes('employee')) return 'employee';
+    if (r === 'agent') return 'agent';
     return 'student';
   }
+  const voiceKey = getVoiceKey(sub.role);
 
-  const voiceKey = getVoiceKey(role);
-  const voice = VOICE_CONFIG[voiceKey];
-  const firstName = ((name || 'friend').split(' ')[0].charAt(0).toUpperCase() + (name || 'friend').split(' ')[0].slice(1));
-  const topStories = (stories || []).slice(0, 6);
+  const all = Array.isArray(stories) ? stories : [];
+  const cards = all;            // ALL khatarnak stories become full cards (no quick-hits)
 
-  // ── GREETINGS ───────────────────────────────────────────────────────────────
-  const greetings = {
-    'student':  `Yaar ${firstName}, aaj ki brief aa gayi. 7 minute mein poori duniya. Chai bana aur padh. ☀`,
-    'employee': `${firstName} bhai, chai le aur yeh padh — aaj ki brief ready hai. Office se pehle ek baar zaroor dekh. ☕`,
-    'agent':    `${firstName} bhai, aaj ki zaroori khabrein aa gayi hain — mandi ke kaam ki. Seedhi baat, koi bakwaas nahi. 🌾`
-  };
+  const firstName = name ? (name.split(' ')[0].charAt(0).toUpperCase() + name.split(' ')[0].slice(1)) : '';
+  const greetName = firstName ? `Good morning, ${esc(firstName)} ☀️` : 'Good morning, friend ☀️';
+  const countWord = cards.length
+    ? `<strong style="color:#FFFFFF;">${cards.length} biggest stor${cards.length === 1 ? 'y' : 'ies'}</strong>`
+    : 'today\'s stories';
+  const refCode = encodeURIComponent(sub.referral_code || '');
+  const refLink = `https://ayushbrief.online/r/${refCode}`;
+  const unsub = sub.email
+    ? `https://ayushbrief.online/unsubscribe.html?e=${encodeURIComponent(sub.email)}`
+    : 'https://ayushbrief.online/unsubscribe.html';
+  const preview = cards.length
+    ? `Good morning — aaj ki ${cards.length} sabse badi khabrein, dost ke andaaz mein.`
+    : 'The Dawn Brief — news that feels like a friend.';
 
-  const greeting = greetings[voiceKey] || `Good morning ${firstName}!`;
+  const teasers = cards.slice(0, 3).map(s =>
+    `<tr><td valign="top" width="18" style="font-family:Arial,sans-serif;font-size:15px;color:#E8C558;line-height:1.7;">&rsaquo;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;line-height:1.7;color:#C8C8D4;">${esc(s.headline || '')}</td></tr>`
+  ).join('');
 
-  // ── STORY CARDS ─────────────────────────────────────────────────────────────
-  const storyCards = topStories.map((s, i) => {
-    const voiceText = (s.voices && s.voices[voiceKey]) ? s.voices[voiceKey] : (s.headline || '');
-    const num = String(i + 1).padStart(2, '0');
+  const cardsHtml = cards.length
+    ? cards.map(s => storyCard(s, voiceKey)).join('')
+    : `<tr><td style="padding:30px 22px;text-align:center;"><p style="margin:0;font-family:Georgia,serif;font-style:italic;font-size:17px;color:rgba(255,255,255,.45);">Aaj koi badi khabar nahi — kal milte hain. ☀️</p></td></tr>`;
 
-    return `
-    <tr>
-      <td style="padding:0 0 14px 0;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0"
-          style="background:#0C0C18;border-radius:14px;border:.5px solid rgba(255,255,255,.07);overflow:hidden;">
+  // (quick-hits removed — every story is now a full card)
 
-          <!-- Top gradient bar -->
-          <tr>
-            <td style="height:2px;background:linear-gradient(90deg,#2979FF,#00B4FF,#5CC8FF);"></td>
-          </tr>
+  const poll = `
+    <tr><td style="padding:24px 32px 6px;"><div style="height:1px;background-color:#1C1C2A;line-height:0;font-size:0;">&nbsp;</div></td></tr>
+    <tr><td class="px" style="padding:16px 32px 6px;" align="center">
+      <p style="margin:0 0 14px;font-family:Georgia,serif;font-style:italic;font-size:19px;color:#FFFFFF;">Aaj ki brief kaisi lagi?</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+        <td style="padding:0 4px;"><a href="https://ayushbrief.online/?rate=fire" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">🔥 Top</a></td>
+        <td style="padding:0 4px;"><a href="https://ayushbrief.online/?rate=ok" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">👍 Theek</a></td>
+        <td style="padding:0 4px;"><a href="https://ayushbrief.online/?rate=meh" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">😐 Meh</a></td>
+      </tr></table>
+    </td></tr>`;
 
-          <tr>
-            <td style="padding:20px 24px;">
-
-              <!-- Story number + category -->
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
-                <tr>
-                  <td>
-                    <span style="font-family:'Courier New',monospace;font-size:9px;color:rgba(255,255,255,.2);margin-right:10px;">${num}</span>
-                    <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(92,200,255,.55);font-weight:600;">${s.category || ''}</span>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Headline -->
-              <h3 style="margin:0 0 14px;font-family:Georgia,serif;font-size:15px;font-weight:bold;color:rgba(255,255,255,.9);line-height:1.45;">${s.headline || ''}</h3>
-
-              <!-- Voice bubble -->
-              <table width="100%" cellpadding="0" cellspacing="0" border="0"
-                style="background:${voice.bg};border-radius:10px;border-left:3px solid ${voice.color};">
-                <tr>
-                  <td style="padding:13px 16px;">
-                    <p style="margin:0 0 6px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:${voice.color};font-weight:700;">${voice.label}</p>
-                    <p style="margin:0;font-size:13.5px;color:${voice.textColor};line-height:1.75;font-family:Arial,sans-serif;">${voiceText}</p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Read more -->
-              <p style="margin:12px 0 0;">
-                <a href="${s.link || 'https://ayushbrief.online'}" style="color:#5CC8FF;font-size:12px;font-weight:600;text-decoration:none;letter-spacing:.02em;">Read full story →</a>
-              </p>
-
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>`;
-  }).join('');
-
-  // ── FULL EMAIL HTML ─────────────────────────────────────────────────────────
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>The Dawn Brief</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<title>The Dawn Brief</title>
+<!--[if mso]><style>body,table,td,p,a,span,h1,h2{font-family:Georgia,'Times New Roman',serif;}</style><![endif]-->
+<style>
+  body{margin:0;padding:0;background:#07070F;}
+  a{text-decoration:none;}
+  .px{padding-left:32px;padding-right:32px;}
+  @media only screen and (max-width:620px){
+    .container{width:100% !important;}
+    .px{padding-left:20px !important;padding-right:20px !important;}
+    .h-hero{font-size:25px !important;line-height:1.18 !important;}
+    .logo-word{font-size:30px !important;}
+    .stack{display:block !important;width:100% !important;}
+    .stack-r{text-align:left !important;padding-top:4px !important;}
+  }
+  @media (prefers-color-scheme: dark){ body,.bg{background:#07070F !important;} }
+</style>
 </head>
-<body style="margin:0;padding:0;background:#07070F;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;">
+<body style="margin:0;padding:0;background-color:#07070F;">
 
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#07070F;padding:32px 16px;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;opacity:0;color:#07070F;font-size:1px;line-height:1px;">
+  ${esc(preview)}
+  &#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;&#847;&zwnj;
+</div>
 
-          <!-- TOP GLOW LINE -->
-          <tr>
-            <td style="height:1.5px;background:linear-gradient(90deg,transparent 0%,rgba(92,200,255,.3) 20%,#5CC8FF 40%,#fff 50%,#5CC8FF 60%,rgba(92,200,255,.3) 80%,transparent 100%);"></td>
-          </tr>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#07070F" class="bg" style="background-color:#07070F;">
+<tr><td align="center" style="padding:24px 12px 40px;">
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" class="container" style="width:600px;max-width:600px;">
 
-          <!-- HEADER -->
-          <tr>
-            <td style="background:#07070F;border-radius:16px 16px 0 0;padding:32px 36px 24px;text-align:center;border:.5px solid rgba(255,255,255,.06);border-top:none;">
+    <!-- header strip -->
+    <tr><td class="px" style="padding:0 32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="stack" align="left" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7C7C8A;">${esc(date || '')}</td>
+        <td class="stack stack-r" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.06em;color:#7C7C8A;">
+          <a href="https://ayushbrief.online" style="color:#B8902A;text-decoration:none;">View online</a> &nbsp;&middot;&nbsp;
+          <a href="https://ayushbrief.online" style="color:#B8902A;text-decoration:none;">Subscribe</a>
+        </td>
+      </tr></table>
+    </td></tr>
 
-              <p style="margin:0 0 8px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(92,200,255,.5);">Daily Intelligence · India</p>
+    <!-- logo -->
+    <tr><td align="center" style="padding:18px 32px 6px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+        <td align="center" style="line-height:0;font-size:0;">
+          <div style="width:46px;height:23px;background-color:#E8C558;background-image:linear-gradient(180deg,#FFE878,#B8902A);border-radius:46px 46px 0 0;"></div>
+        </td>
+      </tr></table>
+      <div style="height:10px;line-height:10px;">&nbsp;</div>
+      <div class="logo-word" style="font-family:Georgia,'Times New Roman',serif;font-size:38px;line-height:1;color:#FFFFFF;letter-spacing:.5px;">
+        <span style="font-size:14px;letter-spacing:.32em;color:#8A8A98;vertical-align:middle;">THE&nbsp;</span><span style="font-style:italic;color:#E8C558;">Dawn</span><span style="font-size:16px;letter-spacing:.30em;color:#CFCFE0;">&nbsp;BRIEF</span>
+      </div>
+      <div style="height:8px;line-height:8px;">&nbsp;</div>
+      <div style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:13px;color:#7C7C8A;">News that feels like a friend</div>
+      <div style="height:6px;line-height:6px;">&nbsp;</div>
+      <div style="width:54px;height:2px;background-color:#B8902A;margin:0 auto;line-height:0;font-size:0;">&nbsp;</div>
+    </td></tr>
 
-              <!-- Logo -->
-              <h1 style="margin:0 0 6px;font-family:Georgia,serif;font-size:32px;font-weight:900;letter-spacing:-.5px;">
-                <span style="color:#E8C558;">☀</span>
-                <span style="color:#E8C558;"> The Dawn Brief</span>
-              </h1>
+    <!-- greeting -->
+    <tr><td class="px" style="padding:24px 32px 6px;">
+      <p style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.7;color:#ECECF2;">
+        <span style="color:#E8C558;font-weight:bold;">${greetName}</span> Here are today's ${countWord} — told the way a friend would over chai. Give it 2 minutes and you're fully caught up.
+      </p>
+      <p style="margin:0;font-family:Georgia,serif;font-style:italic;font-size:13px;color:#7C7C8A;">— Team Dawn Brief</p>
+    </td></tr>
 
-              <p style="margin:0 0 16px;font-size:12px;color:rgba(255,255,255,.3);font-family:'Courier New',monospace;letter-spacing:.1em;">${date}</p>
+    ${teasers ? `<!-- in today's brief -->
+    <tr><td class="px" style="padding:18px 32px 8px;">
+      <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#5CC8FF;font-weight:bold;">In today's brief</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">${teasers}</table>
+    </td></tr>
+    <tr><td style="padding:14px 32px 4px;"><div style="height:1px;background-color:#1C1C2A;line-height:0;font-size:0;">&nbsp;</div></td></tr>` : ''}
 
-              <!-- Voice badge -->
-              <span style="display:inline-block;background:rgba(41,121,255,.12);border:.5px solid rgba(92,200,255,.3);border-radius:100px;padding:6px 18px;font-size:12px;color:#5CC8FF;letter-spacing:.04em;">${voice.label} Edition</span>
+    <!-- story cards -->
+    ${cardsHtml}
+    ${poll}
 
-            </td>
-          </tr>
+    <tr><td style="padding:24px 32px 6px;"><div style="height:1px;background-color:#1C1C2A;line-height:0;font-size:0;">&nbsp;</div></td></tr>
 
-          <!-- GREETING BAR -->
-          <tr>
-            <td style="background:#0C0C18;padding:18px 36px;border-left:.5px solid rgba(255,255,255,.06);border-right:.5px solid rgba(255,255,255,.06);">
-              <p style="margin:0;font-size:14px;color:rgba(255,255,255,.75);line-height:1.7;font-family:Arial,sans-serif;">${greeting}</p>
-            </td>
-          </tr>
+    <!-- share / referral -->
+    <tr><td style="padding:8px 12px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F0F18" style="background-color:#0F0F18;background-image:linear-gradient(135deg,#13131F,#0B0B12);border:1px solid #2A2418;border-radius:16px;">
+        <tr><td align="center" style="padding:26px 24px;">
+          <p style="margin:0 0 8px;font-family:Georgia,serif;font-style:italic;font-size:21px;color:#E8C558;">Grow the gang 🤝</p>
+          <p style="margin:0 0 18px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.65;color:#C8C8D4;">Liked this brief? Forward it to that one friend who always misses the morning news.</p>
+          <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="${refLink}" style="height:44px;v-text-anchor:middle;width:200px;" arcsize="50%" fillcolor="#E8C558" stroke="f"><center style="color:#07070F;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;">Send to a friend →</center></v:roundrect><![endif]-->
+          <!--[if !mso]><!-- -->
+          <a href="${refLink}" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:#07070F;background-color:#E8C558;border-radius:24px;padding:13px 30px;text-decoration:none;">Send to a friend &nbsp;&rarr;</a>
+          <!--<![endif]-->
+          ${sub.referral_code ? `<p style="margin:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7C7C8A;">Your referral link:&nbsp; <span style="color:#B8902A;">ayushbrief.online/r/${esc(sub.referral_code)}</span></p>` : ''}
+        </td></tr>
+      </table>
+    </td></tr>
 
-          <!-- DIVIDER -->
-          <tr>
-            <td style="height:.5px;background:rgba(255,255,255,.06);"></td>
-          </tr>
+    <!-- footer -->
+    <tr><td align="center" style="padding:30px 32px 6px;">
+      <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#9A9AA8;">Was this forwarded to you? Get your own daily brief → <a href="https://ayushbrief.online" style="color:#E8C558;text-decoration:none;font-weight:bold;">Subscribe</a></p>
+      <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9A9AA8;">
+        <a href="https://x.com/" style="color:#9A9AA8;text-decoration:none;">X</a> &nbsp;&middot;&nbsp;
+        <a href="https://instagram.com/" style="color:#9A9AA8;text-decoration:none;">Instagram</a> &nbsp;&middot;&nbsp;
+        <a href="https://linkedin.com/" style="color:#9A9AA8;text-decoration:none;">LinkedIn</a>
+      </p>
+      <div style="width:40px;height:1px;background-color:#2A2A3A;margin:0 auto 16px;line-height:0;font-size:0;">&nbsp;</div>
+      <p style="margin:0 0 6px;font-family:Georgia,serif;font-style:italic;font-size:13px;color:#7C7C8A;">The Dawn Brief — news that feels like a friend</p>
+      <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5A5A68;">Kaithal, Haryana, India</p>
+      <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5A5A68;">
+        <a href="${unsub}" style="color:#7C7C8A;text-decoration:underline;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+        <a href="https://ayushbrief.online/privacy.html" style="color:#7C7C8A;text-decoration:underline;">Privacy</a>
+      </p>
+    </td></tr>
 
-          <!-- STORIES -->
-          <tr>
-            <td style="background:#07070F;padding:20px 36px;border:.5px solid rgba(255,255,255,.06);border-top:none;">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                ${storyCards}
-              </table>
-            </td>
-          </tr>
-
-          <!-- DIVIDER -->
-          <tr>
-            <td style="height:.5px;background:rgba(255,255,255,.06);"></td>
-          </tr>
-
-          <!-- CTA -->
-          <tr>
-            <td style="background:#0C0C18;padding:24px 36px;text-align:center;border-left:.5px solid rgba(255,255,255,.06);border-right:.5px solid rgba(255,255,255,.06);">
-              <p style="margin:0 0 14px;font-size:13px;color:rgba(255,255,255,.4);font-family:Arial,sans-serif;">Aur voices dekhne ke liye website visit karo</p>
-              <a href="https://ayushbrief.online" style="display:inline-block;background:#2979FF;color:#fff;font-family:Arial,sans-serif;font-size:13px;font-weight:600;padding:12px 32px;border-radius:100px;text-decoration:none;letter-spacing:.03em;">Visit ayushbrief.online →</a>
-            </td>
-          </tr>
-
-          <!-- FOOTER -->
-          <tr>
-            <td style="background:#07070F;border-radius:0 0 16px 16px;padding:20px 36px;text-align:center;border:.5px solid rgba(255,255,255,.06);border-top:none;">
-
-              <p style="margin:0 0 4px;font-family:Georgia,serif;font-size:14px;color:#E8C558;">☀ The Dawn Brief</p>
-              <p style="margin:0 0 12px;font-size:11px;color:rgba(255,255,255,.2);font-family:Arial,sans-serif;">Built by Ayush Bansal · Kaithal, Haryana</p>
-
-              <p style="margin:0;font-size:11px;color:rgba(255,255,255,.2);font-family:Arial,sans-serif;">
-                <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">ayushbrief.online</a>
-                &nbsp;&nbsp;·&nbsp;&nbsp;
-                <a href="https://ayushbrief.online/unsubscribe" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
-              </p>
-
-            </td>
-          </tr>
-
-          <!-- BOTTOM GLOW LINE -->
-          <tr>
-            <td style="height:1px;background:linear-gradient(90deg,transparent,rgba(92,200,255,.15),transparent);"></td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
   </table>
-
+</td></tr>
+</table>
 </body>
 </html>`;
 }
