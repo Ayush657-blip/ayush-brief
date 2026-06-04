@@ -729,6 +729,18 @@ async function sendEmailsToSubscribers(stories, date) {
       return;
     }
 
+    // Only KHATARNAK stories go to the email (5–10) — NOT every approved story.
+    let emailStories = stories.filter(s =>
+      s.is_khatarnak === true ||
+      (s.khatarnak_voice && (s.khatarnak_voice.student || s.khatarnak_voice.professional))
+    );
+    if (emailStories.length === 0) emailStories = stories.slice(0, 5); // safety fallback
+    emailStories = emailStories.slice(0, 10);
+    if (emailStories.length === 0) {
+      console.log('No khatarnak stories — skipping email.');
+      return;
+    }
+
     const { Resend } = require('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -737,7 +749,7 @@ async function sendEmailsToSubscribers(stories, date) {
       { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
     );
     const subscribers = await subRes.json();
-    console.log(`\uD83D\uDCE7 Sending ${stories.length} stories to ${subscribers.length} subscribers...`);
+    console.log(`\uD83D\uDCE7 Sending ${emailStories.length} stories to ${subscribers.length} subscribers...`);
 
     for (const subscriber of subscribers) {
       const { email, name, role, region } = subscriber;
@@ -753,7 +765,7 @@ async function sendEmailsToSubscribers(stories, date) {
         : `\u2600\uFE0F Your morning brief \u2014 The Dawn Brief`;
 
       // Premium template + savage khatarnak voice (per subscriber role)
-      const html = generateEmailHTML(stories, date, subscriber);
+      const html = generateEmailHTML(emailStories, date, subscriber);
 
       try {
         await resend.emails.send({
