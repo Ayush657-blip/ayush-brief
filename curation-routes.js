@@ -142,7 +142,10 @@ STRICT rules:
 - MINIMUM 5 sentences, ideally 6 (about 120 to 170 words). NEVER fewer than 5. A 1-2 sentence answer is WRONG.
 - Use ONLY facts present in the text above. Pull in the real numbers and names from it. Do NOT invent any fact, figure, quote, or name that is not in the text.
 - If the text is thin, write what is supported and explain the significance simply — but never fabricate specifics.
-- Plain, simple English. No jargon, no bullet points, no headings, no preamble like "Here is the summary".
+- Write in very simple, everyday English that a 12th-grade student understands on the FIRST read. Use short sentences and common words.
+- NO jargon or technical/financial terms (e.g. misstatement, antitrust, freefall, crude, breaching, forex, liquidity, overstated). Use the plain-English meaning instead.
+- If a body or name is essential (SEBI, CCI, RBI, etc.), explain what it is in the SAME sentence in plain words — e.g. "SEBI, the body that watches over India's stock market".
+- No bullet points, no headings, no preamble like "Here is the summary". The reader should never need to Google anything.
 - Neutral and factual. If the news is tragic or sensitive, write with care and dignity, never casual.
 - Output ONLY the paragraph text, nothing else.`;
   const text = await callClaude(prompt, 350);
