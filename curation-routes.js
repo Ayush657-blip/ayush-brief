@@ -237,14 +237,16 @@ Headline: "${headline}"
 Kya hua: "${summary}"
 Category: ${category}
 
-Do hisse mein likh (exactly is structure mein):
-1. KHABAR — 2 se 3 chhoti Hinglish lines. Kya hua + asli numbers/naam/figures (sirf jo upar diye hain — kuch invent mat karna). Yahan mazaak nahi — saaf, seedhi, samajhne wali info.
-2. Aakhri line "Tere liye matlab: " se shuru karo — phir ek savage/funny punchline us dost ki tarah, jo subscriber ke dimaag mein chipak jaaye.
+Do hisse mein likh:
+1. Pehle 2-3 chhoti Hinglish lines mein KHABAR samjhao — kya hua + asli numbers/naam (sirf jo upar diye hain, kuch invent mat karna). Har vaakya POORA aur clear ho. Adhure tukde mat likho (jaise "8% fake. 5% tha." — ye galat hai). Number ho to poore context ke saath likho taaki pehli baar mein samajh aaye.
+2. Aakhri line "Tere liye matlab: " se shuru karo — phir ek savage/funny punchline jo dimaag mein chipak jaaye.
 
 RULES:
-- Hinglish only. Short punchy sentences.
-- Koi preamble nahi ("yahan summary hai" type), koi heading/label nahi, poori cheez quotes mein mat wrap karo.
-- "Tere liye matlab:" wo exact label use karo.
+- Hinglish only. Saaf, poore vaakya — pehli baar padhke samajh aaye.
+- "KHABAR", "Note", ya koi bhi label/heading MAT likho.
+- Koi markdown nahi — asterisk (* ya **), star, bullet, bold-marks kuch bhi mat use karo. Sirf plain text.
+- Koi preamble nahi, poori cheez quotes mein mat wrap karo.
+- "Tere liye matlab:" wo exact label use karo (yahi ek allowed hai).
 - Total 60-85 words.`;
 
   return await callClaude(prompt, 280);
