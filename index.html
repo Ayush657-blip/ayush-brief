@@ -493,13 +493,13 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 
 <!-- ── MOBILE MENU PANEL (only shows on mobile via hamburger) ───────────────── -->
 <div class="mobile-menu" id="mobile-menu">
-  <button class="mm-item" onclick="mmAction('topics')"><span class="mm-item-icon">📑</span><span>Topics</span></button>
-  <button class="mm-item" onclick="mmAction('search')"><span class="mm-item-icon">🔍</span><span>Search</span></button>
-  <button class="mm-item" onclick="mmAction('lang')"><span class="mm-item-icon">🇮🇳</span><span id="mm-lang-label">Language: English</span></button>
+  <button class="mm-item" onclick="mmAction('topics',event)"><span class="mm-item-icon">📑</span><span>Topics</span></button>
+  <button class="mm-item" onclick="mmAction('search',event)"><span class="mm-item-icon">🔍</span><span>Search</span></button>
+  <button class="mm-item" onclick="mmAction('lang',event)"><span class="mm-item-icon">🇮🇳</span><span id="mm-lang-label">Language: English</span></button>
   <div class="mm-divider"></div>
-  <button class="mm-item" id="mm-login" onclick="mmAction('login')"><span class="mm-item-icon">👤</span><span>Login</span></button>
-  <button class="mm-item mm-sub" id="mm-subscribe" onclick="mmAction('subscribe')"><span>Subscribe →</span></button>
-  <button class="mm-item" id="mm-logout" onclick="mmAction('logout')" style="display:none;"><span class="mm-item-icon">🚪</span><span>Logout</span></button>
+  <button class="mm-item" id="mm-login" onclick="mmAction('login',event)"><span class="mm-item-icon">👤</span><span>Login</span></button>
+  <button class="mm-item mm-sub" id="mm-subscribe" onclick="mmAction('subscribe',event)"><span>Subscribe →</span></button>
+  <button class="mm-item" id="mm-logout" onclick="mmAction('logout',event)" style="display:none;"><span class="mm-item-icon">🚪</span><span>Logout</span></button>
 </div>
 <div id="bhai-overlay">
   <div class="bhai-wave">
@@ -1494,10 +1494,11 @@ function toggleMobileMenu(){
   if(opening){closeSearch();closeTopics();}
 }
 function closeMobileMenu(){var m=document.getElementById('mobile-menu');if(m)m.classList.remove('show');}
-function mmAction(what){
+function mmAction(what,ev){
+  if(ev){ev.stopPropagation();}
   closeMobileMenu();
-  if(what==='topics'){toggleTopics();}
-  else if(what==='search'){toggleSearch();}
+  if(what==='topics'){setTimeout(toggleTopics,0);}
+  else if(what==='search'){setTimeout(toggleSearch,0);}
   else if(what==='lang'){toggleLang();}
   else if(what==='login'){var b=document.getElementById('nav-login-btn');if(b)b.click();}
   else if(what==='subscribe'){var b=document.getElementById('nav-sub-btn');if(b)b.click();}
