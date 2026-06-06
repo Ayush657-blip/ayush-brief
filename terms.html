@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terms of Service — The Dawn Brief</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#07070F;--bg2:#0C0C1A;--blue-p:#5CC8FF;--w:#fff;--w7:rgba(255,255,255,.7);--w3:rgba(255,255,255,.3);--border:rgba(255,255,255,.07);--nav-bg:rgba(7,7,15,.85);}
 html,body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;}
 nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;backdrop-filter:blur(24px);background:var(--nav-bg);border-bottom:.5px solid var(--border);}
-.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;background:linear-gradient(90deg,#C8960E,#F0C830,#FFE878,#F0C830,#C8960E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;flex-shrink:0;}
+.logo-text{display:flex;align-items:baseline;gap:4px;}
+.logo-the,.logo-brief{font-family:'Cormorant SC',serif;font-size:10px;font-weight:400;letter-spacing:.22em;color:rgba(220,185,100,.7);}
+.logo-dawn{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;font-style:italic;background:linear-gradient(90deg,#C8960E 0%,#F0C830 25%,#FFE878 50%,#F0C830 75%,#C8960E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
 .nav-btn{padding:8px 16px;border-radius:100px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;background:#2979FF;border:none;color:#fff;}
 .wrap{max-width:680px;margin:0 auto;padding:100px 24px 80px;}
 h1{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;font-style:italic;margin-bottom:8px;}
@@ -25,7 +28,10 @@ footer{border-top:.5px solid var(--border);padding:24px 48px;display:flex;justif
 </head>
 <body>
 <nav>
-  <a class="logo-dawn" href="index.html">The Dawn Brief</a>
+  <a class="logo" href="index.html">
+    <svg width="34" height="26" viewBox="0 0 34 28" fill="none"><defs><linearGradient id="lgt" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8A6218"/><stop offset="40%" stop-color="#E8C558"/><stop offset="60%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient><clipPath id="cpt"><rect x="0" y="0" width="34" height="19"/></clipPath></defs><line x1="1" y1="19" x2="33" y2="19" stroke="url(#lgt)" stroke-width="1" opacity=".9"/><circle cx="17" cy="19" r="9" stroke="url(#lgt)" stroke-width="1.5" fill="none" clip-path="url(#cpt)"/><line x1="17" y1="8.5" x2="17" y2="4" stroke="#FFE060" stroke-width="1.2" stroke-linecap="round"/><line x1="21.8" y1="10.8" x2="24.8" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><line x1="12.2" y1="10.8" x2="9.2" y2="7.8" stroke="#F0C830" stroke-width="1.1" stroke-linecap="round" opacity=".95"/><circle cx="17" cy="19" r="1.2" fill="#FFF5C0" opacity=".8"/></svg>
+    <div class="logo-text"><span class="logo-the">The</span><span class="logo-dawn">Dawn</span><span class="logo-brief">Brief</span></div>
+  </a>
   <button class="nav-btn" onclick="window.location='index.html'">← Home</button>
 </nav>
 <div class="wrap">
