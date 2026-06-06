@@ -4,11 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Dawn Brief — Categories</title>
+<meta name="description" id="meta-desc" content="Latest news on The Dawn Brief — written like a message from your smartest friend. Daily, sharp, and personalised for students and professionals in India.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Dawn Brief">
+<meta property="og:title" id="og-title" content="The Dawn Brief — News that feels like a friend">
+<meta property="og:description" id="og-desc" content="Daily news written like a message from your smartest friend. Subscribe free.">
+<meta property="og:image" content="https://ayushbrief.online/og-image.png">
+<meta property="og:url" id="og-url" content="https://ayushbrief.online/category.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="tw-title" content="The Dawn Brief">
+<meta name="twitter:description" id="tw-desc" content="Daily news written like a message from your smartest friend.">
+<meta name="twitter:image" content="https://ayushbrief.online/og-image.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GWES74J2CT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GWES74J2CT');</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -162,6 +173,30 @@ function toggleTheme(){
 async function loadCategory(){
   var content=document.getElementById('cat-content');
   document.title=currentCat+' — The Dawn Brief';
+
+  // Dynamic SEO meta per category (reliable, no external calls)
+  (function(){
+    var desc=currentCat+' news on The Dawn Brief — written like a message from your smartest friend. Daily, sharp, and easy to read for students and professionals in India.';
+    var url='https://ayushbrief.online/category.html?cat='+encodeURIComponent(currentCat);
+    var set=function(id,val){var el=document.getElementById(id);if(el)el.setAttribute('content',val);};
+    set('meta-desc',desc);
+    set('og-title',currentCat+' — The Dawn Brief');
+    set('og-desc',desc);
+    set('og-url',url);
+    set('tw-title',currentCat+' — The Dawn Brief');
+    set('tw-desc',desc);
+    // CollectionPage structured data for Google
+    try{
+      var ld={"@context":"https://schema.org","@type":"CollectionPage","name":currentCat+" — The Dawn Brief","description":desc,"url":url,"isPartOf":{"@type":"WebSite","name":"The Dawn Brief","url":"https://ayushbrief.online"},"publisher":{"@type":"Organization","name":"The Dawn Brief","url":"https://ayushbrief.online"}};
+      var old=document.getElementById('ld-collection');
+      if(old)old.remove();
+      var sc=document.createElement('script');
+      sc.type='application/ld+json';
+      sc.id='ld-collection';
+      sc.textContent=JSON.stringify(ld);
+      document.head.appendChild(sc);
+    }catch(e){}
+  })();
   
   // Show skeleton
   content.innerHTML=renderHeader()
