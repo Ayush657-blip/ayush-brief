@@ -129,7 +129,7 @@ Headline: "${headline}"
 Category: ${category}
 ${hasFull ? 'Full article text' : 'Available details'}:
 """
-${source.slice(0, 3000)}
+${source.slice(0, 1500)}
 """
 
 Write ONE flowing paragraph that covers, in this order:
