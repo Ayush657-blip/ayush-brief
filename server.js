@@ -435,7 +435,7 @@ app.get('/story', async (req, res) => {
     let more = [];
     try {
       const mr = await fetch(
-        `${SUPA_URL}/rest/v1/daily_stories?status=eq.approved&id=neq.${id}&select=id,category,headline&order=run_date.desc,importance.asc,id.asc&limit=4`,
+        `${SUPA_URL}/rest/v1/daily_stories?status=eq.approved&id=neq.${id}&select=id,category,headline,image_url&order=run_date.desc,importance.asc,id.asc&limit=4`,
         { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
       );
       more = mr.ok ? await mr.json() : [];
