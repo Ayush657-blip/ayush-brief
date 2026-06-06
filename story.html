@@ -147,7 +147,17 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 
 /* Skeleton */
 .skel{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:1000px 100%;animation:shimmer 1.5s infinite;}
-.skel-line{height:12px;border-radius:6px;margin-bottom:10px;}
+.skel-line{height:14px;border-radius:7px;margin-bottom:14px;}
+.skel-hero{width:100%;height:520px;margin-top:64px;position:relative;overflow:hidden;}
+.skel-hero-content{position:absolute;bottom:36px;left:48px;right:48px;}
+.skel-pill{width:120px;height:24px;border-radius:100px;margin-bottom:16px;}
+.skel-title{width:80%;height:38px;border-radius:10px;margin-bottom:12px;}
+.skel-title2{width:55%;height:38px;border-radius:10px;}
+.skel-card{border-radius:16px;height:200px;margin-bottom:24px;}
+/* Level A: smooth image fade-in */
+.img-fade{opacity:0;transition:opacity .5s ease;}
+.img-fade.loaded{opacity:1;}
+@media(max-width:640px){.skel-hero{height:380px;}.skel-hero-content{left:20px;right:20px;bottom:28px;}.skel-title{height:28px;}.skel-title2{height:28px;}}
 
 footer{border-top:.5px solid var(--border);padding:28px 0;margin-top:20px;position:relative;z-index:5;}
 .ft-inner{max-width:680px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
@@ -181,10 +191,22 @@ footer{border-top:.5px solid var(--border);padding:28px 0;margin-top:20px;positi
 </nav>
 
 <!-- Hero injected by JS -->
-<div id="hero-wrap"></div>
+<div id="hero-wrap">
+  <div class="skel skel-hero">
+    <div class="skel-hero-content">
+      <div class="skel skel-pill"></div>
+      <div class="skel skel-title"></div>
+      <div class="skel skel-title2"></div>
+    </div>
+  </div>
+</div>
 
 <div class="story-body" id="story-body">
-  <div style="padding:60px 0;text-align:center;color:var(--w3);">Loading story...</div>
+  <div class="skel skel-card"></div>
+  <div class="skel skel-line" style="width:100%;"></div>
+  <div class="skel skel-line" style="width:95%;"></div>
+  <div class="skel skel-line" style="width:88%;"></div>
+  <div class="skel skel-line" style="width:60%;"></div>
 </div>
 
 <footer>
@@ -273,7 +295,7 @@ async function loadStory(){
 
   // ── HERO ──
   var heroImgHTML=imgSrc
-    ?'<img class="hero-img" src="'+imgSrc+'" alt="'+story.headline+'" onerror="this.style.display=\'none\';document.querySelector(\'.hero-img-ph\').style.display=\'flex\';" loading="eager"><div class="hero-img-ph" style="display:none;">'+icon+'</div>'
+    ?'<img class="hero-img img-fade" src="'+imgSrc+'" alt="'+story.headline+'" decoding="async" onload="this.classList.add(\'loaded\');" onerror="this.style.display=\'none\';document.querySelector(\'.hero-img-ph\').style.display=\'flex\';" loading="eager"><div class="hero-img-ph" style="display:none;">'+icon+'</div>'
     :'<div class="hero-img-ph">'+icon+'</div>';
 
   heroWrap.innerHTML='<div class="hero">'
@@ -317,7 +339,7 @@ async function loadStory(){
       var mImg=m.image_url||m.image||'';
       var mIcon=CAT_ICONS[m.category]||'📰';
       var imgPart=mImg
-        ?'<img class="more-card-img" src="'+mImg+'" alt="'+m.headline+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="more-card-img-ph" style="display:none;">'+mIcon+'</div>'
+        ?'<img class="more-card-img img-fade" src="'+mImg+'" alt="'+m.headline+'" decoding="async" onload="this.classList.add(\'loaded\');" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" loading="lazy"><div class="more-card-img-ph" style="display:none;">'+mIcon+'</div>'
         :'<div class="more-card-img-ph">'+mIcon+'</div>';
       return '<a class="more-card" href="story.html?id='+m.id+'">'+imgPart+'<div class="more-card-body"><div class="more-card-cat">'+m.category+'</div><div class="more-card-hl">'+m.headline+'</div></div></a>';
     }).join('');
