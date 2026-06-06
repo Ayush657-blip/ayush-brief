@@ -284,6 +284,30 @@ async function loadStory(){
   setMeta('og-desc',desc); setMeta('og-image',storyImg); setMeta('og-url',storyUrl);
   setMeta('tw-title',story.headline+' — The Dawn Brief'); setMeta('tw-desc',desc);
 
+  // NewsArticle structured data for Google (rich results / Google News)
+  try{
+    var ld={
+      "@context":"https://schema.org",
+      "@type":"NewsArticle",
+      "headline":story.headline,
+      "description":desc,
+      "image":[storyImg],
+      "datePublished":(story.run_date?story.run_date+"T06:00:00+05:30":new Date().toISOString()),
+      "articleSection":story.category,
+      "url":storyUrl,
+      "mainEntityOfPage":{"@type":"WebPage","@id":storyUrl},
+      "author":{"@type":"Organization","name":"The Dawn Brief"},
+      "publisher":{"@type":"Organization","name":"The Dawn Brief","logo":{"@type":"ImageObject","url":"https://ayushbrief.online/og-image.png"}}
+    };
+    var old=document.getElementById('ld-article');
+    if(old)old.remove();
+    var sc=document.createElement('script');
+    sc.type='application/ld+json';
+    sc.id='ld-article';
+    sc.textContent=JSON.stringify(ld);
+    document.head.appendChild(sc);
+  }catch(e){}
+
   trackStoryClick(story);
 
   var isSubscriber=!!loggedInUser;
