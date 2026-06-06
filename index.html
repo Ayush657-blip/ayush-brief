@@ -91,6 +91,18 @@ nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:200;display:flex;ali
 .nav-login:hover{border-color:rgba(92,200,255,.4);color:var(--w);}
 .nav-cta{padding:8px 20px;border-radius:100px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .2s;}
 .nav-cta:hover{background:var(--blue-b);}
+/* ── MOBILE HAMBURGER + MENU PANEL ──────────────────────────────────────────── */
+.nav-hamburger{display:none;width:38px;height:38px;border-radius:10px;background:transparent;border:.5px solid var(--border);color:var(--w7);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;padding:0;}
+.nav-hamburger:hover{background:var(--w1);}
+.nav-hamburger svg{width:18px;height:18px;}
+.mobile-menu{position:fixed;top:64px;left:0;right:0;z-index:195;background:var(--bg2);border-bottom:.5px solid var(--border2);padding:16px;display:none;flex-direction:column;gap:8px;max-height:calc(100vh - 64px);overflow-y:auto;animation:fadeIn .2s ease;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.mobile-menu.show{display:flex;}
+.mm-item{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border-radius:12px;background:var(--bg3);border:.5px solid var(--border);color:var(--w9);font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;text-align:left;}
+.mm-item:hover,.mm-item:active{background:var(--w1);border-color:var(--border2);}
+.mm-item-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0;}
+.mm-sub{background:var(--blue);color:#fff;border:none;justify-content:center;font-weight:500;}
+.mm-sub:hover{background:var(--blue-b);}
+.mm-divider{height:.5px;background:var(--border);margin:6px 0;}
 /* ── BHAI MODE TOGGLE ──────────────────────────────────────────────────────── */
 .bhai-toggle{display:none;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;background:transparent;border:.5px solid var(--border);color:var(--w5);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .3s;white-space:nowrap;}
 .bhai-toggle.visible{display:flex;}
@@ -388,6 +400,11 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
 @media(max-width:640px){
   nav{padding:0 16px;}
   .nav-center{display:none;}
+  .nav-hamburger{display:flex;}
+  /* On mobile, hide desktop nav buttons — they move into the hamburger menu.
+     Keep only theme toggle + hamburger in the bar. */
+  #nav-search-btn,#lang-btn,#nav-login-btn,#nav-sub-btn,#nav-logout-btn,.bhai-toggle{display:none !important;}
+  .logo-tag{display:none;}
   .news-grid{grid-template-columns:1fr;}
   .news-section,.pers-news-section{padding:20px 16px 60px;}
   .cat-tabs{padding:12px 16px;}
@@ -468,10 +485,22 @@ footer{border-top:.5px solid var(--border);padding:40px 0 28px;position:relative
     <button class="nav-login" id="nav-login-btn">Login</button>
     <button class="nav-cta sub-btn" id="nav-sub-btn">Subscribe →</button>
     <button class="nav-login" id="nav-logout-btn" style="display:none;" onclick="logout()">Logout</button>
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
 
-<!-- ── BHAI MODE OVERLAY ───────────────────────────────────────────────────── -->
+<!-- ── MOBILE MENU PANEL (only shows on mobile via hamburger) ───────────────── -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mm-item" onclick="mmAction('topics')"><span class="mm-item-icon">📑</span><span>Topics</span></button>
+  <button class="mm-item" onclick="mmAction('search')"><span class="mm-item-icon">🔍</span><span>Search</span></button>
+  <button class="mm-item" onclick="mmAction('lang')"><span class="mm-item-icon">🇮🇳</span><span id="mm-lang-label">Language: English</span></button>
+  <div class="mm-divider"></div>
+  <button class="mm-item" id="mm-login" onclick="mmAction('login')"><span class="mm-item-icon">👤</span><span>Login</span></button>
+  <button class="mm-item mm-sub" id="mm-subscribe" onclick="mmAction('subscribe')"><span>Subscribe →</span></button>
+  <button class="mm-item" id="mm-logout" onclick="mmAction('logout')" style="display:none;"><span class="mm-item-icon">🚪</span><span>Logout</span></button>
+</div>
 <div id="bhai-overlay">
   <div class="bhai-wave">
     <div class="bhai-wave-ring"></div>
@@ -1295,7 +1324,7 @@ document.addEventListener('keydown',function(e){
     var active=document.activeElement;
     if(active.tagName!=='INPUT'&&active.tagName!=='TEXTAREA'){e.preventDefault();toggleSearch();}
   }
-  if(e.key==='Escape'){closeSearch();closeTopics();closeLoginModal();if(bhaiActive)closeBhaiMode();}
+  if(e.key==='Escape'){closeSearch();closeTopics();closeLoginModal();closeMobileMenu();if(bhaiActive)closeBhaiMode();}
 });
 
 function setDate(){
@@ -1457,9 +1486,27 @@ function doSearch(q){
 }
 function toggleTopics(){document.getElementById('topics-dd').classList.toggle('show');}
 function closeTopics(){document.getElementById('topics-dd').classList.remove('show');}
+function toggleMobileMenu(){
+  var m=document.getElementById('mobile-menu');
+  var opening=!m.classList.contains('show');
+  m.classList.toggle('show');
+  // close other panels when opening menu
+  if(opening){closeSearch();closeTopics();}
+}
+function closeMobileMenu(){var m=document.getElementById('mobile-menu');if(m)m.classList.remove('show');}
+function mmAction(what){
+  closeMobileMenu();
+  if(what==='topics'){toggleTopics();}
+  else if(what==='search'){toggleSearch();}
+  else if(what==='lang'){toggleLang();}
+  else if(what==='login'){var b=document.getElementById('nav-login-btn');if(b)b.click();}
+  else if(what==='subscribe'){var b=document.getElementById('nav-sub-btn');if(b)b.click();}
+  else if(what==='logout'){logout();}
+}
 document.addEventListener('click',function(e){
   if(!e.target.closest('#topics-dd')&&!e.target.closest('.nav-topic-btn'))closeTopics();
   if(!e.target.closest('#search-bar')&&!e.target.closest('.nav-icon-btn')&&!e.target.closest('#search-results'))closeSearch();
+  if(!e.target.closest('#mobile-menu')&&!e.target.closest('#nav-hamburger'))closeMobileMenu();
 });
 function toggleTheme(){
   var isDark=document.documentElement.getAttribute('data-theme')!=='light';
@@ -1474,6 +1521,8 @@ function toggleTheme(){
 function toggleLang(){
   isHindi=!isHindi;
   document.getElementById('lang-btn').textContent=isHindi?'🇬🇧':'🇮🇳';
+  var mmLang=document.getElementById('mm-lang-label');
+  if(mmLang)mmLang.textContent=isHindi?'Language: Hindi':'Language: English';
   localStorage.setItem('db_lang',isHindi?'hi':'en');
   if(isHindi){
     document.getElementById('hero-h1').innerHTML='Apne dost se pehle<br><em>padh le.</em>';
@@ -1697,6 +1746,11 @@ function showPersonalisedHP(user){
   document.getElementById('nav-logout-btn').style.display='flex';
   document.getElementById('nav-public-center').style.display='none';
   document.getElementById('nav-pers-center').style.display='flex';
+  // sync mobile menu
+  var mmL=document.getElementById('mm-login'),mmS=document.getElementById('mm-subscribe'),mmO=document.getElementById('mm-logout');
+  if(mmL)mmL.style.display='none';
+  if(mmS)mmS.style.display='none';
+  if(mmO)mmO.style.display='flex';
   document.getElementById('vp-pill').style.display='flex';
   // Show Bhai Mode toggle after login
   document.getElementById('bhai-toggle-btn').classList.add('visible');
@@ -1802,6 +1856,11 @@ function logout(){
   document.getElementById('nav-logout-btn').style.display='none';
   document.getElementById('nav-public-center').style.display='flex';
   document.getElementById('nav-pers-center').style.display='none';
+  // sync mobile menu
+  var mmL2=document.getElementById('mm-login'),mmS2=document.getElementById('mm-subscribe'),mmO2=document.getElementById('mm-logout');
+  if(mmL2)mmL2.style.display='flex';
+  if(mmS2)mmS2.style.display='flex';
+  if(mmO2)mmO2.style.display='none';
   document.getElementById('vp-pill').style.display='none';
   document.getElementById('bhai-toggle-btn').classList.remove('visible','active');
   window.scrollTo({top:0,behavior:'smooth'});
