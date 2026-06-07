@@ -403,6 +403,11 @@ function renderKhatarnakVoiceCard(story) {
     { key: 'professional', label: '💼 Professional · Hinglish · Punchy' }
   ];
   const allApproved = isKhatarnakStoryApproved(story.id);
+  const kcat = story._cat || story.category || '';
+  const choice = story.image_choice || (story.ai_image_url ? 'ai' : 'original');
+  const aiUrl = story.ai_image_url || '';
+  const origUrl = story.image_url || '';
+  const liveUrl = (choice === 'ai' && aiUrl) ? aiUrl : origUrl;
 
   return `
 <div class="voice-card ${allApproved ? 'voice-approved' : ''}" id="kvc-${story.id}">
@@ -412,6 +417,28 @@ function renderKhatarnakVoiceCard(story) {
       <div style="font-size:14px;font-weight:500;color:var(--w7);line-height:1.4">${story.headline}</div>
     </div>
     ${allApproved ? '<span style="color:var(--green);font-size:20px">✅</span>' : ''}
+  </div>
+  <div class="img-block" id="imgblock-${story.id}" style="margin-bottom:12px;">
+    <div style="position:relative;border-radius:10px;overflow:hidden;border:.5px solid var(--border);">
+      <img id="liveimg-${story.id}" src="${liveUrl}" onerror="this.style.opacity=.2"
+        style="width:100%;max-height:200px;object-fit:cover;display:block;background:var(--bg3);" />
+      <span id="imgtag-${story.id}" style="position:absolute;top:8px;left:8px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;background:${choice==='ai'?'rgba(41,121,255,.9)':'rgba(0,0,0,.7)'};color:#fff;">
+        ${choice==='ai'?'🎨 Brief image (live)':'📷 Original (live)'}
+      </span>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;color:var(--w3);">Live image:</span>
+      <button class="voice-btn" id="choice-ai-${story.id}"
+        onclick="setImgChoice(${story.id},'ai','${kcat}')"
+        ${aiUrl?'':'disabled title="Pehle New photo dabao"'}
+        style="background:${choice==='ai'?'var(--blue)':'transparent'};color:${choice==='ai'?'#fff':'var(--w3)'};${aiUrl?'':'opacity:.4;cursor:not-allowed;'}">🎨 Brief photo</button>
+      <button class="voice-btn" id="choice-orig-${story.id}"
+        onclick="setImgChoice(${story.id},'original','${kcat}')"
+        ${origUrl?'':'disabled title="No original image"'}
+        style="background:${choice==='original'?'var(--blue)':'transparent'};color:${choice==='original'?'#fff':'var(--w3)'};${origUrl?'':'opacity:.4;cursor:not-allowed;'}">📷 Original</button>
+      <button class="voice-btn regen-btn" onclick="regenImage(${story.id},'${kcat}')" id="regenimg-${story.id}">🔄 New photo</button>
+      <button class="voice-btn" onclick="event.stopPropagation();openImgModal(${story.id},'${kcat}')" style="background:transparent;color:var(--w3);">🖼️ Change original</button>
+    </div>
   </div>
   ${voiceKeys.map(v => {
     const isApproved = khatarnakApproved[story.id] && khatarnakApproved[story.id][v.key];
@@ -494,6 +521,15 @@ async function generateKhatarnakVoices() {
 
     data.stories.forEach(s => {
       khatarnakVoices[s.id] = s.voices;
+      // attach image fields to the local story object so the card renders the photo
+      if (Array.isArray(khatarnakPool)) {
+        const st = khatarnakPool.find(x => String(x.id) === String(s.id));
+        if (st) {
+          if (s.ai_image_url) st.ai_image_url = s.ai_image_url;
+          if (s.image_choice) st.image_choice = s.image_choice;
+          if (s.image_url) st.image_url = s.image_url;
+        }
+      }
     });
 
     showToast('✅ Khatarnak voices ready!');
@@ -1009,7 +1045,14 @@ function findStory(storyId, cat) {
     const f = allStories[cat].find(s => Number(s.id) === id);
     if (f) return f;
   }
-  return Object.values(allStories).flat().find(s => Number(s.id) === id) || null;
+  const inAll = Object.values(allStories).flat().find(s => Number(s.id) === id);
+  if (inAll) return inAll;
+  // also search the khatarnak pool (selected stories are a subset of this)
+  if (typeof khatarnakPool !== 'undefined' && Array.isArray(khatarnakPool)) {
+    const f = khatarnakPool.find(s => Number(s.id) === id);
+    if (f) return f;
+  }
+  return null;
 }
 
 function approveVoice(storyId, voiceKey, cat) {
