@@ -928,12 +928,16 @@ async function generateSummaries(cat) {
 
 // ── Image: choose which one goes live (AI vs Original) ──
 async function setImgChoice(storyId, choice, cat) {
+  const story = findStory(storyId, cat);
+  // Guard: can't switch to AI if no AI image exists yet
+  if (choice === 'ai' && (!story || !story.ai_image_url)) {
+    showToast('AI image nahi bani — pehle 🔄 Regenerate AI dabao');
+    return;
+  }
   try {
     const res = await apiPost(`${API}/api/admin/set-image-choice`, { story_id: storyId, choice });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Failed');
-    // update in-memory story
-    const story = findStory(storyId, cat);
     if (story) {
       story.image_choice = choice;
       const live = (choice === 'ai' && story.ai_image_url) ? story.ai_image_url : story.image_url;
@@ -944,11 +948,23 @@ async function setImgChoice(storyId, choice, cat) {
         tag.textContent = choice === 'ai' ? '🎨 AI image (live)' : '📷 Original (live)';
         tag.style.background = choice === 'ai' ? 'rgba(41,121,255,.9)' : 'rgba(0,0,0,.7)';
       }
-      // toggle button styles
       const aiBtn = document.getElementById(`choice-ai-${storyId}`);
       const orBtn = document.getElementById(`choice-orig-${storyId}`);
-      if (aiBtn) { aiBtn.style.background = choice === 'ai' ? 'var(--blue)' : 'transparent'; aiBtn.style.color = choice === 'ai' ? '#fff' : 'var(--w3)'; }
-      if (orBtn) { orBtn.style.background = choice === 'original' ? 'var(--blue)' : 'transparent'; orBtn.style.color = choice === 'original' ? '#fff' : 'var(--w3)'; }
+      if (aiBtn) {
+        // keep AI button usable whenever an AI image exists
+        aiBtn.disabled = !story.ai_image_url;
+        aiBtn.style.opacity = story.ai_image_url ? 1 : 0.4;
+        aiBtn.style.cursor = story.ai_image_url ? 'pointer' : 'not-allowed';
+        aiBtn.style.background = choice === 'ai' ? 'var(--blue)' : 'transparent';
+        aiBtn.style.color = choice === 'ai' ? '#fff' : 'var(--w3)';
+      }
+      if (orBtn) {
+        orBtn.disabled = !story.image_url;
+        orBtn.style.opacity = story.image_url ? 1 : 0.4;
+        orBtn.style.cursor = story.image_url ? 'pointer' : 'not-allowed';
+        orBtn.style.background = choice === 'original' ? 'var(--blue)' : 'transparent';
+        orBtn.style.color = choice === 'original' ? '#fff' : 'var(--w3)';
+      }
     }
     saveSession();
     showToast(choice === 'ai' ? '🎨 AI image set live' : '📷 Original image set live');
