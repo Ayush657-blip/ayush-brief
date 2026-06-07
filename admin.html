@@ -1573,24 +1573,43 @@ async function confirmImageSelect() {
     source = imgModalSelected.source;
   } else { showToast('Pehle image select karo'); return; }
 
+  const sid = imgModalStoryId;
   try {
+    // Save as the story's image AND make it the live choice ('original' slot = picked photo)
     const res = await fetch(`${API}/api/admin/update-image`, {
       method: 'POST',
       headers: authHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({ story_id: imgModalStoryId, image_url: url, image_source: source })
+      body: JSON.stringify({ story_id: sid, image_url: url, image_source: source })
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
 
-    // Update local state
-    for (const cat of Object.keys(allStories)) {
-      const story = allStories[cat].find(s => String(s.id) === String(imgModalStoryId));
-      if (story) { story.image_url = url; story.image_source = source; break; }
+    // make this picked image the LIVE one (choice = original)
+    try {
+      await apiPost(`${API}/api/admin/set-image-choice`, { story_id: sid, choice: 'original' });
+    } catch (e) { /* non-fatal */ }
+
+    // Update local state only for this story — do NOT re-render everything
+    const story = findStory(sid);
+    if (story) {
+      story.image_url = url;
+      story.image_source = source;
+      story.image_choice = 'original';
     }
 
-    showToast('✅ Image updated!');
+    // Update just this story's preview in place (stay on Phase 2, no summary regenerate)
+    const liveImg = document.getElementById(`liveimg-${sid}`);
+    if (liveImg) { liveImg.src = url; liveImg.style.opacity = 1; }
+    const tag = document.getElementById(`imgtag-${sid}`);
+    if (tag) { tag.textContent = '📷 Original (live)'; tag.style.background = 'rgba(0,0,0,.7)'; }
+    const aiBtn = document.getElementById(`choice-ai-${sid}`);
+    const orBtn = document.getElementById(`choice-orig-${sid}`);
+    if (aiBtn) { aiBtn.style.background = 'transparent'; aiBtn.style.color = 'var(--w3)'; }
+    if (orBtn) { orBtn.disabled = false; orBtn.style.opacity = 1; orBtn.style.cursor = 'pointer'; orBtn.style.background = 'var(--blue)'; orBtn.style.color = '#fff'; }
+
+    saveSession();
+    showToast('✅ Photo set as live!');
     closeImgModal();
-    renderAllCategories();
   } catch(e) { showToast('❌ ' + e.message); }
 }
 
