@@ -1,13 +1,18 @@
 // ═══════════════════════════════════════════════════════════════════
-// IMAGE GENERATION  —  The Dawn Brief
+// IMAGE SOURCING  —  The Dawn Brief   (real photos, no AI generation)
 // ───────────────────────────────────────────────────────────────────
-// Cascade (reliability):
-//   1. Cloudflare Workers AI (FLUX-1-schnell)  ← first preference (reliable infra)
-//   2. Pollinations.ai (free)                  ← fallback if Cloudflare fails
-//   3. (both fail) → return {ok:false}         ← caller falls back to ORIGINAL photo
+// Morning-Brew model: real, concept-relevant, branded photos.
 //
-// Both generators use the SAME Claude-vision prompt (built from the source
-// image), so whichever runs produces a consistent, story-matching image.
+// Per story:
+//   1. Claude reads summary → decides type (company/person vs concept)
+//      and builds a smart, India-aware search keyword.
+//   2. Fetch a real photo:
+//        company/person  → Wikimedia Commons (exact: logo/building/face)
+//        concept/general  → Pexels  (relevant real photo)
+//        any failure      → Pixabay (optional, if PIXABAY_KEY set)
+//        still nothing    → caller falls back to category image bank
+//   3. Apply Dawn Brief treatment (dark gradient + gold + headline + logo
+//      + tiny attribution) and save to Supabase Storage.
 //
 // NEVER throws. Best-effort. Publish never breaks.
 // ═══════════════════════════════════════════════════════════════════
@@ -17,18 +22,12 @@ const sharp = require('sharp');
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
+const PEXELS_KEY = process.env.PEXELS_KEY;
+const PIXABAY_KEY = process.env.PIXABAY_KEY; // optional
 const IMG_BUCKET = 'story-images';
 
-// Cloudflare Workers AI (set these in Railway env)
-const CF_API_TOKEN = process.env.CF_API_TOKEN;
-const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
-const CF_MODEL = '@cf/black-forest-labs/flux-1-schnell';
-
-// Pollinations (free, no key)
-const POLLINATIONS_BASE = 'https://image.pollinations.ai/prompt';
-
-// ── Claude call (text or vision) ─────────────────────────────────────
-async function callClaudeForPrompt(messages, maxTokens = 200) {
+// ── Claude text call ─────────────────────────────────────────────────
+async function callClaude(prompt, maxTokens = 200) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -39,199 +38,236 @@ async function callClaudeForPrompt(messages, maxTokens = 200) {
     body: JSON.stringify({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: maxTokens,
-      messages
+      messages: [{ role: 'user', content: prompt }]
     })
   });
   if (!res.ok) {
-    let detail = '';
-    try { const e = await res.json(); detail = (e && e.error && e.error.message) || JSON.stringify(e); }
-    catch (x) { try { detail = await res.text(); } catch (y) { detail = ''; } }
-    throw new Error(('Claude ' + res.status + ': ' + detail).slice(0, 300));
+    let d = ''; try { const e = await res.json(); d = (e && e.error && e.error.message) || JSON.stringify(e); } catch (x) {}
+    throw new Error(('Claude ' + res.status + ': ' + d).slice(0, 300));
   }
   const data = await res.json();
   return (data.content[0].text || '').trim();
 }
 
-// ── Fetch source image as base64 (for vision). Returns null on any failure. ──
-async function fetchImageAsBase64(url) {
+// ── Step 1: Claude decides source + keyword ──────────────────────────
+// Returns { kind: 'wikimedia'|'pexels', query: '...' }
+async function decideImageQuery(headline, category, summary) {
+  const prompt =
+'You are a photo editor for an Indian news brief. For the news below, decide what real photo to use.\n\n' +
+'Output STRICT JSON only, no preamble:\n' +
+'{"kind":"wikimedia"|"pexels","query":"search words"}\n\n' +
+'RULES:\n' +
+'- Use "wikimedia" ONLY when the story centers on a SPECIFIC named company, brand, well-known person, or famous institution/place that likely has an official photo (e.g. Tata Power, Reliance, RBI, SEBI, a named politician, a famous building). query = the exact name (e.g. "Tata Power", "Reserve Bank of India").\n' +
+'- Use "pexels" for everything conceptual/general (economy, inflation, jobs, markets, weather, tech, sports, health). \n' +
+'- For pexels queries, turn abstract ideas into a CONCRETE, real, INDIAN scene that a photographer could shoot. Never use abstract words like "inflation" or "economy" alone. Examples:\n' +
+'    inflation -> "indian vegetable market vendor"\n' +
+'    economy growth -> "indian factory workers"\n' +
+'    job market -> "indian office interview"\n' +
+'    stock market -> "stock market trading screen"\n' +
+'    monsoon -> "mumbai monsoon rain street"\n' +
+'- Keep query 2-5 words. Prefer adding "india"/"indian" for local feel where natural.\n' +
+'- Never request text, logos, or specific faces in a pexels query.\n\n' +
+'NEWS:\nHeadline: ' + headline + '\nCategory: ' + category + '\nDetail: ' + (summary || '').slice(0, 350);
+
+  const raw = await callClaude(prompt, 120);
+  // tolerant JSON parse
+  let cleaned = raw.replace(/```json|```/g, '').trim();
+  const m = cleaned.match(/\{[\s\S]*\}/);
+  if (m) cleaned = m[0];
+  let obj;
+  try { obj = JSON.parse(cleaned); } catch (e) { obj = null; }
+  if (!obj || !obj.query) {
+    // safe fallback: treat as concept using category
+    return { kind: 'pexels', query: (category || 'india news') + ' india' };
+  }
+  const kind = obj.kind === 'wikimedia' ? 'wikimedia' : 'pexels';
+  return { kind, query: String(obj.query).slice(0, 80) };
+}
+
+// ── Source A: Wikimedia Commons ──────────────────────────────────────
+// Returns { url, attribution } or null
+async function fromWikimedia(query) {
   try {
-    if (!url || !/^https?:\/\//i.test(url)) return null;
+    const api = 'https://commons.wikimedia.org/w/api.php?action=query&generator=search' +
+      '&gsrnamespace=6&gsrsearch=' + encodeURIComponent(query) +
+      '&gsrlimit=12&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=1200&format=json&origin=*';
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
-    const res = await fetch(url, {
-      signal: controller.signal,
-      redirect: 'follow',
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' }
-    });
-    clearTimeout(timer);
+    const t = setTimeout(() => controller.abort(), 12000);
+    const res = await fetch(api, { signal: controller.signal, headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@ayushbrief.online)' } });
+    clearTimeout(t);
     if (!res.ok) return null;
-    const ctype = (res.headers.get('content-type') || '').toLowerCase();
-    if (!ctype.startsWith('image/')) return null;
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.length < 1000 || buf.length > 5000000) return null;
-    let media = 'image/jpeg';
-    if (ctype.includes('png')) media = 'image/png';
-    else if (ctype.includes('webp')) media = 'image/webp';
-    else if (ctype.includes('gif')) media = 'image/gif';
-    return { data: buf.toString('base64'), media_type: media };
+    const data = await res.json();
+    const pages = data && data.query && data.query.pages;
+    if (!pages) return null;
+
+    // pick the first usable photo (jpg/png/webp, wide enough, not an icon/svg/map)
+    const candidates = Object.values(pages)
+      .map(p => (p.imageinfo && p.imageinfo[0]) ? p.imageinfo[0] : null)
+      .filter(Boolean);
+
+    for (const ii of candidates) {
+      const u = (ii.thumburl || ii.url || '').toLowerCase();
+      if (!u) continue;
+      if (/\.(svg|gif|tif|tiff|pdf|webm|ogv)(\?|$)/.test(u)) continue; // skip non-photo
+      const width = ii.thumbwidth || ii.width || 0;
+      if (width && width < 600) continue; // too small
+      // attribution
+      let artist = '';
+      const ext = ii.extmetadata || {};
+      if (ext.Artist && ext.Artist.value) artist = String(ext.Artist.value).replace(/<[^>]+>/g, '').trim().slice(0, 40);
+      const attribution = 'Wikimedia Commons' + (artist ? ' / ' + artist : '');
+      return { url: ii.thumburl || ii.url, attribution };
+    }
+    return null;
   } catch (e) {
     return null;
   }
 }
 
-// ── Build a realistic image prompt from the story (vision if source available) ──
-async function buildImagePrompt(headline, category, summary, sourceImageUrl) {
-  const guide = 'You are an art director for a premium Indian news brief. Create a SHORT image-generation prompt (max 40 words) for a brand-new, ORIGINAL photograph that visually represents this news story.\n\nRULES:\n- The image must look like a REAL editorial news photograph (DSLR, photojournalism), NOT digital art, NOT illustration, NOT cartoon, NOT 3D render.\n- Capture the same SCENE and CONCEPT as the story (place, setting, objects, mood) so it feels like it belongs to this exact news.\n- Do NOT describe or name any specific real person face. Show people only generically (from behind, silhouette, crowd, hands) or focus on objects/places instead.\n- Output ONLY the prompt text. No preamble, no quotes, no explanation.';
-
-  const storyText = 'NEWS:\nHeadline: ' + headline + '\nCategory: ' + category + '\nDetail: ' + (summary || '').slice(0, 400);
-
-  const b64 = sourceImageUrl ? await fetchImageAsBase64(sourceImageUrl) : null;
-
-  let messages;
-  if (b64) {
-    messages = [{
-      role: 'user',
-      content: [
-        { type: 'image', source: { type: 'base64', media_type: b64.media_type, data: b64.data } },
-        { type: 'text', text: guide + '\n\nThe reference image above shows how this story was illustrated. Take INSPIRATION from its scene/setting (do not copy it) and write a prompt for a fresh original photograph of the same kind of scene.\n\n' + storyText }
-      ]
-    }];
-  } else {
-    messages = [{ role: 'user', content: guide + '\n\n' + storyText }];
-  }
-
-  let prompt = await callClaudeForPrompt(messages, 160);
-  prompt = prompt.replace(/^["'`]+|["'`]+$/g, '').replace(/\*/g, '').trim();
-  prompt = prompt + ', realistic editorial news photograph, natural lighting, high detail, photojournalism, 35mm';
-  return prompt;
-}
-
-// ── GENERATOR 1: Cloudflare Workers AI (FLUX). Returns Buffer or throws. ──
-async function cloudflareImage(prompt) {
-  if (!CF_API_TOKEN || !CF_ACCOUNT_ID) throw new Error('Cloudflare not configured');
-  const seed = Math.floor(Math.random() * 4000000000);
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 30000);
+// ── Source B: Pexels ─────────────────────────────────────────────────
+async function fromPexels(query) {
   try {
-    const res = await fetch(
-      'https://api.cloudflare.com/client/v4/accounts/' + CF_ACCOUNT_ID + '/ai/run/' + CF_MODEL,
-      {
-        method: 'POST',
-        signal: controller.signal,
-        headers: {
-          'Authorization': 'Bearer ' + CF_API_TOKEN,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ prompt: prompt.slice(0, 2000), seed: seed, steps: 6 })
-      }
-    );
-    clearTimeout(timer);
-    if (!res.ok) {
-      let d = ''; try { d = await res.text(); } catch (e) {}
-      throw new Error('Cloudflare ' + res.status + ': ' + d.slice(0, 150));
-    }
+    if (!PEXELS_KEY) return null;
+    const api = 'https://api.pexels.com/v1/search?query=' + encodeURIComponent(query) +
+      '&per_page=12&orientation=landscape';
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 12000);
+    const res = await fetch(api, { signal: controller.signal, headers: { 'Authorization': PEXELS_KEY } });
+    clearTimeout(t);
+    if (!res.ok) return null;
     const data = await res.json();
-    const b64 = data && data.result && data.result.image;
-    if (!b64) throw new Error('Cloudflare returned no image');
-    const buf = Buffer.from(b64, 'base64');
-    if (buf.length < 3000) throw new Error('Cloudflare image too small');
-    return buf;
-  } finally {
-    clearTimeout(timer);
+    const photos = data && data.photos;
+    if (!photos || !photos.length) return null;
+    // pick a photo (rotate a bit so regenerate gives a different one)
+    const pick = photos[Math.floor(Math.random() * Math.min(photos.length, 8))];
+    const url = (pick.src && (pick.src.large2x || pick.src.large || pick.src.original)) || null;
+    if (!url) return null;
+    return { url, attribution: 'Pexels / ' + (pick.photographer || 'photographer') };
+  } catch (e) {
+    return null;
   }
 }
 
-// ── GENERATOR 2: Pollinations (free fallback). Returns Buffer or throws. ──
-async function pollinationsImage(prompt) {
-  const seed = Math.floor(Math.random() * 1000000);
-  const url = POLLINATIONS_BASE + '/' + encodeURIComponent(prompt) + '?width=1200&height=630&nologo=true&model=flux&seed=' + seed;
+// ── Source C: Pixabay (optional fallback) ────────────────────────────
+async function fromPixabay(query) {
+  try {
+    if (!PIXABAY_KEY) return null;
+    const api = 'https://pixabay.com/api/?key=' + PIXABAY_KEY +
+      '&q=' + encodeURIComponent(query) + '&image_type=photo&orientation=horizontal&per_page=12&safesearch=true';
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 12000);
+    const res = await fetch(api, { signal: controller.signal });
+    clearTimeout(t);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const hits = data && data.hits;
+    if (!hits || !hits.length) return null;
+    const pick = hits[Math.floor(Math.random() * Math.min(hits.length, 8))];
+    const url = pick.largeImageURL || pick.webformatURL || null;
+    if (!url) return null;
+    return { url, attribution: 'Pixabay / ' + (pick.user || 'contributor') };
+  } catch (e) {
+    return null;
+  }
+}
+
+// ── Download a remote image as a buffer ──────────────────────────────
+async function downloadImage(url) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 60000);
+  const t = setTimeout(() => controller.abort(), 15000);
   try {
-    const res = await fetch(url, { signal: controller.signal, redirect: 'follow' });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error('Pollinations ' + res.status);
+    const res = await fetch(url, {
+      signal: controller.signal, redirect: 'follow',
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' }
+    });
+    clearTimeout(t);
+    if (!res.ok) throw new Error('download ' + res.status);
     const ctype = (res.headers.get('content-type') || '').toLowerCase();
-    if (!ctype.startsWith('image/')) throw new Error('Pollinations returned non-image');
+    if (!ctype.startsWith('image/')) throw new Error('not an image');
     const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.length < 3000) throw new Error('Pollinations image too small');
+    if (buf.length < 3000) throw new Error('image too small');
     return buf;
   } finally {
-    clearTimeout(timer);
+    clearTimeout(t);
   }
 }
 
-// ── Try generators in priority order. Returns { buffer, source } or null. ──
-async function generateRaw(prompt) {
-  try {
-    const buf = await cloudflareImage(prompt);
-    console.log('🟢 image via Cloudflare');
-    return { buffer: buf, source: 'cloudflare' };
-  } catch (e) {
-    console.warn('⚠️ Cloudflare failed: ' + e.message + ' — trying Pollinations');
-  }
-  try {
-    const buf = await pollinationsImage(prompt);
-    console.log('🟡 image via Pollinations (fallback)');
-    return { buffer: buf, source: 'pollinations' };
-  } catch (e) {
-    console.warn('⚠️ Pollinations failed: ' + e.message);
-  }
-  return null;
+// ── XML-escape text for safe SVG embedding ───────────────────────────
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-// ── Apply "The Dawn Brief" watermark (logo + text) bottom-right ──────────────
-// Logo is pure vector (no font dependency) so it ALWAYS renders. Text uses the
-// generic "sans-serif" family which fontconfig resolves to whatever font the
-// container has — avoids the "Fontconfig: cannot load default config" failure
-// that hid the old "Georgia"-specific watermark.
-async function applyWatermark(imageBuffer) {
+// ── Wrap a headline into <=2 lines for the overlay ───────────────────
+function wrapHeadline(text, maxChars) {
+  const words = String(text || '').split(/\s+/);
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    if ((line + ' ' + w).trim().length > maxChars && line) { lines.push(line.trim()); line = w; }
+    else { line = (line + ' ' + w).trim(); }
+    if (lines.length === 2) break;
+  }
+  if (line && lines.length < 2) lines.push(line.trim());
+  // if truncated, add ellipsis
+  if (lines.join(' ').length < String(text || '').length && lines.length === 2) {
+    lines[1] = lines[1].replace(/[.,;:]?$/, '') + '…';
+  }
+  return lines.slice(0, 2);
+}
+
+// ── Apply Dawn Brief treatment: photo + dark gradient + gold + headline + logo + attribution ──
+async function applyTreatment(imageBuffer, opts) {
+  const category = (opts.category || '').toUpperCase();
+  const headline = opts.headline || '';
+  const attribution = opts.attribution || '';
+
   const base = await sharp(imageBuffer)
     .resize(1200, 630, { fit: 'cover', position: 'centre' })
-    .jpeg({ quality: 86 })
+    .jpeg({ quality: 88 })
     .toBuffer();
 
-  // The Dawn Brief sunrise logo — pure SVG shapes (horizon, half-sun, rays, dot).
-  // Sits inside a translucent dark pill at bottom-right with the brand name.
-  const wmSvg =
-'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">' +
-  '<defs>' +
-    '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">' +
-      '<stop offset="0%" stop-color="#8A6218"/>' +
-      '<stop offset="35%" stop-color="#E8C558"/>' +
-      '<stop offset="65%" stop-color="#FFF0B0"/>' +
-      '<stop offset="100%" stop-color="#8A6218"/>' +
-    '</linearGradient>' +
-    '<clipPath id="halfsun"><rect x="892" y="556" width="48" height="22"/></clipPath>' +
-  '</defs>' +
-  // translucent dark pill background for legibility
-  '<rect x="876" y="544" width="300" height="56" rx="28" fill="#07070F" opacity="0.55"/>' +
-  // ── sunrise logo (gold) at left of pill ──
-  '<g stroke="url(#gold)" stroke-width="3" stroke-linecap="round" fill="none">' +
-    // horizon line
-    '<line x1="898" y1="580" x2="934" y2="580"/>' +
-    // half-circle sun (upper half only, sitting on the horizon)
-    '<circle cx="916" cy="578" r="11" clip-path="url(#halfsun)"/>' +
-    // vertical center ray
-    '<line x1="916" y1="556" x2="916" y2="562"/>' +
-    // two diagonal rays
-    '<line x1="901" y1="563" x2="905" y2="567"/>' +
-    '<line x1="931" y1="563" x2="927" y2="567"/>' +
+  const lines = wrapHeadline(headline, 34);
+  const hlSvg = lines.map((ln, i) =>
+    '<text x="58" y="' + (548 + i * 50) + '" font-family="sans-serif" font-size="42" font-weight="800" fill="#ffffff">' + esc(ln) + '</text>'
+  ).join('');
+  const headlineBlockTop = lines.length === 2 ? 498 : 548;
+
+  const svg =
+'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><defs>' +
+  '<linearGradient id="dark" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0%" stop-color="#07070F" stop-opacity="0"/>' +
+    '<stop offset="50%" stop-color="#07070F" stop-opacity="0.05"/>' +
+    '<stop offset="100%" stop-color="#07070F" stop-opacity="0.9"/></linearGradient>' +
+  '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">' +
+    '<stop offset="0%" stop-color="#8A6218"/><stop offset="50%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient>' +
+  '<clipPath id="hs"><rect x="980" y="34" width="40" height="18"/></clipPath>' +
+'</defs>' +
+  '<rect width="1200" height="630" fill="url(#dark)"/>' +
+  '<rect x="0" y="0" width="1200" height="4" fill="#E8C558"/>' +
+  // category label (gold)
+  (category ? '<text x="60" y="' + (headlineBlockTop - 22) + '" font-family="sans-serif" font-size="19" font-weight="700" fill="#E8C558" letter-spacing="2">' + esc(category) + '</text>' : '') +
+  // headline (white, 1-2 lines)
+  hlSvg +
+  // attribution (tiny, bottom-right corner)
+  (attribution ? '<text x="1180" y="618" font-family="sans-serif" font-size="11" fill="#c8c8d0" opacity="0.7" text-anchor="end">' + esc(attribution) + '</text>' : '') +
+  // Dawn Brief logo + name (top-right)
+  '<g stroke="url(#gold)" stroke-width="2.6" stroke-linecap="round" fill="none">' +
+    '<line x1="986" y1="52" x2="1014" y2="52"/>' +
+    '<circle cx="1000" cy="52" r="9" clip-path="url(#hs)"/>' +
+    '<line x1="1000" y1="33" x2="1000" y2="38"/>' +
   '</g>' +
-  // center dot
-  '<circle cx="916" cy="573" r="2.4" fill="url(#gold)"/>' +
-  // ── brand text (generic sans-serif so fontconfig always resolves it) ──
-  '<text x="952" y="579" font-family="sans-serif" font-size="22" font-style="italic" font-weight="700" fill="#000000" opacity="0.5">The Dawn Brief</text>' +
-  '<text x="950" y="577" font-family="sans-serif" font-size="22" font-style="italic" font-weight="700" fill="url(#gold)">The Dawn Brief</text>' +
+  '<text x="1026" y="58" font-family="sans-serif" font-size="19" font-style="italic" font-weight="700" fill="url(#gold)">The Dawn Brief</text>' +
 '</svg>';
 
   return await sharp(base)
-    .composite([{ input: Buffer.from(wmSvg), top: 0, left: 0 }])
-    .jpeg({ quality: 86 })
+    .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
+    .jpeg({ quality: 88 })
     .toBuffer();
 }
 
-// ── Upload buffer to Supabase, return public URL (cache-busted) ──────────────
+// ── Upload to Supabase, return public URL (cache-busted) ─────────────
 async function uploadToSupabase(buffer, storyId) {
   const path = 'ai/' + storyId + '.jpg';
   const up = await fetch(SUPA_URL + '/storage/v1/object/' + IMG_BUCKET + '/' + path, {
@@ -249,28 +285,53 @@ async function uploadToSupabase(buffer, storyId) {
   return SUPA_URL + '/storage/v1/object/public/' + IMG_BUCKET + '/' + path + '?v=' + Date.now();
 }
 
-// ── MAIN: generate an AI image for one story ─────────────────────────
-// Returns { ok:true, url, source } | { ok:false, error }. NEVER throws.
+// ── MAIN: source a real photo for one story, brand it, save it ───────
+// Returns { ok:true, url, source, attribution } | { ok:false, error }. NEVER throws.
 async function generateStoryImage(story) {
   try {
     if (!CLAUDE_API_KEY) return { ok: false, error: 'No Claude API key' };
     if (!SUPA_KEY) return { ok: false, error: 'No Supabase key' };
 
-    const prompt = await buildImagePrompt(
-      story.headline, story.category, story.summary, story.image_url
-    );
-    console.log('🎨 prompt [' + story.id + ']: ' + prompt.slice(0, 90) + '...');
+    // 1. decide source + keyword
+    let decision;
+    try {
+      decision = await decideImageQuery(story.headline, story.category, story.summary);
+    } catch (e) {
+      decision = { kind: 'pexels', query: (story.category || 'india news') + ' india' };
+    }
+    console.log('🔎 [' + story.id + '] ' + decision.kind + ' query: "' + decision.query + '"');
 
-    const raw = await generateRaw(prompt);
-    if (!raw) return { ok: false, error: 'Both Cloudflare and Pollinations failed' };
+    // 2. fetch a photo in priority order
+    let found = null;   // { url, attribution }
+    let source = null;
 
-    const watermarked = await applyWatermark(raw.buffer);
-    const url = await uploadToSupabase(watermarked, story.id);
+    if (decision.kind === 'wikimedia') {
+      found = await fromWikimedia(decision.query); if (found) source = 'wikimedia';
+      if (!found) { found = await fromPexels(decision.query); if (found) source = 'pexels'; }
+    } else {
+      found = await fromPexels(decision.query); if (found) source = 'pexels';
+      if (!found) { found = await fromPixabay(decision.query); if (found) source = 'pixabay'; }
+      if (!found) { found = await fromWikimedia(decision.query); if (found) source = 'wikimedia'; }
+    }
+    // last-chance pixabay if everything above failed
+    if (!found) { found = await fromPixabay(decision.query); if (found) source = 'pixabay'; }
 
-    console.log('✅ AI image saved [' + story.id + '] via ' + raw.source);
-    return { ok: true, url: url, source: raw.source };
+    if (!found) {
+      console.warn('⚠️ [' + story.id + '] no photo from any source for "' + decision.query + '"');
+      return { ok: false, error: 'No photo found for: ' + decision.query };
+    }
+
+    // 3. download + brand + save
+    const raw = await downloadImage(found.url);
+    const branded = await applyTreatment(raw, {
+      category: story.category, headline: story.headline, attribution: found.attribution
+    });
+    const url = await uploadToSupabase(branded, story.id);
+
+    console.log('✅ [' + story.id + '] photo via ' + source + ' (' + found.attribution + ')');
+    return { ok: true, url, source, attribution: found.attribution };
   } catch (e) {
-    console.error('⚠️ AI image failed [' + (story && story.id) + ']: ' + e.message);
+    console.error('⚠️ image failed [' + (story && story.id) + ']: ' + e.message);
     return { ok: false, error: e.message };
   }
 }
