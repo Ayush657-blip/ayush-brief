@@ -237,46 +237,39 @@ function wrapHeadline(text, maxChars) {
 
 // ── Apply Dawn Brief treatment: photo + dark gradient + gold + headline + logo + attribution ──
 async function applyTreatment(imageBuffer, opts) {
-  const category = (opts.category || '').toUpperCase();
-  const headline = opts.headline || '';
-  const attribution = opts.attribution || '';
-
+  // Clean brand mark only: light premium gradient + gold sunrise logo (top-right).
+  // No text at all — the sunrise is pure SVG vector (no font dependency), so it
+  // always renders. Headline/category live on the website & email, not the image.
   const base = await sharp(imageBuffer)
     .resize(1200, 630, { fit: 'cover', position: 'centre' })
     .jpeg({ quality: 88 })
     .toBuffer();
 
-  const lines = wrapHeadline(headline, 34);
-  const hlSvg = lines.map((ln, i) =>
-    '<text x="58" y="' + (548 + i * 50) + '" font-family="DBSans" font-size="42" font-weight="800" fill="#ffffff">' + esc(ln) + '</text>'
-  ).join('');
-  const headlineBlockTop = lines.length === 2 ? 498 : 548;
-
+  // Sunrise logo top-right: horizon line + upper-half sun + rays + dot.
   const svg =
-'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">' + fontFace() + '<defs>' +
-  '<linearGradient id="dark" x1="0" y1="0" x2="0" y2="1">' +
-    '<stop offset="0%" stop-color="#07070F" stop-opacity="0"/>' +
-    '<stop offset="50%" stop-color="#07070F" stop-opacity="0.05"/>' +
-    '<stop offset="100%" stop-color="#07070F" stop-opacity="0.9"/></linearGradient>' +
+'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><defs>' +
+  '<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0%" stop-color="#07070F" stop-opacity="0.28"/>' +
+    '<stop offset="22%" stop-color="#07070F" stop-opacity="0"/>' +
+    '<stop offset="78%" stop-color="#07070F" stop-opacity="0"/>' +
+    '<stop offset="100%" stop-color="#07070F" stop-opacity="0.4"/></linearGradient>' +
   '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">' +
     '<stop offset="0%" stop-color="#8A6218"/><stop offset="50%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient>' +
-  '<clipPath id="hs"><rect x="980" y="34" width="40" height="18"/></clipPath>' +
+  '<clipPath id="hs"><rect x="1118" y="40" width="60" height="30"/></clipPath>' +
 '</defs>' +
-  '<rect width="1200" height="630" fill="url(#dark)"/>' +
+  // subtle top+bottom vignette for premium depth
+  '<rect width="1200" height="630" fill="url(#vig)"/>' +
+  // thin gold top edge (brand signature)
   '<rect x="0" y="0" width="1200" height="4" fill="#E8C558"/>' +
-  // category label (gold)
-  (category ? '<text x="60" y="' + (headlineBlockTop - 22) + '" font-family="DBSans" font-size="19" font-weight="700" fill="#E8C558" letter-spacing="2">' + esc(category) + '</text>' : '') +
-  // headline (white, 1-2 lines)
-  hlSvg +
-  // attribution (tiny, bottom-right corner)
-  (attribution ? '<text x="1180" y="618" font-family="DBSans" font-size="11" fill="#c8c8d0" opacity="0.7" text-anchor="end">' + esc(attribution) + '</text>' : '') +
-  // Dawn Brief logo + name (top-right)
-  '<g stroke="url(#gold)" stroke-width="2.6" stroke-linecap="round" fill="none">' +
-    '<line x1="986" y1="52" x2="1014" y2="52"/>' +
-    '<circle cx="1000" cy="52" r="9" clip-path="url(#hs)"/>' +
-    '<line x1="1000" y1="33" x2="1000" y2="38"/>' +
+  // ── sunrise logo, top-right (vector, always renders) ──
+  '<g stroke="url(#gold)" stroke-width="4" stroke-linecap="round" fill="none">' +
+    '<line x1="1120" y1="70" x2="1166" y2="70"/>' +          // horizon
+    '<circle cx="1143" cy="70" r="17" clip-path="url(#hs)"/>' + // upper-half sun
+    '<line x1="1143" y1="36" x2="1143" y2="44"/>' +           // center ray
+    '<line x1="1120" y1="48" x2="1126" y2="54"/>' +           // left ray
+    '<line x1="1166" y1="48" x2="1160" y2="54"/>' +           // right ray
   '</g>' +
-  '<text x="1026" y="58" font-family="DBSans" font-size="19" font-style="italic" font-weight="700" fill="url(#gold)">The Dawn Brief</text>' +
+  '<circle cx="1143" cy="60" r="3" fill="url(#gold)"/>' +     // center dot
 '</svg>';
 
   return await sharp(base)
