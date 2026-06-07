@@ -18,6 +18,24 @@
 // ═══════════════════════════════════════════════════════════════════
 
 const sharp = require('sharp');
+const fs = require('fs');
+const path = require('path');
+
+// Load the bundled font ONCE and base64-embed it into every SVG, so text always
+// renders regardless of whether the container has any system fonts (fixes the
+// "□□□ tofu boxes" / Fontconfig failure on Railway).
+let FONT_B64 = '';
+try {
+  const fontPath = path.join(__dirname, 'DejaVuSans-Bold.ttf');
+  FONT_B64 = fs.readFileSync(fontPath).toString('base64');
+} catch (e) {
+  console.warn('⚠️ bundled font not found, text may not render:', e.message);
+}
+function fontFace() {
+  if (!FONT_B64) return '';
+  return '<style>@font-face{font-family:"DBSans";src:url(data:font/truetype;charset=utf-8;base64,' +
+    FONT_B64 + ') format("truetype");font-weight:normal;font-style:normal;}</style>';
+}
 
 const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
@@ -230,12 +248,12 @@ async function applyTreatment(imageBuffer, opts) {
 
   const lines = wrapHeadline(headline, 34);
   const hlSvg = lines.map((ln, i) =>
-    '<text x="58" y="' + (548 + i * 50) + '" font-family="sans-serif" font-size="42" font-weight="800" fill="#ffffff">' + esc(ln) + '</text>'
+    '<text x="58" y="' + (548 + i * 50) + '" font-family="DBSans" font-size="42" font-weight="800" fill="#ffffff">' + esc(ln) + '</text>'
   ).join('');
   const headlineBlockTop = lines.length === 2 ? 498 : 548;
 
   const svg =
-'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><defs>' +
+'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">' + fontFace() + '<defs>' +
   '<linearGradient id="dark" x1="0" y1="0" x2="0" y2="1">' +
     '<stop offset="0%" stop-color="#07070F" stop-opacity="0"/>' +
     '<stop offset="50%" stop-color="#07070F" stop-opacity="0.05"/>' +
@@ -247,18 +265,18 @@ async function applyTreatment(imageBuffer, opts) {
   '<rect width="1200" height="630" fill="url(#dark)"/>' +
   '<rect x="0" y="0" width="1200" height="4" fill="#E8C558"/>' +
   // category label (gold)
-  (category ? '<text x="60" y="' + (headlineBlockTop - 22) + '" font-family="sans-serif" font-size="19" font-weight="700" fill="#E8C558" letter-spacing="2">' + esc(category) + '</text>' : '') +
+  (category ? '<text x="60" y="' + (headlineBlockTop - 22) + '" font-family="DBSans" font-size="19" font-weight="700" fill="#E8C558" letter-spacing="2">' + esc(category) + '</text>' : '') +
   // headline (white, 1-2 lines)
   hlSvg +
   // attribution (tiny, bottom-right corner)
-  (attribution ? '<text x="1180" y="618" font-family="sans-serif" font-size="11" fill="#c8c8d0" opacity="0.7" text-anchor="end">' + esc(attribution) + '</text>' : '') +
+  (attribution ? '<text x="1180" y="618" font-family="DBSans" font-size="11" fill="#c8c8d0" opacity="0.7" text-anchor="end">' + esc(attribution) + '</text>' : '') +
   // Dawn Brief logo + name (top-right)
   '<g stroke="url(#gold)" stroke-width="2.6" stroke-linecap="round" fill="none">' +
     '<line x1="986" y1="52" x2="1014" y2="52"/>' +
     '<circle cx="1000" cy="52" r="9" clip-path="url(#hs)"/>' +
     '<line x1="1000" y1="33" x2="1000" y2="38"/>' +
   '</g>' +
-  '<text x="1026" y="58" font-family="sans-serif" font-size="19" font-style="italic" font-weight="700" fill="url(#gold)">The Dawn Brief</text>' +
+  '<text x="1026" y="58" font-family="DBSans" font-size="19" font-style="italic" font-weight="700" fill="url(#gold)">The Dawn Brief</text>' +
 '</svg>';
 
   return await sharp(base)
