@@ -958,6 +958,37 @@ app.get('/api/images/pexels', async (req, res) => {
   }
 });
 
+// Wikimedia Commons image search (real logos/buildings/people)
+app.get('/api/images/wikimedia', async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) return res.status(400).json({ error: 'Query required' });
+    const api = 'https://commons.wikimedia.org/w/api.php?action=query&generator=search' +
+      '&gsrnamespace=6&gsrsearch=' + encodeURIComponent(query) +
+      '&gsrlimit=24&prop=imageinfo&iiprop=url&iiurlwidth=800&format=json&origin=*';
+    const r = await fetch(api, { headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@ayushbrief.online)' } });
+    if (!r.ok) throw new Error(`Wikimedia error ${r.status}`);
+    const data = await r.json();
+    const pages = (data.query && data.query.pages) ? Object.values(data.query.pages) : [];
+    const images = [];
+    for (const p of pages) {
+      const ii = p.imageinfo && p.imageinfo[0];
+      if (!ii) continue;
+      const u = (ii.thumburl || ii.url || '').toLowerCase();
+      if (!u) continue;
+      if (/\.(svg|gif|tif|tiff|pdf|webm|ogv)(\?|$)/.test(u)) continue; // skip non-photo
+      images.push({
+        url: ii.thumburl || ii.url,      // 800px version used as the chosen image
+        thumb: ii.thumburl || ii.url,
+        source: 'wikimedia'
+      });
+    }
+    res.json({ success: true, images });
+  } catch(err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // List GitHub category images
 app.get('/api/images/github/:category', async (req, res) => {
   try {
