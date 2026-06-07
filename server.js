@@ -1089,6 +1089,8 @@ app.post('/api/admin/regenerate-summary', adminAuth, curation.regenerateSummary)
 app.post('/api/admin/backfill-summaries', adminAuth, curation.backfillSummaries);
 app.post('/api/admin/regenerate-voice', adminAuth, curation.regenerateVoice);
 app.post('/api/admin/save-voice', adminAuth, curation.saveVoice);
+app.post('/api/admin/regenerate-image', adminAuth, curation.regenerateImage);
+app.post('/api/admin/set-image-choice', adminAuth, curation.setImageChoice);
 app.post('/api/admin/submit', adminAuth, curation.submitApproved);
 
 // Resend the latest published edition (FREE — no Claude). Trigger from browser:
