@@ -104,11 +104,11 @@ async function decideImageQuery(headline, category, summary) {
 
 // ── Source A: Wikimedia Commons ──────────────────────────────────────
 // Returns { url, attribution } or null
-async function fromWikimedia(query) {
+async function fromWikimedia(query, offset) {
   try {
     const api = 'https://commons.wikimedia.org/w/api.php?action=query&generator=search' +
       '&gsrnamespace=6&gsrsearch=' + encodeURIComponent(query) +
-      '&gsrlimit=12&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=1200&format=json&origin=*';
+      '&gsrlimit=20&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=1200&format=json&origin=*';
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(api, { signal: controller.signal, headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@ayushbrief.online)' } });
@@ -118,36 +118,37 @@ async function fromWikimedia(query) {
     const pages = data && data.query && data.query.pages;
     if (!pages) return null;
 
-    // pick the first usable photo (jpg/png/webp, wide enough, not an icon/svg/map)
-    const candidates = Object.values(pages)
-      .map(p => (p.imageinfo && p.imageinfo[0]) ? p.imageinfo[0] : null)
-      .filter(Boolean);
-
-    for (const ii of candidates) {
+    // collect all usable photos (jpg/png/webp, wide enough, not icon/svg/map)
+    const usable = [];
+    for (const ii of Object.values(pages).map(p => (p.imageinfo && p.imageinfo[0]) ? p.imageinfo[0] : null).filter(Boolean)) {
       const u = (ii.thumburl || ii.url || '').toLowerCase();
       if (!u) continue;
-      if (/\.(svg|gif|tif|tiff|pdf|webm|ogv)(\?|$)/.test(u)) continue; // skip non-photo
+      if (/\.(svg|gif|tif|tiff|pdf|webm|ogv)(\?|$)/.test(u)) continue;
       const width = ii.thumbwidth || ii.width || 0;
-      if (width && width < 600) continue; // too small
-      // attribution
-      let artist = '';
-      const ext = ii.extmetadata || {};
-      if (ext.Artist && ext.Artist.value) artist = String(ext.Artist.value).replace(/<[^>]+>/g, '').trim().slice(0, 40);
-      const attribution = 'Wikimedia Commons' + (artist ? ' / ' + artist : '');
-      return { url: ii.thumburl || ii.url, attribution };
+      if (width && width < 600) continue;
+      usable.push(ii);
     }
-    return null;
+    if (!usable.length) return null;
+    // rotate by offset so each regenerate gives a different one
+    const ii = usable[Math.abs(offset || 0) % usable.length];
+    let artist = '';
+    const ext = ii.extmetadata || {};
+    if (ext.Artist && ext.Artist.value) artist = String(ext.Artist.value).replace(/<[^>]+>/g, '').trim().slice(0, 40);
+    const attribution = 'Wikimedia Commons' + (artist ? ' / ' + artist : '');
+    return { url: ii.thumburl || ii.url, attribution };
   } catch (e) {
     return null;
   }
 }
 
 // ── Source B: Pexels ─────────────────────────────────────────────────
-async function fromPexels(query) {
+async function fromPexels(query, offset) {
   try {
     if (!PEXELS_KEY) return null;
+    // pull a wide pool; rotate the page so each regenerate lands on fresh results
+    const page = 1 + (Math.abs(offset || 0) % 5); // pages 1..5
     const api = 'https://api.pexels.com/v1/search?query=' + encodeURIComponent(query) +
-      '&per_page=12&orientation=landscape';
+      '&per_page=15&orientation=landscape&page=' + page;
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(api, { signal: controller.signal, headers: { 'Authorization': PEXELS_KEY } });
@@ -156,8 +157,9 @@ async function fromPexels(query) {
     const data = await res.json();
     const photos = data && data.photos;
     if (!photos || !photos.length) return null;
-    // pick a photo (rotate a bit so regenerate gives a different one)
-    const pick = photos[Math.floor(Math.random() * Math.min(photos.length, 8))];
+    // pick by rotating index within the page (guaranteed-different across attempts)
+    const idx = Math.abs(offset || 0) % photos.length;
+    const pick = photos[idx];
     const url = (pick.src && (pick.src.large2x || pick.src.large || pick.src.original)) || null;
     if (!url) return null;
     return { url, attribution: 'Pexels / ' + (pick.photographer || 'photographer') };
@@ -167,11 +169,12 @@ async function fromPexels(query) {
 }
 
 // ── Source C: Pixabay (optional fallback) ────────────────────────────
-async function fromPixabay(query) {
+async function fromPixabay(query, offset) {
   try {
     if (!PIXABAY_KEY) return null;
+    const page = 1 + (Math.abs(offset || 0) % 5);
     const api = 'https://pixabay.com/api/?key=' + PIXABAY_KEY +
-      '&q=' + encodeURIComponent(query) + '&image_type=photo&orientation=horizontal&per_page=12&safesearch=true';
+      '&q=' + encodeURIComponent(query) + '&image_type=photo&orientation=horizontal&per_page=15&safesearch=true&page=' + page;
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(api, { signal: controller.signal });
@@ -180,7 +183,7 @@ async function fromPixabay(query) {
     const data = await res.json();
     const hits = data && data.hits;
     if (!hits || !hits.length) return null;
-    const pick = hits[Math.floor(Math.random() * Math.min(hits.length, 8))];
+    const pick = hits[Math.abs(offset || 0) % hits.length];
     const url = pick.largeImageURL || pick.webformatURL || null;
     if (!url) return null;
     return { url, attribution: 'Pixabay / ' + (pick.user || 'contributor') };
@@ -298,10 +301,14 @@ async function uploadToSupabase(buffer, storyId) {
 
 // ── MAIN: source a real photo for one story, brand it, save it ───────
 // Returns { ok:true, url, source, attribution } | { ok:false, error }. NEVER throws.
-async function generateStoryImage(story) {
+// `attempt` rotates the photo pick so each regenerate yields a different image.
+async function generateStoryImage(story, attempt) {
   try {
     if (!CLAUDE_API_KEY) return { ok: false, error: 'No Claude API key' };
     if (!SUPA_KEY) return { ok: false, error: 'No Supabase key' };
+
+    // offset: use given attempt, else a time-seeded value so repeats differ
+    const off = (typeof attempt === 'number') ? attempt : Math.floor(Date.now() / 1000);
 
     // 1. decide source + keyword
     let decision;
@@ -310,22 +317,22 @@ async function generateStoryImage(story) {
     } catch (e) {
       decision = { kind: 'pexels', query: (story.category || 'india news') + ' india' };
     }
-    console.log('🔎 [' + story.id + '] ' + decision.kind + ' query: "' + decision.query + '"');
+    console.log('🔎 [' + story.id + '] ' + decision.kind + ' query: "' + decision.query + '" (attempt ' + off + ')');
 
     // 2. fetch a photo in priority order
     let found = null;   // { url, attribution }
     let source = null;
 
     if (decision.kind === 'wikimedia') {
-      found = await fromWikimedia(decision.query); if (found) source = 'wikimedia';
-      if (!found) { found = await fromPexels(decision.query); if (found) source = 'pexels'; }
+      found = await fromWikimedia(decision.query, off); if (found) source = 'wikimedia';
+      if (!found) { found = await fromPexels(decision.query, off); if (found) source = 'pexels'; }
     } else {
-      found = await fromPexels(decision.query); if (found) source = 'pexels';
-      if (!found) { found = await fromPixabay(decision.query); if (found) source = 'pixabay'; }
-      if (!found) { found = await fromWikimedia(decision.query); if (found) source = 'wikimedia'; }
+      found = await fromPexels(decision.query, off); if (found) source = 'pexels';
+      if (!found) { found = await fromPixabay(decision.query, off); if (found) source = 'pixabay'; }
+      if (!found) { found = await fromWikimedia(decision.query, off); if (found) source = 'wikimedia'; }
     }
     // last-chance pixabay if everything above failed
-    if (!found) { found = await fromPixabay(decision.query); if (found) source = 'pixabay'; }
+    if (!found) { found = await fromPixabay(decision.query, off); if (found) source = 'pixabay'; }
 
     if (!found) {
       console.warn('⚠️ [' + story.id + '] no photo from any source for "' + decision.query + '"');
