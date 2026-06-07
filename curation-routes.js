@@ -6,6 +6,7 @@ const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
 const { generateEmailHTML } = require('./email');  // premium template engine
+const { generateStoryImage } = require('./image-gen');  // AI image generation
 
 const VALID_CATEGORIES = [
   'Business', 'Indian Economy', 'Finance', 'Tech', 'Sports',
@@ -307,7 +308,27 @@ async function generateVoices(req, res) {
         body: JSON.stringify({ summary: cleanSummary, status: 'voices_generated' })
       });
 
-      results.push({ id: story.id, headline: story.headline, summary: cleanSummary, src: summarySrc });
+      // ── AI image: generate alongside the summary (never blocks publish) ──
+      // Default choice = 'ai' (admin can flip to 'original' for faces). Original
+      // image stays in image_url; AI image goes in ai_image_url.
+      let aiImageUrl = story.ai_image_url || null;
+      try {
+        const img = await generateStoryImage(story);
+        if (img.ok) {
+          aiImageUrl = img.url;
+          await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
+            method: 'PATCH',
+            headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ai_image_url: aiImageUrl, image_choice: story.image_choice || 'ai' })
+          });
+        }
+      } catch (e) { /* image is best-effort; original image remains as fallback */ }
+
+      results.push({
+        id: story.id, headline: story.headline, summary: cleanSummary, src: summarySrc,
+        ai_image_url: aiImageUrl, image_url: story.image_url || null,
+        image_choice: story.image_choice || 'ai'
+      });
       await new Promise(r => setTimeout(r, 300));
     }
 
@@ -505,9 +526,30 @@ async function submitApproved(req, res) {
     );
     const approvedStories = await response.json();
 
-    // Copy each published story's image to our own Supabase Storage (reliable in email + website)
+    // Decide each published story's final image based on the editor's choice.
+    // image_choice 'ai'  → use the AI image (already self-hosted on Supabase)
+    // image_choice 'original' (or no AI image) → rehost the source image
     await ensureImageBucket();
     for (const s of approvedStories) {
+      const choice = s.image_choice || (s.ai_image_url ? 'ai' : 'original');
+
+      if (choice === 'ai' && s.ai_image_url) {
+        // AI image is already on Supabase — make it the live image_url.
+        if (s.image_url !== s.ai_image_url) {
+          try {
+            await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${s.id}`, {
+              method: 'PATCH',
+              headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ image_url: s.ai_image_url, image_source: 'ai-generated' })
+            });
+          } catch (e) { /* keep going */ }
+          s.image_url = s.ai_image_url;
+          s.image_source = 'ai-generated';
+        }
+        continue;
+      }
+
+      // ── Original image path: rehost source image to Supabase (reliable) ──
       if (!s.image_url) continue;
       const hosted = await rehostImage(s.image_url, s.id);
       if (hosted && hosted !== s.image_url) {
@@ -868,6 +910,51 @@ async function resendTodayEmail(req, res) {
   }
 }
 
+// ── ROUTE: Regenerate the AI image for one story ─────────────────────────────
+async function regenerateImage(req, res) {
+  try {
+    const { story_id } = req.body;
+    if (!story_id) return res.status(400).json({ error: 'story_id required' });
+    const r = await fetch(
+      `${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}&select=*`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+    );
+    const rows = await r.json();
+    if (!rows || rows.length === 0) return res.status(404).json({ error: 'Story not found' });
+
+    await ensureImageBucket();
+    const img = await generateStoryImage(rows[0]);
+    if (!img.ok) return res.status(502).json({ error: `Image generation failed: ${img.error}` });
+
+    await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ai_image_url: img.url, image_choice: 'ai' })
+    });
+    res.json({ success: true, ai_image_url: img.url });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// ── ROUTE: Set which image the editor wants live ('ai' | 'original') ─────────
+async function setImageChoice(req, res) {
+  try {
+    const { story_id, choice } = req.body;
+    if (!story_id || !['ai', 'original'].includes(choice)) {
+      return res.status(400).json({ error: "story_id and choice ('ai'|'original') required" });
+    }
+    await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image_choice: choice })
+    });
+    res.json({ success: true, choice });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 module.exports = {
   getAdminStories,
   generateVoices,
@@ -881,5 +968,7 @@ module.exports = {
   generateKhatarnakVoices,
   regenerateKhatarnakVoice,
   backfillSummaries,
-  resendTodayEmail
+  resendTodayEmail,
+  regenerateImage,
+  setImageChoice
 };
