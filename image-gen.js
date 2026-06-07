@@ -180,14 +180,50 @@ async function generateRaw(prompt) {
   return null;
 }
 
-// ── Apply "The Dawn Brief" watermark (bottom-right) + normalize to 1200x630 ──
+// ── Apply "The Dawn Brief" watermark (logo + text) bottom-right ──────────────
+// Logo is pure vector (no font dependency) so it ALWAYS renders. Text uses the
+// generic "sans-serif" family which fontconfig resolves to whatever font the
+// container has — avoids the "Fontconfig: cannot load default config" failure
+// that hid the old "Georgia"-specific watermark.
 async function applyWatermark(imageBuffer) {
   const base = await sharp(imageBuffer)
     .resize(1200, 630, { fit: 'cover', position: 'centre' })
     .jpeg({ quality: 86 })
     .toBuffer();
 
-  const wmSvg = '<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8A6218"/><stop offset="35%" stop-color="#E8C558"/><stop offset="65%" stop-color="#FFF0B0"/><stop offset="100%" stop-color="#8A6218"/></linearGradient></defs><g transform="translate(1176, 600)" text-anchor="end" font-family="Georgia, serif"><text x="2" y="2" font-size="26" font-style="italic" font-weight="700" fill="#000000" opacity="0.45">The Dawn Brief</text><text x="0" y="0" font-size="26" font-style="italic" font-weight="700" fill="url(#g)">The Dawn Brief</text></g></svg>';
+  // The Dawn Brief sunrise logo — pure SVG shapes (horizon, half-sun, rays, dot).
+  // Sits inside a translucent dark pill at bottom-right with the brand name.
+  const wmSvg =
+'<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">' +
+  '<defs>' +
+    '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">' +
+      '<stop offset="0%" stop-color="#8A6218"/>' +
+      '<stop offset="35%" stop-color="#E8C558"/>' +
+      '<stop offset="65%" stop-color="#FFF0B0"/>' +
+      '<stop offset="100%" stop-color="#8A6218"/>' +
+    '</linearGradient>' +
+    '<clipPath id="halfsun"><rect x="892" y="556" width="48" height="22"/></clipPath>' +
+  '</defs>' +
+  // translucent dark pill background for legibility
+  '<rect x="876" y="544" width="300" height="56" rx="28" fill="#07070F" opacity="0.55"/>' +
+  // ── sunrise logo (gold) at left of pill ──
+  '<g stroke="url(#gold)" stroke-width="3" stroke-linecap="round" fill="none">' +
+    // horizon line
+    '<line x1="898" y1="580" x2="934" y2="580"/>' +
+    // half-circle sun (upper half only, sitting on the horizon)
+    '<circle cx="916" cy="578" r="11" clip-path="url(#halfsun)"/>' +
+    // vertical center ray
+    '<line x1="916" y1="556" x2="916" y2="562"/>' +
+    // two diagonal rays
+    '<line x1="901" y1="563" x2="905" y2="567"/>' +
+    '<line x1="931" y1="563" x2="927" y2="567"/>' +
+  '</g>' +
+  // center dot
+  '<circle cx="916" cy="573" r="2.4" fill="url(#gold)"/>' +
+  // ── brand text (generic sans-serif so fontconfig always resolves it) ──
+  '<text x="952" y="579" font-family="sans-serif" font-size="22" font-style="italic" font-weight="700" fill="#000000" opacity="0.5">The Dawn Brief</text>' +
+  '<text x="950" y="577" font-family="sans-serif" font-size="22" font-style="italic" font-weight="700" fill="url(#gold)">The Dawn Brief</text>' +
+'</svg>';
 
   return await sharp(base)
     .composite([{ input: Buffer.from(wmSvg), top: 0, left: 0 }])
