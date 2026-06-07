@@ -923,7 +923,9 @@ async function regenerateImage(req, res) {
     if (!rows || rows.length === 0) return res.status(404).json({ error: 'Story not found' });
 
     await ensureImageBucket();
-    const img = await generateStoryImage(rows[0]);
+    // random attempt so each "New photo" click yields a different image
+    const attempt = Math.floor(Math.random() * 1000) + Date.now() % 100;
+    const img = await generateStoryImage(rows[0], attempt);
     if (!img.ok) return res.status(502).json({ error: `Image generation failed: ${img.error}` });
 
     await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story_id}`, {
