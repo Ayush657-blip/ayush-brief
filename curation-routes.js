@@ -736,7 +736,28 @@ async function generateKhatarnakVoices(req, res) {
       }
       await new Promise(r => setTimeout(r, 300));
 
-      results.push({ id: story.id, headline: story.headline, voices });
+      // Generate a real branded photo for this khatarnak story (best-effort, never blocks)
+      let ai_image_url = story.ai_image_url || null;
+      let image_choice = story.image_choice || 'ai';
+      if (!ai_image_url) {
+        try {
+          await ensureImageBucket();
+          const img = await generateStoryImage(story);
+          if (img && img.ok) {
+            ai_image_url = img.url;
+            // persist to Supabase so admin + publish can use it
+            await fetch(`${SUPA_URL}/rest/v1/daily_stories?id=eq.${story.id}`, {
+              method: 'PATCH',
+              headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ ai_image_url, image_choice })
+            });
+          }
+        } catch (e) {
+          console.warn('khatarnak image failed [' + story.id + ']: ' + e.message);
+        }
+      }
+
+      results.push({ id: story.id, headline: story.headline, voices, ai_image_url, image_choice, image_url: story.image_url || null });
     }
 
     res.json({ success: true, stories: results });
