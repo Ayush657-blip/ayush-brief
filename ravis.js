@@ -14,7 +14,7 @@ const RAVIS_CONFIG = {
 
 async function loadRavisConfig() {
   try {
-    const res = await fetch('https://api.ayushbrief.online/api/admin/config', {
+    const res = await fetch('https://api.thedawnbrief.com/api/admin/config', {
       headers: { 'x-admin-key': 'dawnbrief2026' }
     });
     const data = await res.json();
@@ -161,7 +161,7 @@ class Ravis {
     this.isSpeaking = true;
     this.updateStatus('Bol raha hoon...');
     try {
-      const r = await fetch('https://api.ayushbrief.online/api/voice/speak', {
+      const r = await fetch('https://api.thedawnbrief.com/api/voice/speak', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, voice_sample: RAVIS_CONFIG.voiceId })
@@ -459,7 +459,7 @@ class Ravis {
     const cat = this.currentCategoryName;
     const ids = Array.from(this.admin.selected5[cat]);
     try {
-      const res = await fetch('https://api.ayushbrief.online/api/admin/generate-voices', {
+      const res = await fetch('https://api.thedawnbrief.com/api/admin/generate-voices', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-admin-key': 'dawnbrief2026' },
         body: JSON.stringify({ story_ids: ids })
@@ -532,7 +532,7 @@ class Ravis {
     const currentVoice = story.voices?.[this.currentVoiceKey] || '';
 
     try {
-      const res = await fetch('https://api.ayushbrief.online/api/admin/regenerate-voice', {
+      const res = await fetch('https://api.thedawnbrief.com/api/admin/regenerate-voice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-admin-key': 'dawnbrief2026' },
         body: JSON.stringify({
@@ -564,7 +564,7 @@ class Ravis {
     await this.speak('Theek hai, regenerate kar raha hoon.');
     const story = this.currentPhase3Stories[this.currentPhase3Index];
     try {
-      const res = await fetch('https://api.ayushbrief.online/api/admin/regenerate-voice', {
+      const res = await fetch('https://api.thedawnbrief.com/api/admin/regenerate-voice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-admin-key': 'dawnbrief2026' },
         body: JSON.stringify({
@@ -653,7 +653,7 @@ class Ravis {
     await this.speak('5 khatarnak stories selected. Voice generate kar raha hoon.');
     const ids = Array.from(this.admin.selectedKhatarnak);
     try {
-      const res = await fetch('https://api.ayushbrief.online/api/admin/generate-khatarnak-voices', {
+      const res = await fetch('https://api.thedawnbrief.com/api/admin/generate-khatarnak-voices', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-admin-key': 'dawnbrief2026' },
         body: JSON.stringify({ story_ids: ids })
