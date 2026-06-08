@@ -9,12 +9,12 @@
 <meta property="og:site_name" content="The Dawn Brief">
 <meta property="og:title" id="og-title" content="The Dawn Brief — News that feels like a friend">
 <meta property="og:description" id="og-desc" content="Read this story on The Dawn Brief — news that feels like a friend.">
-<meta property="og:image" id="og-image" content="https://ayushbrief.online/og-image.png">
-<meta property="og:url" id="og-url" content="https://ayushbrief.online">
+<meta property="og:image" id="og-image" content="https://thedawnbrief.com/og-image.png">
+<meta property="og:url" id="og-url" content="https://thedawnbrief.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" id="tw-title" content="The Dawn Brief">
 <meta name="twitter:description" id="tw-desc" content="Read this story on The Dawn Brief — news that feels like a friend.">
-<meta name="twitter:image" content="https://ayushbrief.online/og-image.png">
+<meta name="twitter:image" content="https://thedawnbrief.com/og-image.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -211,7 +211,7 @@ footer{border-top:.5px solid var(--border);padding:28px 0;margin-top:20px;positi
 
 <footer>
   <div class="ft-inner">
-    <div class="ft-copy">© 2026 The Dawn Brief · ayushbrief.online</div>
+    <div class="ft-copy">© 2026 The Dawn Brief · thedawnbrief.com</div>
     <div class="ft-links">
       <a class="ft-link" href="index.html">Home</a>
       <a class="ft-link" href="about.html">About</a>
@@ -221,7 +221,7 @@ footer{border-top:.5px solid var(--border);padding:28px 0;margin-top:20px;positi
 </footer>
 
 <script>
-var API='https://api.ayushbrief.online';
+var API='https://api.thedawnbrief.com';
 var SUPA_URL='https://ygkviidhuqicfnvyuiiu.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlna3ZpaWRodXFpY2Zudnl1aWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDU0NjIsImV4cCI6MjA5NTAyMTQ2Mn0.h7Qy5uGWBx4dP4-gFFZYxuMQvMBu0QTjdIx9nrg9oZ0';
 var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Startups & Auto':'🚀','Science & Health':'🔬','Entertainment':'🎬'};
@@ -278,7 +278,7 @@ async function loadStory(){
   document.title=story.headline+' — The Dawn Brief';
   var desc=(story.summary||story.headline).slice(0,160);
   var storyUrl=window.location.href;
-  var storyImg=story.image_url||story.image||'https://ayushbrief.online/og-image.png';
+  var storyImg=story.image_url||story.image||'https://thedawnbrief.com/og-image.png';
   var setMeta=function(id,val){var el=document.getElementById(id);if(el)el.setAttribute('content',val);};
   setMeta('meta-desc',desc); setMeta('og-title',story.headline+' — The Dawn Brief');
   setMeta('og-desc',desc); setMeta('og-image',storyImg); setMeta('og-url',storyUrl);
@@ -297,7 +297,7 @@ async function loadStory(){
       "url":storyUrl,
       "mainEntityOfPage":{"@type":"WebPage","@id":storyUrl},
       "author":{"@type":"Organization","name":"The Dawn Brief"},
-      "publisher":{"@type":"Organization","name":"The Dawn Brief","logo":{"@type":"ImageObject","url":"https://ayushbrief.online/og-image.png"}}
+      "publisher":{"@type":"Organization","name":"The Dawn Brief","logo":{"@type":"ImageObject","url":"https://thedawnbrief.com/og-image.png"}}
     };
     var old=document.getElementById('ld-article');
     if(old)old.remove();
