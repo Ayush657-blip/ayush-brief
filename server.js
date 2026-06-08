@@ -1141,3 +1141,4 @@ app.post('/api/admin/generate-khatarnak-voices', adminAuth, (req, res, next) => 
 app.post('/api/admin/regenerate-khatarnak-voice', adminAuth, curation.regenerateKhatarnakVoice);
 
 app.listen(PORT, () => console.log(`\n🌅 Dawn Brief API running on port ${PORT} | SUPABASE_KEY: ${SUPA_KEY ? 'SET ✅' : 'MISSING ❌'}`));
+// redeploy trigger
