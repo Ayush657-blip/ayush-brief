@@ -18,7 +18,7 @@ const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 const NEWSDATA_KEY = process.env.NEWSDATA_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const ALERT_EMAIL = process.env.MY_EMAIL || 'ayush@ayushbrief.online';
+const ALERT_EMAIL = process.env.MY_EMAIL || 'ayush@thedawnbrief.com';
 
 const VALID_CATEGORIES = [
   'Business', 'Indian Economy', 'Finance', 'Tech', 'Sports',
@@ -335,7 +335,7 @@ async function sendAlertEmail(subject, message) {
     const { Resend } = require('resend');
     const resend = new Resend(RESEND_API_KEY);
     await resend.emails.send({
-      from: 'Dawn Brief System <newsletter@ayushbrief.online>',
+      from: 'Dawn Brief System <newsletter@thedawnbrief.com>',
       to: [ALERT_EMAIL],
       subject: `🚨 Dawn Brief Alert: ${subject}`,
       html: `<div style="font-family:Arial;padding:20px;background:#07070F;color:#fff;">
