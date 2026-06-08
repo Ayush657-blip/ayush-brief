@@ -9,12 +9,12 @@
 <meta property="og:site_name" content="The Dawn Brief">
 <meta property="og:title" id="og-title" content="The Dawn Brief — News that feels like a friend">
 <meta property="og:description" id="og-desc" content="Daily news written like a message from your smartest friend. Subscribe free.">
-<meta property="og:image" content="https://ayushbrief.online/og-image.png">
-<meta property="og:url" id="og-url" content="https://ayushbrief.online/category.html">
+<meta property="og:image" content="https://thedawnbrief.com/og-image.png">
+<meta property="og:url" id="og-url" content="https://thedawnbrief.com/category.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" id="tw-title" content="The Dawn Brief">
 <meta name="twitter:description" id="tw-desc" content="Daily news written like a message from your smartest friend.">
-<meta name="twitter:image" content="https://ayushbrief.online/og-image.png">
+<meta name="twitter:image" content="https://thedawnbrief.com/og-image.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -143,7 +143,7 @@ footer{border-top:.5px solid var(--border);padding:28px 0;position:relative;z-in
 
 <footer>
   <div class="ft-inner">
-    <div class="ft-copy">© 2026 The Dawn Brief · ayushbrief.online</div>
+    <div class="ft-copy">© 2026 The Dawn Brief · thedawnbrief.com</div>
     <div class="ft-links">
       <a class="ft-link" href="index.html">Home</a>
       <a class="ft-link" href="about.html">About</a>
@@ -153,7 +153,7 @@ footer{border-top:.5px solid var(--border);padding:28px 0;position:relative;z-in
 </footer>
 
 <script>
-var API='https://api.ayushbrief.online';
+var API='https://api.thedawnbrief.com';
 var CAT_ICONS={'Business':'💼','Indian Economy':'🇮🇳','Finance':'📈','Tech':'💻','Sports':'⚽','Government':'🏛️','International':'🌍','Climate':'🌿','Startups & Auto':'🚀','Science & Health':'🔬','Entertainment':'🎬'};
 var CAT_DESCS={'Business':'Corporate moves, market shifts, and the deals that shape your world.','Indian Economy':'Policy, growth, and the numbers that run Bharat.','Finance':'Markets, money, and what your wallet should know.','Tech':'AI, startups, and the gadgets everyone is talking about.','Sports':'Scores, drama, and the moments that matter.','Government':'Policy, parliament, and what is happening in Delhi.','International':'World news that affects India directly.','Climate':'Environment, energy, and the planet we share.','Startups & Auto':'New launches, EVs, funding, and the roads ahead.','Science & Health':'ISRO, health breakthroughs, and discoveries.','Entertainment':'Films, OTT, and culture worth knowing.'};
 var ALL_CATS=['Business','Indian Economy','Finance','Tech','Sports','Government','International','Climate','Startups & Auto','Science & Health','Entertainment'];
@@ -177,7 +177,7 @@ async function loadCategory(){
   // Dynamic SEO meta per category (reliable, no external calls)
   (function(){
     var desc=currentCat+' news on The Dawn Brief — written like a message from your smartest friend. Daily, sharp, and easy to read for students and professionals in India.';
-    var url='https://ayushbrief.online/category.html?cat='+encodeURIComponent(currentCat);
+    var url='https://thedawnbrief.com/category.html?cat='+encodeURIComponent(currentCat);
     var set=function(id,val){var el=document.getElementById(id);if(el)el.setAttribute('content',val);};
     set('meta-desc',desc);
     set('og-title',currentCat+' — The Dawn Brief');
@@ -187,7 +187,7 @@ async function loadCategory(){
     set('tw-desc',desc);
     // CollectionPage structured data for Google
     try{
-      var ld={"@context":"https://schema.org","@type":"CollectionPage","name":currentCat+" — The Dawn Brief","description":desc,"url":url,"isPartOf":{"@type":"WebSite","name":"The Dawn Brief","url":"https://ayushbrief.online"},"publisher":{"@type":"Organization","name":"The Dawn Brief","url":"https://ayushbrief.online"}};
+      var ld={"@context":"https://schema.org","@type":"CollectionPage","name":currentCat+" — The Dawn Brief","description":desc,"url":url,"isPartOf":{"@type":"WebSite","name":"The Dawn Brief","url":"https://thedawnbrief.com"},"publisher":{"@type":"Organization","name":"The Dawn Brief","url":"https://thedawnbrief.com"}};
       var old=document.getElementById('ld-collection');
       if(old)old.remove();
       var sc=document.createElement('script');
