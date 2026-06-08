@@ -5,7 +5,7 @@ const webpush = require('web-push');
 
 // ── WEB PUSH CONFIG ───────────────────────────────────────────────────────────
 webpush.setVapidDetails(
-  'mailto:ayush@ayushbrief.online',
+  'mailto:ayush@thedawnbrief.com',
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
@@ -151,7 +151,7 @@ app.post('/send-otp', async (req, res) => {
     await supabaseQuery('otp_store', 'POST', { email, otp, expires_at: expiresAt, used: false });
     const firstName = (name || 'friend').split(' ')[0];
     const { error } = await resend.emails.send({
-      from: 'The Dawn Brief <newsletter@ayushbrief.online>',
+      from: 'The Dawn Brief <newsletter@thedawnbrief.com>',
       to: [email],
       subject: `${otp} — Your Dawn Brief verification code`,
       html: `<div style="background:#07070F;padding:40px;text-align:center;font-family:Arial,sans-serif;"><h1 style="color:#E8C558;font-size:28px;margin-bottom:8px;">☀️ The Dawn Brief</h1><p style="color:rgba(255,255,255,.8);font-size:16px;margin-bottom:24px;">Yaar ${firstName}, tera secret code:</p><div style="background:#0C0C18;border:1px solid #5CC8FF;border-radius:12px;padding:24px;margin:20px auto;max-width:280px;"><p style="color:#5CC8FF;font-size:40px;font-weight:bold;letter-spacing:10px;margin:0;">${otp}</p></div><p style="color:rgba(255,255,255,.4);font-size:12px;margin-top:16px;">10 minutes mein expire hoga. Jaldi kar.</p></div>`
@@ -251,10 +251,10 @@ app.post('/subscribe', async (req, res) => {
       const regionLabels = { north: '🏔️ North India', west: '🌊 West India', south: '🌴 South India', east: '🌿 East India' };
       const isHinglish = region === 'north' || region === 'west';
       await resend.emails.send({
-        from: 'The Dawn Brief <newsletter@ayushbrief.online>',
+        from: 'The Dawn Brief <newsletter@thedawnbrief.com>',
         to: [email],
         subject: `☀️ Aye ${firstName}, welcome to the gang.`,
-        html: `<div style="background:#07070F;min-height:100vh;padding:48px 24px;font-family:Arial,sans-serif;text-align:center;"><h1 style="color:#E8C558;font-size:32px;margin-bottom:4px;">☀️ The Dawn Brief</h1><p style="color:rgba(255,255,255,.4);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:40px;">News that feels like a friend</p><div style="background:#0C0C1A;border:0.5px solid rgba(255,255,255,.1);border-radius:16px;padding:36px;max-width:480px;margin:0 auto;"><div style="font-size:48px;margin-bottom:16px;">🎉</div><h2 style="color:#fff;font-size:24px;font-weight:300;font-style:italic;margin-bottom:12px;">Welcome to the gang, ${firstName}.</h2><p style="color:rgba(255,255,255,.6);font-size:15px;line-height:1.7;margin-bottom:24px;">${isHinglish ? `Kal subah 6 AM pe teri pehli brief aayegi. Set kar le alarm.` : `Your first brief arrives tomorrow at 6 AM. Do not miss it.`}</p><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:28px;"><span style="background:rgba(41,121,255,.15);border:0.5px solid rgba(92,200,255,.3);color:#5CC8FF;font-size:12px;padding:6px 14px;border-radius:100px;">${roleLabels[role]||role}</span><span style="background:rgba(41,121,255,.15);border:0.5px solid rgba(92,200,255,.3);color:#5CC8FF;font-size:12px;padding:6px 14px;border-radius:100px;">${regionLabels[region]||region}</span></div><a href="https://ayushbrief.online" style="display:inline-block;background:#2979FF;color:#fff;text-decoration:none;padding:14px 32px;border-radius:12px;font-size:14px;font-weight:500;">Read today's brief →</a></div><p style="color:rgba(255,255,255,.2);font-size:11px;margin-top:32px;">© 2026 The Dawn Brief · ayushbrief.online</p><p style="margin-top:8px;"><a href="https://ayushbrief.online/unsubscribe.html" style="color:rgba(255,255,255,.2);font-size:11px;">Unsubscribe</a></p></div>`
+        html: `<div style="background:#07070F;min-height:100vh;padding:48px 24px;font-family:Arial,sans-serif;text-align:center;"><h1 style="color:#E8C558;font-size:32px;margin-bottom:4px;">☀️ The Dawn Brief</h1><p style="color:rgba(255,255,255,.4);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:40px;">News that feels like a friend</p><div style="background:#0C0C1A;border:0.5px solid rgba(255,255,255,.1);border-radius:16px;padding:36px;max-width:480px;margin:0 auto;"><div style="font-size:48px;margin-bottom:16px;">🎉</div><h2 style="color:#fff;font-size:24px;font-weight:300;font-style:italic;margin-bottom:12px;">Welcome to the gang, ${firstName}.</h2><p style="color:rgba(255,255,255,.6);font-size:15px;line-height:1.7;margin-bottom:24px;">${isHinglish ? `Kal subah 6 AM pe teri pehli brief aayegi. Set kar le alarm.` : `Your first brief arrives tomorrow at 6 AM. Do not miss it.`}</p><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:28px;"><span style="background:rgba(41,121,255,.15);border:0.5px solid rgba(92,200,255,.3);color:#5CC8FF;font-size:12px;padding:6px 14px;border-radius:100px;">${roleLabels[role]||role}</span><span style="background:rgba(41,121,255,.15);border:0.5px solid rgba(92,200,255,.3);color:#5CC8FF;font-size:12px;padding:6px 14px;border-radius:100px;">${regionLabels[region]||region}</span></div><a href="https://thedawnbrief.com" style="display:inline-block;background:#2979FF;color:#fff;text-decoration:none;padding:14px 32px;border-radius:12px;font-size:14px;font-weight:500;">Read today's brief →</a></div><p style="color:rgba(255,255,255,.2);font-size:11px;margin-top:32px;">© 2026 The Dawn Brief · thedawnbrief.com</p><p style="margin-top:8px;"><a href="https://thedawnbrief.com/unsubscribe.html" style="color:rgba(255,255,255,.2);font-size:11px;">Unsubscribe</a></p></div>`
       });
       console.log(`✅ Welcome email sent to ${email}`);
     } catch (emailErr) {
@@ -609,7 +609,7 @@ app.post('/api/trigger-newsletter', adminAuth, async (req, res) => {
 // ── REFERRAL SYSTEM ───────────────────────────────────────────────────────────
 app.get('/referral/:code', async (req, res) => {
   const { code } = req.params;
-  res.redirect(302, `https://ayushbrief.online/?ref=${code}`);
+  res.redirect(302, `https://thedawnbrief.com/?ref=${code}`);
 });
 
 app.get('/api/referral/:email', async (req, res) => {
@@ -623,7 +623,7 @@ app.get('/api/referral/:email', async (req, res) => {
     res.json({
       referral_code,
       referral_count: referral_count || 0,
-      referral_link: `https://ayushbrief.online/?ref=${referral_code}`
+      referral_link: `https://thedawnbrief.com/?ref=${referral_code}`
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -703,7 +703,7 @@ app.post('/api/push/send-all', adminAuth, async (req, res) => {
         await webpush.sendNotification(subscription, JSON.stringify({
           title: title || '☀️ The Dawn Brief',
           body: body || 'Tera brief ready hai. Dekh le.',
-          url: url || 'https://ayushbrief.online'
+          url: url || 'https://thedawnbrief.com'
         }));
         sent++;
       } catch (err) {
@@ -966,7 +966,7 @@ app.get('/api/images/wikimedia', async (req, res) => {
     const api = 'https://commons.wikimedia.org/w/api.php?action=query&generator=search' +
       '&gsrnamespace=6&gsrsearch=' + encodeURIComponent(query) +
       '&gsrlimit=24&prop=imageinfo&iiprop=url&iiurlwidth=800&format=json&origin=*';
-    const r = await fetch(api, { headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@ayushbrief.online)' } });
+    const r = await fetch(api, { headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@thedawnbrief.com)' } });
     if (!r.ok) throw new Error(`Wikimedia error ${r.status}`);
     const data = await r.json();
     const pages = (data.query && data.query.pages) ? Object.values(data.query.pages) : [];
@@ -1125,7 +1125,7 @@ app.post('/api/admin/set-image-choice', adminAuth, curation.setImageChoice);
 app.post('/api/admin/submit', adminAuth, curation.submitApproved);
 
 // Resend the latest published edition (FREE — no Claude). Trigger from browser:
-//   https://api.ayushbrief.online/api/admin/resend?key=dawnbrief2026
+//   https://api.thedawnbrief.com/api/admin/resend?key=dawnbrief2026
 app.get('/api/admin/resend', (req, res) => {
   const key = req.query.key || req.headers['x-admin-key'];
   if (key !== ADMIN_KEY) return res.status(401).json({ error: 'Unauthorized' });
