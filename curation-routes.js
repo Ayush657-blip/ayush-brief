@@ -837,9 +837,9 @@ async function sendEmailsToSubscribers(stories, date) {
 
       try {
         await resend.emails.send({
-          from: 'Ayush \u2014 The Dawn Brief <newsletter@ayushbrief.online>',
+          from: 'Ayush \u2014 The Dawn Brief <newsletter@thedawnbrief.com>',
           to: [email],
-          replyTo: 'newsletter@ayushbrief.online',
+          replyTo: 'newsletter@thedawnbrief.com',
           subject,
           html
         });
