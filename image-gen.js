@@ -111,7 +111,7 @@ async function fromWikimedia(query, offset) {
       '&gsrlimit=20&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=1200&format=json&origin=*';
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort(), 12000);
-    const res = await fetch(api, { signal: controller.signal, headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@ayushbrief.online)' } });
+    const res = await fetch(api, { signal: controller.signal, headers: { 'User-Agent': 'TheDawnBrief/1.0 (newsletter; contact@thedawnbrief.com)' } });
     clearTimeout(t);
     if (!res.ok) return null;
     const data = await res.json();
