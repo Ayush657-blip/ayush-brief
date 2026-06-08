@@ -21,7 +21,7 @@ function daysSince(dateStr) {
 
 async function sendEmail(to, subject, html) {
   const { error } = await resend.emails.send({
-    from: 'The Dawn Brief <newsletter@ayushbrief.online>',
+    from: 'The Dawn Brief <newsletter@thedawnbrief.com>',
     to: [to],
     subject,
     html
@@ -130,18 +130,18 @@ function baseTemplate(firstName, subject, body, tag, showUnsub = false) {
           <td style="background:#0C0C18;padding:28px;border-left:0.5px solid rgba(255,255,255,.05);border-right:0.5px solid rgba(255,255,255,.05);">
             <p style="margin:0;font-size:15px;color:rgba(255,255,255,.75);line-height:1.85;">${body}</p>
             <p style="margin:24px 0 0;text-align:center;">
-              <a href="https://ayushbrief.online" style="display:inline-block;background:#2979FF;color:#fff;text-decoration:none;padding:13px 32px;border-radius:12px;font-size:14px;font-weight:500;">Read today's brief →</a>
+              <a href="https://thedawnbrief.com" style="display:inline-block;background:#2979FF;color:#fff;text-decoration:none;padding:13px 32px;border-radius:12px;font-size:14px;font-weight:500;">Read today's brief →</a>
             </p>
           </td>
         </tr>
         <tr>
           <td style="background:#07070F;padding:16px 28px 20px;text-align:center;border:0.5px solid rgba(255,255,255,.05);border-top:none;border-radius:0 0 16px 16px;">
             <p style="margin:0 0 6px;font-family:Georgia,serif;font-size:14px;color:#E8C558;">☀️ The Dawn Brief</p>
-            <p style="margin:0 0 8px;font-size:11px;color:rgba(255,255,255,.2);">News that feels like a friend · ayushbrief.online</p>
+            <p style="margin:0 0 8px;font-size:11px;color:rgba(255,255,255,.2);">News that feels like a friend · thedawnbrief.com</p>
             <p style="margin:0;font-size:11px;">
-              <a href="https://ayushbrief.online" style="color:#5CC8FF;text-decoration:none;">Read on website</a>
+              <a href="https://thedawnbrief.com" style="color:#5CC8FF;text-decoration:none;">Read on website</a>
               &nbsp;·&nbsp;
-              <a href="https://ayushbrief.online/unsubscribe.html" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
+              <a href="https://thedawnbrief.com/unsubscribe.html" style="color:rgba(255,255,255,.2);text-decoration:none;">Unsubscribe</a>
             </p>
           </td>
         </tr>
