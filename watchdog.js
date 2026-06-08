@@ -20,8 +20,8 @@ const SUPA_URL = 'https://ygkviidhuqicfnvyuiiu.supabase.co';
 const SUPA_KEY = process.env.SUPABASE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const ALERT_TO = process.env.MY_EMAIL;
-const ALERT_FROM = process.env.ALERT_FROM || 'Dawn Brief Watchdog <newsletter@ayushbrief.online>';
-const BACKEND_HEALTH = process.env.BACKEND_HEALTH_URL || 'https://api.ayushbrief.online/health';
+const ALERT_FROM = process.env.ALERT_FROM || 'Dawn Brief Watchdog <newsletter@thedawnbrief.com>';
+const BACKEND_HEALTH = process.env.BACKEND_HEALTH_URL || 'https://api.thedawnbrief.com/health';
 const MIN_STORIES = parseInt(process.env.MIN_STORIES || '5', 10);
 
 const VALID_CATEGORIES = [
