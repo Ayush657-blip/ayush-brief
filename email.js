@@ -69,7 +69,7 @@ function voiceFor(story, voiceKey) {
   return story.summary || story.headline || '';
 }
 function storyUrl(s) {
-  return s.id ? `https://ayushbrief.online/story.html?id=${encodeURIComponent(s.id)}` : (s.link || 'https://ayushbrief.online');
+  return s.id ? `https://thedawnbrief.com/story.html?id=${encodeURIComponent(s.id)}` : (s.link || 'https://thedawnbrief.com');
 }
 
 function storyCard(s, voiceKey) {
@@ -130,10 +130,10 @@ function generateEmailHTML(stories, date, subscriber) {
     ? `<strong style="color:#FFFFFF;">${cards.length} biggest stor${cards.length === 1 ? 'y' : 'ies'}</strong>`
     : 'today\'s stories';
   const refCode = encodeURIComponent(sub.referral_code || '');
-  const refLink = `https://ayushbrief.online/r/${refCode}`;
+  const refLink = `https://thedawnbrief.com/r/${refCode}`;
   const unsub = sub.email
-    ? `https://ayushbrief.online/unsubscribe.html?e=${encodeURIComponent(sub.email)}`
-    : 'https://ayushbrief.online/unsubscribe.html';
+    ? `https://thedawnbrief.com/unsubscribe.html?e=${encodeURIComponent(sub.email)}`
+    : 'https://thedawnbrief.com/unsubscribe.html';
   const preview = cards.length
     ? `Good morning — aaj ki ${cards.length} sabse badi khabrein, dost ke andaaz mein.`
     : 'The Dawn Brief — news that feels like a friend.';
@@ -153,9 +153,9 @@ function generateEmailHTML(stories, date, subscriber) {
     <tr><td class="px" style="padding:16px 32px 6px;" align="center">
       <p style="margin:0 0 14px;font-family:Georgia,serif;font-style:italic;font-size:19px;color:#FFFFFF;">Aaj ki brief kaisi lagi?</p>
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
-        <td style="padding:0 4px;"><a href="https://ayushbrief.online/?rate=fire" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">🔥 Top</a></td>
-        <td style="padding:0 4px;"><a href="https://ayushbrief.online/?rate=ok" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">👍 Theek</a></td>
-        <td style="padding:0 4px;"><a href="https://ayushbrief.online/?rate=meh" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">😐 Meh</a></td>
+        <td style="padding:0 4px;"><a href="https://thedawnbrief.com/?rate=fire" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">🔥 Top</a></td>
+        <td style="padding:0 4px;"><a href="https://thedawnbrief.com/?rate=ok" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">👍 Theek</a></td>
+        <td style="padding:0 4px;"><a href="https://thedawnbrief.com/?rate=meh" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;color:#ECECF2;background-color:#15151F;border:1px solid #2A2A3A;border-radius:22px;padding:9px 16px;text-decoration:none;">😐 Meh</a></td>
       </tr></table>
     </td></tr>`;
 
@@ -201,8 +201,8 @@ function generateEmailHTML(stories, date, subscriber) {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
         <td class="stack" align="left" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7C7C8A;">${esc(date || '')}</td>
         <td class="stack stack-r" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.06em;color:#7C7C8A;">
-          <a href="https://ayushbrief.online" style="color:#B8902A;text-decoration:none;">View online</a> &nbsp;&middot;&nbsp;
-          <a href="https://ayushbrief.online" style="color:#B8902A;text-decoration:none;">Subscribe</a>
+          <a href="https://thedawnbrief.com" style="color:#B8902A;text-decoration:none;">View online</a> &nbsp;&middot;&nbsp;
+          <a href="https://thedawnbrief.com" style="color:#B8902A;text-decoration:none;">Subscribe</a>
         </td>
       </tr></table>
     </td></tr>
@@ -255,14 +255,14 @@ function generateEmailHTML(stories, date, subscriber) {
           <!--[if !mso]><!-- -->
           <a href="${refLink}" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:#07070F;background-color:#E8C558;border-radius:24px;padding:13px 30px;text-decoration:none;">Send to a friend &nbsp;&rarr;</a>
           <!--<![endif]-->
-          ${sub.referral_code ? `<p style="margin:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7C7C8A;">Your referral link:&nbsp; <span style="color:#B8902A;">ayushbrief.online/r/${esc(sub.referral_code)}</span></p>` : ''}
+          ${sub.referral_code ? `<p style="margin:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#7C7C8A;">Your referral link:&nbsp; <span style="color:#B8902A;">thedawnbrief.com/r/${esc(sub.referral_code)}</span></p>` : ''}
         </td></tr>
       </table>
     </td></tr>
 
     <!-- footer -->
     <tr><td align="center" style="padding:30px 32px 6px;">
-      <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#9A9AA8;">Was this forwarded to you? Get your own daily brief → <a href="https://ayushbrief.online" style="color:#E8C558;text-decoration:none;font-weight:bold;">Subscribe</a></p>
+      <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#9A9AA8;">Was this forwarded to you? Get your own daily brief → <a href="https://thedawnbrief.com" style="color:#E8C558;text-decoration:none;font-weight:bold;">Subscribe</a></p>
       <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9A9AA8;">
         <a href="https://x.com/" style="color:#9A9AA8;text-decoration:none;">X</a> &nbsp;&middot;&nbsp;
         <a href="https://instagram.com/" style="color:#9A9AA8;text-decoration:none;">Instagram</a> &nbsp;&middot;&nbsp;
@@ -273,7 +273,7 @@ function generateEmailHTML(stories, date, subscriber) {
       <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5A5A68;">Kaithal, Haryana, India</p>
       <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5A5A68;">
         <a href="${unsub}" style="color:#7C7C8A;text-decoration:underline;">Unsubscribe</a> &nbsp;&middot;&nbsp;
-        <a href="https://ayushbrief.online/privacy.html" style="color:#7C7C8A;text-decoration:underline;">Privacy</a>
+        <a href="https://thedawnbrief.com/privacy.html" style="color:#7C7C8A;text-decoration:underline;">Privacy</a>
       </p>
     </td></tr>
 
